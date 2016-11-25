@@ -7,6 +7,12 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+
+if(Sys.info()['user']=='janus829' | Sys.info()['user']=='s7m'){
+	dropPath = '~/Dropbox/Research/netsMatter/replications/example/'
+	gitPath = '~/Research/netsMatter/'
+	dataPath = paste0(dropPath, 'inputData/')
+	resultsPath = paste0(dropPath, 'outputData/') }
 ```
 
 ## Purpose
@@ -198,7 +204,8 @@ library(amen)
 ## Structuring input data
 
 * This is going to be a bit different than what is described in [Hoff's vignette](https://arxiv.org/pdf/1506.08237v1.pdf). 
-      - As of this week, AMEN can now be estimated on networks where the actor composition changes over time, and to make that change we switch to using **lists** instead of **arrays**.
+      - As of yesterday, AMEN can now be estimated on networks where the actor composition changes over time, and to make that change we switch to using **lists** instead of **arrays**.
+      	+ Hoff still need to give the new code a review.
 * In undirected longitudinal setting three inputs:
       - `Y`: a T length list of n x n adjacency matrices (see Table 2)
       - `Xdyad`: A T length list of n x n x p arrays
@@ -261,7 +268,7 @@ knitr::include_graphics("ameRepL.png")
 fit=ame_repL(Y=yL, Xdyad=xDyadL, Xrow=xNodeL, Xcol=NULL,
       nvar=TRUE, R=2,
       model="bin",symmetric=TRUE,
-      burn=500,nscan=1000,odens=10, # WILL NEED TO BE LARGER
+      burn=500,nscan=1000,odens=10, 
       plot=FALSE, print=FALSE, 
       seed=6886 # ALWAYS SET A SEED
       )
@@ -340,18 +347,6 @@ fit$BETA %>% apply(., 2, summStats) %>% round(., 3) %>% t(.)
 circplot(Y=yL[[length(yL)]], U=fit$U, lcol='white')
 ```
 
-## Out of sample model performance
-
-* Randomly divide the $n \times (n-1)$ data points into $S$ sets of roughly equal size, letting $s_{ij}$ be the set to which pair $\{ij\}$ is assigned.
-* For each $s \in \{1, \ldots, S\}$:
-	- Obtain estimates of the model parameters conditional on $\{y_{ij} : s_{ij} \neq s\}$, the data on pairs not in set $s$.
-	- For pairs $\{kl\}$ in set $s$, let $\hat y_{kl} = E[y_{kl} | \{y_{ij} : s_{ij} \neq s\}]$, the predicted value of $y_{kl}$ obtained using data not in set $s$.
-
-* Code to perform this analysis for the example is shown in `git/netsMatter/code/example/runOutPerf.R`
-* When we get out of sample results we will be evaluating across two metrics:
-	- Receiver Operating Characteristic curves
-	- Precision-Recall curves
-
 ## There will be a lot of models to run...
 
 ```{r, eval=FALSE, echo=TRUE}
@@ -372,11 +367,84 @@ foreach(ii=1:length(latDims), .packages=c("amen")) %dopar% {
 		nscan=imps, seed=seed, burn=brn, odens=ods, 
 		plot=FALSE, print=FALSE) 	
 	save(ameFit, 
-		file='~/Dropbox/netsMatter/replications/example/outputData/model_k',
-			latDims[ii],'.rda')
+		file=paste0('~/Dropbox/netsMatter/replications/example/outputData/model_k',
+			latDims[ii],'.rda'))
 }
 stopCluster(cl)
 ```
+
+## Might need parallelization...
+
+* because we will want to assess how varying k changes GOF
+
+```{r, echo=FALSE, fig.height=4, fig.width=8, message=FALSE, warning=FALSE}
+load(paste0(resultsPath, 'modelk1.rda')) ; fit1=fit
+load(paste0(resultsPath, 'modelk2.rda')) ; fit2=fit
+load(paste0(resultsPath, 'modelk3.rda')) ; fit3=fit
+load(paste0(resultsPath, 'modelk4.rda')) ; fit4=fit
+
+fits = list(fit1, fit2, fit3, fit4) ; names(fits) = paste0('k=',1:4)
+
+gofSumm = do.call('rbind', lapply(1:length(fits), function(ii){
+	fit = fits[[ii]]
+	act = fit$GOF[1,-c(2:3)]
+	gof = fit$GOF[-1,-c(2:3)]
+
+	ggGof = melt(gof)[,-1]
+	ggGof$act = act[match(ggGof$Var2, names(act))]	
+	ggGof$K = names(fits)[ii]
+	return(ggGof)
+	}) )
+
+ggplot(gofSumm, aes(x=value )) + 
+	geom_histogram() + 
+	geom_vline(aes(xintercept=act), color='red') + 
+	facet_grid(Var2 ~ K) +
+	theme(axis.text.x=element_text(angle=45,hjust=1))
+```
+
+## and to assess performance
+
+* Randomly divide the $n \times (n-1)$ data points into $S$ sets of roughly equal size, letting $s_{ij}$ be the set to which pair $\{ij\}$ is assigned.
+* For each $s \in \{1, \ldots, S\}$:
+	- Obtain estimates of the model parameters conditional on $\{y_{ij} : s_{ij} \neq s\}$, the data on pairs not in set $s$.
+	- For pairs $\{kl\}$ in set $s$, let $\hat y_{kl} = E[y_{kl} | \{y_{ij} : s_{ij} \neq s\}]$, the predicted value of $y_{kl}$ obtained using data not in set $s$.
+
+* Code to perform this analysis for the example is shown in `git/netsMatter/code/example/runOutPerf.R`
+* When we get out of sample results we will be evaluating across two metrics:
+	- Sensitivity/Specificity & Precision/Recall 
+
+```{r, echo=FALSE}
+
+source(paste0(gitPath, 'code/helpers/functions.R'))
+source(paste0(gitPath, 'code/helpers/binPerfHelpers.R'))
+
+load(paste0(resultsPath, 'model_k1_outPerfResults.rda'))
+load(paste0(resultsPath, 'model_k2_outPerfResults.rda'))
+load(paste0(resultsPath, 'model_k3_outPerfResults.rda'))
+load(paste0(resultsPath, 'model_k4_outPerfResults.rda'))
+
+preds = list(do.call('rbind', modsAme1), do.call('rbind', modsAme2), do.call('rbind', modsAme3), do.call('rbind', modsAme4))
+names(preds) = paste0('k=',1:4)
+
+aucSumm = do.call('rbind', 
+	lapply(preds, function(x){ 
+		cbind( 'AUC'=getAUC(x$prob, x$actual), 'AUC (PR)'=auc_pr(x$actual, x$prob) ) 
+		} ) ) ; rownames(aucSumm) = names(preds)
+aucSumm = aucSumm[order(aucSumm[,1],decreasing=TRUE),]
+aucSumm = trim(format(round(aucSumm, 2), nsmall=2))
+print( aucSumm )
+```
+
+## Issues
+
+* Any missingness in covariates inputted into AME automatically get turned into 0 ... this is not good.
+* We can get around this via imputing nodal and dyadic variables within AME
+	- In this vein, I made a modified version of sbgcop that works over nodal and dyadic data...but we still need to incorporate this within the AME MCMC
+	- also *within* because otherwise we'd have to run each model k times over different imputed datasets and use Rubin's rules to combine parameter estimates ... problematic especially when it comes to third order deps
+* Computation time ... these models take a notable amount of time to converge
+	- Mike's tower?
+	- EC2 ... though the costs can build
 
 ## Code + Data + Conversation
 

@@ -6,9 +6,9 @@ load('~/Dropbox/Research/netsMatter/replications/example/inputData/exampleData.r
 
 ##############################
 # run ame in parallel # mcmc params
-imps = 100000
-brn = 50000
-ods = 10
+imps = 1000
+brn = 5
+ods = 1
 latDims = 1:4
 seed=6886
 
@@ -17,13 +17,13 @@ library(doParallel) ; library(foreach)
 cl=makeCluster(4) ; registerDoParallel(cl)
 foreach(ii=1:length(latDims), .packages=c("amen")) %dopar% {
 	
-	ameFit = ame_repL(
+	fit = ame_repL(
 		Y=yL,Xdyad=xDyadL,Xrow=xNodeL,Xcol=NULL, model="bin",symmetric=TRUE,
 		R=latDims[ii], 
 		nscan=imps, seed=seed, burn=brn, odens=ods, 
 		plot=FALSE, print=FALSE) 
 	
-	save(ameFit, file='~/Dropbox/Research/netsMatter/replications/example/outputData/model_k',latDims[ii],'.rda')
+	save(fit, file=paste0('~/Dropbox/Research/netsMatter/replications/example/outputData/modelk',latDims[ii],'.rda'))
 }
 stopCluster(cl)
 ##############################

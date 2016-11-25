@@ -2,6 +2,13 @@ rm(list=ls())
 # library(devtools) ; devtools::install_github('s7minhas/amen')
 library(amen) ; library(reshape2) ; library(ggplot2)
 
+# create your own if block of paths
+if(Sys.info()['user']=='janus829' | Sys.info()['user']=='s7m'){
+	dropPath = '~/Dropbox/Research/netsMatter/replications/example/'
+	gitPath = '~/Research/netsMatter/'
+	dataPath = paste0(dropPath, 'inputData/')
+	resultsPath = paste0(dropPath, 'outputData/') }
+
 # ##############################
 # # load some other data
 # data(coldwar)
@@ -59,7 +66,7 @@ library(amen) ; library(reshape2) ; library(ggplot2)
 # names(xDyadL) = names(yL)
 
 # # Save data
-# save(yL, xNodeL, xDyadL, file='~/Dropbox/Research/netsMatter/replications/example/inputData/exampleData.rda')
+# save(yL, xNodeL, xDyadL, file=paste0(dataPath, 'exampleData.rda'))
 # ##############################
 
 ##############################
@@ -67,13 +74,13 @@ library(amen) ; library(reshape2) ; library(ggplot2)
 # fit=ame_repL(Y=yL,Xdyad=xDyadL,Xrow=xNodeL,Xcol=NULL, R=2,
 # 	model="bin",symmetric=TRUE,
 # 	burn=500,nscan=1000,odens=10,plot=FALSE, print=FALSE, seed=6886)
-# save(fit, file='~/Dropbox/Research/netsMatter/replications/example/outputData/model_k2.rda')
+# save(fit, file=paste0(resultsPath, 'model_k2.rda'))
 ##############################
 
 ##############################
 # Assess convergence
-load('~/Dropbox/Research/netsMatter/replications/example/inputData/exampleData.rda')
-load('~/Dropbox/Research/netsMatter/replications/example/outputData/model_k2.rda')
+load(paste0(dataPath, 'exampleData.rda'))
+load(paste0(resultsPath, 'model_k2.rda'))
 
 beta = data.frame(fit$BETA) ; names(beta)[ncol(beta)] = 'distance'
 beta$iter = 1:nrow(beta)*10
@@ -96,4 +103,49 @@ ggplot(ggGof, aes(x=value)) + geom_histogram() + facet_wrap(~Var2,nrow=1,scales=
 # summary of parameter estimates
 summStats = function(x){ c(mu=mean(x), sd=sd(x), quantile(x, probs=c(0.025,0.975)))  }
 t( round( apply(fit$BETA, 2, summStats), 3) )
+##############################
+
+##############################
+# compare gof across ame mods
+load(paste0(resultsPath, 'modelk1.rda')) ; fit1=fit
+load(paste0(resultsPath, 'modelk2.rda')) ; fit2=fit
+load(paste0(resultsPath, 'modelk3.rda')) ; fit3=fit
+load(paste0(resultsPath, 'modelk4.rda')) ; fit4=fit
+
+fits = list(fit1, fit2, fit3, fit4) ; names(fits) = paste0('k=',1:4)
+
+gofSumm = do.call('rbind', lapply(1:length(fits), function(ii){
+	fit = fits[[ii]]
+	act = fit$GOF[1,-c(2:3)]
+	gof = fit$GOF[-1,-c(2:3)]
+
+	ggGof = melt(gof)[,-1]
+	ggGof$act = act[match(ggGof$Var2, names(act))]	
+	ggGof$K = names(fits)[ii]
+	return(ggGof)
+	}) )
+
+ggplot(gofSumm, aes(x=value )) + geom_histogram() + geom_vline(aes(xintercept=act), color='red') + facet_grid(Var2 ~ K)
+##############################
+
+##############################
+# compare out of sample fit
+source(paste0(gitPath, 'code/helpers/functions.R'))
+source(paste0(gitPath, 'code/helpers/binPerfHelpers.R'))
+
+load(paste0(resultsPath, 'model_k1_outPerfResults.rda'))
+load(paste0(resultsPath, 'model_k2_outPerfResults.rda'))
+load(paste0(resultsPath, 'model_k3_outPerfResults.rda'))
+load(paste0(resultsPath, 'model_k4_outPerfResults.rda'))
+
+preds = list(do.call('rbind', modsAme1), do.call('rbind', modsAme2), do.call('rbind', modsAme3), do.call('rbind', modsAme4))
+names(preds) = paste0('k=',1:4)
+
+aucSumm = do.call('rbind', 
+	lapply(preds, function(x){ 
+		cbind( 'AUC'=getAUC(x$prob, x$actual), 'AUC (PR)'=auc_pr(x$actual, x$prob) ) 
+		} ) ) ; rownames(aucSumm) = names(preds)
+aucSumm = aucSumm[order(aucSumm[,1],decreasing=TRUE),]
+aucSumm = trim(format(round(aucSumm, 2), nsmall=2))
+aucSumm
 ##############################
