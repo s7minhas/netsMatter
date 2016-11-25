@@ -1,6 +1,6 @@
 ---
-title: "Amen to replication: What have we learned about networks in International relations "
-author: "Minhas, Dorff, Foster, Gallop, Liu, Roberts, Tellez, Ward"
+title: "AMEN to Replication: Networks in IR"
+author: "Minhas, Dorff, Gallop, Foster, Liu, Roberts, Tellez, Ward"
 output: 
       ioslides_presentation:
             smaller: true
