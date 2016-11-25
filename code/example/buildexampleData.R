@@ -1,6 +1,6 @@
 rm(list=ls())
 library(devtools) ; devtools::install_github('s7minhas/amen')
-library(amen)
+library(amen) ; library(reshape2) ; library(ggplot2)
 
 ##############################
 # load some other data
@@ -44,7 +44,6 @@ xNodeL[[2]] = xNodeL[[2]][ actors[-c(noIntNum,noIntEarlyNum[c(3,6)])],  ]
 xNodeL[[3]] = xNodeL[[3]][ actors[-c(noIntNum,noIntEarlyNum[c(3)])],  ]
 xNodeL[[8]] = xNodeL[[8]][ actors[-c(noIntLateNum[c(3,4)])],  ]
 
-
 # modify x dyad matrix
 xDyadL = lapply(1:t, function(x){ array(Xd[,,,x],dim=c(n,n,1),dimnames=list(rownames(Y),rownames(Y),'ldist')) })
 xDyadL[[1]] = xDyadL[[1]][ actors[-c(noIntNum,noIntEarlyNum[c(3,6,9)])], actors[-c(noIntNum,noIntEarlyNum[c(3,6,9)])], ]
@@ -72,40 +71,12 @@ save(yL, xNodeL, xDyadL, file='~/Dropbox/Research/netsMatter/replications/exampl
 ##############################
 
 ##############################
-# run ame in parallel
-# mcmc params
-imps = 100000
-brn = 50000
-ods = 10
-latDims = 1:4
-seed=6886
-
-# Run amen in parallel
-library(doParallel) ; library(foreach)
-cl=makeCluster(4) ; registerDoParallel(cl)
-foreach(ii=1:length(latDims), .packages=c("amen")) %dopar% {
-	
-	ameFit = ame_repL(
-		Y=yL,Xdyad=xDyadL,Xrow=xNodeL,Xcol=NULL, model="bin",symmetric=TRUE,
-		R=latDims[ii], 
-		nscan=imps, seed=seed, burn=brn, odens=ods, 
-		plot=FALSE, print=FALSE) 
-	
-	save(ameFit, file='~/Dropbox/Research/netsMatter/replications/example/outputData/model_k',latDims[ii],'.rda')
-}
-stopCluster(cl)
-##############################
-
-##############################
 # Assess convergence
 load('~/Dropbox/Research/netsMatter/replications/example/outputData/model_k2.rda')
 
-library(reshape2)
-library(ggplot2)
 beta = data.frame(fit$BETA)
 names(beta)[ncol(beta)] = 'distance'
 beta$iter = 1:nrow(beta)*10
 ggBeta = reshape2::melt(beta,id='iter')
 ggplot(ggBeta, aes(x=iter,y=value)) + geom_line() + facet_wrap(~variable,nrow=2)
 ##############################
-
