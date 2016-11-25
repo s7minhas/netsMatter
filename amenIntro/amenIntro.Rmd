@@ -1,0 +1,297 @@
+---
+title: "Networks Matter...or some nonsense like that"
+output: 
+      ioslides_presentation:
+            smaller: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Purpose
+
+* Why are we meeting during Thanksgiving weekend...I didn't realize the date and none of you objected :)
+* Anyhow...we are here to talk about conducting a meta-analysis of dyadic studies in political science using the Additive and Multiplicative Effects Model for Networks (AMEN)
+* What I hope we find from this project is that using standard GLM approaches on dyadic data will produce
+      - biased estimates of the effect of independent variables
+      - uncalibrated confidence intervals
+      - and poor predictive performance.
+* Anticipated outputs: 
+      - One big meta-analysis piece in which we show the items in the list above to be true on average
+      - A number of small replication pieces
+
+## Outline
+
+* **Brief** background discussion of AMEN based on [Hoff's vignette](https://arxiv.org/pdf/1506.08237v1.pdf) and a [joint piece with me and Mike](https://arxiv.org/pdf/1611.00460v1.pdf)
+* Example application of AMEN, where we will   
+      - Discuss how to structure input data
+      - Extract and interpret model results
+      - Conduct out-of-sample performance on longitudinal networks
+* Discuss project management
+
+## Dyadic data
+
+* Any dataset in which the unit of observation is characterized by a pair of actors
+      - MIDs
+      - International economic agreements (PTAs, BITs)
+      - Alliances (NATO)
+      - Trade flows
+
+## What makes dyadic data special
+
+* Formation of a tie between any pair of actors is **not necessarily** independent of other ties
+      - This is true for bilateral and multilateral events
+* Why?
+
+## Actors are part of a system ... a network
+
+```{r, out.width= "700px",fig.align="center"}
+knitr::include_graphics("dyaddata.png")
+```
+
+## Flavors of dependencies
+
+* First order dependence
+      - Often will find significant heterogeneity in activity levels across nodes
+* Second order dependence
+      - Reciprocity: Event sent from i $\rightarrow$ j is likely related to an event sent from j $\rightarrow$ i
+
+## What to do: Social Relations Model
+
+$$
+\begin{aligned}
+      y_{ij} &= \color{red}{\mu} + \color{red}{e_{ij}} \\
+      e_{ij} &= a_{i} + b_{j} + \epsilon_{ij} \\
+      \{ (a_{1}, b_{1}), \ldots, (a_{n}, b_{n}) \} &\sim N(0,\Sigma_{ab}) \\ 
+      \{ (\epsilon_{ij}, \epsilon_{ji}) : \; i \neq j\} &\sim N(0,\Sigma_{\epsilon}), \text{ where } \\
+      \Sigma_{ab} = \begin{pmatrix} \sigma_{a}^{2} & \sigma_{ab} \\ \sigma_{ab} & \sigma_{b}^2   \end{pmatrix} \;\;\;\;\; &\Sigma_{\epsilon} = \sigma_{\epsilon}^{2} \begin{pmatrix} 1 & \rho \\ \rho & 1  \end{pmatrix}
+\end{aligned}
+$$
+
+* $\mu$ baseline measure of network activity, for the purpose of regression we turn this into $\beta^{T}X$
+* $e_{ij}$ residual variation that we will use the SRM to decompose
+
+## What to do: Social Relations Model
+
+$$
+\begin{aligned}
+      y_{ij} &= \mu + e_{ij} \\
+      e_{ij} &= \color{red}{a_{i} + b_{j}} + \epsilon_{ij} \\
+      \color{red}{\{ (a_{1}, b_{1}), \ldots, (a_{n}, b_{n}) \}} &\sim N(0,\Sigma_{ab}) \\ 
+      \{ (\epsilon_{ij}, \epsilon_{ji}) : \; i \neq j\} &\sim N(0,\Sigma_{\epsilon}), \text{ where } \\
+      \Sigma_{ab} = \begin{pmatrix} \sigma_{a}^{2} & \sigma_{ab} \\ \sigma_{ab} & \sigma_{b}^2   \end{pmatrix} \;\;\;\;\; &\Sigma_{\epsilon} = \sigma_{\epsilon}^{2} \begin{pmatrix} 1 & \rho \\ \rho & 1  \end{pmatrix}
+\end{aligned}
+$$
+
+* row/sender effect ($a_{i}$) & column/receiver effect ($b_{j}$)
+* Modeled jointly to account for correlation in how active an actor is in sending and receiving ties
+
+## What to do: Social Relations Model
+
+$$
+\begin{aligned}
+      y_{ij} &= \mu + e_{ij} \\
+      e_{ij} &= a_{i} + b_{j} + \epsilon_{ij} \\
+      \{ (a_{1}, b_{1}), \ldots, (a_{n}, b_{n}) \} &\sim N(0,\color{red}{\Sigma_{ab}}) \\ 
+      \{ (\epsilon_{ij}, \epsilon_{ji}) : \; i \neq j\} &\sim N(0,\Sigma_{\epsilon}), \text{ where } \\
+      \color{red}{\Sigma_{ab}} = \begin{pmatrix} \sigma_{a}^{2} & \sigma_{ab} \\ \sigma_{ab} & \sigma_{b}^2   \end{pmatrix} \;\;\;\;\; &\Sigma_{\epsilon} = \sigma_{\epsilon}^{2} \begin{pmatrix} 1 & \rho \\ \rho & 1  \end{pmatrix}
+\end{aligned}
+$$
+
+* $\sigma_{a}^{2}$ and $\sigma_{b}^{2}$ capture heterogeneity in the row and column means
+* $\sigma_{ab}$ describes the linear relationship between these two effects (i.e., whether actors who send [receive] a lot of ties also receive [send] a lot of ties)
+
+## What to do: Social Relations Model
+
+$$
+\begin{aligned}
+      y_{ij} &= \mu + e_{ij} \\
+      e_{ij} &= a_{i} + b_{j} + \color{red}{\epsilon_{ij}} \\
+      \{ (a_{1}, b_{1}), \ldots, (a_{n}, b_{n}) \} &\sim N(0,\Sigma_{ab}) \\ 
+      \color{red}{\{ (\epsilon_{ij}, \epsilon_{ji}) : \; i \neq j\}} &\sim N(0,\color{red}{\Sigma_{\epsilon}}), \text{ where } \\
+      \Sigma_{ab} = \begin{pmatrix} \sigma_{a}^{2} & \sigma_{ab} \\ \sigma_{ab} & \sigma_{b}^2   \end{pmatrix} \;\;\;\;\; & \color{red}{\Sigma_{\epsilon}} = \sigma_{\epsilon}^{2} \begin{pmatrix} 1 & \rho \\ \rho & 1  \end{pmatrix}
+\end{aligned}
+$$
+
+* $\epsilon_{ij}$ captures the within dyad effect
+* Second-order dependencies are described by $\sigma_{\epsilon}^{2}$
+* Within dyad correlation, aka reciprocity, represented by $\rho$
+
+## Network level dependencies
+
+```{r, out.width= "700px",fig.align="center"}
+knitr::include_graphics("homophStoch.png")
+```
+
+* Homophily
+* Stochastic equivalence
+
+## Latent variable models for networks
+
+$$
+\begin{aligned}
+\text{Latent class model} \\
+      &\alpha(u_{i}, u_{j}) = m_{u_{i}, u_{j}} \\
+      &u_{i} \in \{1, \ldots, K \}, \; i \in \{1,\ldots, n\} \\
+      &M \text{ a } K \times K \text{ symmetric matrix} \\
+\text{Latent distance model} \\
+      &\alpha(\textbf{u}_{i}, \textbf{u}_{j}) = -|\textbf{u}_{i} - \textbf{u}_{j}| \\
+      &\textbf{u}_{i} \in \mathbb{R}^{K}, \; i \in \{1, \ldots, n \} \\
+\text{Latent factor model} \\
+      &\alpha(\textbf{u}_{i}, \textbf{u}_{j}) = \textbf{u}_{i}^{T} \Lambda \textbf{u}_{j} \\
+      &\textbf{u}_{i} \in \mathbb{R}^{K}, \; i \in \{1, \ldots, n \} \\
+      &\Lambda \text{ a } K \times K \text{ diagonal matrix}
+\end{aligned}
+$$
+
+## Our preferred approach
+
+$$
+\begin{aligned}
+\text{Latent class model} \\
+      &\alpha(u_{i}, u_{j}) = m_{u_{i}, u_{j}} \\
+      &u_{i} \in \{1, \ldots, K \}, \; i \in \{1,\ldots, n\} \\
+      &M \text{ a } K \times K \text{ symmetric matrix} \\
+\text{Latent distance model} \\
+      &\alpha(\textbf{u}_{i}, \textbf{u}_{j}) = -|\textbf{u}_{i} - \textbf{u}_{j}| \\
+      &\textbf{u}_{i} \in \mathbb{R}^{K}, \; i \in \{1, \ldots, n \} \\
+\color{red}{\text{Latent factor model}} \\
+      &\alpha(\textbf{u}_{i}, \textbf{u}_{j}) = \textbf{u}_{i}^{T} \Lambda \textbf{u}_{j} \\
+      &\textbf{u}_{i} \in \mathbb{R}^{K}, \; i \in \{1, \ldots, n \} \\
+      &\Lambda \text{ a } K \times K \text{ diagonal matrix}
+\end{aligned}
+$$
+
+## Putting it all together: AME
+
+$$
+\begin{aligned}
+      y_{ij} &= g(\theta_{ij}) \\ 
+      &\theta_{ij} = \beta^{T} \mathbf{X}_{ij} + e_{ij} \\
+      &e_{ij} = a_{i} + b_{j}  + \epsilon_{ij} + \textbf{u}_{i}^{T} \textbf{D} \textbf{v}_{j} \\
+\end{aligned}
+$$
+
+* $a_{i} + b_{j}  + \epsilon_{ij}$, are additive random effects and account for sender, receiver, and within-dyad dependence
+* multiplicative effects, $\textbf{u}_{i}^{T} \textbf{D} \textbf{v}_{j}$, capture higher-order dependence patterns that are left over in $\theta$ after accounting for any known covariate information
+
+## Benefits of this approach
+
+* At its core, AME is just a GLM with random effects used to ensure that we can treat dyadic observations as conditionally independent
+* AME can be used: 
+      - on both undirected and directed data, 
+      - on longitudinal and static networks,
+      - and on a variety of distribution types we commonly encounter in political science (binomial, gaussian, and ordinal).
+
+## How to use it...first installing
+
+```{r,echo=TRUE, message=FALSE, warning=FALSE, suppressPackageStartupMessages=TRUE}
+library(devtools)
+devtools::install_github('s7minhas/amen')
+library(amen)
+```
+
+**DON'T USE THE VERSION FROM CRAN**
+
+## Structuring input data
+
+* This is going to be a bit different than what is described in [Hoff's vignette](https://arxiv.org/pdf/1506.08237v1.pdf). 
+      - As of this week, AMEN can now be estimated on networks where the actor composition changes over time, and to make that change we switch to using **lists** instead of **arrays**.
+* In undirected longitudinal setting three inputs:
+      - `Y`: a T length list of n x n adjacency matrices (see Table 2)
+      - `Xdyad`: A T length list of n x n x p arrays
+      - `Xrow`: A T length list of n x p matrices
+* In directed longitudinal setting you can distinguish between:
+      - Sender covariates `Xrow`
+      - Receiver covariates `Xcol`
+
+## Structuring dependent variable
+
+```{r,echo=FALSE}
+load('~/Dropbox/Research/netsMatter/replications/example/inputData/exampleData.rda')
+```
+
+```{r, echo=TRUE}
+str(yL)
+```
+
+## More on dependent variable
+
+```{r, echo=TRUE}
+print( yL$'1985'[17:33,17:33]  )
+```
+
+## Dyadic covariate(s)
+
+```{r, echo=TRUE}
+str(xDyadL)
+```
+
+## More on dyadic covariate(s)
+
+```{r, echo=TRUE}
+print( round(xDyadL$'1985'[17:33,17:33,1],1)  )
+```
+
+## Actor level covariate(s)
+
+```{r, echo=TRUE}
+str(xNodeL)
+```
+
+## More on actor level covariate(s)
+
+```{r, echo=TRUE}
+print( xNodeL$'1985'[17:33,]  )
+```
+
+## Running an AME model
+
+```{r, out.width= "600px",fig.align="center"}
+knitr::include_graphics("ameRepL.png")
+```
+
+## Lets put it all together
+
+* Undirected, `symmetric=TRUE`, binary, `model='bin'`, longitudinal AME model with actor random effects, `nvar=TRUE`, and a two dimensional multiplicative effect, `R=2`.
+
+```{r, echo=TRUE,eval=FALSE}
+fit=ame_repL(Y=yL, Xdyad=xDyadL, Xrow=xNodeL, Xcol=NULL,
+      nvar=TRUE, R=2,
+      model="bin",symmetric=TRUE,
+      burn=500,nscan=1000,odens=10, # WILL NEED TO BE LARGER
+      plot=FALSE, print=FALSE, 
+      seed=6886 # ALWAYS SET A SEED
+      )
+```
+
+```{r, echo=TRUE}
+load('~/Dropbox/Research/netsMatter/replications/example/outputData/model_k2.rda')
+```
+
+## The output
+
+```{r, out.width= "600px",fig.align="center"}
+knitr::include_graphics("ameOut.png")
+```
+
+## Assessing convergence
+
+
+
+## Did you set the right K?
+
+
+
+## Exogenous covariates
+
+```{r, echo=TRUE}
+dim(fit$BETA)
+
+stats = function(x){ c( mu=mean(x), q95  ) }
+apply(BETA<)
+```
+
+## Out of sample model performance
+
