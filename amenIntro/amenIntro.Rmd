@@ -443,16 +443,9 @@ print( aucSumm )
 * We can get around this via imputing nodal and dyadic variables within AME
 	- In this vein, I made a modified version of sbgcop that works over nodal and dyadic data...but we still need to incorporate this within the AME MCMC
 	- also *within* because otherwise we'd have to run each model k times over different imputed datasets and use Rubin's rules to combine parameter estimates ... problematic especially when it comes to third order deps
-* Computation time ... these models take a notable amount of time to converge
+* <span style="color:red">**Computation time**</span> ... these models take a notable amount of time to converge
 	- Mike's tower?
 	- EC2 ... though the costs can build
-
-## Code + Data + Conversation
-
-* We will be writing code on Git **ONLY**
-* Input and output data will be stored on Dropbox **ONLY**
-* We can converse on Slack 
-	- As you guys run into issues/questions/concerns we can raise them there and answer them in close to real-time
 
 ## Project Management
 
@@ -462,11 +455,17 @@ print( aucSumm )
 	- Ward + Roberts
 	- Me + Tellez 
 * Claim the replications you want to do on Google sheets ... whoever gets there first wins.
-	- Mansfield + Milner is already mine.
 * <span style="color:red">**How many replications should we do?**</span>
-	- I propose two.
-* <span style="color:red">**Timeline?**</span>
-	- AT LEAST ONE REPLICATION MODEL RUNNING BY JANUARY 1
+	- I propose two per team.
+* <span style="color:red">**Timeline**</span>
+	- Decide on your two replication pieces by December 1
+	- EACH TEAM SHOULD HAVE AT LEAST ONE REPLICATION MODEL RUNNING BY JANUARY 1
 	- Paper draft end of January
 * <span style="color:red">**What else?**</span>
 
+## Code + Data + Conversation
+
+* We will be writing code on Git **ONLY**
+* Input and output data will be stored on Dropbox **ONLY**
+* We can converse on Slack 
+	- As you guys run into issues/questions/concerns we can raise them there and answer them in close to real-time
