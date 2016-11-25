@@ -1,5 +1,6 @@
 ---
-title: "Networks Matter...or some nonsense like that"
+title: "Amen to replication: What have we learned about networks in International relations "
+author: "Minhas, Dorff, Foster, Gallop, Liu, Roberts, Tellez, Ward"
 output: 
       ioslides_presentation:
             smaller: true
@@ -25,7 +26,7 @@ if(Sys.info()['user']=='janus829' | Sys.info()['user']=='s7m'){
       - and poor predictive performance.
 * Anticipated outputs: 
       - One big meta-analysis piece in which we show the items in the list above to be true on average
-      - A number of small replication pieces
+      - <span style="color:red">**After**</span> big project is done, a number of small replication pieces
       - New disciples to spread the gospel
 
 ## Outline
@@ -405,7 +406,7 @@ ggplot(gofSumm, aes(x=value )) +
 
 ## and to assess performance
 
-* Randomly divide the $n \times (n-1)$ data points into $S$ sets of roughly equal size, letting $s_{ij}$ be the set to which pair $\{ij\}$ is assigned.
+* In each year, randomly divide the $n \times (n-1)$ data points into $S$ sets of roughly equal size, letting $s_{ij}$ be the set to which pair $\{ij\}$ is assigned.
 * For each $s \in \{1, \ldots, S\}$:
 	- Obtain estimates of the model parameters conditional on $\{y_{ij} : s_{ij} \neq s\}$, the data on pairs not in set $s$.
 	- For pairs $\{kl\}$ in set $s$, let $\hat y_{kl} = E[y_{kl} | \{y_{ij} : s_{ij} \neq s\}]$, the predicted value of $y_{kl}$ obtained using data not in set $s$.
@@ -463,6 +464,9 @@ print( aucSumm )
 * Claim the replications you want to do on Google sheets ... whoever gets there first wins.
 	- Mansfield + Milner is already mine.
 * <span style="color:red">**How many replications should we do?**</span>
+	- I propose two.
 * <span style="color:red">**Timeline?**</span>
+	- AT LEAST ONE REPLICATION MODEL RUNNING BY JANUARY 1
+	- Paper draft end of January
 * <span style="color:red">**What else?**</span>
 
