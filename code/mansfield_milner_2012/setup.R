@@ -1,9 +1,10 @@
 if( Sys.info()['user']=='janus829' | Sys.info()['user']=='s7m' ){
-	dPath='~/Dropbox/Research/amenRepl/'
-	dataPath=paste0(dPath, 'data/mansfield_milner_2012/')
-	graphicsPath=paste0(dPath, 'graphics/mansfield_milner_2012/')
-	resultsPath=paste0(dPath, 'results/mansfield_milner_2012/')
-	gPath='~/Research/amenRepl/'
+	dPath='~/Dropbox/Research/netsMatter/' # path to dropbox
+	dataPath=paste0(dPath, 'replications/mansfield_milner_2012/inputData/') # path to dir where i will store input data for models
+	graphicsPath=paste0(dPath, 'replications/mansfield_milner_2012/graphics/') # path to dir where i will store any graphics
+	resultsPath=paste0(dPath, 'replications/mansfield_milner_2012/outputData/') # path to dir where i will store results
+	gPath='~/Research/netsMatter/' # path to github in case i need to call in helper functions
+	funcPath=paste0(gPath, 'code/helpers/')
 }
 
 # install/load libraries
