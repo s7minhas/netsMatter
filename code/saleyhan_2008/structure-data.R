@@ -122,6 +122,17 @@ for(ii in sort(unique(mod1_dat$year)))
 
 
 # monadic vars
-monad_vars = c('civwars1', 'civwars2', 'dem1', 'dem2', 'trans1', 'trans2', 
+monad_vars = c('uppcivcon1', 'uppcivcon2', 'dem1', 'dem2', 'trans1', 'trans2', 
                'depend1', 'depend2')  
 
+xNode = list()
+
+for(ii in sort(unique(mod1_dat$year)))
+{
+  # get data.frame-year
+  temp_dat = filter(mod1_dat, year == ii) %>% 
+    select(., one_of(monad_vars), cname1, cname2)
+  
+  # put in list
+  xNode[[paste(ii)]] = temp_dat
+}
