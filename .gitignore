@@ -28,3 +28,4 @@
 *.snm
 *.nav
 *.fls
+.Rproj.user
