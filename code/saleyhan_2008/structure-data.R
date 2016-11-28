@@ -136,3 +136,10 @@ for(ii in sort(unique(mod1_dat$year)))
   # put in list
   xNode[[paste(ii)]] = temp_dat
 }
+
+
+# save objects
+save(Y, file = '/Users/juanftellez/Dropbox/netsMatter/replications/saleyhan2008/output data/Y.rda')
+save(Xdyad, file = '/Users/juanftellez/Dropbox/netsMatter/replications/saleyhan2008/output data/xDyad.rda')
+save(xNode, file = '/Users/juanftellez/Dropbox/netsMatter/replications/saleyhan2008/output data/xNode.rda')
+
