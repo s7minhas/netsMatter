@@ -84,23 +84,39 @@ dyad_vars = c('logref1', 'logref2', 'contig', 'colcont', 'capshare', 'demdem',
 
 Xdyad = list()
 
-# array to store results
-temp_array = array()
 
-for(ii in sort(unique(mod2_dat$year)))
+for(ii in sort(unique(mod1_dat$year)))
 {
-  for(jj in dyad_vars)
+  
+  # format array
+  dim_num = max(c(length(unique(mod1_dat$cname1[mod1_dat$year == ii])), length(unique(mod1_dat$cname2[mod1_dat$year == ii]))))
+  
+  
+  
+  temp_array = array(data = NA, dim = c(dim_num,dim_num,length(dyad_vars)))
+  
+  
+  for(jj in 1:length(dyad_vars))
   {
+   
+    
     # isolate yearly edgelist
-    temp_dat = filter(mod2_dat, year == ii) %>% 
-      select(., cname1, cname2, one_of(jj))
+    temp_dat = filter(mod1_dat, year == ii) %>% 
+      select(., cname1, cname2, one_of(dyad_vars[jj]))
     
     # convert to adjacency matrix
     temp_graph = graph.data.frame(temp_dat, directed = T)
-    temp_adj = get.adjacency(temp_graph, attr = jj, sparse = F)
+    temp_adj = get.adjacency(temp_graph, attr = dyad_vars[jj], sparse = F)
     
-    temp_array = abind(temp_adj, temp_array)
+    # fill array
+    temp_array[ , ,jj] = temp_adj
+    print(jj)
   }
+  
+  # add to list
+  Xdyad[[paste(ii)]] = temp_array
+  
+  print(ii)
   
 }
 
