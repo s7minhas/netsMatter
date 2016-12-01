@@ -27,7 +27,7 @@ base_vars = c('sideaa pdemdtar pdemdin personal military single democ contig maj
 dyad_vars = c('personal', 'military', 'single', 'democ', 'contig', 
               'ally', 'majpow', 'loglsrat', 'advanced', 
               'dispyrs', 'dspline1', 'dspline2', 'dspline3', 
-              'pdemdtar', 'pdemdin')
+              'pdemdtar', 'pdemdin', 'idyr')
 
 #
 
@@ -62,29 +62,22 @@ xDyadList = lapply(1:length(yrs), function(ii){
   return( adj[ cntriesT[[ii]], cntriesT[[ii]],  ] )
 })
 
-# nodal vars
-# nVars = c('pdemdtar', 'pdemdin')
+#nodal vars
+# nVars = c('year')
 # 
 # 
 # xNode = list()
 # 
-# for(ii in yrs)
+# for(ii in sort(unique(comp_dat$year)))
 # {
 #   # get in monad level
 #   temp_dat1 = 
-#     filter(data, year == ii) %>% 
-#     select(., uppcivcon = uppcivcon1, dem = dem1, trans = trans1, 
-#            cname1) %>% 
-#     distinct()
+#     filter(comp_dat, year == ii) %>% 
+#     select(., one_of(nVars), statea, stateb)
 #   
-#   temp_dat2 = 
-#     filter(mod1_dat, year == ii) %>% 
-#     select(., uppcivcon = uppcivcon2, dem = dem2, trans = trans2, 
-#            cname1 = cname2) %>% 
-#     distinct()
+#   # get list of countries
+#   temp_dat2 = data.frame()
 #   
-#   # join
-#   temp_join = rbind(temp_dat1, temp_dat2) %>%  distinct()
 #   
 #   # put in list
 #   xNode[[paste(ii)]] = temp_join
