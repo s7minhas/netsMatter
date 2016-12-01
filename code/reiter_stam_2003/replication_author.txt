@@ -1,0 +1,372 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+       log:  {res}E:\dictator peace\dictpeacelog6-26.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}26 Jun 2002, 11:30:21
+{txt}
+{com}. set mem 150m
+{txt}(153600k)
+
+{com}. use "E:\dictator peace\doublereduce.dta", clear
+{txt}
+{com}. *This is an attempt to replicate the findings in the Reiter and Stam draft,
+. *"Identifying the Culprit."  It builds on the data set Peceny et al use in
+. *their 2002 APSR paper, "Dictatorial Peace?" provided to Reiter by
+. *Beer.  I have doubled that data set to allow for testing which state is
+. *actually initiating the disputes, then I used the MID data to figure out
+. *who is the initiator.  I also went back to the Geddes (1999) data to figure
+. *out which states are coded as single party, military regime, or personalist
+. *dictatorships.  Lastly, some of the analysis here is done with the King et al
+. *(1999) rare events logit procedure.  The STATA ado file for that can be
+. *downloaded at http://gking.harvard.edu/stats.shtml.  The analysis in this
+. *log file is being performed with STATA 7.0.
+. sort idyr
+{txt}
+{com}. gen dummy=1
+{txt}
+{com}. replace dummy=dummy-dummy[_n-1] if dummy[_n-1]~=.
+{txt}(400562 real changes made)
+
+{com}. browse
+{txt}
+{com}. *This is an attempt to replicate Peceny et al, p. 24, Table 3, Model 4.
+. logit dispute persdem personal military single democ contig majpow ally  loglsrat advanced dispyrs dspline1 dspline2 dspline3, if dummy==1
+{err}if invalid
+{txt}{search r(198):r(198);}
+
+{com}. logit dispute persdem personal military single democ contig majpow ally  loglsrat advanced dispyrs dspline1 dspline2 dspline3 if dummy==1
+
+{txt}Iteration 0:   log likelihood = {res}-9973.6391
+{txt}Iteration 1:   log likelihood = {res}-7875.0344
+{txt}Iteration 2:   log likelihood = {res} -6982.278
+{txt}Iteration 3:   log likelihood = {res}-6807.4436
+{txt}Iteration 4:   log likelihood = {res}-6793.2794
+{txt}Iteration 5:   log likelihood = {res}-6793.1082
+{txt}Iteration 6:   log likelihood = {res}-6793.1081
+
+{txt}Logit estimates                                   Number of obs   = {res}    376771
+                                                  {txt}LR chi2({res}14{txt})     = {res}   6361.06
+                                                  {txt}Prob > chi2     = {res}    0.0000
+{txt}Log likelihood = {res}-6793.1081                       {txt}Pseudo R2       = {res}    0.3189
+
+{txt}{hline 13}{c TT}{hline 64}
+     dispute {c |}      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+{hline 13}{c +}{hline 64}
+     persdem {c |}  {res}  .613281   .0994073     6.17   0.000     .4184463    .8081156
+    {txt}personal {c |}  {res} .2219903   .2342579     0.95   0.343    -.2371467    .6811273
+    {txt}military {c |}  {res}-.7936331   .7214446    -1.10   0.271    -2.207638    .6203723
+      {txt}single {c |}  {res}-.8406913   .1303307    -6.45   0.000    -1.096135   -.5852478
+       {txt}democ {c |}  {res}-1.052696   .1285853    -8.19   0.000    -1.304719   -.8006736
+      {txt}contig {c |}  {res}  3.07656   .0622799    49.40   0.000     2.954493    3.198626
+      {txt}majpow {c |}  {res} 2.364125   .0716122    33.01   0.000     2.223768    2.504482
+        {txt}ally {c |}  {res}-.0058485    .070866    -0.08   0.934    -.1447433    .1330463
+    {txt}loglsrat {c |}  {res} -.325243   .0215954   -15.06   0.000    -.3675693   -.2829167
+    {txt}advanced {c |}  {res}-.3101242   .0988088    -3.14   0.002    -.5037859   -.1164625
+     {txt}dispyrs {c |}  {res}-.3800133   .0199329   -19.06   0.000    -.4190811   -.3409455
+    {txt}dspline1 {c |}  {res}-.0033825   .0004013    -8.43   0.000     -.004169    -.002596
+    {txt}dspline2 {c |}  {res} .0021219   .0003441     6.17   0.000     .0014475    .0027963
+    {txt}dspline3 {c |}  {res}-.0005575   .0001383    -4.03   0.000    -.0008286   -.0002864
+       {txt}_cons {c |}  {res}-4.106084   .0756363   -54.29   0.000    -4.254329    -3.95784
+{txt}{hline 13}{c BT}{hline 64}
+
+{com}. browse
+{txt}
+{com}. logit dispute persdem personal military single democ contig majpow ally  loglsrat advanced dispyrs dspline1 dspline2 dspline3 if statea>stateb
+
+{txt}Iteration 0:   log likelihood = {res}-9846.7996
+{txt}Iteration 1:   log likelihood = {res}-7769.5929
+{txt}Iteration 2:   log likelihood = {res}-6933.2415
+{txt}Iteration 3:   log likelihood = {res}-6769.9223
+{txt}Iteration 4:   log likelihood = {res}-6756.9833
+{txt}Iteration 5:   log likelihood = {res}-6756.8298
+{txt}Iteration 6:   log likelihood = {res}-6756.8298
+
+{txt}Logit estimates                                   Number of obs   = {res}    376728
+                                                  {txt}LR chi2({res}14{txt})     = {res}   6179.94
+                                                  {txt}Prob > chi2     = {res}    0.0000
+{txt}Log likelihood = {res}-6756.8298                       {txt}Pseudo R2       = {res}    0.3138
+
+{txt}{hline 13}{c TT}{hline 64}
+     dispute {c |}      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+{hline 13}{c +}{hline 64}
+     persdem {c |}  {res} .6539338   .0989953     6.61   0.000     .4599065    .8479611
+    {txt}personal {c |}  {res} .2341008   .2343884     1.00   0.318    -.2252921    .6934938
+    {txt}military {c |}  {res}-.3002527   .5936389    -0.51   0.613    -1.463764    .8632583
+      {txt}single {c |}  {res}-.6906833   .1263787    -5.47   0.000    -.9383811   -.4429856
+       {txt}democ {c |}  {res}-1.135622   .1330039    -8.54   0.000    -1.396305   -.8749393
+      {txt}contig {c |}  {res} 2.992597   .0628349    47.63   0.000     2.869443    3.115751
+      {txt}majpow {c |}  {res} 2.334849   .0719525    32.45   0.000     2.193824    2.475873
+        {txt}ally {c |}  {res} .0400293    .071243     0.56   0.574    -.0996043     .179663
+    {txt}loglsrat {c |}  {res}-.3254923   .0217371   -14.97   0.000    -.3680963   -.2828884
+    {txt}advanced {c |}  {res}-.2439824   .0982516    -2.48   0.013    -.4365521   -.0514128
+     {txt}dispyrs {c |}  {res}-.3875477    .020101   -19.28   0.000    -.4269449   -.3481505
+    {txt}dspline1 {c |}  {res}-.0035801   .0004036    -8.87   0.000    -.0043712   -.0027891
+    {txt}dspline2 {c |}  {res} .0023052   .0003459     6.66   0.000     .0016272    .0029831
+    {txt}dspline3 {c |}  {res}-.0006324   .0001392    -4.54   0.000    -.0009051   -.0003596
+       {txt}_cons {c |}  {res}-4.089861   .0757689   -53.98   0.000    -4.238366   -3.941357
+{txt}{hline 13}{c BT}{hline 64}
+
+{com}. *OK, that worked, it's a successful replication of Peceny et al.
+. logit dispute persdem personal military single democ contig majpow ally  loglsrat advanced dispyrs dspline1 dspline2 dspline3, robust cluster(idyr)
+
+{txt}Iteration 0:   log likelihood = {res}-19693.599
+{txt}Iteration 1:   log likelihood = {res}-15539.186
+{txt}Iteration 2:   log likelihood = {res}-13866.483
+{txt}Iteration 3:   log likelihood = {res}-13539.845
+{txt}Iteration 4:   log likelihood = {res}-13513.967
+{txt}Iteration 5:   log likelihood = {res} -13513.66
+{txt}Iteration 6:   log likelihood = {res} -13513.66
+
+{txt}Logit estimates                                   Number of obs   = {res}    753456
+                                                  {txt}Wald chi2({res}14{txt})   = {res}   5388.46
+                                                  {txt}Prob > chi2     = {res}    0.0000
+{txt}Log likelihood = {res} -13513.66                       {txt}Pseudo R2       = {res}    0.3138
+
+                             {txt}(standard errors adjusted for clustering on idyr)
+{hline 13}{c TT}{hline 64}
+             {c |}               Robust
+     dispute {c |}      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+{hline 13}{c +}{hline 64}
+     persdem {c |}  {res} .6539338   .1269111     5.15   0.000     .4051926     .902675
+    {txt}personal {c |}  {res} .2341008   .2642309     0.89   0.376    -.2837822    .7519839
+    {txt}military {c |}  {res}-.3002527   .5868928    -0.51   0.609    -1.450541    .8500361
+      {txt}single {c |}  {res}-.6906833   .1578684    -4.38   0.000      -1.0001   -.3812669
+       {txt}democ {c |}  {res}-1.135622   .1962866    -5.79   0.000    -1.520337   -.7509076
+      {txt}contig {c |}  {res} 2.992597   .0862617    34.69   0.000     2.823527    3.161667
+      {txt}majpow {c |}  {res} 2.334849    .102793    22.71   0.000     2.133378    2.536319
+        {txt}ally {c |}  {res} .0400293   .0891886     0.45   0.654    -.1347771    .2148358
+    {txt}loglsrat {c |}  {res}-.3254923   .0270994   -12.01   0.000    -.3786063   -.2723784
+    {txt}advanced {c |}  {res}-.2439824    .135912    -1.80   0.073    -.5103651    .0224002
+     {txt}dispyrs {c |}  {res}-.3875477   .0230627   -16.80   0.000    -.4327497   -.3423457
+    {txt}dspline1 {c |}  {res}-.0035801   .0004311    -8.31   0.000     -.004425   -.0027353
+    {txt}dspline2 {c |}  {res} .0023052    .000361     6.39   0.000     .0015977    .0030127
+    {txt}dspline3 {c |}  {res}-.0006324   .0001423    -4.44   0.000    -.0009113   -.0003534
+       {txt}_cons {c |}  {res}-4.089861   .0961935   -42.52   0.000    -4.278397   -3.901326
+{txt}{hline 13}{c BT}{hline 64}
+
+{com}. logit dispute persdem personal military single democ contig majpow ally  loglsrat advanced dispyrs dspline1 dspline2 dspline3
+
+{txt}Iteration 0:   log likelihood = {res}-19693.599
+{txt}Iteration 1:   log likelihood = {res}-15539.186
+{txt}Iteration 2:   log likelihood = {res}-13866.483
+{txt}Iteration 3:   log likelihood = {res}-13539.845
+{txt}Iteration 4:   log likelihood = {res}-13513.967
+{txt}Iteration 5:   log likelihood = {res} -13513.66
+{txt}Iteration 6:   log likelihood = {res} -13513.66
+
+{txt}Logit estimates                                   Number of obs   = {res}    753456
+                                                  {txt}LR chi2({res}14{txt})     = {res}  12359.88
+                                                  {txt}Prob > chi2     = {res}    0.0000
+{txt}Log likelihood = {res} -13513.66                       {txt}Pseudo R2       = {res}    0.3138
+
+{txt}{hline 13}{c TT}{hline 64}
+     dispute {c |}      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+{hline 13}{c +}{hline 64}
+     persdem {c |}  {res} .6539338   .0700003     9.34   0.000     .5167358    .7911318
+    {txt}personal {c |}  {res} .2341008   .1657377     1.41   0.158     -.090739    .5589407
+    {txt}military {c |}  {res}-.3002527   .4197661    -0.72   0.474    -1.122979    .5224738
+      {txt}single {c |}  {res}-.6906833   .0893633    -7.73   0.000    -.8658321   -.5155346
+       {txt}democ {c |}  {res}-1.135622    .094048   -12.07   0.000    -1.319953   -.9512916
+      {txt}contig {c |}  {res} 2.992597    .044431    67.35   0.000     2.905514     3.07968
+      {txt}majpow {c |}  {res} 2.334849   .0508781    45.89   0.000      2.23513    2.434568
+        {txt}ally {c |}  {res} .0400293   .0503764     0.79   0.427    -.0587065    .1387652
+    {txt}loglsrat {c |}  {res}-.3254923   .0153705   -21.18   0.000    -.3556179   -.2953668
+    {txt}advanced {c |}  {res}-.2439824   .0694744    -3.51   0.000    -.3801497   -.1078152
+     {txt}dispyrs {c |}  {res}-.3875477   .0142135   -27.27   0.000    -.4154057   -.3596897
+    {txt}dspline1 {c |}  {res}-.0035801   .0002854   -12.54   0.000    -.0041395   -.0030208
+    {txt}dspline2 {c |}  {res} .0023052   .0002446     9.42   0.000     .0018258    .0027846
+    {txt}dspline3 {c |}  {res}-.0006324   .0000984    -6.43   0.000    -.0008253   -.0004395
+       {txt}_cons {c |}  {res}-4.089861   .0535767   -76.34   0.000     -4.19487   -3.984853
+{txt}{hline 13}{c BT}{hline 64}
+
+{com}. *OK, this is an attempt to replicate model 2 of Table 1.  Note that the only difference is the different dependent variable, 
+. *sideaa, which is 1 if there is a dispute between the two countries in the dyad in the year in question in which 
+. *country a is an initiator (on side a in the MID data).
+. logit sideaa persdem personal military single democ contig majpow ally  loglsrat advanced dispyrs dspline1 dspline2 dspline3, robust cluster(idyr)
+
+{txt}Iteration 0:   log likelihood = {res}-11223.867
+{txt}Iteration 1:   log likelihood = {res}  -9157.16
+{txt}Iteration 2:   log likelihood = {res}-8186.3152
+{txt}Iteration 3:   log likelihood = {res}-7990.8543
+{txt}Iteration 4:   log likelihood = {res}-7973.4563
+{txt}Iteration 5:   log likelihood = {res}-7973.1955
+{txt}Iteration 6:   log likelihood = {res}-7973.1954
+
+{txt}Logit estimates                                   Number of obs   = {res}    753456
+                                                  {txt}Wald chi2({res}14{txt})   = {res}   6461.84
+                                                  {txt}Prob > chi2     = {res}    0.0000
+{txt}Log likelihood = {res}-7973.1954                       {txt}Pseudo R2       = {res}    0.2896
+
+                             {txt}(standard errors adjusted for clustering on idyr)
+{hline 13}{c TT}{hline 64}
+             {c |}               Robust
+      sideaa {c |}      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+{hline 13}{c +}{hline 64}
+     persdem {c |}  {res} .6525042   .1285503     5.08   0.000     .4005501    .9044582
+    {txt}personal {c |}  {res} .2811924   .2646138     1.06   0.288    -.2374412    .7998259
+    {txt}military {c |}  {res}-.3222631   .5736336    -0.56   0.574    -1.446564    .8020382
+      {txt}single {c |}  {res}-.6759031   .1436817    -4.70   0.000    -.9575141   -.3942921
+       {txt}democ {c |}  {res}-1.072665   .1938502    -5.53   0.000    -1.452604   -.6927255
+      {txt}contig {c |}  {res}  2.91116   .0901751    32.28   0.000      2.73442      3.0879
+      {txt}majpow {c |}  {res} 2.172701   .1011675    21.48   0.000     1.974416    2.370985
+        {txt}ally {c |}  {res} .0776558    .086117     0.90   0.367    -.0911304    .2464421
+    {txt}loglsrat {c |}  {res}-.3162347   .0268017   -11.80   0.000    -.3687651   -.2637044
+    {txt}advanced {c |}  {res}-.1746474    .131378    -1.33   0.184    -.4321436    .0828488
+     {txt}dispyrs {c |}  {res}-.3805181   .0226337   -16.81   0.000    -.4248793    -.336157
+    {txt}dspline1 {c |}  {res}-.0035023   .0004238    -8.26   0.000    -.0043329   -.0026717
+    {txt}dspline2 {c |}  {res} .0022692   .0003555     6.38   0.000     .0015725    .0029659
+    {txt}dspline3 {c |}  {res}-.0006339    .000141    -4.50   0.000    -.0009102   -.0003576
+       {txt}_cons {c |}  {res}-4.783969   .0970532   -49.29   0.000     -4.97419   -4.593748
+{txt}{hline 13}{c BT}{hline 64}
+
+{com}. *That's a replication of Model 2 of Table 1.  Note that the log likelihood here is slightly different
+. *from that reported in the paper; that is a typo in the paper.
+. *OK, now to replicate Model 3 of Table 1.  Here we drop persdem, which is the variable from Peceny et al,
+. *and replace it with two dummy variables, pdemdin which is coded 1if the potential initiator (statea) is a democracy
+. *and if the potential target (stateb) is a personalist dictatorship.  Note also that in Models 2-5, Reiter and Stam
+. *use robust standard errors, clustering on idyear, which has a separate value for each dyad-year.
+. logit sideaa   pdemdtar pdemdin personal military single democ contig majpow ally  loglsrat advanced dispyrs dspline1 dspline2 dspline3, robust cluster(idyr)
+
+{txt}Iteration 0:   log likelihood = {res}-11223.867
+{txt}Iteration 1:   log likelihood = {res}-9151.7569
+{txt}Iteration 2:   log likelihood = {res}-8175.2708
+{txt}Iteration 3:   log likelihood = {res}-7978.4471
+{txt}Iteration 4:   log likelihood = {res}-7960.8963
+{txt}Iteration 5:   log likelihood = {res}-7960.6313
+{txt}Iteration 6:   log likelihood = {res}-7960.6312
+
+{txt}Logit estimates                                   Number of obs   = {res}    753456
+                                                  {txt}Wald chi2({res}15{txt})   = {res}   6563.94
+                                                  {txt}Prob > chi2     = {res}    0.0000
+{txt}Log likelihood = {res}-7960.6312                       {txt}Pseudo R2       = {res}    0.2907
+
+                             {txt}(standard errors adjusted for clustering on idyr)
+{hline 13}{c TT}{hline 64}
+             {c |}               Robust
+      sideaa {c |}      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+{hline 13}{c +}{hline 64}
+    pdemdtar {c |}  {res} 1.025827   .1397709     7.34   0.000      .751881    1.299773
+     {txt}pdemdin {c |}  {res}  .083124   .1906289     0.44   0.663    -.2905018    .4567497
+    {txt}personal {c |}  {res} .2808246   .2646146     1.06   0.289    -.2378105    .7994596
+    {txt}military {c |}  {res}-.3225107   .5736582    -0.56   0.574     -1.44686    .8018388
+      {txt}single {c |}  {res}-.6766103    .143697    -4.71   0.000    -.9582512   -.3949694
+       {txt}democ {c |}  {res}-1.072752   .1939213    -5.53   0.000    -1.452831   -.6926732
+      {txt}contig {c |}  {res} 2.912404   .0902399    32.27   0.000     2.735537    3.089271
+      {txt}majpow {c |}  {res} 2.173518   .1012646    21.46   0.000     1.975044    2.371993
+        {txt}ally {c |}  {res} .0780909   .0861787     0.91   0.365    -.0908163    .2469981
+    {txt}loglsrat {c |}  {res}-.3164945    .026822   -11.80   0.000    -.3690646   -.2639244
+    {txt}advanced {c |}  {res}-.1753187   .1314502    -1.33   0.182    -.4329563    .0823188
+     {txt}dispyrs {c |}  {res}-.3806312   .0226518   -16.80   0.000    -.4250279   -.3362345
+    {txt}dspline1 {c |}  {res}-.0035034    .000424    -8.26   0.000    -.0043344   -.0026723
+    {txt}dspline2 {c |}  {res}   .00227   .0003556     6.38   0.000     .0015729     .002967
+    {txt}dspline3 {c |}  {res}-.0006342    .000141    -4.50   0.000    -.0009106   -.0003578
+       {txt}_cons {c |}  {res}-4.783985   .0970768   -49.28   0.000    -4.974252   -4.593718
+{txt}{hline 13}{c BT}{hline 64}
+
+{com}. compress
+{txt}dummy was {res}float{txt} now {res}byte
+{txt}sideaa was {res}float{txt} now {res}byte
+{txt}pdemdin was {res}float{txt} now {res}byte
+{txt}pdemdtar was {res}float{txt} now {res}byte
+{txt}singlea was {res}float{txt} now {res}byte
+{txt}singleb was {res}float{txt} now {res}byte
+{txt}mila was {res}float{txt} now {res}byte
+{txt}milb was {res}float{txt} now {res}byte
+{txt}sdemin was {res}float{txt} now {res}byte
+{txt}sdemtar was {res}float{txt} now {res}byte
+{txt}mdemin was {res}float{txt} now {res}byte
+{txt}mdemtar was {res}float{txt} now {res}byte
+{txt}
+{com}. *Compress was a little housekeeping, please ignore it.  The above logit run replicated Model 3 in 
+. *Table 1.  Next, we attempt to replicate Model 4, in which we add similar dependent variables for
+. *single party and military regime,  sdemin, sdemtar, mdemin, and mdemtar.
+. logit sideaa   pdemdtar pdemdin  sdemin sdemtar mdemin mdemtar personal military single democ contig majpow ally  loglsrat advanced dispyrs dspline1 dspline2 dspline3, robust cluster(idyr)
+
+{txt}Iteration 0:   log likelihood = {res}-11223.867
+{txt}Iteration 1:   log likelihood = {res}-9146.8698
+{txt}Iteration 2:   log likelihood = {res}-8167.1571
+{txt}Iteration 3:   log likelihood = {res}-7969.1007
+{txt}Iteration 4:   log likelihood = {res}-7951.1975
+{txt}Iteration 5:   log likelihood = {res}-7950.9218
+{txt}Iteration 6:   log likelihood = {res}-7950.9217
+
+{txt}Logit estimates                                   Number of obs   = {res}    753456
+                                                  {txt}Wald chi2({res}19{txt})   = {res}   6554.64
+                                                  {txt}Prob > chi2     = {res}    0.0000
+{txt}Log likelihood = {res}-7950.9217                       {txt}Pseudo R2       = {res}    0.2916
+
+                             {txt}(standard errors adjusted for clustering on idyr)
+{hline 13}{c TT}{hline 64}
+             {c |}               Robust
+      sideaa {c |}      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+{hline 13}{c +}{hline 64}
+    pdemdtar {c |}  {res}  1.04494   .1402162     7.45   0.000     .7701215    1.319759
+     {txt}pdemdin {c |}  {res} .1052964   .1899926     0.55   0.579    -.2670822    .4776749
+      {txt}sdemin {c |}  {res}-.0814373   .1420702    -0.57   0.566    -.3598898    .1970153
+     {txt}sdemtar {c |}  {res}  .178899   .1139472     1.57   0.116    -.0444334    .4022313
+      {txt}mdemin {c |}  {res}-.4550045   .2755528    -1.65   0.099    -.9950781    .0850692
+     {txt}mdemtar {c |}  {res} .6421512   .2444073     2.63   0.009     .1631217    1.121181
+    {txt}personal {c |}  {res} .2955889   .2650628     1.12   0.265    -.2239247    .8151024
+    {txt}military {c |}  {res}-.3066264    .573985    -0.53   0.593    -1.431616    .8183635
+      {txt}single {c |}  {res}-.6506379   .1506631    -4.32   0.000    -.9459322   -.3553436
+       {txt}democ {c |}  {res} -1.04653     .21039    -4.97   0.000    -1.458887   -.6341736
+      {txt}contig {c |}  {res} 2.913831   .0902857    32.27   0.000     2.736874    3.090788
+      {txt}majpow {c |}  {res} 2.163517   .1035523    20.89   0.000     1.960558    2.366476
+        {txt}ally {c |}  {res} .0847972   .0870061     0.97   0.330    -.0857316     .255326
+    {txt}loglsrat {c |}  {res}-.3157004     .02668   -11.83   0.000    -.3679922   -.2634087
+    {txt}advanced {c |}  {res}-.1871352   .1415325    -1.32   0.186    -.4645339    .0902634
+     {txt}dispyrs {c |}  {res}-.3807184   .0226534   -16.81   0.000    -.4251183   -.3363184
+    {txt}dspline1 {c |}  {res} -.003513   .0004241    -8.28   0.000    -.0043442   -.0026817
+    {txt}dspline2 {c |}  {res} .0022829   .0003559     6.42   0.000     .0015854    .0029804
+    {txt}dspline3 {c |}  {res}-.0006414   .0001412    -4.54   0.000    -.0009181   -.0003646
+       {txt}_cons {c |}  {res}-4.805453   .0988994   -48.59   0.000    -4.999293   -4.611614
+{txt}{hline 13}{c BT}{hline 64}
+
+{com}. *That's a replication of Model 4.  Last is a replication of Model 5, which uses relogit, rare
+. relogit sideaa   pdemdtar pdemdin  sdemin sdemtar mdemin mdemtar personal military single democ contig majpow ally  loglsrat advanced dispyrs dspline1 dspline2 dspline3, robust cluster(idyr)
+{err}robust invalid
+{txt}{search r(198):r(198);}
+
+{com}. relogit sideaa   pdemdtar pdemdin  sdemin sdemtar mdemin mdemtar personal military single democ contig majpow ally  loglsrat advanced dispyrs dspline1 dspline2 dspline3, cluster(idyr)
+{txt}(47668 missing values generated)
+
+
+Corrected logit estimates                             Number of obs ={res}   753456
+
+{txt}{hline 13}{c TT}{hline 64}
+             {c |}               Robust
+      sideaa {c |}      Coef.   Std. Err.      z    P>|z|     [95% Conf. Interval]
+{hline 13}{c +}{hline 64}
+    pdemdtar {c |}  {res}  1.04919   .1402125     7.48   0.000     .7743783    1.324001
+     {txt}pdemdin {c |}  {res} .1174854   .1899875     0.62   0.536    -.2548833    .4898541
+      {txt}sdemin {c |}  {res}-.0784255   .1420664    -0.55   0.581    -.3568706    .2000196
+     {txt}sdemtar {c |}  {res} .1812085   .1139441     1.59   0.112    -.0421179    .4045349
+      {txt}mdemin {c |}  {res}-.4146715   .2755455    -1.50   0.132    -.9547308    .1253878
+     {txt}mdemtar {c |}  {res} .6550784   .2444008     2.68   0.007     .1760616    1.134095
+    {txt}personal {c |}  {res} .3150521   .2650558     1.19   0.235    -.2044477    .8345518
+    {txt}military {c |}  {res}-.1452495   .5739698    -0.25   0.800     -1.27021    .9797106
+      {txt}single {c |}  {res}-.6454752   .1506591    -4.28   0.000    -.9407616   -.3501887
+       {txt}democ {c |}  {res}-1.040805   .2103844    -4.95   0.000    -1.453151   -.6284589
+      {txt}contig {c |}  {res} 2.912794   .0902833    32.26   0.000     2.735842    3.089746
+      {txt}majpow {c |}  {res} 2.162371   .1035496    20.88   0.000     1.959417    2.365324
+        {txt}ally {c |}  {res} .0855522   .0870038     0.98   0.325    -.0849721    .2560764
+    {txt}loglsrat {c |}  {res}-.3150686   .0266793   -11.81   0.000     -.367359   -.2627782
+    {txt}advanced {c |}  {res}-.1860392   .1415288    -1.31   0.189    -.4634305    .0913521
+     {txt}dispyrs {c |}  {res}-.3804647   .0226528   -16.80   0.000    -.4248634    -.336066
+    {txt}dspline1 {c |}  {res}-.0035133   .0004241    -8.28   0.000    -.0043445    -.002682
+    {txt}dspline2 {c |}  {res} .0022845   .0003559     6.42   0.000     .0015871     .002982
+    {txt}dspline3 {c |}  {res}-.0006427   .0001412    -4.55   0.000    -.0009195    -.000366
+       {txt}_cons {c |}  {res}-4.804478   .0988968   -48.58   0.000    -4.998312   -4.610644
+{txt}{hline 13}{c BT}{hline 64}
+
+{com}. *And that's a rep of Model 5.
+. save "E:\dictator peace\doublereduce.dta", replace
+{txt}file E:\dictator peace\doublereduce.dta saved
+
+{com}. log close
+       {txt}log:  {res}E:\dictator peace\dictpeacelog6-26.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}26 Jun 2002, 13:01:00
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
