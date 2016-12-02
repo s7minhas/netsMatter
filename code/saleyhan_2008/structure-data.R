@@ -1,5 +1,5 @@
 ########
-# What does this do?
+# produce Amen data
 #######
 
 #
@@ -78,9 +78,11 @@ for(ii in sort(unique(mod1_dat$year)))
 
 
 # dyadic covariates (xDyadL) [n x n x p ; p = dyadic variable]
-# notes: missing time variables, need to check direct/undirect for each of these
+# notes: missing time variables
 dyad_vars = c('logref1', 'logref2', 'contig', 'colcont', 'capshare', 'demdem', 
               'transtrans', 's_wt_glo', 'igos')
+
+dyad_vars_dir = c('logref1', 'logref2', 'capshare')
 
 Xdyad = list()
 
@@ -98,8 +100,26 @@ for(ii in sort(unique(mod1_dat$year)))
   
   for(jj in 1:length(dyad_vars))
   {
-   
+    ###### directed varaibles
     
+    if(dyad_vars[jj] %in% dyad_vars_dir) {
+      
+      # isolate yearly edgelist
+      temp_dat = filter(mod1_dat, year == ii) %>% 
+        select(., cname1, cname2, one_of(dyad_vars[jj]))
+      
+      # convert to adjacency matrix
+      temp_graph = graph.data.frame(temp_dat, directed = T)
+      temp_adj = get.adjacency(temp_graph, attr = dyad_vars[jj], sparse = F)
+      
+      # fill array
+      temp_array[ , ,jj] = temp_adj
+      print(jj)
+      
+    } else {
+   
+    ###### undirected variables   
+      
     # isolate yearly edgelist
     temp_dat = filter(mod1_dat, year == ii) %>% 
       select(., cname1, cname2, one_of(dyad_vars[jj]))
@@ -110,7 +130,7 @@ for(ii in sort(unique(mod1_dat$year)))
     
     # fill array
     temp_array[ , ,jj] = temp_adj
-    print(jj)
+    print(jj) }
   }
   
   # add to list
@@ -122,24 +142,37 @@ for(ii in sort(unique(mod1_dat$year)))
 
 
 # monadic vars
-monad_vars = c('uppcivcon1', 'uppcivcon2', 'dem1', 'dem2', 'trans1', 'trans2', 
-               'depend1', 'depend2')  
+monad_vars_a = c('uppcivcon1', 'dem1', 'trans1', 'lpcyrs', 'lpcyrs1', 
+                 'lpcyrs2', 'lpcyrs3')
+monad_vars_b = c('uppcivcon2', 'dem2', 'trans2', 'lpcyrs', 'lpcyrs1', 
+                 'lpcyrs2', 'lpcyrs3')  
 
 xNode = list()
 
 for(ii in sort(unique(mod1_dat$year)))
 {
-  # get data.frame-year
-  temp_dat = filter(mod1_dat, year == ii) %>% 
-    select(., one_of(monad_vars), cname1, cname2)
+  # get in monad level
+  temp_dat1 = 
+    filter(mod1_dat, year == ii) %>% 
+    select(., uppcivcon = uppcivcon1, dem = dem1, trans = trans1, 
+           cname1) %>% 
+    distinct()
+  
+  temp_dat2 = 
+    filter(mod1_dat, year == ii) %>% 
+    select(., uppcivcon = uppcivcon2, dem = dem2, trans = trans2, 
+           cname1 = cname2) %>% 
+    distinct()
+  
+  # join
+  temp_join = rbind(temp_dat1, temp_dat2) %>%  distinct()
   
   # put in list
-  xNode[[paste(ii)]] = temp_dat
+  xNode[[paste(ii)]] = temp_join
+  print(ii)
 }
 
 
 # save objects
-save(Y, file = '/Users/juanftellez/Dropbox/netsMatter/replications/saleyhan2008/output data/Y.rda')
-save(Xdyad, file = '/Users/juanftellez/Dropbox/netsMatter/replications/saleyhan2008/output data/xDyad.rda')
-save(xNode, file = '/Users/juanftellez/Dropbox/netsMatter/replications/saleyhan2008/output data/xNode.rda')
+save(Y, xDyad, xNode, file = '/Users/juanftellez/Dropbox/netsMatter/replications/saleyhan2008/output data/amenData.rda')
 
