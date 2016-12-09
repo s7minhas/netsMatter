@@ -26,11 +26,28 @@ III. Replication itself.
 
 ** Documentation of issue with missing data and clustered standard errors
 
--  NOTE: Results occur with a version of the data that subsets on whether “democracy_1” is not NA; NOT whether all missing observations are removed. If all missing observations are removed, even in a version of the data that is subsetted to only have the variables used in the regression, the estimated coefficient results are different. Also, the number of observations drops dramatically.
+-  NOTE: Results occur with a version of the data that subsets on
+   whether “democracy_1” is not NA; NOT whether all missing
+   observations are removed. If all missing observations are removed,
+   even in a version of the data that is subsetted to only have the
+   variables used in the regression, the estimated coefficient results
+   are different. Also, the number of observations drops
+   dramatically. 
 
-What is weird though is that without removing NA values, clustering the standard errors crashes. Removing the NA values dramatically changes the number of recorded observations. 
+What is weird though is that without removing NA values, clustering
+the standard errors crashes. Removing the NA values dramatically
+changes the number of recorded observations.  
 
-Next step (12/9): run the .do file in STATA and see what the output is.
+Next step (12/9): run the .do file in STATA and see what the output
+is. Did so, her calls report the same N as the paper, for table
+1.2. Ran statas's "gen byte used=e(sample)" command, which should
+provide a record of which observations were used in the regression.
+From there, saved to desktop (saving to Dropbox fails, will move over
+by hand).
+
+Sources for the used command:
+http://www.stata.com/statalist/archive/2009-08/msg00386.html/
+
 
 * online appendix now at: https://users.polisci.wisc.edu/jweeks/WeeksAPSR2012WebAppendix.pdf
 
