@@ -1,0 +1,30 @@
+Notes on the Weeks 2012 replication.
+
+DV unit: dyad-year, using dyadic MID data from Maoz (2005).
+
+Cryptic Variables:
+s_wt_glo: weighted global s-score; picks up similarity of alliance
+portfolios.
+
+s_lead: similarity of state's alliance portfolio with system leader
+
+contig: dummy for contiguity (or less than 24 miles of separation)
+
+logdist: log of distance between capitals
+
+
+II. Replication file:
+"." is the internal STAT marker of missing data, so the syntax of "if
+[variable] !=." like subsetting.
+
+The * ending on the "pcyrsmzinits*" variable in the logit call is
+STATA synatx for "all variables that start with pcyrsmzinits. Which
+means: pcyrsmzinits1, pcyrsmzinits2, pcyrsmzinits3.
+
+
+III. Replication itself.
+
+* Results occur with a version of the data that subsets on whether “democracy_1” is not NA; NOT whether all missing observations are removed. 
+** If all missing observations are removed, 
+
+* online appendix now at: https://users.polisci.wisc.edu/jweeks/WeeksAPSR2012WebAppendix.pdf
