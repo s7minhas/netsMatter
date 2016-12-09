@@ -24,7 +24,14 @@ means: pcyrsmzinits1, pcyrsmzinits2, pcyrsmzinits3.
 
 III. Replication itself.
 
-* Results occur with a version of the data that subsets on whether “democracy_1” is not NA; NOT whether all missing observations are removed. 
-** If all missing observations are removed, 
+** Documentation of issue with missing data and clustered standard errors
+
+-  NOTE: Results occur with a version of the data that subsets on whether “democracy_1” is not NA; NOT whether all missing observations are removed. If all missing observations are removed, even in a version of the data that is subsetted to only have the variables used in the regression, the estimated coefficient results are different. Also, the number of observations drops dramatically.
+
+What is weird though is that without removing NA values, clustering the standard errors crashes. Removing the NA values dramatically changes the number of recorded observations. 
+
+Next step (12/9): run the .do file in STATA and see what the output is.
 
 * online appendix now at: https://users.polisci.wisc.edu/jweeks/WeeksAPSR2012WebAppendix.pdf
+
+
