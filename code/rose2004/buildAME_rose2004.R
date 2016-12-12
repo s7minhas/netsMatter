@@ -11,7 +11,8 @@ char = function(x){ as.character(x) }
 num = function(x){ as.numeric(char(x)) }
 trim = function (x) { gsub("^\\s+|\\s+$", "", x) }
 
-data = read.dta("/Users/howardliu/Dropbox/netsMatter/replications/rose2004/data4web.dta")
+dataPath = '/Users/howardliu/Dropbox/netsMatter/replications/rose2004/'
+data = read.dta(paste0(dataPath,"data4web.dta"))
 
 # get sampling frame
 baseVars = c('cty1', 'cty2', 'year', 'pairid', 'ltrade', # log real trade
@@ -83,4 +84,7 @@ xDyadList = lapply(1:length(years), function(ii){
 	return( adj[ cntriesT[[ii]], cntriesT[[ii]],  ] )
 })
 
-#str(xDyadList)
+
+# save dfs
+save(yList, xDyadList, file=paste0(dataPath, 'amenData_rose.rda'))
+

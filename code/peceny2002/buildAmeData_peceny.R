@@ -13,7 +13,8 @@ trim = function (x) { gsub("^\\s+|\\s+$", "", x) }
 
 
 # load data
-data = read.dta("/Users/howardliu/Dropbox/netsRep_Howard_Max/peceny2002/dictators2.dta")
+dataPath = '/Users/howardliu/Dropbox/netsMatter/replications/peceny2002/'
+data = read.dta(paste0(dataPath,"dictators2.dta"))
 data$mid = data$midhost >0
 data$mid = data$mid %>% as.numeric()
 
@@ -82,3 +83,6 @@ xDyadList = lapply(1:length(years), function(ii){
 })
 
 
+# save dfs
+
+save(yList, xDyadList, file=paste0(dataPath, 'amenData_peceny.rda'))
