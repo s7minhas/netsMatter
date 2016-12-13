@@ -68,11 +68,11 @@ dVars = c('demlo', 'demhi', 'deplo',
 xDyadList = lapply(1:length(yrs), function(ii){
   slice = data[ which( 
     data$year==yrs[ii] & 
-      data$ccode1 %in% cntriesT[[ii]] & 
-      data$ccode2 %in% cntriesT[[ii]]
-  ), c('ccode1', 'ccode2', dVars) ]
-  sliceL = reshape2::melt(slice, id=c('ccode1','ccode2'))
-  adj = reshape2::acast(sliceL, ccode1 ~ ccode2 ~ variable, value.var='value')
+      data$statea %in% cntriesT[[ii]] & 
+      data$stateb %in% cntriesT[[ii]]
+  ), c('statea', 'stateb', dVars) ]
+  sliceL = reshape2::melt(slice, id=c('statea','stateb'))
+  adj = reshape2::acast(sliceL, statea ~ stateb ~ variable, value.var='value')
   return( adj[ cntriesT[[ii]], cntriesT[[ii]],  ] )
 })
 
