@@ -11,7 +11,6 @@ packs = c('dplyr', 'ggplot2', 'foreign', 'readr', 'lmtest')
 
 #
 source("LoadPkg.R")
-source("clusteredSE.R")
 
 #
 loadPkg(packs)
@@ -37,6 +36,9 @@ dataComp = na.omit(data[, base_vars])
 yrs = sort(unique(dataComp$year)) 
 cntriesT = lapply(yrs, function(t){ as.character( unique( dataComp$statea[dataComp$year==t] ) ) })
 
+
+# get rid of NA (colonial) countries
+# TBD
 
 # dv
 yVar = 'sideaa'
