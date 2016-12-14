@@ -9,7 +9,13 @@ library(foreign)
 library(lmtest)
 library(multiwayvcov)
 
-data = read.dta("/Users/jordan/Dropbox/netsMatter/replications/gartzke2007/capitalistpeace_012007.dta")
+if(Sys.info()['user']=='jordan'){
+data = read.dta("~/Dropbox/netsMatter/replications/gartzke2007/capitalistpeace_012007.dta")
+}
+
+if(Sys.info()['user']=='s7m' | Sys.info()['user']=='janus829'){
+data = read.dta("~/Dropbox/research/netsMatter/replications/gartzke2007/capitalistpeace_012007.dta")
+}
 
 
 # rename the spline variables to avoid issues with R syntax

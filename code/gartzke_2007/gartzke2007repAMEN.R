@@ -12,7 +12,13 @@ library(foreign)
 library(lmtest)
 library(multiwayvcov)
 
-data = read.dta("/Users/jordan/Dropbox/netsMatter/replications/gartzke2007/capitalistpeace_012007.dta")
+if(Sys.info()['user']=='jordan'){
+data = read.dta("~/Dropbox/netsMatter/replications/gartzke2007/capitalistpeace_012007.dta")
+}
+
+if(Sys.info()['user']=='s7m' | Sys.info()['user']=='janus829'){
+data = read.dta("~/Dropbox/research/netsMatter/replications/gartzke2007/capitalistpeace_012007.dta")
+}
 
 
 # rename the spline variables to avoid issues with R syntax
@@ -44,8 +50,8 @@ baseVars = c('maoznewl', 'demlo', 'demhi', 'deplo',
 # get sampling frame
 dataComp = na.omit(data[, baseVars])
 yrs = sort(unique(dataComp$year)) 
-cntriesT = lapply(yrs, function(t){ char( unique( dataComp$statea[dataComp$year==t] ) ) })
-
+cntriesTa = lapply(yrs, function(t){ char( unique( dataComp$statea[dataComp$year==t] ) ) })
+cntriesTb = lapply(yrs, function(t){ char( unique( dataComp$stateb[dataComp$year==t] ) ) })
 
 # dv
 yVar = 'maoznewl'
