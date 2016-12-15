@@ -32,6 +32,12 @@ colnames(data)[36] = 'spline3'
 ####### Build AMEN format data
 ##########################################
 
+# get "both sides" of the undirected data
+data2 = data
+data2$statea = data$stateb
+data2$stateb = data$statea
+data = rbind(data, data2)
+
 # NOTE: this section adapted from Minhas code
 
 char = function(x){ as.character(x) }
@@ -50,8 +56,8 @@ baseVars = c('maoznewl', 'demlo', 'demhi', 'deplo',
 # get sampling frame
 dataComp = na.omit(data[, baseVars])
 yrs = sort(unique(dataComp$year)) 
-cntriesTa = lapply(yrs, function(t){ char( unique( dataComp$statea[dataComp$year==t] ) ) })
-cntriesTb = lapply(yrs, function(t){ char( unique( dataComp$stateb[dataComp$year==t] ) ) })
+cntriesT = lapply(yrs, function(t){ char( unique( dataComp$statea[dataComp$year==t] ) ) })
+#cntriesTb = lapply(yrs, function(t){ char( unique( dataComp$stateb[dataComp$year==t] ) ) })
 
 # dv
 yVar = 'maoznewl'
@@ -82,26 +88,36 @@ xDyadList = lapply(1:length(yrs), function(ii){
   return( adj[ cntriesT[[ii]], cntriesT[[ii]],  ] )
 })
 
-# nodal vars
-nVars = c(
-  'polity2_04', 'polconiiiA', 'llnGDP_gled08', 'ldGDP_gled08V2', 
-  'lheg_new', 'pcw89', 'onsetperc2', 'region'
-)
-xNodeList = lapply(1:length(yrs), function(ii){
-  slice = unique( data[ which( 
-    data$year==yrs[ii] & 
-      data$ccode1 %in% cntriesT[[ii]] & 
-      data$ccode2 %in% cntriesT[[ii]]
-  ), c('ccode1', nVars) ] )
-  if(nrow(slice)!=length(cntriesT[[ii]])){ stop('# rows dont match')  }
-  regionSplit = model.matrix(~region-1, data=slice)
-  adj = data.matrix(cbind( slice[,nVars[-length(nVars)]], regionSplit ))
-  rownames(adj) = slice$ccode1
-  return( adj[ cntriesT[[ii]], ]  )
-})
+
+
+# quick check
+# xDyadList[[1]][, , 1]
+# xDyadList[[1]][, , 2]
+
+
+
+
+### No nodal vars in this paper
+# # nodal vars
+# nVars = c(
+#   ''
+# )
+# xNodeList = lapply(1:length(yrs), function(ii){
+#   slice = unique( data[ which( 
+#     data$year==yrs[ii] & 
+#       data$ccode1 %in% cntriesT[[ii]] & 
+#       data$ccode2 %in% cntriesT[[ii]]
+#   ), c('ccode1', nVars) ] )
+#   if(nrow(slice)!=length(cntriesT[[ii]])){ stop('# rows dont match')  }
+#   regionSplit = model.matrix(~region-1, data=slice)
+#   adj = data.matrix(cbind( slice[,nVars[-length(nVars)]], regionSplit ))
+#   rownames(adj) = slice$ccode1
+#   return( adj[ cntriesT[[ii]], ]  )
+# })
 
 # save dfs
-save(yList, xDyadList, xNodeList, file=paste0(dataPath, 'amenData.rda'))
+save(yList, xDyadList, #xNodeList, 
+     file='/Users/jordan/GitHub/netsMatter/code/gartzke_2007/gartzke2007amenData.rda')
 
 
 
