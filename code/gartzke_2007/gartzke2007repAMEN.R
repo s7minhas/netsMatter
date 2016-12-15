@@ -117,7 +117,7 @@ xDyadList = lapply(1:length(yrs), function(ii){
 
 # save dfs
 save(yList, xDyadList, #xNodeList, 
-     file='/Users/jordan/GitHub/netsMatter/code/gartzke_2007/gartzke2007amenData.rda')
+     file='/Users/jordan/Dropbox/netsMatter/replications/gartzke2007/Replication\ specific\ data/gartzke2007amenData.rda')
 
 
 
