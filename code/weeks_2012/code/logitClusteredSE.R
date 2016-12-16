@@ -15,7 +15,7 @@ function(fit, clustervar){
   k <- length(beta)
   print(paste0('k is ', k))      
   y <- fit$y
-  print(paste0("length of y is", length(y)))
+  print(paste0("length of y is ", length(y)))
         
   m <- dim(table(data$clustervar))    # N of clusters, in Weeks' data: 31874
   xvars <- names(beta)            # Name of covariates ordered accordingly
@@ -28,6 +28,10 @@ function(fit, clustervar){
   u <- ((y==1) * f(xb)/F(xb) + (y==0) * -f(xb)/(1-F(xb)))[,1] * xmat
   u.clust <- matrix(NA, nrow=m, ncol=k)
   fc <- factor(data$clustervar)
+  
+  ## Loop over covariates in two cases:
+  ## first case: if cluster variable is in the regression
+  ## second case: if not
   for (i in 1:k){ ## loop over covariates
     u.clust[,i] <- tapply(u[,i], fc, sum) ## sum over dyad
   }
