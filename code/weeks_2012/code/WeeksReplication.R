@@ -1,10 +1,15 @@
 # paths
 if(Sys.info()['user']=='janus829' | Sys.info()['user']=='s7m'){
-	pathData='~/Dropbox/Research/netsMatter/replications/Weeks2012/replication/data/'
+    pathData='~/Dropbox/Research/netsMatter/replications/Weeks2012/replication/data/'
+}
+
+if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
+ pathData='~/Dropbox/netsMatter/replications/Weeks2012/replication/data/'
 }
 
 # load libs
-# install/load libraries
+                                        # install/load libraries
+
 loadPkg=function(toLoad){
 	for(lib in toLoad){
 	  if(!(lib %in% installed.packages()[,1])){ 
@@ -54,4 +59,4 @@ clVcov = vcov(mod) %*% ((clustN/(clustN-1)) * t(uClust) %*% uClust ) %*% + vcov(
 modSumm = lmtest::coeftest(mod, vcov=clVcov)
 
 # save replicated results
-save(modSumm, file=paste0(pathData, 'weeks_baseModel.rda'))
+#save(modSumm, file=paste0(pathData, 'weeks_baseModel.rda'))
