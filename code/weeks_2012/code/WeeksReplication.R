@@ -49,10 +49,10 @@ mod = glm(modForm, data=modData, family=binomial(link='logit'))
 clust = modData$dirdyadid
 clustN = length(unique(clust))
 params = length(coef(mod))
-u = estfun(mod)
+u = sandwich::estfun(mod)
 uClust = matrix(NA, nrow=clustN, ncol=params)
 for(j in 1:params){ uClust[,j]=tapply(u[,j], clust, sum) }
-clVcov = vcov(mod) %*% ((clustN/(clustN-1)) * t(uClust) %*% uClust ) %*% + vcov(mod)
+clVcov = vcov(mod) %*% ((clustN/(clustN-1)) * t(uClust) %*% uClust ) %*% vcov(mod)
 
 # feed revised vcov in
 # results match with stata
