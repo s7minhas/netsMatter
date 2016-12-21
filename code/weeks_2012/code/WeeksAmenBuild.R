@@ -31,10 +31,55 @@ other = 'democracy_1'
 ids = c('ccode1', 'ccode2', 'year', 'dirdyadid')
 
 ## construct data for modelling
-modData = na.omit( weeksData[,c(dv,ivs,other,ids)] )
+modData = na.omit(weeksData[,c(dv,ivs,other,ids)] )
 
+
+###########################
+## Sort vars into nodal or dyadic variables:
+##########################
+
+## Classifying the variables:
+
+#### Dyadic variables: 
+## "dependlow"     
+##"majmaj", "minmaj" "majmin", "minmin" = major powers. (Order codes for node-level inforamation about which state is the major power)
+## "contigdum" = whether states share a land border
+## "logdist" = log distance between capitals
+## "s_wt_glo" = similarity of alliance porfolio
+##"pcyrsmzinit"    "pcyrsmzinits1"  "pcyrsmzinits2"  "pcyrsmzinits3"
+## I bet these are the cubic splies for previous year since State A initiated against state B
+
+dyadicVars <- c( "dependlow" , "majmaj", "minmaj", "majmin", "contigdum",
+                "logdist","s_wt_glo","pcyrsmzinit", "pcyrsmzinits1", "pcyrsmzinits2",
+                "pcyrsmzinits3")
+###############
+#### node-level
+################
+
+## regime type of initator or reciever: 
+## "machinejlw_1"   "juntajlw_1"     "bossjlw_1"     
+## "strongmanjlw_1" "allotherauts_1" "newregime_1"    "democracy_2"
+
+## "cap_1", "cap_2"  = raw capabilites of each side
+## "initshare" = initiator's share of dyad's total capabilities
+## "s_lead_1","s_lead_2" = each state's similarity to most powerful state in system
+##"democracy_2" = whether side B is a democracy
+
+## Dyad-level identifiers
+## "ccode1"         "ccode2"  = identifiers
+
+
+nodalVars.i <- c("machinejlw_1", "juntajlw_1", "bossjlw_1",
+                  "strongmanjlw_1", "allotherauts_1", "newregime_1",  "cap_1",
+                 "s_lead_1" )
+
+nodalVars.r <- c("democracy_2" , "cap_2", "s_lead_2")
+
+
+
+#####################################
 ## Start AMEN build process
-
+######################################
 
 years <- sort(unique(modData$year)) ## 1950-1999
 
@@ -69,12 +114,19 @@ difs2 <- lapply(1:length(years), function(y){
     setdiff(mst[[y]], mst2[[y]]) 
 })
 
-difs2
-
-
 ## all zeros, so seems ok:
-difs
 
+## checks to ensure that the difference lists are
+## of length 0 for the entire list:
+checklist <- function(list){
+    lapply(list, function(x) ifelse(length(x)==0,
+                                 print("ok"),
+                                 print("Warning! Not Symmetrical!")))
+
+}
+
+checklist(difs2)
+checklist(difs)
 
 ## Lists of the DV:
 
@@ -98,10 +150,54 @@ yList = lapply(1:length(years), function(ii){
     })
 
 
+xDyadList = lapply(1:length(years), function(ii){
+	slice = modData[which( 
+			modData$year==years[ii] & 
+			modData$ccode1 %in% cntriesT[[ii]] & 
+			modData$ccode2 %in% cntriesT[[ii]]
+			), c('ccode1', 'ccode2', dyadicVars) ]
+	sliceL = reshape2::melt(slice, id=c('ccode1','ccode2'))
+	adj = reshape2::acast(sliceL, ccode1 ~ ccode2 ~ variable, value.var='value')
+        print(dim(adj))
+        includedCountries <- as.character(cntriesT[[ii]])
+        return(adj[includedCountries, includedCountries,]) #last comma is impt: gets the third dimension
+	##return(adj)
+    })
 
-## Next up:
-## Figure out which are dyadic variables
 
-## and which are the nodal variables
+## node list:
 
-## then run dvars and nvars
+nVars <- c(nodalVars.r, nodalVars.i)
+
+## concatenating the node and 
+xNodeList = lapply(1:length(years), function(ii){
+	slice = unique( modData[which( 
+			modData$year==years[ii] & 
+			modData$ccode1 %in% cntriesT[[ii]] & 
+			modData$ccode2 %in% cntriesT[[ii]]
+            ), c('ccode1', nVars) ] )
+
+        print(nrow(slice))
+        print(length(cntriesT[[ii]]))
+	if(nrow(slice)!=length(cntriesT[[ii]])){ stop('# rows dont match')  }
+	regionSplit = model.matrix(~region-1, data=slice)
+	adj = data.matrix(cbind( slice[,nVars[-length(nVars)]], regionSplit ))
+	rownames(adj) = slice$ccode1
+	return( adj[ cntriesT[[ii]], ]  )
+})
+
+## walk through:
+
+slice.tmp = unique(modData[which( 
+    modData$year==years[1] & 
+    modData$ccode1 %in% cntriesT[[1]] & 
+    modData$ccode2 %in% cntriesT[[1]]
+    ), c('ccode1', nVars) ] )
+
+class(slice.tmp)
+dim(slice.tmp)
+
+dim(modData[which(modData$year==years[[1]]),]) #5256
+
+head(slice.tmp)
+
