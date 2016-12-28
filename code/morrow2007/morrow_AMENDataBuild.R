@@ -116,4 +116,53 @@ uniqueDyads <- unique(repdat[, identifiers]) ## 170 x 2
 
 dim(uniqueDyads)
 
+####################################
+## Building AMEN
+#####################################
 
+# get sampling frame
+
+## data is repdat
+
+yrs = sort(unique(repdat$endyear)) ##1990- 1991, 42 years
+yrs.s = sort(unique(repdat$startyear)) ##1990-1991, 43 years
+
+violatorccode
+
+
+cntriesT = lapply(yrs, function(t){as.character(
+    unique( repdat$violatorccode[repdat$startyear==t] ) ) })
+
+###################################
+## Now test to make sure we don't lose any cases:
+################################### 
+
+## senders
+mst = lapply(yrs, function(t){
+  unique( repdat$violatorccode[repdat$startyear==t] ) })
+
+## recievers
+
+mst2 = lapply(yrs, function(t){
+   unique( repdat$victimccode[repdat$startyear==t] )})
+
+difs <- lapply(1:length(yrs), function(y){
+    ##
+    setdiff(mst2[[y]], mst[[y]]) 
+})
+
+difs2 <- lapply(1:length(yrs), function(y){
+    ##
+    setdiff(mst[[y]], mst2[[y]]) 
+})
+
+## seemes to be all 0s
+
+
+
+################
+## length of conflicts:
+
+lengths <- repdat$endyear-repdat$startyear
+
+summary(lengths)
