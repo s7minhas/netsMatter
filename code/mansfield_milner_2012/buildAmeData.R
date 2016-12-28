@@ -31,7 +31,7 @@ yList = lapply(1:length(yrs), function(ii){
 			), c('ccode1', 'ccode2', yVar) ]
 	adj = reshape2::acast(slice, ccode1 ~ ccode2, value.var=yVar)
 	return( adj[ cntriesT[[ii]], cntriesT[[ii]] ] )
-})
+}) ; names(yList) = yrs
 
 # dyadic vars
 dVars = c(
@@ -49,7 +49,7 @@ xDyadList = lapply(1:length(yrs), function(ii){
 	sliceL = reshape2::melt(slice, id=c('ccode1','ccode2'))
 	adj = reshape2::acast(sliceL, ccode1 ~ ccode2 ~ variable, value.var='value')
 	return( adj[ cntriesT[[ii]], cntriesT[[ii]],  ] )
-})
+}) ; names(xDyadList) = yrs
 
 # nodal vars
 nVars = c(
@@ -67,7 +67,7 @@ xNodeList = lapply(1:length(yrs), function(ii){
 	adj = data.matrix(cbind( slice[,nVars[-length(nVars)]], regionSplit ))
 	rownames(adj) = slice$ccode1
 	return( adj[ cntriesT[[ii]], ]  )
-})
+}) ; names(xNodeList) = yrs
 
 # save dfs
 save(yList, xDyadList, xNodeList, file=paste0(dataPath, 'amenData.rda'))
