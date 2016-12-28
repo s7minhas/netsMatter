@@ -5,10 +5,10 @@ if(Sys.info()['user']=='s7m' | Sys.info()['user']=='janus829'){
 load( paste0(dataPath, 'amenData.rda') )
 
 # running in parallel varying k
-imps = 500000
-brn = 250000
+imps = 1000000
+brn = 500000
 ods = 25
-latDims = 0:4
+latDims = 0:3
 seed=6886
 
 # Run amen in parallel

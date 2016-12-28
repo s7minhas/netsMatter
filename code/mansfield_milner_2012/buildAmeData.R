@@ -16,6 +16,11 @@ dataComp = na.omit(data[, baseVars])
 yrs = sort(unique(dataComp$year)) 
 cntriesT = lapply(yrs, function(t){ char( unique( dataComp$ccode1[dataComp$year==t] ) ) })
 
+# get cnt of actors by year
+sort(table( unlist( cntriesT ) ))
+# remove ccode=346 only available for one year
+cntriesT = lapply(cntriesT, function(x){ x[x!='346'] })
+
 # dv
 yVar = 'nohs_rat2_onset2'
 yList = lapply(1:length(yrs), function(ii){
