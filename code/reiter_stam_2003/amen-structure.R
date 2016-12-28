@@ -26,7 +26,7 @@ base_vars = c('sideaa pdemdtar pdemdin personal military single democ contig maj
 dyad_vars = c('personal', 'military', 'single', 'democ', 'contig', 
               'ally', 'majpow', 'loglsrat', 'advanced', 
               'dispyrs', 'dspline1', 'dspline2', 'dspline3', 
-              'pdemdtar', 'pdemdin', 'idyr')
+              'pdemdtar', 'pdemdin')
 
 #
 

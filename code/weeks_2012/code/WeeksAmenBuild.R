@@ -1,6 +1,6 @@
 
 if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
- pathData='~/Dropbox/netsMatter/replications/Weeks2012/replication/data/'
+ dataPath <- '~/Dropbox/netsMatter/replications/Weeks2012/replication/data/'
 }
 
 ## libraries
@@ -69,7 +69,7 @@ dyadicVars <- c( "dependlow" , "majmaj", "minmaj", "majmin", "contigdum",
 ## "ccode1"         "ccode2"  = identifiers
 
 
-nodalVars.i <- c("machinejlw_1", "juntajlw_1", "bossjlw_1",
+nodalVars.send <- c("machinejlw_1", "juntajlw_1", "bossjlw_1",
                   "strongmanjlw_1", "allotherauts_1", "newregime_1",  "cap_1",
                  "s_lead_1" )
 
@@ -167,37 +167,61 @@ xDyadList = lapply(1:length(years), function(ii){
 
 ## node list:
 
-nVars <- c(nodalVars.r, nodalVars.i)
+## so the issue is that "nodal" variables are
+## for both sender (_1) and reciever (_2),which means that the
+## unique call isn't filtering down the list
 
-## concatenating the node and 
-xNodeList = lapply(1:length(years), function(ii){
-	slice = unique( modData[which( 
-			modData$year==years[ii] & 
-			modData$ccode1 %in% cntriesT[[ii]] & 
-			modData$ccode2 %in% cntriesT[[ii]]
-            ), c('ccode1', nVars) ] )
+## possible way to proceed: making X.Send and X.Reciev
 
-        print(nrow(slice))
-        print(length(cntriesT[[ii]]))
-	if(nrow(slice)!=length(cntriesT[[ii]])){ stop('# rows dont match')  }
-	regionSplit = model.matrix(~region-1, data=slice)
-	adj = data.matrix(cbind( slice[,nVars[-length(nVars)]], regionSplit ))
-	rownames(adj) = slice$ccode1
-	return( adj[ cntriesT[[ii]], ]  )
+## xNodeList.sender
+
+xNodeList.s = lapply(1:length(years), function(ii){
+    slice = unique(modData[
+        which( #rows 
+              modData$year==years[ii] & 
+              modData$ccode1 %in% cntriesT[[ii]] & 
+              modData$ccode2 %in% cntriesT[[ii]]),
+        c('ccode1', nodalVars.send) ] ) #this is the columns to select
+    
+    print(nrow(slice))
+    print(length(cntriesT[[ii]]))
+    if(nrow(slice)!=length(cntriesT[[ii]])){ stop('# rows dont match')  }
+    sliceL = reshape2::melt(slice, id=c('ccode1'))
+    adj = reshape2::acast(sliceL, ccode1 ~ variable, value.var='value')
+    rownames(adj) = slice$ccode1
+    includedCountries <- as.character(cntriesT[[ii]])
+    ## output is a matrix, Ncountries X nvars
+    return(adj[includedCountries,])
 })
 
-## walk through:
+#### Recievers
 
-slice.tmp = unique(modData[which( 
-    modData$year==years[1] & 
-    modData$ccode1 %in% cntriesT[[1]] & 
-    modData$ccode2 %in% cntriesT[[1]]
-    ), c('ccode1', nVars) ] )
+xNodeList.r = lapply(1:length(years), function(ii){
+    slice = unique(modData[
+        which( #rows 
+              modData$year==years[ii] & 
+              modData$ccode1 %in% cntriesT[[ii]] & 
+              modData$ccode2 %in% cntriesT[[ii]]),
+        c('ccode2', nodalVars.r) ] ) #this is the columns to select
+    
+    print(nrow(slice))
+    print(length(cntriesT[[ii]]))
+    if(nrow(slice)!=length(cntriesT[[ii]])){ stop('# rows dont match')  }
+    sliceL = reshape2::melt(slice, id=c('ccode2'))
+    adj = reshape2::acast(sliceL, ccode2 ~ variable, value.var='value')
+    rownames(adj) = slice$ccode2
+    includedCountries <- as.character(cntriesT[[ii]])
+    ## output is a matrix, Ncountries X nvars
+    return(adj[includedCountries,])
+})
 
-class(slice.tmp)
-dim(slice.tmp)
 
-dim(modData[which(modData$year==years[[1]]),]) #5256
+dim(xNodeList.r[[1]])
+dim(xNodeList.s[[1]])
 
-head(slice.tmp)
+######################
+## Save Data
+######################
 
+save(yList, xDyadList, xNodeList.s,
+     xNodeList.r, file=paste0(dataPath, 'WeeksamenData.rda'))
