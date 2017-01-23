@@ -27,6 +27,14 @@ summary(m1)
   # exact replication
 
 
+data1946 = data[data$year>=1946, ]
+
+m2 = glm(cowwar ~ mixed + terrXmixed + territor + 
+           jtdem + caprat + terrcount + rival, 
+         data = data1946, 
+         family = 'binomial')
+summary(m2)
+
 
 
 
