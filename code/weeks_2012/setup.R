@@ -1,0 +1,42 @@
+## This file loads packages needed to do the replications and run AMEN
+## and also identifies paths to load and save data
+## the script is read into the start of future files
+
+if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
+    dataPath='~/Dropbox/netsMatter/replications/Weeks2012'## where the Weeks data lives
+    dPath='~/Dropbox/netsMatter/' # general dropox path
+    graphicsPath=paste0(dPath, 'replications/Weeks2012/graphics/') # path to dir where i will store any graphics
+    resultsPath=paste0(dPath, 'replications/Weeks2012/replication/output/') # path to dir where i will store results
+    gPath='~/Research/netsMatter/' # path to github in case i need to call in helper functions
+    funcPath=paste0(gPath, 'code/helpers/') # helpers directory in ~/Research
+}
+
+# install/load libraries
+loadPkg=function(toLoad){
+	for(lib in toLoad){
+	  if(!(lib %in% installed.packages()[,1])){ 
+	    install.packages(lib, repos='http://cran.rstudio.com/') }
+	  suppressMessages( library(lib, character.only=TRUE) )
+	}
+}
+
+## some necessary libs
+loadPkg(c(
+    'foreign',
+    'reshape2', # data management
+    'ggplot2', 'latex2exp', 'Cairo',	# plotting
+    'xtable', # tables
+    'devtools', # loading git packages
+    'gridExtra' #for the param plots
+	))
+
+# load amen
+devtools::install_github('s7minhas/amen') ; library(amen)
+
+# Set a theme for gg
+theme_set(theme_bw())
+
+# misc
+char = function(x){ as.character(x) }
+num = function(x){ as.numeric(char(x)) }
+trim = function (x) { gsub("^\\s+|\\s+$", "", x) }
