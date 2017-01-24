@@ -4,7 +4,7 @@
 
 ## MJF: setup.R loads packages and directory  paths
 if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
-    source('~/Research/netsMatter/code/weeks_2012/code/setup.R')
+    source('~/Research/netsMatter/code/weeks_2012/setup.R')
 }
 
 ## load amen data
