@@ -6,8 +6,12 @@
 if(Sys.info()['user']== 'margaret'){
     dataPath='~/projects/netsmatter/data/'
     dPath='~/projects/netsmatter/data/'
-    gPath='~/projects/netsmatter/code/netsMatter/code/weeks_2012/' #where code lives on Dave's server
+    gPath='~/projects/netsmatter/code/netsMatter/code/weeks_2012/'
+                                        #where code lives on Dave's
+                                        #server
+    
 }
+
 
 
 ## if on one of my machines
@@ -46,7 +50,12 @@ loadPkg(c(
 print("packages loaded")
                                         ## load amen
 
-devtools::install_github('s7minhas/amen') ; library(amen)
+## for github install:
+#devtools::install_github('s7minhas/amen') ; library(amen)
+
+## for my local cline:
+
+library(devtools) ; install('~/projects/netsmatter/amen/')
 
 # Set a theme for gg
 theme_set(theme_bw())
@@ -56,4 +65,4 @@ char = function(x){ as.character(x) }
 num = function(x){ as.numeric(char(x)) }
 trim = function (x) { gsub("^\\s+|\\s+$", "", x) }
 
-print(sessionInfo())
+#print(sessionInfo())

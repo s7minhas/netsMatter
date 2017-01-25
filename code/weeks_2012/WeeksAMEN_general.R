@@ -11,7 +11,7 @@ source('./setup.R')
 ls()
 
 ## load amen data
-AMENData <- paste0(dataPath, "/replication/output/", 'WeeksamenData.rda')
+AMENData <- paste0(dataPath, 'WeeksamenData.rda')
 load(AMENData)
 
 ##params: read in from config.R
