@@ -80,7 +80,8 @@ xDyadList = lapply(1:length(years), function(ii){
     slice = rbind(slice, add)
 	sliceL = reshape2::melt(slice, id=c('cty1','cty2'))
 	adj = reshape2::acast(sliceL, cty1 ~ cty2 ~ variable, value.var='value')
-	adj[lower.tri(adj)] <- 0
+	# adj[lower.tri(adj)] <- 0 # this seems wrong, try the below, sm
+    for(p in 1:dim(adj)[3]){ x=adj[,,p] ; x[lower.tri(x)] = x[upper.tri(x)] ; adj[,,p]=x ; rm(x) }
 	return( adj[ cntriesT[[ii]], cntriesT[[ii]],  ] )
 })
 
