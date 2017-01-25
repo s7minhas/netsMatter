@@ -47,7 +47,8 @@ yList = lapply(1:length(years), function(ii){
     slice = rbind(slice, add) # add in
     adj = reshape2::acast(slice, cty1 ~ cty2, value.var=yVar)
     #adj
-    adj[lower.tri(adj)] <- 0
+    # adj[lower.tri(adj)] <- 0
+    adj[lower.tri(adj)] = adj[upper.tri(adj)]
     return( adj[ cntriesT[[ii]], cntriesT[[ii]] ] )
 })
 
