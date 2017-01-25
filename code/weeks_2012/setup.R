@@ -53,9 +53,18 @@ print("packages loaded")
 ## for github install:
 #devtools::install_github('s7minhas/amen') ; library(amen)
 
-## for my local cline:
+## for my local clone:
 
-library(devtools) ; install('~/projects/netsmatter/amen/')
+if(Sys.info()['user']== 'margaret'){
+    print("Loading local clone of AMEN")
+    library(devtools) ; install('~/projects/netsmatter/amen/')
+}
+
+## if on one of my macs
+if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
+    print("loading AMEN from Github")
+    devtools::install <- github('s7minhas/amen') ; library(amen)
+}
 
 # Set a theme for gg
 theme_set(theme_bw())
