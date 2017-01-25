@@ -2,14 +2,26 @@
 ## and also identifies paths to load and save data
 ## the script is read into the start of future files
 
+## if on Dave's server
+if(Sys.info()['user']== 'margaret'){
+    dataPath='~/projects/netsmatter/data/'
+    dPath='~/projects/netsmatter/data/'
+    gPath='~/projects/netsmatter/code/netsMatter/code/weeks_2012/' #where code lives on Dave's server
+}
+
+
+## if on one of my machines
 if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
     dataPath='~/Dropbox/netsMatter/replications/Weeks2012'## where the Weeks data lives
     dPath='~/Dropbox/netsMatter/' # general dropox path
-    graphicsPath=paste0(dPath, 'replications/Weeks2012/graphics/') # path to dir where i will store any graphics
-    resultsPath=paste0(dPath, 'replications/Weeks2012/replication/output/') # path to dir where i will store results
     gPath='~/Research/netsMatter/' # path to github in case i need to call in helper functions
-    funcPath=paste0(gPath, 'code/helpers/') # helpers directory in ~/Research
 }
+
+## need to declare these, based on the system-specific dPath and gPath
+
+graphicsPath=paste0(dPath, 'replications/Weeks2012/graphics/') # path to dir where i will store any graphics
+resultsPath=paste0(dPath, 'replications/Weeks2012/replication/output/') # path to dir where i will store results
+funcPath=paste0(gPath, 'code/helpers/') # helpers directory in ~/Research
 
 # install/load libraries
 loadPkg=function(toLoad){
@@ -23,6 +35,7 @@ loadPkg=function(toLoad){
 ## some necessary libs
 loadPkg(c(
     'foreign',
+    'dplyr', "Rcpp", "RcppArmadillo", "plyr",
     'reshape2', # data management
     'ggplot2', 'latex2exp', 'Cairo',	# plotting
     'xtable', # tables
@@ -30,7 +43,9 @@ loadPkg(c(
     'gridExtra' #for the param plots
 	))
 
-# load amen
+print("packages loaded")
+                                        ## load amen
+
 devtools::install_github('s7minhas/amen') ; library(amen)
 
 # Set a theme for gg
@@ -40,3 +55,5 @@ theme_set(theme_bw())
 char = function(x){ as.character(x) }
 num = function(x){ as.numeric(char(x)) }
 trim = function (x) { gsub("^\\s+|\\s+$", "", x) }
+
+print(sessionInfo())

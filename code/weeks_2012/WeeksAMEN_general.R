@@ -3,9 +3,12 @@
 ###################################
 
 ## MJF: setup.R loads packages and directory  paths
-if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
-    source('~/Research/netsMatter/code/weeks_2012/setup.R')
-}
+## hardcoded to be in the same directory as this script
+## to make it easier to port to different computers-- just keep dir together
+
+source('./setup.R')
+
+ls()
 
 ## load amen data
 AMENData <- paste0(dataPath, "/replication/output/", 'WeeksamenData.rda')
