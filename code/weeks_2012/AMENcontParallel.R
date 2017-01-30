@@ -1,0 +1,80 @@
+##
+
+## script to continue AMEN runs from place the last run stopped at
+
+
+## Load paths and libaries:
+
+## case 1: Dave's server:
+if(Sys.info()['user']== 'margaret'){
+    source('~/projects/netsmatter/code/netsMatter/code/weeks_2012/setup.R')
+}
+
+## One of my machines
+if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
+    source('~/Dropbox/netsMatter/replications/Weeks2012/setup.R')
+}
+
+
+## load amen data
+load( paste0(dataPath, 'WeeksamenData.rda') )
+
+## running in parallel varying k
+## read in config setting:
+
+source("config.R")
+
+##latDims= 0:3
+##print(imps)
+
+##print(latDims)
+
+## imps = 1000000
+## brn = 500000
+ ods = 25
+## #latDims = 0:3
+seed=6886
+
+## verification:
+##preModLoc= print(paste0(resultsPath, 'ameFit_k', latDims,'.rda'))
+
+prevModelFiles = paste0(resultsPath, 'ameFit_k', latDims,'.rda')
+
+                                        # Run amen in parallel
+library(doParallel) ; library(foreach)
+
+cl=makeCluster(4) ; registerDoParallel(cl)
+
+ls()
+
+
+class(xDyadList)
+length(xDyadList)
+
+foreach(ii=1:length(latDims), .packages=c("amen")) %dopar% {
+
+                                        # load previous model run
+    load(prevModelFiles[ii])
+                                        # extract start vals
+    startVals0 = fit$'startVals'
+                                        # dump rest
+    rm(fit)
+
+    ameFit = ame_repL(
+        Y=yList,
+        Xdyad=xDyadList,
+        Xrow=xNodeList.s,
+        Xcol=xNodeList.r,
+        model="bin",
+        symmetric=FALSE,
+        R=latDims[ii],
+        nscan=imps, seed=seed, burn=brn, odens=ods,
+        plot=FALSE, print=FALSE, startVals=startVals0
+    )
+    save(ameFit,
+         file=paste0(resultsPath, 'model_k',
+                     latDims[ii],as.character(Sys.Date()),
+                     '_v2.rda'))
+}
+
+stopCluster(cl)

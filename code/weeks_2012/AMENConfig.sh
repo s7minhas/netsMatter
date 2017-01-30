@@ -8,9 +8,9 @@
 ## in sequence: num lat dims, imps, burn
 ## config is an .R file, so objects declared
 
-echo "latDims=$1" > config.R
-echo "imps=$2" >> config.R
-echo "brn=$3" >> config.R
+## echo "latDims= $1" > config.R
+echo "imps= $2" >> config.R
+echo "brn= $3" >> config.R
 
 ## now keep track of settings into the logfile:
 echo "$(date '+%Y%M%d-%H:%M:%S')" >> logfile.txt

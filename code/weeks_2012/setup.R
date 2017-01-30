@@ -10,8 +10,8 @@ if(Sys.info()['user']== 'margaret'){
                                         #where code lives on Dave's
                                         #server
 
-    graphicPath='./results/' # path to dir where i will store any graphics
-    resultsPath='./results/' # path to dir where i will store results
+    graphicPath='results/' # path to dir where i will store any graphics
+    resultsPath='results/' # path to dir where i will store results
     funcPath=paste0(gPath, 'code/helpers/') # helpers directory in ~/Research
 
 }
@@ -49,7 +49,8 @@ loadPkg(c(
     'ggplot2', 'latex2exp', 'Cairo',	# plotting
     'xtable', # tables
     'devtools', # loading git packages
-    'gridExtra' #for the param plots
+    'gridExtra', #for the param plots
+    'doParallel','foreach' #packages for parallelization
 	))
 
 print("packages loaded")
