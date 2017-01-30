@@ -5,11 +5,15 @@
 ## if on Dave's server
 if(Sys.info()['user']== 'margaret'){
     dataPath='~/projects/netsmatter/data/'
-    dPath='~/projects/netsmatter/data/'
+    dPath='./results/'
     gPath='~/projects/netsmatter/code/netsMatter/code/weeks_2012/'
                                         #where code lives on Dave's
                                         #server
-    
+
+    graphicPath='./results/' # path to dir where i will store any graphics
+    resultsPath='./results/' # path to dir where i will store results
+    funcPath=paste0(gPath, 'code/helpers/') # helpers directory in ~/Research
+
 }
 
 
@@ -19,13 +23,14 @@ if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
     dataPath='~/Dropbox/netsMatter/replications/Weeks2012'## where the Weeks data lives
     dPath='~/Dropbox/netsMatter/' # general dropox path
     gPath='~/Research/netsMatter/' # path to github in case i need to call in helper functions
+    graphicsPath=paste0(dPath, 'replications/Weeks2012/graphics/') # path to dir where i will store any graphics
+    resultsPath=paste0(dPath, 'replications/Weeks2012/replication/output/') # path to dir where i will store results
+    funcPath=paste0(gPath, 'code/helpers/') # helpers directory in ~/Research
+    
 }
 
 ## need to declare these, based on the system-specific dPath and gPath
 
-graphicsPath=paste0(dPath, 'replications/Weeks2012/graphics/') # path to dir where i will store any graphics
-resultsPath=paste0(dPath, 'replications/Weeks2012/replication/output/') # path to dir where i will store results
-funcPath=paste0(gPath, 'code/helpers/') # helpers directory in ~/Research
 
 # install/load libraries
 loadPkg=function(toLoad){
@@ -38,7 +43,7 @@ loadPkg=function(toLoad){
 
 ## some necessary libs
 loadPkg(c(
-    'foreign',
+    'foreign','roxygen2',
     'dplyr', "Rcpp", "RcppArmadillo", "plyr",
     'reshape2', # data management
     'ggplot2', 'latex2exp', 'Cairo',	# plotting
@@ -57,7 +62,9 @@ print("packages loaded")
 
 if(Sys.info()['user']== 'margaret'){
     print("Loading local clone of AMEN")
-    library(devtools) ; install('~/projects/netsmatter/amen/')
+    library(devtools)
+    document('~/projects/netsmatter/amen/')
+    install('~/projects/netsmatter/amen/')
 }
 
 ## if on one of my macs
