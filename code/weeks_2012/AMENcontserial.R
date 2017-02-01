@@ -6,8 +6,6 @@
 ## Load paths and libaries:
 rm(list=ls())
 
-ls()
-
 ## case 1: Dave's server:
 if(Sys.info()['user']== 'margaret'){
     source('~/projects/netsmatter/code/netsMatter/code/weeks_2012/setup.R')
@@ -38,8 +36,8 @@ prevModelFiles = paste0(resultsPath, 'ameFit_k', latDims,'.rda')
 
 ## These were from the parallel implementation
 
-#library(doParallel) ; library(foreach)
-#cl=makeCluster(4) ; registerDoParallel(cl)
+##library(doParallel) ; library(foreach)
+##cl=makeCluster(4) ; registerDoParallel(cl)
 
 ls()
 
@@ -47,9 +45,9 @@ class(xDyadList)
 length(xDyadList)
 
 
-#foreach(ii=1:length(latDims), .packages=c("amen")) %dopar% {
+##foreach(ii=1:length(latDims), .packages=c("amen")) %dopar% {
 
-                                        # load previous model run
+## load previous model run
 
 load(prevModelFiles[2])
 
@@ -57,21 +55,21 @@ ls()
 
 attributes(fit)
 
-
-class(fit$"startVals")
-length(fit$"startVals")
-
-                                        # extract start vals
+## extract start values
 startVals2 = fit$"startVals"
-                                        # dump rest
+## dump rest
 rm(fit)
-
-ls()
 
 ## 1/30: error is
 ## Starting burn-in period...
 ## Error in chol.default(S0) :
 ##  the leading minor of order 1 is not positive definite
+
+rZ_bin_fc2 <- dget("rZBinfc.R")
+
+assignInNamespace("rZ_bin_fc", rZ_bin_fc2, pos="package:amen")
+
+
 ameFit = ame_repL(
     Y=yList,
     Xdyad=xDyadList,

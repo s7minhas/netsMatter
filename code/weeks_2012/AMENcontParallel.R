@@ -31,9 +31,9 @@ source("config.R")
 
 ## imps = 1000000
 ## brn = 500000
- ods = 25
-## #latDims = 0:3
-seed=6886
+ods = 25
+## latDims = 0:3
+seed=6889
 
 ## verification:
 ##preModLoc= print(paste0(resultsPath, 'ameFit_k', latDims,'.rda'))
@@ -53,11 +53,19 @@ length(xDyadList)
 
 foreach(ii=1:length(latDims), .packages=c("amen")) %dopar% {
 
-                                        # load previous model run
+
+    ## overwrite one of the initiation parameters
+    ## specific to the Weeks data
+    
+    rZ_bin_fc2 <- dget("rZBinfc.R")
+    assignInNamespace("rZ_bin_fc", rZ_bin_fc2, pos="package:amen")
+
+    ## load previous model run
     load(prevModelFiles[ii])
-                                        # extract start vals
+    ## extract start vals
     startVals0 = fit$'startVals'
-                                        # dump rest
+
+    ## dump rest
     rm(fit)
 
     ameFit = ame_repL(
