@@ -1,6 +1,7 @@
-##
 
 ## script to continue AMEN runs from place the last run stopped at
+## runs in parallel across values of K.
+## pulls config.txt to specify latDims, imps, and burn.
 
 
 ## Load paths and libaries:
@@ -19,37 +20,22 @@ if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
 ## load amen data
 load( paste0(dataPath, 'WeeksamenData.rda') )
 
-## running in parallel varying k
 ## read in config setting:
-
 source("config.R")
 
-##latDims= 0:3
-##print(imps)
-
-##print(latDims)
-
-## imps = 1000000
-## brn = 500000
 ods = 25
-## latDims = 0:3
-seed=6889
+seed=6886 
 
-## verification:
-##preModLoc= print(paste0(resultsPath, 'ameFit_k', latDims,'.rda'))
+## load output from previous models:
 
 prevModelFiles = paste0(resultsPath, 'ameFit_k', latDims,'.rda')
 
-                                        # Run amen in parallel
-library(doParallel) ; library(foreach)
+## Call libraries so that AMEN can run in parallel
 
+library(doParallel) ; library(foreach)
 cl=makeCluster(4) ; registerDoParallel(cl)
 
 ls()
-
-
-class(xDyadList)
-length(xDyadList)
 
 foreach(ii=1:length(latDims), .packages=c("amen")) %dopar% {
 
