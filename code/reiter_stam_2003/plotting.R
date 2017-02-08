@@ -1,10 +1,12 @@
 rm(list=ls())
 resultsPath = '/Users/juanftellez/Dropbox/netsMatter/replications/Reiter_Stam_2003/output/'
+plotPath = '/Users/juanftellez/Dropbox/netsMatter/replications/Reiter_Stam_2003/output/'
 #
 library(magrittr)
 library(ggplot2)
 library(stringr)
 library(gridExtra)
+library(Cairo)
 
 
 # load data
@@ -103,9 +105,8 @@ ggCoef = function(data, group = NULL)
 }
 
 # plot
-library(gridExtra)
 
-ggCoef(data = pDat, group = 1) ; ggsave(filename = paste0(resultsPath, 'coefs1.png'))
-ggCoef(data = pDat, group = 2) ; ggsave(filename = paste0(resultsPath, 'coefs2.png'))
-ggCoef(data = pDat, group = 3) ; ggsave(filename = paste0(resultsPath, 'coefs3.png'))
-ggCoef(data = pDat, group = 4) ; ggsave(filename = paste0(resultsPath, 'coefs4.png'))
+ggCoef(data = pDat, group = 1) ; ggsave(filename = paste0(resultsPath, 'coefs1.pdf'))
+ggCoef(data = pDat, group = 2) ; ggsave(filename = paste0(resultsPath, 'coefs2.pdf'))
+ggCoef(data = pDat, group = 3) ; ggsave(filename = paste0(resultsPath, 'coefs3.pdf'))
+ggCoef(data = pDat, group = 4) ; ggsave(filename = paste0(resultsPath, 'coefs4.pdf'))

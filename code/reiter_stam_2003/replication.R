@@ -25,7 +25,7 @@ base_vars = c('sideaa pdemdtar pdemdin personal military single democ contig maj
   strsplit(x = ., split = " ") %>%  unlist()
 
 #
-mod_dat = select(stam, one_of(base_vars), idyr) %>% 
+mod_dat = select(stam, one_of(base_vars), idyr, statea, stateb) %>% 
   filter(complete.cases(.))
 
 # formula
