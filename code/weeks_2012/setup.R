@@ -3,22 +3,18 @@
 ## the script is read into the start of future files
 
 ## if on Dave's server
-if(Sys.info()['user']== 'margaret'){
+
+if(Sys.info()['user']== 'margaret' | Sys.info()['user']== 'root' ){
     dataPath='~/projects/netsmatter/data/'
     dPath='./results/'
-    gPath='~/projects/netsmatter/code/netsMatter/code/weeks_2012/'
-                                        #where code lives on Dave's
-                                        #server
-
-    graphicPath='results/' # path to dir where i will store any graphics
-    resultsPath='results/' # path to dir where i will store results
+    gPath='~/projects/netsmatter/code/netsMatter/code/weeks_2012/'                                          #graphicPath='/results/' # path to dir where i will store any graphics
+    #resultsPath='/results/' # path to dir where i will store results
     funcPath=paste0(gPath, 'code/helpers/') # helpers directory in ~/Research
-
 }
 
 
 
-## if on one of my machines
+## If on one of my machines
 if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
     dataPath='~/Dropbox/netsMatter/replications/Weeks2012'## where the Weeks data lives
     dPath='~/Dropbox/netsMatter/' # general dropox path

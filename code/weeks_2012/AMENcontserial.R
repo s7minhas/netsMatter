@@ -1,7 +1,4 @@
-##
-
 ## script to continue AMEN runs from place the last run stopped at
-
 
 ## Load paths and libaries:
 rm(list=ls())
@@ -16,9 +13,9 @@ if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
     source('~/Dropbox/netsMatter/replications/Weeks2012/setup.R')
 }
 
-
 ## load amen data
-load( paste0(dataPath, 'WeeksamenData.rda') )
+
+load(paste0(dataPath, 'WeeksamenData.rda') )
 
 ## running in parallel varying k
 ## read in config setting:
@@ -27,31 +24,14 @@ source("config.R")
 
 ods = 25
 seed=6886
+prevModelFiles = paste0(dPath, 'ameFit_k', latDims,'.rda')
 
-prevModelFiles = paste0(resultsPath, 'ameFit_k', latDims,'.rda')
-
-## Break the parallel loop, to see if
-## all of the starting values do not produce a positive
-## definite matrix
-
-## These were from the parallel implementation
-
-##library(doParallel) ; library(foreach)
-##cl=makeCluster(4) ; registerDoParallel(cl)
-
-ls()
-
-class(xDyadList)
-length(xDyadList)
-
-
-##foreach(ii=1:length(latDims), .packages=c("amen")) %dopar% {
 
 ## load previous model run
 
-load(prevModelFiles[2])
+prevModelFiles
 
-ls()
+load(prevModelFiles)
 
 attributes(fit)
 
