@@ -158,3 +158,29 @@ latDims= 0:3
 imps= 1000000
 brn= 500000
 --
+## Note on 2/8: starting latDims 1-4 in parallel via screen
+20173708-12:37:32
+latDims= 0
+imps= 1000000
+brn= 500000
+--
+20171910-12:19:54
+latDims= 0
+imps= 100000
+brn= 500000
+--
+20172010-12:20:49
+latDims= 1
+imps= 100000
+brn= 500000
+--
+20173510-12:35:10
+latDims= 2
+imps= 100000
+brn= 500000
+--
+20170511-08:05:10
+latDims= 3
+imps= 100000
+brn= 500000
+--
