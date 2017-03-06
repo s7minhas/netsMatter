@@ -1,14 +1,14 @@
 if(Sys.info()['user']=='howardliu'){
-	source('~/netsMatter/code/rose2004/loadPkg.R') }
+	source('~/netsMatter/code/peceny2002/loadPkg.R') }
 
 #
 loadPkg('magrittr')
 
 # load data
-resultsPath = "/Users/howardliu/Dropbox/netsMatter/replications/rose2004/outputData/"
-load( paste0(resultsPath,'ameFit_k0_re.rda') ) ; ameFit_k0=ameFit
-load( paste0(resultsPath,'ameFit_k1_re.rda') ) ; ameFit_k1=ameFit
-load( paste0(resultsPath,'ameFit_k2_v1_rose.rda') ) ; ameFit_k2=ameFit
+resultsPath = "/Users/howardliu/Dropbox/netsMatter/replications/peceny2002/outputData/"
+load( paste0(resultsPath,'ameFit_k0_v2_peceny.rda') ) ; ameFit_k0=ameFit
+load( paste0(resultsPath,'ameFit_k1_v1_peceny.rda') ) ; ameFit_k1=ameFit
+load( paste0(resultsPath,'ameFit_k2_v1.rda') ) ; ameFit_k1=ameFit
 load( paste0(resultsPath,'ameFit_k3_v1.rda') ) ; ameFit_k3=ameFit
 
 #load( paste0(resultsPath,'ameFit_k2.rda') ) ; ameFit_k2=ameFit
@@ -16,9 +16,9 @@ load( paste0(resultsPath,'ameFit_k3_v1.rda') ) ; ameFit_k3=ameFit
 
 # check out goodness of fit stats
 amen::gofPlot(ameFit_k0$GOF, symmetric = FALSE)
-amen::gofPlot(ameFit_k1$GOF, symmetric = TRUE) ## change pix
-amen::gofPlot(ameFit_k2$GOF, symmetric = TRUE)
-amen::gofPlot(ameFit_k3$GOF, symmetric = TRUE)
+amen::gofPlot(ameFit_k1$GOF, symmetric = FALSE) ## change pix
+amen::gofPlot(ameFit_k2$GOF, symmetric = FALSE)
+amen::gofPlot(ameFit_k3$GOF, symmetric = FALSE)
 
 # check out beta params
 summStats = function(x){
@@ -49,15 +49,15 @@ amen::paramPlot(ameFit_k2$VC)
 amen::paramPlot(ameFit_k3$VC)
 
 latDims = 0
-pdf(paste0(resultsPath, "BETAPlot_k", latDims, ".pdf"))
+pdf(paste0(resultsPath, "BETAPlot_k", latDims,"_v2", ".pdf"))
 for(bIndex in betaIndices){ amen::paramPlot( ameFit_k0$BETA[,bIndex,drop=FALSE] ) }
 dev.off()
 
-pdf(paste0(resultsPath, "paramPlot_k", latDims, ".pdf"))
+pdf(paste0(resultsPath, "paramPlot_k", latDims,"_v2", ".pdf"))
 amen::paramPlot(ameFit_k0$VC)
 dev.off()
 
-pdf(paste0(resultsPath, "GOFPlot_k", latDims, ".pdf"))
+pdf(paste0(resultsPath, "GOFPlot_k", latDims,"_v2", ".pdf"))
 amen::gofPlot(ameFit_k0$GOF, symmetric = FALSE)
 dev.off()
 

@@ -48,16 +48,18 @@ yList = lapply(1:length(years), function(ii){
     colnames(add) = names(slice)
     slice = rbind(slice, add) # add in
     adj = reshape2::acast(slice, statea ~ stateb, value.var=yVar)
-    adj[lower.tri(adj)] <- 0
+    # adj[lower.tri(adj)] <- 0
+    adj[lower.tri(adj)] = adj[upper.tri(adj)]
     return( adj[ cntriesT[[ii]], cntriesT[[ii]] ] ) ## dont work?? maybe NA issues
 })
-
+yList[[1]]
 
 # dyadic vars
 dVars_mod1 = c('dictator',
           'democ', 'contig', 'majpow', 'ally', 'loglsrat', 'advanced', 'dispute', 'dispyrs', 'dspline1', 'dspline2', 'dspline3'
 )
 
+ii = 1
 xDyadList = lapply(1:length(years), function(ii){
 	slice = data[ which(
 			data$year==years[ii] &
@@ -65,7 +67,7 @@ xDyadList = lapply(1:length(years), function(ii){
 			data$stateb %in% cntriesT[[ii]]
 			), c('statea', 'stateb', dVars_mod1) ]
 	  #head(slice)
-	  slice$statea %>% unique
+
 	  missa = unique(slice$statea[!slice$statea %in% slice$stateb])
     #missa
 	  missb = unique(slice$stateb[!slice$stateb %in% slice$statea])
@@ -78,7 +80,8 @@ xDyadList = lapply(1:length(years), function(ii){
     #tail(slice)
 	sliceL = reshape2::melt(slice, id=c('statea','stateb'))
 	adj = reshape2::acast(sliceL, statea ~ stateb ~ variable, value.var='value')
-	adj[lower.tri(adj)] <- 0
+	# adj[lower.tri(adj)] <- 0 # this seems wrong, try the below, sm
+  for(p in 1:dim(adj)[3]){ x=adj[,,p] ; x[lower.tri(x)] = x[upper.tri(x)] ; adj[,,p]=x ; rm(x) }
 	return( adj[ cntriesT[[ii]], cntriesT[[ii]],  ] )
 })
 

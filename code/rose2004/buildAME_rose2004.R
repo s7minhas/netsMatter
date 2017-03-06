@@ -60,6 +60,12 @@ dVars_mod1 = c(
         'comlang', 'border', 'landl', 'island', 'lareap', 'comcol', 'curcol', 'colony', 'comctry'
         )
 
+# var = c('ltrade', # log real trade
+#         'bothin', 'onein', 'gsp', 'ldist', 'lrgdp', 'lrgdppc', 'regional',
+#         'custrict',
+#         'comlang', 'border', 'landl', 'island', 'lareap', 'comcol', 'curcol', 'colony', 'comctry', 'as.factor(year)'
+#         )
+
 xDyadList = lapply(1:length(years), function(ii){
 	slice = data[ which(
 			data$year==years[ii] &
