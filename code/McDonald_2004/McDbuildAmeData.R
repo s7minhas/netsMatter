@@ -16,7 +16,6 @@ if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
 
 char = function(x){ as.character(x) }
 num = function(x){ as.numeric(char(x)) }
-
 trim = function (x) { gsub("^\\s+|\\s+$", "", x) }
 
 
@@ -47,57 +46,17 @@ head(data)
 
 years = sort(unique(data$year)) #1971-2000
 
-
-## countriesT = lapply(years, function(t){
-##     as.character(unique(data$ccode1[data$year==t]) ) })
-
-## #countriesT
-## # get count of actors by year
-## tail(sort(table( unlist( countriesT ) )))
-
-######################
-## Check for symmetry
-
-## mst = lapply(years, function(t){
-##    unique(data$ccode1[data$year==t])})
-
-
-## mst2 = lapply(years, function(t){
-##    unique(data$ccode2[data$year==t])})
-
-## difs <- lapply(1:length(years), function(y){
-##     ##
-##     setdiff(mst2[[y]], mst[[y]]) 
-## })
-
-## difs2 <- lapply(1:length(years), function(y){
-##     ##
-##     setdiff(mst[[y]], mst2[[y]]) 
-## })
-
-
-## difs ## fails test!
-## difs2
-
-#######
-
 ## correct for asymmetric actor list:
 
 pds = sort(unique(data$year))
 length(pds) ##44
 
+## want actorList[[i]] to be about 20-30 unique
+
 actorList = lapply(pds, function(t){
     slice = data[data$year==t,c('ccode1' , 'ccode2')]
     sort(unique(c(slice$ccode1, slice$ccode2)))
 })
-
-## investigate what actorList produces:
-class(actorList) #list
-length(actorList) ## 44 (so, each year)
-class(actorList[[1]]) #numeric
-
-length(actorList[[1]]) #want this to be 20-30, depending on i
-length(actorList[[2]])
 
 ## remove ccodes 212, 369, and483
 ## each only available for one year
@@ -107,9 +66,12 @@ length(actorList[[2]])
 ## countriesT = lapply(countriesT, function(x){ x[x!='369'] })
 ## countriesT = lapply(countriesT, function(x){ x[x!='482'] })
 
-## dv
 
-## to here: need to find out where actorList goes.
+#########################################
+## Build list of adjacency matricies for the DV
+## dv
+#########################################3
+
 
 yVar = 'cw2mid'
 
@@ -121,7 +83,7 @@ yList = lapply(1:length(years), function(ii){
         ), c('ccode1', 'ccode2', yVar) ]
 
     ## this creates the symmetric adj matrix
-    symmetry <- as.data.frame(
+     symmetry <- as.data.frame(
         cbind(slice$ccode2, slice$ccode1,slice$cw2mid))
         names(symmetry)=c("ccode1", "ccode2", "cw2mid")
 
@@ -139,48 +101,68 @@ yList = lapply(1:length(years), function(ii){
         ##send out and close apply:
         return(tmp)}) ; names(yList) = years
 
-length(yList)
-yList[[1]]
 
-## year 1= 1971, which happened to have no MIDs
-## in this data
-rowSums(yList[[1]], na.rm=TRUE)
-
-years[15] #1985, should have 32
-table(rowSums(yList[[15]], na.rm=TRUE))
+#### Build list of dyadic variable values
 
 ## dyadic vars
 
-dVars = c(...)
+baseVars
+baseVars[2:16]
+
+dVars = baseVars[2:16]
 
 xDyadList = lapply(1:length(years), function(ii){
 	slice = data[ which( 
 			data$year==years[ii] & 
 			data$ccode1 %in% actorList[[ii]] & 
 			data$ccode2 %in% actorList[[ii]]
-			), c('ccode1', 'ccode2', dVars) ]
+            ), c('ccode1', 'ccode2', dVars) ]
+
+        symmetry <- as.data.frame(
+            ## ToDO: make the dVars go here@
+        cbind(slice$ccode2, slice$ccode1,#dvasr))
+        names(symmetry)=c("ccode1", "ccode2", "cw2mid")
+
+        ## bind the two to make a faux "directed"
+        ## edgelist:
+        dat <- rbind(slice, symmetry)  
+        
+        ## now produce adjacency matrix
+        adj = reshape2::acast(dat, ccode1 ~ ccode2, value.var=yVar)
+        
 	sliceL = reshape2::melt(slice, id=c('ccode1','ccode2'))
 	adj = reshape2::acast(sliceL, ccode1 ~ ccode2 ~ variable, value.var='value')
-	return( adj[ actorList[[ii]], actorList[[ii]],  ] )
-}) ; names(xDyadList) = years
+	return( adj[char(actorList[[ii]]), char(actorList[[ii]]),  ] )
+    }) ; names(xDyadList) = years
+
 
 # nodal vars
 nVars = c(..)
 
 xNodeList = lapply(1:length(years), function(ii){
-	slice = unique( data[ which( 
+
+    slice = unique( data[ which( 
 			data$year==years[ii] & 
 			data$ccode1 %in% actorList[[ii]] & 
 			data$ccode2 %in% actorList[[ii]]
-			), c('ccode1', nVars) ] )
-	if(nrow(slice)!=length(actorList[[ii]])){
-            stop('# rows dont match')
-        }
-        
-	regionSplit = model.matrix(~region-1, data=slice)
-	adj = data.matrix(cbind( slice[,nVars[-length(nVars)]], regionSplit ))
+        ), c('ccode1', nVars) ] )
+    
+    symmetry <- as.data.frame(
+         cbind(slice$ccode2, slice$ccode1,slice$cw2mid))
+    names(symmetry)=c("ccode1", "ccode2", "cw2mid")
+    
+    ## bind the two to make a faux "directed"
+    ## edgelist:
+    dat <- rbind(slice, symmetry)  
+       
+    #if(nrow(slice)!=length(actorList[[ii]])){
+     #   stop('# rows dont match')
+    #}
+    
+    #regionSplit = model.matrix(~region-1, data=slice)
+    adj = data.matrix(cbind( slice[,nVars[-length(nVars)]], regionSplit ))
 	rownames(adj) = slice$ccode1
-	return( adj[ actorList[[ii]], ]  )
+	return( adj[ char(actorList[[ii]]), ]  )
     }) ; names(xNodeList) = years
 
 # save dfs
