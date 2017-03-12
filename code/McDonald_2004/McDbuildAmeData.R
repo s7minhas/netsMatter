@@ -106,64 +106,90 @@ yList = lapply(1:length(years), function(ii){
 
 ## dyadic vars
 
-baseVars
-baseVars[2:16]
+baseVars ## all vars
+
+baseVars[2:16] ## confirm that these are the ones  I want
 
 dVars = baseVars[2:16]
 
+#head(cbind(data$ccode1, data$ccode2, data[,dVars]))
+
 xDyadList = lapply(1:length(years), function(ii){
-	slice = data[ which( 
-			data$year==years[ii] & 
-			data$ccode1 %in% actorList[[ii]] & 
-			data$ccode2 %in% actorList[[ii]]
-            ), c('ccode1', 'ccode2', dVars) ]
-
-        symmetry <- as.data.frame(
-            ## ToDO: make the dVars go here@
-        cbind(slice$ccode2, slice$ccode1,#dvasr))
-        names(symmetry)=c("ccode1", "ccode2", "cw2mid")
-
-        ## bind the two to make a faux "directed"
-        ## edgelist:
-        dat <- rbind(slice, symmetry)  
-        
-        ## now produce adjacency matrix
-        adj = reshape2::acast(dat, ccode1 ~ ccode2, value.var=yVar)
-        
-	sliceL = reshape2::melt(slice, id=c('ccode1','ccode2'))
-	adj = reshape2::acast(sliceL, ccode1 ~ ccode2 ~ variable, value.var='value')
-	return( adj[char(actorList[[ii]]), char(actorList[[ii]]),  ] )
-    }) ; names(xDyadList) = years
-
-
-# nodal vars
-nVars = c(..)
-
-xNodeList = lapply(1:length(years), function(ii){
-
-    slice = unique( data[ which( 
-			data$year==years[ii] & 
-			data$ccode1 %in% actorList[[ii]] & 
-			data$ccode2 %in% actorList[[ii]]
-        ), c('ccode1', nVars) ] )
+    slice = data[ which( 
+        data$year==years[ii] & 
+        data$ccode1 %in% actorList[[ii]] & 
+        data$ccode2 %in% actorList[[ii]]
+        ), c('ccode1', 'ccode2', dVars) ]
     
     symmetry <- as.data.frame(
-         cbind(slice$ccode2, slice$ccode1,slice$cw2mid))
-    names(symmetry)=c("ccode1", "ccode2", "cw2mid")
+        ## all of the dependent variables
+        ## are dyadic, so can just place the data
+        ## in naively ...I think 
+        
+        cbind(slice$ccode2, slice$ccode1, slice[,dVars]))
+    names(symmetry)=c("ccode1", "ccode2",dVars)
     
-    ## bind the two to make a faux "directed"
-    ## edgelist:
-    dat <- rbind(slice, symmetry)  
-       
-    #if(nrow(slice)!=length(actorList[[ii]])){
-     #   stop('# rows dont match')
-    #}
+                                        #head(symmetry)
+        ## bind the two to make a faux "directed"
+        ## edgelist:
+    dat <- rbind(slice, symmetry)
     
-    #regionSplit = model.matrix(~region-1, data=slice)
-    adj = data.matrix(cbind( slice[,nVars[-length(nVars)]], regionSplit ))
-	rownames(adj) = slice$ccode1
-	return( adj[ char(actorList[[ii]]), ]  )
-    }) ; names(xNodeList) = years
+    
+    ##check for asymmetries:
+    ## just first dimension so doesn't throw warnings
+    if(dim(dat)[1] !=dim(unique(dat))[1] ){
+        print(paste0("Check for duplicated entries in year  ", ii))}
+    
+## now produce adjacency matrix
+        
+    sliceL = reshape2::melt(dat, id=c('ccode1','ccode2')) 
+    adj = reshape2::acast(sliceL, ccode1 ~ ccode2 ~ variable,
+        value.var='value')
+    
+    
+    return(adj[char(actorList[[ii]]), char(actorList[[ii]]),  ]    )
+}) ; names(xDyadList) = years
 
-# save dfs
-save(yList, xDyadList, xNodeList, file=paste0(dataPath, 'amenData.rda'))
+ls()
+length(xDyadList)
+
+###########################################
+## Build nodal variables
+## README: McDonald doesn't have any node-specific vars
+## that are not just identifiers
+###########################################
+
+## nVars = c(..)
+
+## xNodeList = lapply(1:length(years), function(ii){
+
+##     slice = unique( data[ which( 
+## 			data$year==years[ii] & 
+## 			data$ccode1 %in% actorList[[ii]] & 
+## 			data$ccode2 %in% actorList[[ii]]
+##         ), c('ccode1', nVars) ] )
+    
+##     symmetry <- as.data.frame(
+##         cbind(slice$ccode2, slice$ccode1,slice$cw2mid))
+##     names(symmetry)=c("ccode1", "ccode2", nVars)
+    
+##     ## bind the two to make a faux "directed"
+##     ## edgelist:
+##     dat <- rbind(slice, symmetry)  
+    
+##     #if(nrow(slice)!=length(actorList[[ii]])){
+##      #   stop('# rows dont match')
+##     #}
+    
+##     #regionSplit = model.matrix(~region-1, data=slice)
+##     adj = data.matrix(cbind( slice[,nVars[-length(nVars)]], regionSplit ))
+## 	rownames(adj) = slice$ccode1
+## 	return( adj[ char(actorList[[ii]]), ]  )
+##     }) ; names(xNodeList) = years
+
+
+##########################################
+## Save data
+###########################################
+
+save(yList, xDyadList, file=paste0(dataPath, 'amenData.rda'))
