@@ -46,9 +46,17 @@ print(paste0("Single latent dimension, which is ", latDims))
 prevModelFiles = paste0(dPath, 'ameFit_k', latDims,'.rda')
 load(prevModelFiles)
 
+ls()
 class(prevModelFiles)
 
-startVals0 = ameFit$'startVals'
+if(latDims==0){
+    startVals0=ameFit$'startVals'
+}
+
+if(latDims==1 | latDims==2 | latDims==3){
+startVals0=fit$'startVals'
+}
+
 ################################
 ## Trial run
 ### (using Howard's code)
@@ -58,7 +66,7 @@ startVals0 = ameFit$'startVals'
 seed=6889
 
 
-ameFit = ame_repL(
+ameFit =  ame_repL(
     Y=yList,Xdyad=xDyadList,Xrow=NULL,Xcol=NULL,
     model="bin",symmetric=TRUE, # McDonald model is symmetric
     intercept=FALSE,R=latDims,
@@ -66,6 +74,7 @@ ameFit = ame_repL(
     plot=FALSE, print=FALSE, gof=TRUE,
     startVals=startVals0,
     periodicSave=TRUE, outFile=paste0(dPath, 'ameFit_k', latDims,'.rda')
-    )                                   
+    )   
+
 
 save(ameFit, file=paste0(dPath, 'ameFit_k', latDims,'.rda'))
