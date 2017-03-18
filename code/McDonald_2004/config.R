@@ -1,3 +1,3 @@
-latDims= 2
-imps= 200
-brn= 100
+latDims= 3
+imps= 100000
+brn= 500000
