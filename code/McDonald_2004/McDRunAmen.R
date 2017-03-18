@@ -1,25 +1,30 @@
 
 ## Script to replicate the results in McDonald (2004)
-
-## paths
-if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
-    dPath='~/Dropbox/netsMatter/replications/McDonald_2004/data/'
+#
+## If on Dave's computer:
+if(Sys.info()['user']== 'margaret'| Sys.info()['user']== 'root'){
+    print("On Dave's server")
+    source('setup.R')
+    ls()
 }
 
-
-## load libraries
+## If my own
+if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
+    dPath='~/Dropbox/netsMatter/replications/McDonald_2004/data/'
+    
+    ## load libraries
 ### install/load libraries
-
-loadPkg=function(toLoad){
+    
+    loadPkg=function(toLoad){
 	for(lib in toLoad){
-	  if(!(lib %in% installed.packages()[,1])){ 
-	    install.packages(lib, repos='http://cran.rstudio.com/') }
-	  suppressMessages( library(lib, character.only=TRUE) )
+            if(!(lib %in% installed.packages()[,1])){ 
+                install.packages(lib, repos='http://cran.rstudio.com/') }
+            suppressMessages( library(lib, character.only=TRUE) )
 	}
     }
-
-loadPkg(c('amen'))
-
+    
+    loadPkg(c('amen'))
+}
 
 ###################################
 ## load amen data and config
@@ -33,6 +38,17 @@ load(paste0(dPath, 'amenData.rda') )
 ## imps, latDims, brn
 source("config.R")
 
+## if we're continuing to run:
+
+print(paste0("Single latent dimension, which is ", latDims))
+
+## load previous model run
+prevModelFiles = paste0(dPath, 'ameFit_k', latDims,'.rda')
+load(prevModelFiles)
+
+class(prevModelFiles)
+
+startVals0 = ameFit$'startVals'
 ################################
 ## Trial run
 ### (using Howard's code)
@@ -40,18 +56,16 @@ source("config.R")
 ## params that are stable
 
 seed=6889
-ods=10
-#### k =0 #####
 
-# Run amen in parallel
 
 ameFit = ame_repL(
     Y=yList,Xdyad=xDyadList,Xrow=NULL,Xcol=NULL,
-    model="bin",symmetric=FALSE, # was directed data
+    model="bin",symmetric=TRUE, # McDonald model is symmetric
     intercept=FALSE,R=latDims,
     nscan=imps, seed=seed, burn=brn, odens=ods,
     plot=FALSE, print=FALSE, gof=TRUE,
-    periodicSave=TRUE, outFile=paste0(dPath,'ameFit_k0.rda')
-    )
+    startVals=startVals0,
+    periodicSave=TRUE, outFile=paste0(dPath, 'ameFit_k', latDims,'.rda')
+    )                                   
 
-save(ameFit, file=paste0(dPath,'ameFit_k0.rda'))
+save(ameFit, file=paste0(dPath, 'ameFit_k', latDims,'.rda'))

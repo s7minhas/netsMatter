@@ -13,6 +13,7 @@
 echo "latDims= $1" > config.R
 echo "imps= $2" >> config.R
 echo "brn= $3" >> config.R
+echo "ods=$4" >> config.R
 
 ## now keep track of settings into the logfile:
 echo "$(date '+%D-%H:%M:%S')" >> logfile.txt
