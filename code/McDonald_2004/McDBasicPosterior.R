@@ -34,7 +34,7 @@ dev.off()
 pdf(file=paste0(dPath, "gofPlotK2.pdf"))
 amen::gofPlot(ameFit_k2$GOF, symmetric = TRUE)
 dev.off()
-
+#
 pdf(file=paste0(dPath, "gofPlotK3.pdf"))
 amen::gofPlot(ameFit_k3$GOF, symmetric = TRUE)
 dev.off()

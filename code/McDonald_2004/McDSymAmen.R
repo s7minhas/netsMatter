@@ -1,6 +1,7 @@
 
 ## Script to replicate the results in McDonald (2004)
-#
+## Coded for a symmetric model
+
 ## If on Dave's computer:
 if(Sys.info()['user']== 'margaret'| Sys.info()['user']== 'root'){
     print("On Dave's server")
@@ -13,8 +14,7 @@ if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
     dPath='~/Dropbox/netsMatter/replications/McDonald_2004/data/'
     
     ## load libraries
-### install/load libraries
-    
+### install/load libraries    
     loadPkg=function(toLoad){
 	for(lib in toLoad){
             if(!(lib %in% installed.packages()[,1])){ 
@@ -42,15 +42,20 @@ source("config.R")
 
 print(paste0("Single latent dimension, which is ", latDims))
 
+### reactivate this section if have starting values
+
 ## load previous model run
-prevModelFiles = paste0(dPath, 'ameFit_k', latDims,'.rda')
-load(prevModelFiles)
-ls()
+## prevModelFiles = paste0(dPath, 'ameFit_k', latDims,'.rda')
+## load(prevModelFiles)
+## ls()
 
-#head(fit$'BETA')
+## if(latDims==0){
+##     startVals0=ameFit$'startVals'
+## }
 
-startVals0=ameFit$'startVals'
-
+## if(latDims==1 | latDims==2 | latDims==3){
+## startVals0=fit$'startVals'
+## }
 
 ################################
 ## Trial run
@@ -60,16 +65,15 @@ startVals0=ameFit$'startVals'
 
 seed=6889
 
-
 ameFit =  ame_repL(
     Y=yList,Xdyad=xDyadList,Xrow=NULL,Xcol=NULL,
-    model="bin",symmetric=FALSE, # McDonald model is symmetric
+    model="bin",symmetric=TRUE, # McDonald model is symmetric
     intercept=FALSE,R=latDims,
     nscan=imps, seed=seed, burn=brn, odens=ods,
     plot=FALSE, print=FALSE, gof=TRUE,
-    startVals=startVals0,
-    periodicSave=TRUE, outFile=paste0(dPath, 'ameFit_k', latDims,'.rda')
+#   startVals=startVals0,
+    periodicSave=TRUE, outFile=paste0(dPath, 'ameFitSym_k', latDims,'.rda')
     )   
 
 
-save(ameFit, file=paste0(dPath, 'ameFit_k', latDims,'.rda'))
+save(ameFit, file=paste0(dPath, 'ameFitSym_k', latDims,'.rda'))
