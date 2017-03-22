@@ -62,6 +62,7 @@ if(Sys.info()['user']== 'margaret' | Sys.info()['user']== 'root'){
     library(devtools)
     document('~/projects/netsmatter/amen/')
     install('~/projects/netsmatter/amen/')
+    library(amen)
 }
 
 ## if on one of my macs

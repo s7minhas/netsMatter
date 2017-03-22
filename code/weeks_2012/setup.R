@@ -1,4 +1,4 @@
-## This file loads packages needed to do the replications and run AMEN
+# This file loads packages needed to do the replications and run AMEN
 ## and also identifies paths to load and save data
 ## the script is read into the start of future files
 
@@ -57,7 +57,7 @@ print("packages loaded")
 
 ## for my local clone:
 
-if(Sys.info()['user']== 'margaret'){
+if(Sys.info()['user']== 'margaret'  | Sys.info()['user']== 'root'){
     print("Loading local clone of AMEN")
     library(devtools)
     document('~/projects/netsmatter/amen/')
