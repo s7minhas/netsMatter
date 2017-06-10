@@ -1,23 +1,18 @@
-A
+
 ### This is the third of the three scripts
 ## to generate the Weeks xvalidation
 
 ## needs to load model fit (produced by weeks fit crossval)
-
 path <-'~/Dropbox/netsMatter/replications/Weeks2012/replication/output/' 
 
-load(paste0(path, ))
-load(paste0(path, "fitCrossVal_k0.r"))
-
-## load some helper functions and
-## parameters
-source('xValSetupK0.R')
-
 ################
 
-################
-## redeclare yListFolds
-set.seed(seed)
+## Load helpers for the out sample validation:
+
+library('ROCR')
+library('RColorBrewer')
+library('caTools')
+source('binPerf.R')
 
 ameOutSamp = function(yList=yList,
     xDyadL=xDyadL,
@@ -36,14 +31,15 @@ ameOutSamp = function(yList=yList,
     cvar=cvar,
     symmetric=symmetric){
     
-set.seed(seed)
-yListFolds = lapply(yList, function(y){
-    yFold=matrix(sample(1:folds, length(y), replace=TRUE),
-        nrow=nrow(y),ncol=ncol(y), dimnames=dimnames(y)) # Na --> affects folds, so only 4-5 folds
-    diag(yFold) = NA
-    return(yFold) }) # num of folds
-## Then:
-print("Getting predictions")
+    set.seed(6889)
+    
+    yListFolds = lapply(yList, function(y){
+        yFold=matrix(sample(1:folds, length(y), replace=TRUE),
+            nrow=nrow(y),ncol=ncol(y), dimnames=dimnames(y)) # Na --> affects folds, so only 4-5 folds
+        diag(yFold) = NA
+        return(yFold) }) # num of folds
+    ## Then:
+    print("Getting predictions")
 
   # get preds (predictions)
 outPerf = do.call('rbind', lapply(1:folds, function(f){
@@ -56,9 +52,7 @@ outPerf = do.call('rbind', lapply(1:folds, function(f){
         res=na.omit(data.frame(actual=c(y), pred=c(predT), fold=f, stringsAsFactors=FALSE))
                                         #res$pred = 1/(1+exp(-res$pred)) --> normal model
         return(res) }) ) }) )
-
-class(outPerf) #dataframe
-
+    
 ## get perf stats  (just do RMSE)
 aucByFold=do.call('rbind', lapply(1:folds, function(f){
     slice = outPerf[outPerf$fold==f,]
@@ -75,9 +69,10 @@ aucByFold=do.call('rbind', lapply(1:folds, function(f){
   print("organizing output for return")
   # org output and return
   out=list(outPerf=outPerf, aucByFold=aucByFold,
-    aucROC=aucROC, aucPR=aucPR)
+      aucROC=aucROC, aucPR=aucPR)
  return(out)
 }
+
 
 ################
 
@@ -85,20 +80,13 @@ aucByFold=do.call('rbind', lapply(1:folds, function(f){
 ## run outsamp models
 
 
-ameOutSamp_NULL = ameOutSamp(
-    yList=yList, xDyadL=NULL, xRowL=NULL, xColL=NULL,
-    startVals=fit$startVals
-    )
+## ameOutSamp_NULL = ameOutSamp(
+##     yList=yList, xDyadL=NULL,
+##     xRowL=NULL, xColL=NULL,
+##     startVals=ameFit$'startVals')
 
 
-ameOutSamp_wFullSpec = ameOutSamp(
-  yList=yList, xDyadL=xDyadL, xRowL=xRowL, xColL=xColL,
-  startVals=fitFullSpec$startVals
-)
-
-# save
-save(
-  ameOutSamp_NULL, ameOutSamp_wFullSpec,
-  file=paste0(pathResults, 'ameCrossValResults.rda')
-)
-################
+## ameOutSamp_wFullSpec = ameOutSamp(
+##   yList=yList, xDyadL=xDyadL, xRowL=xRowL, xColL=xColL,
+##   startVals=fitFullSpec$startVals
+## )
