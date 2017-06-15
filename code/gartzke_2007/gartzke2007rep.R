@@ -25,6 +25,19 @@ colnames(data)[36] = 'spline3'
 
 
 
+x = data[, c('demlo', 'demhi', 'deplo',
+           'capopenl', 'rgdppclo', 'gdpcontg',
+           'sun2cati', 'contig', 'logdstab',
+           'majpdyds', 'alliesr', 'lncaprt',
+           'spline1', 'spline2', 'spline3')]
+# 
+# x = x[!is.na(x$x$demlo) & !is.na(x$demhi) & !is.na(x$deplo) &
+#         !is.na(x$capopenl) & !is.na(x$rgdppclo) & !is.na(x$gdpcontg) & 
+#         !is.na(x$sun2cati) & !is.na(x$contig) & !is.na(x$logdstab) &
+#         !is.na(x$majpdyds) & !is.na(x$alliesr) & !is.na(x$lncaprt) &
+#         !is.na(x$spline1) & !is.na(x$spline2) & !is.na(x$spline3), ]
+
+cor(x, use='pairwise.complete.obs')
 
 
 ##### Table 1, Model 5 #####
@@ -55,5 +68,30 @@ m1cluster
 
 
 
+
+#Spineless: 
+  
+m1s = glm(maoznewl ~ demlo + demhi + deplo +
+           capopenl + rgdppclo + gdpcontg + 
+           sun2cati + contig + logdstab +
+           majpdyds + alliesr + lncaprt, 
+         data = data, 
+         family = 'binomial')
+summary(m1s)
+
+### Cluster SE's by dyad
+
+# Shahryar's solution
+baseModelVcov = cluster.vcov(model=m1s, cluster=data$dyadid, 
+                             df_correction = FALSE, leverage = 3)
+m1clusterS = coeftest(m1s, baseModelVcov)
+
+
+
+m1clusterS
+# Results: 
+# coefficients replicate perfectly
+# SE's are very close or identical after rounding
+# just different because of clustering algorithms? 
  
 

@@ -31,7 +31,7 @@ if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
 ###################################
 
 ## data
-load(paste0(dPath, 'amenData.rda') )
+#load(paste0(dPath, 'amenData.rda') )
 
 
 ##params: read in from config.R
