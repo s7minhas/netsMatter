@@ -9,21 +9,35 @@
 rm(list=ls())
 
 ## load script to load package
-source('LoadPackage.R')
-#source('setup.R') #for some small helper functions
-
-char = function(x){ as.character(x) }
-num = function(x){ as.numeric(char(x)) }
-trim = function (x) { gsub("^\\s+|\\s+$", "", x) }
+source('loadPackage.R')
+source('setup.R') #for some small helper functions
 
 library(dplyr)
 library(reshape2)
 library(tidyr)
 ################
-path = '~/Dropbox/netsMatter/replications/Weeks2012/replication/output/'
+## set up different data paths depending on whether on my computers or Dave's server
+
+## case 1: Dave's server:
+if(Sys.info()['user']== 'margaret'){
+    source('~/projects/netsmatter/code/netsMatter/code/weeks_2012/setup.R')
+    # data path named as "dpath"
+}
+
+## One of my machines
+if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
+    source('~/Dropbox/netsMatter/replications/Weeks2012/setup.R')
+}
+
+#path = '~/Dropbox/netsMatter/replications/Weeks2012/replication/output/'
 ################
-# load data
-load(paste0(path, 'WeeksamenData.rda'))
+## load ame results
+## assume that we want one that matches the
+## K (or R)
+
+## let's start with K=2
+load(paste0(dPath, 'ameFit_k2.rda'))
+load(paste0(dataPath, 'WeeksamenData.rda'))
 
 # crossval params
 seed=6886
@@ -56,10 +70,49 @@ ls()
 
 ################
 
+## weeks-specific fix
+rZ_bin_fc2 <- function(Z,EZ,rho,Y) {
+    ## simulates Z under the contraints
+    ## (1)  Y[i,j]=1   => Z[i,j]>0
+    ##(2)  Y[i,j]=0   => Z[i,j]<0
+   
+    sz<-sqrt(1-rho^2)
+    ut<-upper.tri(EZ)
+    lt<-lower.tri(EZ)
+    
+    Y[is.na(Y)]<- -1
+    for(y in c((-1):1))
+    {
+        lb<-c(-Inf,-Inf,0)[y+2] ; ub<-c(Inf,0,Inf)[y+2]
+
+        up<- ut & Y==y
+        ez<- EZ[up] + rho*( t(Z)[up]  - t(EZ)[up] )
+        lbUnif <- pnorm((lb-ez)/sz)
+        ubUnif <- pnorm((ub-ez)/sz)
+        unif <- runif(sum(up),lbUnif,ubUnif)
+        unif[unif==1]=1-(1e-16)
+        Z[up]<-ez+sz*qnorm(unif)
+
+        up<- lt & Y==y
+        ez<- EZ[up] + rho*( t(Z)[up]  - t(EZ)[up] )
+        lbUnif <- pnorm((lb-ez)/sz)
+        ubUnif <- pnorm((ub-ez)/sz)
+        unif <- runif(sum(up),lbUnif,ubUnif)
+        unif[unif==1]=1-(1e-16)
+        Z[up]<-ez+sz*qnorm(unif)
+    }
+
+    diag(Z)<-rnorm(nrow(Z),diag(EZ),1)
+    Z
+}
+
+assignInNamespace("rZ_bin_fc", rZ_bin_fc2, pos="package:amen")
+
+#####
 ameOutSamp = function(
 	yList, xDyadL=NULL, xRowL=NULL, xColL=NULL, startVals, ## startVal (to pick one portion)
 	seed=6886, folds=30, #increase burn and nscan eventually
-    R=2, model='bin', burn=1000, nscan=200, odens=25, 
+    R=2, model='bin', burn=10, nscan=20, odens=2, #expand when needed 
     intercept=TRUE, rvar=TRUE, cvar=TRUE, symmetric=FALSE){
     
     set.seed(seed)
@@ -136,11 +189,17 @@ ameOutSamp = function(
 }
 ###############
 ################
-# run outsamp models
-ameOutSamp_NULL = ameOutSamp(
-	yList=yList, xDyadL=NULL, xRowL=NULL, xColL=NULL,
-	startVals=fit$startVals
-	)
+## run outsamp models
+ls()
 
+ameOutSamp_NULL = ameOutSamp(
+    yList=yList, xDyadL=xDyadList,
+    xRowL=xNodeList.s,
+    xColL=xNodeList.r,
+    startVals=fit$startVals
+)
+
+save(ameOutSamp_NULL, file=
+                          paste0("outsampResults", K,".Rdata"))
 ## think that this is what I want to run, when I package
 ## the above back into a function

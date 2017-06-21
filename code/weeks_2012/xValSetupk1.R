@@ -19,16 +19,17 @@ num <- function(x){ as.numeric(char(x)) }
 ################
 ## define paths
 
+
 path = '~/Dropbox/netsMatter/replications/Weeks2012/replication/output/'
 
 ## load helpers
 source('binPerf.R') #should be in same directory
 
 ## load data
-load(paste0(path, 'WeeksamenData.rda'))
+load(paste0(dataPath, 'WeeksamenData.rda'))
 
 ## load model results
-load(paste0(path, 'model_k12017-03-15_v2.rda'))
+load(paste0(dpath, 'model_k12017-03-15_v2.rda'))
 ################
 
 ## parameters for the cross-val

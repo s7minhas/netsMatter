@@ -53,16 +53,16 @@ print("packages loaded")
                                         ## load amen
 
 ## for github install:
-#devtools::install_github('s7minhas/amen') ; library(amen)
+devtools::install_github('s7minhas/amen') ; library(amen)
 
 ## for my local clone:
 
-if(Sys.info()['user']== 'margaret'  | Sys.info()['user']== 'root'){
-    print("Loading local clone of AMEN")
-    library(devtools)
-    document('~/projects/netsmatter/amen/')
-    install('~/projects/netsmatter/amen/')
-}
+## if(Sys.info()['user']== 'margaret'  | Sys.info()['user']== 'root'){
+##     print("Loading local clone of AMEN")
+##     library(devtools)
+##     document('~/projects/netsmatter/amen/')
+##     install('~/projects/netsmatter/amen/')
+## }
 
 ## if on one of my macs
 if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
