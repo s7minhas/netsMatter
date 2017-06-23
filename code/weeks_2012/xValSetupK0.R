@@ -1,38 +1,4 @@
-## This script to load objects needed for the Weeks cross-validation
-
-#rm(list=ls())
-
-if(Sys.info()['user']== 'margaret'  | Sys.info()['user']== 'root'){
-    print("Loading local clone of AMEN")
-    library(devtools)
-    document('~/projects/netsmatter/amen/')
-    install('~/projects/netsmatter/amen/')
-}
-
-## if on one of my macs
-if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
-    print("loading AMEN from Github")
-    devtools::install <- github('s7minhas/amen') ; library(amen)
-}
-
-## Set a theme for gg:
-theme <- set(theme <- bw())
-
-## misc
-char = function(x){ as.character(x) }
-num = function(x){ as.numeric(char(x)) }
-trim = function (x) { gsub("^\\s+|\\s+$", "", x) }
-
-### loading libraries:
-
-library(reshape2)
-library(ROCR)
-library(caTools)
-library(RColorBrewer)
-library(devtools) ; devtools::install_github('s7minhas/amen') ; library(amen)
-
-char <- function(x){ as.character(x) }
-num <- function(x){ as.numeric(char(x)) }
+## This script to load objects and paths  needed for the Weeks cross-validation
 ################
 
 ### paths, depending on computer
@@ -41,8 +7,9 @@ num <- function(x){ as.numeric(char(x)) }
 if(Sys.info()['user']== 'margaret' | Sys.info()['user']== 'root' ){
     dataPath='~/projects/netsmatter/data/'
     dPath='./results/'
-    gPath='~/projects/netsmatter/code/netsMatter/code/weeks_2012/'                                          #graphicPath='/results/' # path to dir where i will store any graphics
-                                        #resultsPath='/results/' # path to dir where i will store results
+    gPath='~/projects/netsmatter/code/netsMatter/code/weeks_2012/'
+    ##graphicPath='/results/' # path to dir where i will store any graphics
+    ##resultsPath='/results/' # path to dir where i will store results
     funcPath=paste0(gPath, 'code/helpers/') # helpers directory in ~/Research
 }
 
@@ -68,7 +35,11 @@ load(paste0(dataPath, 'WeeksamenData.rda'))
 
 ## load model results
 
-load(paste0(dpath, 'model_k02017-03-15_v2.rda'))
+load(paste0(dPath, 'model_k02017-03-15_v2.rda'))
+
+## changing some names for consistency
+
+fit=ameFit
 ################
 
 ## parameters for the cross-val

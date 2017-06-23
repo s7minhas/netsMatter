@@ -2,23 +2,20 @@
 ## difference appears to be in the fit function
 ## becomes the ameRepl function
 ## instead of the glm
-
-
 ################
 # workspace
 rm(list=ls())
 
 ## load script to load package
 source('loadPackage.R')
-source('setup.R') #for some small helper functions
 
 library(dplyr)
 library(reshape2)
 library(tidyr)
 ################
 ## set up different data paths depending on whether on my computers or Dave's server
-
-## case 1: Dave's server:
+## load setup.R for small helper functions
+##case 1: Dave's server:
 if(Sys.info()['user']== 'margaret'){
     source('~/projects/netsmatter/code/netsMatter/code/weeks_2012/setup.R')
     # data path named as "dpath"
@@ -29,22 +26,22 @@ if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
     source('~/Dropbox/netsMatter/replications/Weeks2012/setup.R')
 }
 
-#path = '~/Dropbox/netsMatter/replications/Weeks2012/replication/output/'
+
 ################
 ## load ame results
-## assume that we want one that matches the
-## K (or R)
+## load the k-specific data:
+## as well as the ame formulation of the data
+##source('xValSetupK0.R') #started 5:20 6/22
+source('xValSetupk1.R') #started 5:30 pm  6/22
+##source('xValSetupk2.R') #started 5:28 pm 6/22
+##source('xValSetupk3.R') #started 5:19 6/22
 
-## let's start with K=2
-load(paste0(dPath, 'ameFit_k2.rda'))
-load(paste0(dataPath, 'WeeksamenData.rda'))
+## load helpers
+source('binPerf.R') #should be in same directory
 
 # crossval params
 seed=6886
 folds=30
-
-ls()
-
 ################
 
 dyadicVars <- c('mzinit', "dependlow" , "majmaj", "minmaj", "majmin",
@@ -65,8 +62,6 @@ form_mod = formula(paste0('value ~ ',
     paste(base_vars[-1], collapse = '+')))
 
 form_mod
-
-ls()
 
 ################
 
@@ -112,10 +107,10 @@ assignInNamespace("rZ_bin_fc", rZ_bin_fc2, pos="package:amen")
 ameOutSamp = function(
 	yList, xDyadL=NULL, xRowL=NULL, xColL=NULL, startVals, ## startVal (to pick one portion)
 	seed=6886, folds=30, #increase burn and nscan eventually
-    R=2, model='bin', burn=10, nscan=20, odens=2, #expand when needed 
+    R=1, model='bin', burn=1000, nscan=20000, odens=25, #expand when needed 
     intercept=TRUE, rvar=TRUE, cvar=TRUE, symmetric=FALSE){
     
-    set.seed(seed)
+    set.seed(6886)
 
     ## Helper function #1:
     ## Divide dataset into folds
@@ -190,16 +185,20 @@ ameOutSamp = function(
 ###############
 ################
 ## run outsamp models
-ls()
 
-ameOutSamp_NULL = ameOutSamp(
-    yList=yList, xDyadL=xDyadList,
+
+ylist <- yList
+## need to figure out what's going on with this new
+##"promise already under evaluation: recursive default argument reference ## or earlier problems?"  error.
+
+ameOutSamp_NULL =   ameOutSamp(
+    yList=ylist, xDyadL=xDyadList,
     xRowL=xNodeList.s,
     xColL=xNodeList.r,
-    startVals=fit$startVals
-)
+    R=1,
+    startVals=ameFit$startVals)
 
 save(ameOutSamp_NULL, file=
-                          paste0("outsampResults", K,".Rdata"))
+                          paste0("outsampResults", R,".rda"))
 ## think that this is what I want to run, when I package
 ## the above back into a function
