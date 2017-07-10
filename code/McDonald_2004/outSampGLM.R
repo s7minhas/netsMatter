@@ -1,6 +1,5 @@
 ##This script for the GLM comparison 
 
-
 ## Plan on 5/10:
 ## First run GLM with just the dyadic vars
 ## then add in each of the sender and reciever
@@ -12,21 +11,39 @@
 rm(list=ls())
 
 ## load script to load package
-source('LoadPackage.R')
+scriptPath <- "../weeks_2012/"
+
+source(paste0(scriptPath, "LoadPackage.R"))
 
 library(dplyr)
 library(reshape2)
 library(tidyr)
 ################
-path = '~/Dropbox/netsMatter/replications/Weeks2012/replication/output/'
+
+path = '~/Dropbox/netsMatter/replications/McDonald_2004/data/'
 ################
 # load data
-load(paste0(path, 'WeeksamenData.rda'))
+
+load(paste0(path, 'McDonald_baseModel.rda'))
 
 # crossval params
 seed=6886
 folds=30
 ################
+
+## remember: no dyadic vars, so all are
+## base vars:
+
+base_vars<- 'cw2mid'
+
+## Table 1, model 1
+ivs <- c('cw2midspl','cw2midsp1','cw2midsp2', 'cw2midsp3',
+         'ally','cont1', 'lncaprat', 'ldep2l',
+         'grow61l', 'lpolity42l','s_wt_glo', 'lrgdpch61h', 'lndistan',
+         'majpow', 'limpduty0200h')
+
+
+
 
 dyadicVars <- c('mzinit', "dependlow" , "majmaj", "minmaj", "majmin", "contigdum","logdist","s_wt_glo","pcyrsmzinit", "pcyrsmzinits1", "pcyrsmzinits2","pcyrsmzinits3")  %>%  strsplit(x = ., split = " ") %>%
     unlist()
