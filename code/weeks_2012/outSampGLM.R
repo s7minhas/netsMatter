@@ -23,6 +23,7 @@ path = '~/Dropbox/netsMatter/replications/Weeks2012/replication/output/'
 # load data
 load(paste0(path, 'WeeksamenData.rda'))
 
+ls()
 # crossval params
 seed=6886
 folds=30
@@ -215,8 +216,18 @@ glmOutSamp_wFullSpec=glmOutSamp(glmForm=form_mod)
 
 ##save current work:
 
+ls()
+
+attributes(glmOutSamp_wFullSpec)
+
+smallGLMoutSamp <- list(glmOutSamp_wFullSpec$aucROC, glmOutSamp_wFullSpec$aucPR)
+
+names(smallGLMoutSamp) <- c("GLMaucROC", "GLMaucPR" )
+
 ## too large to save:
 
 savePath <- '~/Dropbox/netsMatter/replications/Weeks2012/replication/output/'
 
-save(glmOutSamp_wFullSpec, file=paste0(savePath, "weeksOutPerf.rda"))
+##save(glmOutSamp_wFullSpec, file=paste0(savePath, "weeksOutPerf.rda"))
+
+save(smallGLMoutSamp,file=paste0(savePath, "smallGLMoutSamp.rda"))
