@@ -7,20 +7,17 @@
 if(Sys.info()['user']== 'margaret' | Sys.info()['user']== 'root' ){
     dataPath='~/projects/netsmatter/data/'
     dPath='./results/'
-    gPath='~/projects/netsmatter/code/netsMatter/code/weeks_2012/'                                          #graphicPath='/results/' # path to dir where i will store any graphics
+    
+    gPath='~/projects/netsmatter/code/netsMatter/code/McDonald2004/'                                          #graphicPath='/results/' # path to dir where i will store any graphics
     #resultsPath='/results/' # path to dir where i will store results
     funcPath=paste0(gPath, 'code/helpers/') # helpers directory in ~/Research
 }
 
-
-
 ## If on one of my machines
 if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
-    dataPath='~/Dropbox/netsMatter/replications/Weeks2012'## where the Weeks data lives
+    dataPath='~/Dropbox/netsMatter/replications/McDonald_2004/data'## where the Weeks data lives
     dPath='~/Dropbox/netsMatter/' # general dropox path
     gPath='~/Research/netsMatter/' # path to github in case i need to call in helper functions
-    graphicsPath=paste0(dPath, 'replications/Weeks2012/graphics/') # path to dir where i will store any graphics
-    resultsPath=paste0(dPath, 'replications/Weeks2012/replication/output/') # path to dir where i will store results
     funcPath=paste0(gPath, 'code/helpers/') # helpers directory in ~/Research
     
 }
@@ -51,10 +48,6 @@ loadPkg(c(
 
 print("packages loaded")
                                         ## load amen
-
-## for github install:
-devtools::install_github('s7minhas/amen') ; library(amen)
-
 ## for my local clone:
 
 ## if(Sys.info()['user']== 'margaret'  | Sys.info()['user']== 'root'){
@@ -62,13 +55,14 @@ devtools::install_github('s7minhas/amen') ; library(amen)
 ##     library(devtools)
 ##     document('~/projects/netsmatter/amen/')
 ##     install('~/projects/netsmatter/amen/')
-## }
+##}
 
 ## if on one of my macs
-if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
-    print("loading AMEN from Github")
-    devtools::install <- github('s7minhas/amen') ; library(amen)
-}
+##if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
+
+print("loading AMEN from Github")
+devtools::install_github('s7minhas/amen') ; library(amen)
+##}
 
 # Set a theme for gg
 theme_set(theme_bw())

@@ -23,7 +23,6 @@ loadPkg(c('foreign', 'lmtest', 'sandwich'))
 McDdata = foreign::read.dta(paste0(dataPath, 'PTTOFTfvs.dta'))
 ## note that appears to have all of the variables that he created in the .do file.
 
-
 class(McDdata)
 
 dim(McDdata) ## 534274 x 23

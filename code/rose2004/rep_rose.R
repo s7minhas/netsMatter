@@ -13,7 +13,7 @@ data = read.dta("/Users/howardliu/Dropbox/netsRep_Howard_Max/rose2004/data4web.d
 
 # mod1
 # which var is currency union?
-mod1_data=  select(data, cty1, cty2, year, pairid, ltrade, bothin, onein, gsp, ldist, lrgdp, lrgdppc, regional, custrict, comlang, border, landl, island, lareap, comcol, curcol, colony, comctry, year)
+mod1_data= dplyr:: select(data, cty1, cty2, year, pairid, ltrade, bothin, onein, gsp, ldist, lrgdp, lrgdppc, regional, custrict, comlang, border, landl, island, lareap, comcol, curcol, colony, comctry, year)
 var = c('ltrade', # log real trade
         'bothin', 'onein', 'gsp', 'ldist', 'lrgdp', 'lrgdppc', 'regional',
         'custrict',
@@ -23,7 +23,7 @@ var = c('ltrade', # log real trade
 form_mod1 = formula(paste0('ltrade ~ ', paste(var[-1], collapse = '+')))
 
 mod1 = glm(form_mod1, family = gaussian, data = mod1_data)
-#summary(mod1)
+summary(mod1)
 
 # clustered SEs
 baseModel <- mod1
@@ -32,7 +32,7 @@ baseModelVcov = cluster.vcov(model=baseModel, cluster=baseData$pairid,
     df_correction = FALSE, leverage = 3)
 baseModelSumm = coeftest(baseModel, baseModelVcov)
 baseModelSumm
-
+save(baseModelSumm, file = "/Users/howardliu/Dropbox/netsMatter/replications/rose2004/glmResults_rose.rda")
 
 
 # mod2 (no ind countries)

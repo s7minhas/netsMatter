@@ -124,7 +124,7 @@ if(length(latDims)==1){
         R=latDims,  nscan=imps, seed=seed, burn=brn, odens=ods,
         plot=FALSE, print=FALSE, startVals=startVals0
     )
-    save(ameFit,file=paste0(resultsPath, 'model_k', latDims[ii],as.character(Sys.Date()),
+    save(ameFit,file=paste0(dPath, 'model_k', latDims,as.character(Sys.Date()),
                      '_v2.rda'))
 }
 

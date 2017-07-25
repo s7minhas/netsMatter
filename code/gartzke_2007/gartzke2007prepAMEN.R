@@ -49,7 +49,7 @@ baseVars = c('maoznewl', 'demlo', 'demhi', 'deplo',
     'capopenl', 'rgdppclo', 'gdpcontg',
     'sun2cati', 'contig', 'logdstab',
     'majpdyds', 'alliesr', 'lncaprt',
-    'spline1', 'spline2', 'spline3', 
+    #'spline1', 'spline2', 'spline3', 
     'year', 'statea', 'stateb'
 )
 
