@@ -2,21 +2,23 @@
 #library(devtools)
 #devtools::install_github('s7minhas/amen')
 if(Sys.info()['user']=='howardliu'){
-  load('/Users/howardliu/Dropbox/netsMatter/replications/rose2004/amenData_rose.rda' )
-  resultsPath = "/Users/howardliu/Dropbox/netsMatter/replications/rose2004/outputData/"
-  }
-
-if(Sys.info()['user']=='howard'){
-  load('C:/Users/Howard/Dropbox/netsMatter/replications/rose2004/amenData_rose.rda' )
-  resultsPath = "C:/Users/Howard/Dropbox/netsMatter/replications/rose2004/outputData/"
-  }
+  load('/Users/howardliu/Dropbox/netsMatter/replications/gibler_2017/amenData_gibler.rda' )
+  resultsPath = "/Users/howardliu/Dropbox/netsMatter/replications/gibler_2017/outputData/"
+}
 
 library(amen)
 
 str(yList)
 yList[1]
 
-brn=200; imps=100; ods=10
+# test run 
+brn=200; imps=100; ods=25
+
+# for real
+#imps =20000
+#brn = 10000
+#ods = 25
+
 #### k =0 #####
 # params
 latDims = 0 ## change k here
@@ -26,7 +28,7 @@ seed=6886
 
 ameFit = ame_repL(
 	Y=yList,Xdyad=xDyadList,Xrow=NULL,Xcol=NULL,
-	model="nrm",symmetric=FALSE, # was directed data
+	model="bin",symmetric=TRUE, # MID DV: undirected data
 	intercept=FALSE,R=latDims,
 	nscan=imps, seed=seed, burn=brn, odens=ods,
 	plot=FALSE, print=FALSE, gof=TRUE,
@@ -44,7 +46,7 @@ seed=6886
 
 ameFit = ame_repL(
 	Y=yList,Xdyad=xDyadList,Xrow=NULL,Xcol=NULL,
-	model="nrm",symmetric=FALSE, # was directed data
+	model="bin",symmetric=TRUE, # MID DV: undirected data
 	intercept=FALSE,R=latDims,
 	nscan=imps, seed=seed, burn=brn, odens=ods,
 	plot=FALSE, print=FALSE, gof=TRUE,
@@ -62,7 +64,7 @@ seed=6886
 
 ameFit = ame_repL(
 	Y=yList,Xdyad=xDyadList,Xrow=NULL,Xcol=NULL,
-	model="nrm",symmetric=FALSE, # was directed data
+	model="bin",symmetric=TRUE, # MID DV: undirected data
 	intercept=FALSE,R=latDims,
 	nscan=imps, seed=seed, burn=brn, odens=ods,
 	plot=FALSE, print=FALSE, gof=TRUE,
@@ -79,7 +81,7 @@ seed=6886
 
 ameFit = ame_repL(
 	Y=yList,Xdyad=xDyadList,Xrow=NULL,Xcol=NULL,
-	model="nrm",symmetric=FALSE, # was directed data
+	model="bin",symmetric=TRUE, # MID DV: undirected data
 	intercept=FALSE,R=latDims,
 	nscan=imps, seed=seed, burn=brn, odens=ods,
 	plot=FALSE, print=FALSE, gof=TRUE,
@@ -88,7 +90,7 @@ ameFit = ame_repL(
 
 
 ### parallel
-#imps = 5000
+#imps =20000
 #brn = 10000
 #ods = 25
 latDims = 0:3
@@ -99,7 +101,7 @@ cl=makeCluster(4) ; registerDoParallel(cl)
 foreach(ii=1:length(latDims), .packages=c("amen")) %dopar% {
   ameFit = ame_repL(
     Y=yList,Xdyad=xDyadList,Xrow=NULL,Xcol=NULL,
-    model="nrm", symmetric=FALSE,
+    model="bin",symmetric=TRUE, # MID DV: undirected data
     R=latDims[ii],
     nscan=imps, seed=seed, burn=brn, odens=ods,
     plot=FALSE, print=FALSE
