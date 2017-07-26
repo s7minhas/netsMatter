@@ -1,10 +1,5 @@
 ##This script for the GLM comparison 
-
-## Plan on 5/10:
-## First run GLM with just the dyadic vars
-## then add in each of the sender and reciever
-## vars by merging them into the
-## xd data.frame
+## for McDonald 2004
 
 ################
 # workspace
@@ -24,7 +19,8 @@ library(tidyr)
 ################
 
 dataPath = '~/Dropbox/netsMatter/replications/McDonald_2004/data/'
-dataPath = '~/Dropbox/Research/netsMatter/replications/McDonald_2004/data/'
+
+##dataPath = '~/Dropbox/Research/netsMatter/replications/McDonald_2004/data/'
 ################
 # load data
 
@@ -60,7 +56,7 @@ form_mod = formula(paste0('value ~ ', paste(base_vars[-1], collapse = '+')))
 glmForm = form_mod
 ################
 
-##glmOutSamp = function(glmForm){
+glmOutSamp = function(glmForm){
 set.seed(seed)
     ################
     # divide dataset into folds
@@ -146,8 +142,6 @@ set.seed(seed)
 }
 ###############
 
-## think that this is what I want to run, when I package
-## the above back into a function
 
 glmOutSamp_wFullSpec=glmOutSamp(glmForm=form_mod)
 
@@ -158,3 +152,8 @@ glmOutSamp_wFullSpec=glmOutSamp(glmForm=form_mod)
 
 
 ls() 
+
+attributes(glmOutSamp_wFullSpec)
+
+glmOutSamp_wFullSpec$aucROC
+glmOutSamp_wFullSpec$aucPR

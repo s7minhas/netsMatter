@@ -69,6 +69,10 @@ ids = c('ccode1', 'ccode2', 'year', 'dyadid')
 modData = na.omit(McDdata[,c(dv, ivs, ids)]) #dirty, but almost def
                                         #what STATA did
 
+dim(modData)
+
+head(modData)
+
 ## run glm
 
 modForm = formula(
@@ -82,7 +86,6 @@ attributes(mod)
 
 round(mod$coefficients,3)
 
-summary(mod)
 
 ## none of the pkgs working so going manual
 ## code from: s7m

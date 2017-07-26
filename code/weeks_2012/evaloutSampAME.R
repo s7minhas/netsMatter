@@ -22,6 +22,7 @@ ls()
 
 outFitK0 <- ameOutSamp_NULL
 
+attributes(outFitK0)
 outFitK0$aucPR
 
 ##K=1

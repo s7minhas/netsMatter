@@ -1,10 +1,10 @@
 # paths
 if(Sys.info()['user']=='janus829' | Sys.info()['user']=='s7m'){
-    pathData='~/Dropbox/Research/netsMatter/replications/Weeks2012/replication/data/'
+    pathData='~/Dropbox/Research/netsMatter/replications/Weeks2012/replication/input/'
 }
 
 if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
- pathData='~/Dropbox/netsMatter/replications/Weeks2012/replication/data/'
+ pathData='~/Dropbox/netsMatter/replications/Weeks2012/replication/input/'
 }
 
 # load libs
@@ -46,6 +46,7 @@ modForm = formula(
 mod = glm(modForm, data=modData, family=binomial(link='logit'))
 
 # none of the pkgs working so going manual
+
 clust = modData$dirdyadid
 clustN = length(unique(clust))
 params = length(coef(mod))
