@@ -1,6 +1,12 @@
 
+## This script to build the Weeks data into the AMEN format;
+## it takes the original data and returns data compatible for AMEN
+
+
+### MJF: These are my computers:
+## algauros is my laptop, Promachos is my desktop
 if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
- dataPath <- '~/Dropbox/netsMatter/replications/Weeks2012/replication/data/'
+ dataPath <- '~/Dropbox/netsMatter/replications/Weeks2012/replication/input/'
 }
 
 ## libraries
@@ -16,7 +22,7 @@ loadPkg=function(toLoad){
 loadPkg(c('foreign', 'lmtest', 'sandwich'))
 
 ## load full data
-weeksData = foreign::read.dta(paste0(pathData, 'WeeksAPSR2012.dta'))
+weeksData = foreign::read.dta(paste0(dataPath, 'WeeksAPSR2012.dta'))
 
 ## subset to relev covars
 dv = 'mzinit'
@@ -71,11 +77,22 @@ dyadicVars <- c( "dependlow" , "majmaj", "minmaj", "majmin", "contigdum",
 
 nodalVars.send <- c("machinejlw_1", "juntajlw_1", "bossjlw_1",
                   "strongmanjlw_1", "allotherauts_1", "newregime_1",  "cap_1",
-                 "s_lead_1" )
+                    "s_lead_1"#, "initshare" ## initshare commented b/c including it breaks the var creation below
+                    )
 
 nodalVars.r <- c("democracy_2" , "cap_2", "s_lead_2")
 
 
+### Quick check that the 'dyadic', 'sender', and 'reciever' lists
+### cover all of the vars in the model:
+## strategy: set difference
+
+## this will print out the name of any variables in the
+## IV list that are not in the AMEN list
+
+amenvars <-  c(dyadicVars, nodalVars.send, nodalVars.r)
+
+ivs[!(ivs %in% amenvars)]
 
 #####################################
 ## Start AMEN build process
@@ -225,3 +242,5 @@ dim(xNodeList.s[[1]])
 
 save(yList, xDyadList, xNodeList.s,
      xNodeList.r, file=paste0(dataPath, 'WeeksamenData.rda'))
+
+print("AMEN Variables Created")
