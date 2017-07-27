@@ -1,6 +1,6 @@
 rm(list=ls())
 resultsPath = '/Users/howardliu/Dropbox/netsMatter/replications/rose2004/outputData/'
-plotPath = '/Users/howardliu/Dropbox/netsMatter/replications/rose2004/outputData/'
+plotPath = '/Users/howardliu/Dropbox/netsMatter/replications/rose2004/graphics/'
 #
 library(magrittr)
 library(ggplot2)
@@ -64,7 +64,8 @@ addEffPlot = function(fit, row=TRUE, addDegree=FALSE, yList=NULL, orderByDegree=
     }
     return(gg)
 }
-addEffPlot(fit = ameFit, row=TRUE, yList= yList)
+addEffPlot(fit = ameFit, row=TRUE, yList= yList) # sender
+addEffPlot(fit = ameFit, row=FALSE, yList= yList) # receiver
 
 
 ######################################################
@@ -79,10 +80,7 @@ vNameKey<-list()
 #load(paste0(pathData, 'nigeriaMatList_acled_v7.rda')) # loads yList object
 #yrs = char(2000:2016) ; yList = yList[yrs]
 yList %>% length
-yList2 = yList[1:3]
-
-#load(paste0(pathResults, 'ameResults.rda')) # load AME mod results
-
+yList2 = yList[1:3] # can't do too many years. Will hit the looping limit.
 
 # subset data
 #yList2 = yList[42:47]
@@ -106,17 +104,13 @@ circPlot=ggCirc(
   lcol='gray85', lsize=.05) +
   scale_color_manual(values=uvCols)
 circPlot
-# options()$expression  --> look 
-# ggsave(circPlot, 
-#        file=paste0(resultsPath,'reiter_circPlot.pdf'), 
-#        width=12, height=10, device=cairo_pdf)
+# options()$expression  --> change to higher expression values to 500000
+
 ################
 
 
 ################
 # plot vecs on 2d
-
-
 uDF = data.frame(ameFit$U) ; uDF$name = rownames(uDF) ; uDF$type='Sender Factor Space'
 vDF = data.frame(ameFit$V) ; vDF$name = rownames(vDF) ; vDF$type='Receiver Factor Space'
 uvDF = rbind(uDF, vDF) ; uvDF$type = factor(uvDF$type, levels=unique(uvDF$type))
@@ -137,5 +131,5 @@ ggplot(uvDF, aes(x=X1, y=X2, color=type, label=name)) +
     panel.border=element_blank()
   )
 ggsave( 
-  file=paste0(resultsPath,'rose_2dPlot.pdf'), 
+  file=paste0(plotPath,'rose_2dPlot.pdf'), 
    width=12, height=10, device=cairo_pdf)
