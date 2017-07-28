@@ -38,19 +38,20 @@ load(paste0(dPath, 'model_k22017-04-04_v2.rda'))
 ## parameters for the cross-val
 ################
 fit <- ameFit
-## xDyadL = xDyadList
-## xRowL = xNodeList.s
-## xColL = xNodeList.r
-## startVals = ameFit$startVals
-#seeds=6886
-## folds=3
-## R=2
-## model='bin'
-## #burn=10000
-## #nscan=2000
-## odens=25
-## intercept=TRUE
-## rvar=TRUE
-## cvar=TRUE
-## symmetric=FALSE
-## seed=6886
+xDyadL = xDyadList
+xRowL = xNodeList.s
+xColL = xNodeList.r
+startVals = ameFit$startVals
+seeds=6886
+##folds=30
+folds=4 ## update 7/27
+R=2
+model='bin'
+#burn=10000
+#nscan=2000
+odens=25
+intercept=TRUE
+rvar=TRUE
+cvar=TRUE
+symmetric=FALSE
+seed=6886

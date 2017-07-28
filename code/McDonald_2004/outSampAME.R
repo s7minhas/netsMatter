@@ -32,13 +32,10 @@ if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
 ## load ame results
 ## load the k-specific data:
 ## as well as the ame formulation of the data
-##source('xValSetupK0.R') #started 11:41 am 6/24. note amen data is nonsymmetric
-##source('xValSetupk1.R') #started 12:03 pm 6/24 data nonsymmetric
-##source('xValSetupk2.R') #started 12:01 pm 6/24 data non-symmetric
-source('xValSetupk3.R') #started at 12:04 5/24 data-non symetric
-
-##FIX ME: figure out if need to rerun the AMEN models to be a symmetric model
-## and then re-do the out-samp
+source('xValSetupK0.R') #started 11:41 am 6/24. note amen data is nonsymmetric; 7/27 with f=4
+##source('xValSetupk1.R') #started 12:03 pm 6/24 data nonsymmetric; 7/27 with f=4
+##source('xValSetupk2.R') #started 12:01 pm 6/24 data non-symmetric; 7/24 with f=4
+##source('xValSetupk3.R') #started at 12:04 5/24 data-non symetric; 7/27 with f=4 
 
 print(paste0("Running with latDims= ", latDims))
 print(paste0("running with burnin= ", burnin, "and nscans= ", nscans))

@@ -23,11 +23,8 @@ loadPkg(c('foreign', 'lmtest', 'sandwich'))
 McDdata = foreign::read.dta(paste0(dataPath, 'PTTOFTfvs.dta'))
 ## note that appears to have all of the variables that he created in the .do file.
 
-class(McDdata)
 
 dim(McDdata) ## 534274 x 23
-
-colnames(McDdata)
 
 length(is.na(McDdata)) ##lots of NA values
 
@@ -82,10 +79,8 @@ modForm = formula(
 	)
 mod = glm(modForm, data=modData, family=binomial(link='logit'))
 
-attributes(mod)
 
-round(mod$coefficients,3)
-
+print("GLM Model estimated")
 
 ## none of the pkgs working so going manual
 ## code from: s7m
@@ -101,13 +96,15 @@ clVcov = vcov(mod) %*% ((clustN/(clustN-1)) * t(uClust) %*% uClust ) %*% vcov(mo
 ## results match with stata
 modSumm = lmtest::coeftest(mod, vcov=clVcov)
 
-## Table 2, model 1
 
-
-colnames(modData)
-
+print("saving replicated results")
 
 ##  save replicated results
 ## for the first model (though not the interaction model)
 
 save(modSumm, file=paste0(dataPath, 'McDonald_baseModel.rda'))
+
+save(mod, file=paste0(dataPath, "McDonald_baseModelGLMObj.rda"))
+
+
+print("completed!")
