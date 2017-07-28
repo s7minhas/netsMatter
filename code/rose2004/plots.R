@@ -1,6 +1,6 @@
 rm(list=ls())
 resultsPath = '/Users/howardliu/Dropbox/netsMatter/replications/rose2004/outputData/'
-plotPath = '/Users/howardliu/Dropbox/netsMatter/replications/rose2004/graphics/'
+plotPath = '/Users/howardliu/Dropbox/netsMatter/replications/rose2004/outputData/'
 #
 library(magrittr)
 library(ggplot2)
@@ -20,17 +20,17 @@ getAddEffData = function(fit, row=TRUE, addDegree=FALSE, yList=NULL, orderByDegr
     if(!row){addEffData = data.frame(addEff=fit$BPM, stringsAsFactors = FALSE) ; yLabel='Receiver Effects'}
     addEffData$actor = rownames(addEffData) ; rownames(addEffData) = NULL
     if(!orderByDegree){
-        addEffData$actor = factor(addEffData$actor, 
+        addEffData$actor = factor(addEffData$actor,
             levels=addEffData[order(addEffData$addEff),'actor'])
     }
     if(addDegree){
         yArr = listToArray(
-            actors=sort(unique(unlist(lapply(yList,rownames)))), 
+            actors=sort(unique(unlist(lapply(yList,rownames)))),
             Y=yList, Xdyad=NULL, Xrow=NULL, Xcol=NULL)$Y
         if(row){ degree = sort(apply(yArr, 1, mean, na.rm=TRUE)) }
         if(!row){ degree = sort(apply(yArr, 2, mean, na.rm=TRUE)) }
-        if(orderByDegree){ 
-            addEffData$actor = factor(addEffData$actor, 
+        if(orderByDegree){
+            addEffData$actor = factor(addEffData$actor,
                 levels=names(degree) )
         }
         addEffData$var = 'Additive Effect'
@@ -38,34 +38,50 @@ getAddEffData = function(fit, row=TRUE, addDegree=FALSE, yList=NULL, orderByDegr
         addEffData = rbind(addEffData, tmp) ; rm(tmp)
     }
     addEffData$max = ifelse(addEffData$addEff>=0,addEffData$addEff,0)
-    addEffData$min = ifelse(addEffData$addEff<0,addEffData$addEff,0) 
+    addEffData$min = ifelse(addEffData$addEff<0,addEffData$addEff,0)
     return(addEffData)
 }
 
-getAddEffData(fit = ameFit)
-
+addEffData = getAddEffData(fit = ameFit)
+rm(addEffData)
 addEffPlot = function(fit, row=TRUE, addDegree=FALSE, yList=NULL, orderByDegree=FALSE, addEffData=NULL){
     if(is.null(addEffData)){
         addEffData = getAddEffData(fit, row, addDegree, yList, orderByDegree)
+        # convert to ccode by ifs (Rose2004 used)
+        ccode = read.csv("/Users/howardliu/Dropbox/netsMatter/replications/rose2004/ifs_countrycode.csv", header=T) 
+        #ccode = ccode %>% .[complete.cases(.),]
+        # delete NA
+        ccode$code = as.factor(ccode$code)
+        addEffData = left_join(addEffData, ccode, by =c("actor" = "code") )
+        addEffData = dplyr::select(addEffData, addEff, actor =countryname , max, min)
+        addEffData = addEffData[order(addEffData$addEff),]
+        addEffData$actor = factor(addEffData$actor, levels = addEffData$actor)
     }
     if(row){ yLabel='Sender Effects'}
-    if(!row){ yLabel='Receiver Effects'}        
-    gg = ggplot(addEffData, aes(x=actor, y=addEff)) +
+    if(!row){ yLabel='Receiver Effects'}
+    gg = ggplot(addEffData, aes(x=actor, y=addEff )) +
         geom_point() + geom_linerange(aes(ymax=max,ymin=min)) +
-        ylab(yLabel) + xlab('') + 
-        geom_hline(yintercept=0,color='red') + 
+        coord_flip() +
         theme(
             panel.border=element_blank(), axis.ticks=element_blank(),
-            # axis.text.x=element_text(angle=45, hjust=1, size=4)
-            axis.text.x=element_text(angle=90, hjust=1, size=6)
-            )
+            #text = element_text(size=2),
+            axis.text.x=element_text(angle=180, hjust=1, size=1),
+            axis.text.y = element_text(size=4,angle=0,hjust=1,vjust=0,face="plain")
+            # axis.text.x=element_text(angle=90, hjust=1, size=6)
+            ) +
+        geom_hline(yintercept=0,color='red') +
+        ylab(yLabel) + xlab('') 
+        
+        
     if(addDegree){
         gg = gg + facet_wrap(~var, nrow=2, scales='free_y')
     }
     return(gg)
 }
-addEffPlot(fit = ameFit, row=TRUE, yList= yList) # sender
-addEffPlot(fit = ameFit, row=FALSE, yList= yList) # receiver
+addEffPlot(fit = ameFit, row=TRUE, yList= yList)
+addEffPlot(fit = ameFit, row=FALSE, yList= yList)
+
+
 
 
 ######################################################
@@ -80,11 +96,14 @@ vNameKey<-list()
 #load(paste0(pathData, 'nigeriaMatList_acled_v7.rda')) # loads yList object
 #yrs = char(2000:2016) ; yList = yList[yrs]
 yList %>% length
-yList2 = yList[1:3] # can't do too many years. Will hit the looping limit.
+yList2 = yList[1:3]
+
+#load(paste0(pathResults, 'ameResults.rda')) # load AME mod results
+
 
 # subset data
 #yList2 = yList[42:47]
-yArr = listToArray(actors=sort(unique(unlist(lapply(yList,rownames)))), 
+yArr = listToArray(actors=sort(unique(unlist(lapply(yList,rownames)))),
                    Y=yList2, Xdyad=NULL, Xrow=NULL, Xcol=NULL)$Y
 yArrSumm = apply(yArr, c(1,2), sum, na.rm=TRUE)
 diag(yArrSumm) = 0
@@ -99,13 +118,15 @@ nrow(yArrSumm)
 ################
 uvCols = brewer.pal(11, 'RdBu')[c(11-2, 3)]
 circPlot=ggCirc(
-  Y=yArrSumm, U=ameFit$U, V=ameFit$V, vscale=.6, 
-   force=3, 
+  Y=yArrSumm, U=ameFit$U, V=ameFit$V, vscale=.6,
+   force=3,
   lcol='gray85', lsize=.05) +
   scale_color_manual(values=uvCols)
 circPlot
-# options()$expression  --> change to higher expression values to 500000
-
+# options()$expression  --> look
+# ggsave(circPlot,
+#        file=paste0(resultsPath,'reiter_circPlot.pdf'),
+#        width=12, height=10, device=cairo_pdf)
 ################
 
 
@@ -115,21 +136,21 @@ uDF = data.frame(ameFit$U) ; uDF$name = rownames(uDF) ; uDF$type='Sender Factor 
 vDF = data.frame(ameFit$V) ; vDF$name = rownames(vDF) ; vDF$type='Receiver Factor Space'
 uvDF = rbind(uDF, vDF) ; uvDF$type = factor(uvDF$type, levels=unique(uvDF$type))
 #uvDF$name = countrycode::countrycode(uvDF$name, 'cown', 'country.name', warn = T) # problem
-ggplot(uvDF, aes(x=X1, y=X2, color=type, label=name)) + 
-  geom_vline(xintercept = 0, linetype='dashed', color='grey50') + 
-  geom_hline(yintercept = 0, linetype='dashed', color='grey50') + 
-  scale_color_manual(values=rev(uvCols)) + 
-  geom_point() + 
-  geom_text_repel() + 
-  facet_wrap(~type) + 
-  xlab('') + ylab('') + 
-  labs(color='') + 
+ggplot(uvDF, aes(x=X1, y=X2, color=type, label=name)) +
+  geom_vline(xintercept = 0, linetype='dashed', color='grey50') +
+  geom_hline(yintercept = 0, linetype='dashed', color='grey50') +
+  scale_color_manual(values=rev(uvCols)) +
+  geom_point() +
+  geom_text_repel() +
+  facet_wrap(~type) +
+  xlab('') + ylab('') +
+  labs(color='') +
   theme(
     legend.position = 'none',
     axis.ticks=element_blank(),
     axis.text=element_blank(),
     panel.border=element_blank()
   )
-ggsave( 
-  file=paste0(plotPath,'rose_2dPlot.pdf'), 
+ggsave(
+  file=paste0(resultsPath,'rose_2dPlot.pdf'),
    width=12, height=10, device=cairo_pdf)
