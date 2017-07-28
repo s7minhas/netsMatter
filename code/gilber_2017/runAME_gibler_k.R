@@ -2,7 +2,7 @@
 #library(devtools)
 #devtools::install_github('s7minhas/amen')
 if(Sys.info()['user']=='howardliu'){
-  load('/Users/howardliu/Dropbox/netsMatter/replications/gibler_2017/amenData_gibler.rda' )
+  load('/Users/howardliu/Dropbox/netsMatter/replications/gibler_2017/amenData_gibler2.rda' )
   resultsPath = "/Users/howardliu/Dropbox/netsMatter/replications/gibler_2017/outputData/"
 }
 
@@ -11,8 +11,8 @@ library(amen)
 str(yList)
 yList[1]
 
-# test run 
-brn=200; imps=100; ods=25
+# test run
+brn=100; imps=50; ods=25
 
 # for real
 #imps =20000
@@ -32,9 +32,9 @@ ameFit = ame_repL(
 	intercept=FALSE,R=latDims,
 	nscan=imps, seed=seed, burn=brn, odens=ods,
 	plot=FALSE, print=FALSE, gof=TRUE,
-	periodicSave=TRUE, outFile=paste0(resultsPath,'ameFit_k0.rda')
+	periodicSave=TRUE, outFile=paste0(resultsPath,'ameFit_k',latDims,'.rda')
 	)
-save(ameFit, file=paste0(resultsPath,'ameFit_k0.rda'))
+save(ameFit, file=paste0(resultsPath,'ameFit_k',latDims,'.rda'))
 
 
 #### k =1 #####
@@ -50,7 +50,7 @@ ameFit = ame_repL(
 	intercept=FALSE,R=latDims,
 	nscan=imps, seed=seed, burn=brn, odens=ods,
 	plot=FALSE, print=FALSE, gof=TRUE,
-	periodicSave=TRUE, outFile=paste0(resultsPath,'ameFit_k1.rda')
+	periodicSave=TRUE, outFile=paste0(resultsPath,'ameFit_k',latDims,'.rda')
 	)
 
 
@@ -68,7 +68,7 @@ ameFit = ame_repL(
 	intercept=FALSE,R=latDims,
 	nscan=imps, seed=seed, burn=brn, odens=ods,
 	plot=FALSE, print=FALSE, gof=TRUE,
-	periodicSave=TRUE, outFile=paste0(resultsPath,'ameFit_k2.rda')
+	periodicSave=TRUE, outFile=paste0(resultsPath,'ameFit_k',latDims,'.rda')
 	)
 
 
@@ -85,7 +85,7 @@ ameFit = ame_repL(
 	intercept=FALSE,R=latDims,
 	nscan=imps, seed=seed, burn=brn, odens=ods,
 	plot=FALSE, print=FALSE, gof=TRUE,
-	periodicSave=TRUE, outFile=paste0(resultsPath,'ameFit_k3.rda')
+	periodicSave=TRUE, outFile=paste0(resultsPath,'ameFit_k',latDims,'.rda')
 	)
 
 
