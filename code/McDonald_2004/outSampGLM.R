@@ -32,7 +32,8 @@ McDdata = foreign::read.dta(paste0(dataPath, 'PTTOFTfvs.dta'))
 
 # crossval params
 seed=6886
-folds=30
+##folds=30
+folds=4 ## update 7/27
 ################
 
 ## remember: no dyadic vars, so all are
