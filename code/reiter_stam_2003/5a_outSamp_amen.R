@@ -1,12 +1,14 @@
 rm(list=ls())
 ################
-resultsPath = '/Users/juantellez/Dropbox/netsMatter/replications/Reiter_Stam_2003/output/'
-fPth= '/Users/juantellez/Desktop/netsMatter-Reiter/Reiter_Stam_2003/Scripts/'
+resultsPath = '/Users/juanftellez/Dropbox/netsMatter/replications/Reiter_Stam_2003/output/'
+fPth= '/Users/juanftellez/OneDrive/netsMatter/code/reiter_stam_2003/'
 source(paste0(fPth, 'setup.r'))
-source(paste0(fPth, 'binPerfHelper.r'))
+source(paste0(fPth, 'binPerfHelpers.r'))
 ################
 # load data
 load(paste0(resultsPath, 'amenData.rda')) 
+load(paste0(resultsPath, 'model_k0_v12.rda')); ameFit_k0 = ameFit
+load(paste0(resultsPath, 'model_k1_v12.rda')); ameFit_k1 = ameFit
 load(paste0(resultsPath, 'model_k2_v12.rda')); ameFit_k2 = ameFit
 load(paste0(resultsPath, 'model_k3_v12.rda')); ameFit_k3 = ameFit
 rm(ameFit)
@@ -95,6 +97,6 @@ ameOutSamp = function(
 
 ameOutSamp_k2 = ameOutSamp(
   yList=yList, xDyadL=xDyadList, xRowL=NULL, xColL=NULL,
-  startVals=ameFit_k2$'startVals', folds = 4, 
+  startVals=ameFit_k2$'startVals', folds = 30, 
   burn=2000, nscan=4000, odens=10
 )
