@@ -1,9 +1,9 @@
 ######### run ame model
 #library(devtools)
 #devtools::install_github('s7minhas/amen')
-if(Sys.info()['user']=='howardliu'){
-  load('/Users/howardliu/Dropbox/netsMatter/replications/gibler_2017/amenData_gibler.rda' )
-  resultsPath = "/Users/howardliu/Dropbox/netsMatter/replications/gibler_2017/outputData/"
+if(Sys.info()['user']=='mdw'){
+  load('/Users/mdw/Dropbox/research/Ongoing/netsMatter/replications/gibler_2017/amenData_gibler.rda' )
+  resultsPath = "/Users/mdw/Dropbox/research/Ongoing/Dropbox/netsMatter/replications/gibler_2017/outputData/"
 }
 
 library(amen)
