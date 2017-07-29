@@ -6,9 +6,9 @@
 ## hardcoded to be in the same directory as this script
 ## to make it easier to port to different computers-- just keep dir together
 
-source('./setup.R')
+rm(list=ls())
 
-ls()
+source('./setup.R')
 
 ## load amen data
 AMENData <- paste0(dataPath, 'WeeksamenData.rda')
@@ -21,12 +21,11 @@ source("config.R")
 ## print workspace
 ls()
 
-##imps = as.numeric(args[2]) 
-##brn = as.numeric(args[3] ## burn-in
 ods = 10
-##latDims = as.numeric(args[1])
 seed= 6889
 
+## make a character out of the number of latent dimensions;
+## to name output
 kchar <- as.character(latDims)
 
 ameFit = ame_repL(

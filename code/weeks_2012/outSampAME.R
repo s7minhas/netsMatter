@@ -32,8 +32,8 @@ if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
 ## load the k-specific data:
 ## as well as the ame formulation of the data
 ##source('xValSetupK0.R') #started 5:20 6/22
-source('xValSetupk1.R') #started 5:30 pm  6/22
-##source('xValSetupk2.R') #started 5:28 pm 6/22
+##source('xValSetupk1.R') #started 5:30 pm  6/22
+source('xValSetupk2.R') #started 5:28 pm 6/22, eaten by gremlins & restarted 7/17
 ##source('xValSetupk3.R') #started 5:19 6/22
 
 ## load helpers
@@ -111,6 +111,11 @@ ameOutSamp = function(
     intercept=TRUE, rvar=TRUE, cvar=TRUE, symmetric=FALSE){
     
     set.seed(6886)
+    ## give myself some records:
+
+    print(paste0("# of folds is ", folds))
+    print(paste0("burnin is ", burn, "nscan is ", nscan))
+    print(paste0("R is ", R))
 
     ## Helper function #1:
     ## Divide dataset into folds
@@ -195,7 +200,7 @@ ameOutSamp_NULL =   ameOutSamp(
     yList=ylist, xDyadL=xDyadList,
     xRowL=xNodeList.s,
     xColL=xNodeList.r,
-    R=1,
+    R=R,
     startVals=ameFit$startVals)
 
 save(ameOutSamp_NULL, file=

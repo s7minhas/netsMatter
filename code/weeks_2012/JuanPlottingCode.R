@@ -4,6 +4,8 @@ resultsPath = '~/Dropbox/netsMatter/replications/Reiter_Stam_2003/output/'
 
 ##plotPath = '~/Dropbox/netsMatter/replications/Reiter_Stam_2003/output/'
 #
+
+library(dplyr)
 library(magrittr)
 library(ggplot2)
 library(stringr)
@@ -20,7 +22,9 @@ library(amen)
 load( paste0(resultsPath,'model_k1_v12.rda') ) ; ameFit_k1=ameFit
 load( paste0(resultsPath,'model_k2_v12.rda') ) ; ameFit_k2=ameFit
 load( paste0(resultsPath,'model_k3_v12.rda') ) ; ameFit_k3=ameFit
-load( paste0(resultsPath,'reiterStam_baseModel.rda') )
+load( paste0(resultsPath,'reiterStam_baseModel.rda') ) ##contains: base_mod1, mod1, mod_dat
+
+head(mod_dat)
 
 ls()
 
@@ -165,9 +169,25 @@ ggCoef(data = pDat, group = 4) ; ggsave(filename = paste0(resultsPath, 'reiter_c
 
 
 ##### AUC and PR
-# read data
-resultsPath = '/Users/juanftellez/Dropbox/netsMatter/replications/Reiter_Stam_2003/output/'
-load(paste0(resultsPath, 'amenData.rda'))
+## read data
+
+## MJF notes: investigating what his data looks like:
+
+ls()
+
+class(base_mod1)
+
+class(mod1) ## this is the GLM objetc
+
+attributes(base_mod1)
+
+
+## Loading the AME object
+load(paste0(resultsPath, 'amenData.rda')) ##contains: xDyadList, yList
+
+ls()
+
+head(mod_dat)
 
 # logit model
 load( paste0(resultsPath,'reiterStam_baseModel.rda') )
@@ -177,6 +197,8 @@ logitPred = data.frame(
   statea = mod_dat$statea,
   stateb = mod_dat$stateb)
 logitPred = logitPred[logitPred$statea != logitPred$stateb,]
+
+
 ################################################
 
 ################################################

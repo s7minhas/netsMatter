@@ -7,8 +7,8 @@ if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
  pathData='~/Dropbox/netsMatter/replications/Weeks2012/replication/input/'
 }
 
-# load libs
-                                        # install/load libraries
+## load libs
+## install/load libraries
 
 loadPkg=function(toLoad){
 	for(lib in toLoad){
@@ -59,5 +59,11 @@ clVcov = vcov(mod) %*% ((clustN/(clustN-1)) * t(uClust) %*% uClust ) %*% vcov(mo
 # results match with stata
 modSumm = lmtest::coeftest(mod, vcov=clVcov)
 
-# save replicated results
-#save(modSumm, file=paste0(pathData, 'weeks_baseModel.rda'))
+## save replicated results
+## 7/27/17 update: saving a list with the
+## clustered SE in modSumm as well as the glm object
+## glm object needed for model evaluation
+
+##save(modSumm, file=paste0(pathData, 'weeks_baseModel.rda'))
+
+save(mod, file=paste0(pathData, 'weeks_baseModelGLMObj.rda'))

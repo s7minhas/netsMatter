@@ -1,5 +1,5 @@
 ########
-# replication of Saleyhan 2008
+# replication of Reiter and Stam 2003 results
 #######
 
 #
@@ -24,7 +24,7 @@ stam =
 base_vars = c('sideaa pdemdtar pdemdin personal military single democ contig majpow ally loglsrat advanced dispyrs dspline1 dspline2 dspline3') %>% 
   strsplit(x = ., split = " ") %>%  unlist()
 
-#
+# get model data
 mod_dat = select(stam, one_of(base_vars), idyr, statea, stateb) %>% 
   filter(complete.cases(.))
 

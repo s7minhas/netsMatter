@@ -52,3 +52,28 @@ http://www.stata.com/statalist/archive/2009-08/msg00386.html/
 * online appendix now at: https://users.polisci.wisc.edu/jweeks/WeeksAPSR2012WebAppendix.pdf
 
 
+AMEN Scripts
+
+1. WeeksAmenBuld.R takes the data and put it into AMN form
+
+
+2. To run AMEN models: 
+
+2a. Start with AMENConfig.sh. This will modify config.R which passes parameters to WeeksAMEN_general.R. It will also echo the parameters into a logfile.
+
+2b. WeeksAMEN_general.R is the bare-bones template, that would require individual hand-tuning to cycle through the latent dimensions
+The README.TXT file provides instructions.
+
+2c. Note that WeeksAMEN_general will save the output demarcated with latDim and date that it finished running. This is intended to keep track of runtimes and avoiding overwriting the results with different runs, but is a little bit irritating when it comes to loading the output.)
+
+3. WeeksBasicPosterior prints out graphics to assess convergence
+
+4. Crossvalidation scripts: 
+4a. AMEN cross validation is done via: weeksCrossVal_BasicWorking.R
+As with the normal AMEN run, I used the same outline script and ran them in parallel  by using my computers’ cores to parallelize the runs. So: open terminal, and then initialize the script with a different parameters configuration file.
+
+5. Results graphs are: 
+5a. plotCoefComparisons.R
+5b. PlotAUCPRComparisons.R
+
+

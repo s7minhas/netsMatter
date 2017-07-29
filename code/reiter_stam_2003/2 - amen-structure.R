@@ -1,5 +1,5 @@
 ########
-# Reiter and Stam 2003
+# Put R/S data into AMEN-ready structure
 #######
 
 #
@@ -28,17 +28,12 @@ dyad_vars = c('personal', 'military', 'single', 'democ', 'contig',
               'dispyrs', 'dspline1', 'dspline2', 'dspline3', 
               'pdemdtar', 'pdemdin')
 
-#
-
 
 # get sampling frame
 dataComp = na.omit(data[, base_vars])
 yrs = sort(unique(dataComp$year)) 
 cntriesT = lapply(yrs, function(t){ as.character( unique( dataComp$statea[dataComp$year==t] ) ) })
 
-
-# get rid of NA (colonial) countries
-# TBD
 
 # dv
 yVar = 'sideaa'
@@ -63,29 +58,6 @@ xDyadList = lapply(1:length(yrs), function(ii){
   adj = reshape2::acast(sliceL, statea ~ stateb ~ variable, value.var='value')
   return( adj[ cntriesT[[ii]], cntriesT[[ii]],  ] )
 })
-
-#nodal vars
-# nVars = c('year')
-# 
-# 
-# xNode = list()
-# 
-# for(ii in sort(unique(comp_dat$year)))
-# {
-#   # get in monad level
-#   temp_dat1 = 
-#     filter(comp_dat, year == ii) %>% 
-#     select(., one_of(nVars), statea, stateb)
-#   
-#   # get list of countries
-#   temp_dat2 = data.frame()
-#   
-#   
-#   # put in list
-#   xNode[[paste(ii)]] = temp_join
-#   print(ii)
-# }
-
 
 
 # save dfs
