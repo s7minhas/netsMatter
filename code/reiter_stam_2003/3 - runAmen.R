@@ -1,3 +1,4 @@
+rm(list=ls())
 # libraries
 # load amen
 devtools::install_github('s7minhas/amen') ; library(amen)
@@ -7,13 +8,13 @@ resultsPath = '/Users/juantellez/Dropbox/netsMatter/replications/Reiter_Stam_200
 load('/Users/juantellez/Desktop/netsMatter-Reiter/Reiter_Stam_2003/output/amenData.rda')
 
 # running in parallel varying k
-imps = 25000
-brn = 0
+imps = 10000
+brn = 25000
 ods = 10
 latDims = 0:3
 seed=6886
 
-prevModelFiles = paste0(resultsPath, 'model_k', latDims,'_v4.rda')
+prevModelFiles = paste0(resultsPath, 'model_k', latDims,'_v11.rda')
 # 
 
 
@@ -32,13 +33,13 @@ foreach(ii=1:length(latDims), .packages=c("amen")) %dopar% {
   
   ameFit = ame_repL(
     Y=yList,Xdyad=xDyadList,Xrow=NULL,Xcol=NULL, 
-    model="bin",symmetric=FALSE,intercept=FALSE,R=latDims[ii], 
+    model="bin",symmetric=FALSE,intercept=TRUE,R=latDims[ii], 
     nscan=imps, seed=seed, burn=brn, odens=ods, 
     plot=FALSE, print=FALSE, gof=TRUE, startVals=startVals0,
     periodicSave=TRUE
   ) 	
   save(ameFit, 
-       file=paste0(resultsPath, 'model_k', latDims[ii],'_v5.rda')
+       file=paste0(resultsPath, 'model_k', latDims[ii],'_v12.rda')
   )
 }
 stopCluster(cl)

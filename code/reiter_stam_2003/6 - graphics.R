@@ -1,6 +1,6 @@
 rm(list=ls())
 resultsPath = '/Users/juanftellez/Dropbox/netsMatter/replications/Reiter_Stam_2003/output/'
-plotPath = '/Users/juanftellez/Dropbox/netsMatter/replications/Reiter_Stam_2003/output/'
+plotPath = '/Users/juanftellez/Dropbox/netsMatter/replications/0_finalRepFigs/'
 #
 library(magrittr)
 library(ggplot2)
@@ -113,7 +113,10 @@ pDat = rbind(glmBETA, ameBETA, ameBETA1, ameBETA2, ameBETA3)
 pDat = 
   filter(pDat, !var %in% c('Rho', 'Cubic Spline 1', 'Cubic Spline 2', 
                            'Cubic Spline 3')) %>% 
-  filter(!mod %in% c('AME_K0', 'AME_K1'))
+  filter(mod %in% c('AME_K2', 'GLM'))
+
+pDat$mod[pDat$mod == 'AME_K2'] <- 'AME'
+pDat$mod[pDat$mod == 'GLM'] <- 'Logit'
 
 
 # create order for plotting
@@ -127,7 +130,7 @@ pDat$var = factor(pDat$var,levels = rev(levels(pDat$var)))
 
 # plot
 ggCoef(data = pDat)
-ggsave(filename = paste0(resultsPath, 'reiter_coefs_all.pdf'), device = cairo_pdf, width=7, height=7)
+ggsave(filename = paste0('/Users/juanftellez/Dropbox/netsMatter/replications/0_finalRepFigs', 'reiter_coefs_all.pdf'), device = cairo_pdf, width=7, height=7)
 
 
 # ggCoef(data = pDat, group = 1) ; ggsave(filename = paste0(resultsPath, 'reiter_coefs1.pdf'), device = cairo_pdf, width=7, height=7)
@@ -168,18 +171,18 @@ rocLogit =
 rocAme2 = 
   roc(prediction = ameOutSamp_k2$outPerf$pred, 
       actual = ameOutSamp_k2$outPerf$actual) %>% 
-  mutate(model = 'AME_K2')
+  mutate(model = 'AME (K = 2)')
 rocAme3 = 
   roc(prediction = ameOutSamp_k3$outPerf$pred, 
       actual = ameOutSamp_k3$outPerf$actual) %>% 
-  mutate(model = 'AME_K3')
+  mutate(model = 'AME (K = 3)')
 
 # plotting
 pRoc = rbind(rocLogit,rocAme2, rocAme3)
 pRoc$model = as.factor(pRoc$model)
 ggCols = brewer.pal(length(levels(pRoc$model)), 'Set1')
-rocPlot(pRoc, linetypes = c(1:3), legPos = 'top')
-ggsave(filename = paste0(resultsPath, 'reiter_auc_outsamp.pdf'), device = cairo_pdf, width=7, height=7)
+rocPlot(pRoc, linetypes = c(1,1,1), legPos = 'top')
+ggsave(filename = paste0(plotPath, 'reiter_auc_outsamp.pdf'), device = cairo_pdf, width=7, height=7)
 
 
 # pr
@@ -190,18 +193,19 @@ rocLogit =
 rocAme2 = 
   rocdf(pred = ameOutSamp_k2$outPerf$pred, 
         obs =  ameOutSamp_k2$outPerf$actual, type = 'pr') %>% 
-  mutate(model = 'AME_K2')
+  mutate(model = 'AME (K = 2)')
 rocAme3 = 
   rocdf(pred = ameOutSamp_k3$outPerf$pred, 
         obs =  ameOutSamp_k3$outPerf$actual, type = 'pr') %>% 
-  mutate(model = 'AME_K3')
+  mutate(model = 'AME (K = 3)')
 
 # plotting
 pRoc = rbind(rocLogit,rocAme2, rocAme3)
 pRoc$model = as.factor(pRoc$model)
 ggCols = brewer.pal(length(levels(pRoc$model)), 'Set1')
-rocPlot(pRoc, linetypes = c(1:3), legPos = 'top', type = 'pr')
-ggsave(filename = paste0(resultsPath, 'reiter_pr-outsamp.pdf'), device = cairo_pdf, width=7, height=7)
+rocPlot(pRoc, linetypes = c(1,1,1), legPos = 'top', type = 'pr')
+ggsave(filename = paste0(plotPath, 'reiter_pr_outsamp.pdf'), device = cairo_pdf, 
+       width=7, height=7)
 
 
 
@@ -283,11 +287,13 @@ ggsave(
 
 # Parameter Table and Triad Plot ------------------------------------------
 # table
-paramTab = rbind(c(apply(ameFit_k2$VC, 2, mean), apply(ameFit_k2$GOF, 2, mean)),
+paramTab = rbind(c(apply(ameFit_k0$VC, 2, mean), apply(ameFit_k0$GOF, 2, mean)),
+                 c(apply(ameFit_k1$VC, 2, mean), apply(ameFit_k1$GOF, 2, mean)), 
+                 c(apply(ameFit_k2$VC, 2, mean), apply(ameFit_k2$GOF, 2, mean)),
                  c(apply(ameFit_k3$VC, 2, mean), apply(ameFit_k3$GOF, 2, mean))) %>% 
   round(3) %>% 
   as.data.frame()
-paramTab$Model = c('AME_K2', 'AME_K3')
+paramTab$Model = c('AME_K0', 'AME_K1', 'AME_K2', 'AME_K3')
 stargazer::stargazer(paramTab, summary = F)
 
 # triad plot
