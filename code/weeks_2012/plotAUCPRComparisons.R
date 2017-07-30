@@ -36,7 +36,7 @@ load(paste0(inputPath,'weeks_baseModel.rda')); base_mod1=round(modSumm,3) #this 
 
 ## read data
 
-ls()
+s()
 
 load(paste0(resultsPath, 'WeeksamenData.rda')) ## xDyadList, xNodeList.R, xNodeList.s, Ylist 
 
@@ -179,6 +179,8 @@ colnames(yArrSumm) =
   countrycode::countrycode(colnames(yArrSumm), origin = 'cown', 'country.name', warn = T)
 
 ################
+
+
 uvCols = brewer.pal(11, 'RdBu')[c(11-2, 3)]
 circPlot=ggCirc(
   Y=yArrSumm, U=ameFit$U, V=ameFit$V, vscale=.6, 
@@ -188,6 +190,7 @@ circPlot=ggCirc(
 ggsave(circPlot, 
        file=paste0(resultsPath,'weeks_circPlot.pdf'), 
        width=12, height=10, device=cairo_pdf)
+
 ################
 
 

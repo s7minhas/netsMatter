@@ -1,4 +1,4 @@
-rm(list=ls())
+rm(list=ls
 
 resultsPath = '~/Dropbox/netsMatter/replications/Reiter_Stam_2003/output/'
 
@@ -109,6 +109,12 @@ ameBETA3$var = c('Intercept', 'Personal', 'Military', 'Single', 'Democracy',
 # combine and clean up
 pDat = rbind(glmBETA, ameBETA, ameBETA1, ameBETA2, ameBETA3)
 
+dim(ameFit_k3$BETA) ## 16 vars
+dim(glmBETA) ## 16 vars
+
+dim(pDat)
+
+pDat[10:30,]
 
 # create groups for plotting
 vars = unique(pDat$var)

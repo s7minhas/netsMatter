@@ -1,4 +1,4 @@
-## This script produces coefficient plots for AME output K=0:3 and the GLM model
+## This script produces coefficient plots for AME output K=0:3 Aand the GLM model
 ## Script 1 of the model presentation 
 ##Based on Juan's code for Reiter-Stam and mine for Weeks
 
@@ -33,7 +33,8 @@ load(paste0(resultsPath,'McDonald_baseModel.rda'));  base_mod1=round(modSumm,3) 
 
 dv= 'cw2mid'
 
-ivs =c("Spline0","Spline1","Spline2","Spline3","SharedAlliance","Contiguous","LogCapRatio","TradeDependence","GDPChangePreConflict","LowestDyadicPolityScore","Capabilities","LoggedGDP","LoggedCapDistance","MajorPowerInDyad","HigestBarrierToTrade")
+ivs=c("Spline0","Spline1","Spline2","Spline3","Shared Alliance","Contiguous","Log Capabilities Ratio","Trade Dependence","Preconflict GDP Change","Lowest Dyadic Polity Score","Capabilities","Logged GDP","Logged Cap. Distance","Major Power In Dyad","Higest Barrier To Trade")
+
 
 # sum stats
 summStats = function(x){
@@ -48,6 +49,13 @@ glmBETA = data.frame(var = rownames(base_mod1),
     sd = base_mod1[ ,2])
 
 
+class(base_mod1)
+attributes(base_mod1)
+head(ameFit_k2$BETA)
+
+colnames(ameFit_k2$BETA)
+
+     
 rownames(glmBETA) = NULL
 glmBETA$lo95 = glmBETA$mean - qnorm(.975)*glmBETA$sd
 glmBETA$hi95 = glmBETA$mean + qnorm(.975)*glmBETA$sd
@@ -58,6 +66,12 @@ glmBETA$med = glmBETA$mean
 glmBETA$prezvar = c("Intercept", ivs)
 
 attributes(ameFit_k0)
+
+class(ameFit_k0$BETA)
+
+dim(ameFit_k0$BETA) ## still 15, which means no intercept. wth?
+
+head(ameFit_k0$BETA)
 
 ## AME IVS
 
@@ -71,7 +85,7 @@ colnames(ameBETA) = c('mean', 'med', 'sd', 'lo95','lo90','hi90','hi95')
 ameBETA = data.frame(ameBETA, stringsAsFactors = F)
 ameBETA$var = rownames(ameBETA) ; rownames(ameBETA) = NULL
 ameBETA$mod = 'AME_K0'
-ameBETA$prezvar = c(ivs, "rho") ## CHECK: WHYS IS THERE NO INTERCEPT?
+ameBETA$prezvar = c(ivs, "rho") ## CHECK: WHY IS THERE NO INTERCEPT?
 
 # AME K1
 ameBETA1 = cbind(ameFit_k1$BETA, rho = ameFit_k1$VC[,'rho'])
@@ -109,9 +123,10 @@ pDat = rbind(glmBETA, ameBETA, ameBETA1, ameBETA2, ameBETA3)
 # create groups for plotting
 vars = unique(pDat$prezvar)
 pDat$group = NA
-## varOrder = COME BACK TO ME
-##pDat$var = factor(pDat$var,levels = varOrder, ordered = F)
-##pDat$var = factor(pDat$var,levels = rev(levels(pDat$var)))
+varOrder = c(ivs, "rho")
+pDat$prezvar = factor(pDat$prezvar,levels = varOrder, ordered = F) 
+pDat$prezvar = factor(pDat$prezvar,levels =
+    rev(levels(pDat$var)))##this is needed b/c of the axis orientation
 
 
 length(ivs)## 15
@@ -137,7 +152,7 @@ ggCoef = function(data, group = NULL)
   zp1 = zp1 + geom_pointrange(aes(x = prezvar, y = mean, ymin = lo95,
                                   ymax = hi95),
                               lwd = 1/2, position = position_dodge(width = .7),
-                              shape = 21, fill = "WHITE")
+                              shape = 21, fill = "WHITE", fatten=.5)
   zp1 = zp1 + coord_flip() + labs(x = "", y = '', 
                                   color = 'model type')
   zp1 = zp1 + theme_bw() +
@@ -153,39 +168,7 @@ ggCoef = function(data, group = NULL)
 }
 
 
-### Function for GLM data
-
-ggCoef2 = function(data, group = NULL)
-{
-  if(!is.null(group))
-  {
-    zp1 = ggplot(data[data$group == group, ], aes(color = mod))
-  } else{
-    zp1 = ggplot(data, aes(color = mod))
-  }
-  zp1 = zp1 + geom_hline(yintercept = 0, colour = gray(1/2), lty = 2)
-  zp1 = zp1 + geom_linerange(aes(x = var, ymin = lo90, ymax = hi90),
-                             lwd = 1, position = position_dodge(width = .7))
-  zp1 = zp1 + geom_pointrange(aes(x = var, y = mean, ymin = lo95,
-                                  ymax = hi95),
-                              lwd = 1/2, position = position_dodge(width = .7),
-                              shape = 21, fill = "WHITE")
-  zp1 = zp1 + coord_flip() + labs(x = "", y = '', 
-                                  color = 'model type')
-  zp1 = zp1 + theme_bw() +
-    theme(
-      legend.position='top', legend.title=element_blank(),
-      legend.text=element_text(family="Source Sans Pro Light"),
-      panel.border=element_blank(),
-      axis.ticks=element_blank(),
-      axis.text.x=element_text(family="Source Sans Pro Light"),
-      axis.text.y=element_text(family="Source Sans Pro Light", hjust=0)
-    )
-  return(zp1)
-}
-
-
-### Save plots
+### make a version without the trade dyads, for comparison
 
 ## All coefficients
 ggCoef(data = pDat) ;

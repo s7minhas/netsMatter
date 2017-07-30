@@ -32,13 +32,14 @@ if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
 ## load ame results
 ## load the k-specific data:
 ## as well as the ame formulation of the data
-source('xValSetupK0.R') #started 11:41 am 6/24. note amen data is nonsymmetric; 7/27 with f=4
+##source('xValSetupK0.R') #started 11:41 am 6/24. note amen data is nonsymmetric; 7/27 with f=4
 ##source('xValSetupk1.R') #started 12:03 pm 6/24 data nonsymmetric; 7/27 with f=4
 ##source('xValSetupk2.R') #started 12:01 pm 6/24 data non-symmetric; 7/24 with f=4
-##source('xValSetupk3.R') #started at 12:04 5/24 data-non symetric; 7/27 with f=4 
+source('xValSetupk3.R') #started at 12:04 5/24 data-non symetric; 7/27 with f=4 
 
 print(paste0("Running with latDims= ", latDims))
 print(paste0("running with burnin= ", burnin, "and nscans= ", nscans))
+print(paste0("running with folds = ", folds))
 ################
 
 ## all including DV
@@ -57,7 +58,7 @@ form_mod
 ####################
 ameOutSamp = function(
     yList, xDyadL=NULL, xRowL=NULL, xColL=NULL, startVals, ## startVal (to pick one portion)
-    seed=6886, folds=30, #increase burn and nscan eventually
+    seed=6886, folds=4, #increase burn and nscan eventually
     R=latDims, model='bin',
     burn=1000, nscan=2000, odens=25, #expand when needed 
     intercept=FALSE, rvar=TRUE, cvar=TRUE, symmetric=FALSE){
@@ -152,6 +153,7 @@ ameOutSamp_NULL =   ameOutSamp(
     yList=ylist, xDyadL=xDyadList,
     xRowL=NULL,
     xColL=NULL,
+    folds=folds,
     R=latDims,
     startVals=ameFit$startVals)
 

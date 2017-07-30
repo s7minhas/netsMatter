@@ -59,7 +59,6 @@ print(paste0("Single latent dimension, which is ", latDims))
 
 ################################
 ## Trial run
-### (using Howard's code)
 
 ## params that are stable
 
@@ -68,10 +67,11 @@ seed=6889
 ameFit =  ame_repL(
     Y=yList,Xdyad=xDyadList,Xrow=NULL,Xcol=NULL,
     model="bin",symmetric=TRUE, # McDonald model is symmetric
-    intercept=FALSE,R=latDims,
+    intercept=TRUE, ## Do want the intercept!
+    R=latDims,
     nscan=imps, seed=seed, burn=brn, odens=ods,
     plot=FALSE, print=FALSE, gof=TRUE,
-#   startVals=startVals0,
+    ##   startVals=startVals0, ## no startvals here
     periodicSave=TRUE, outFile=paste0(dPath, 'ameFitSym_k', latDims,'.rda')
     )   
 
