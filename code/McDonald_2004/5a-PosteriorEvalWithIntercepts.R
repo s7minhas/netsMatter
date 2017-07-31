@@ -15,12 +15,19 @@ loadPkg=function(toLoad){
 
 loadPkg('magrittr')
 
-# load data
-load( paste0(dPath,'ameFit_k0.rda') ) ; ameFit_k0=ameFit
-load( paste0(dPath,'ameFit_k1.rda') ) ; ameFit_k1=ameFit
-load( paste0(dPath,'ameFit_k2.rda') ) ; ameFit_k2=ameFit
-load( paste0(dPath,'ameFit_k3.rda') ) ; ameFit_k3=ameFit
+## load data
+## Original model:
+## load( paste0(dPath,'ameFit_k0.rda') ) ; ameFit_k0=ameFit
+## load( paste0(dPath,'ameFit_k1.rda') ) ; ameFit_k1=ameFit
+## load( paste0(dPath,'ameFit_k2.rda') ) ; ameFit_k2=ameFit
+## load( paste0(dPath,'ameFit_k3.rda') ) ; ameFit_k3=ameFit
 
+## Update on 7/30: Posteriors with intercepts
+
+load( paste0(dPath,'ameFitIntercepts_k0.rda') ) ; ameFit_k0=ameFit
+load( paste0(dPath,'ameFitIntercepts_k1.rda') ) ; ameFit_k1=ameFit
+load( paste0(dPath,'ameFitIntercepts_k2.rda') ) ; ameFit_k2=ameFit
+load( paste0(dPath,'ameFitIntercepts_k3.rda') ) ; ameFit_k3=ameFit
 # check out goodness of fit stats
 
 pdf(file=paste0(dPath, "gofPlotK0.pdf"))

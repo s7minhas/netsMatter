@@ -1,12 +1,11 @@
 ## This script produces AUC and ROC plots comparing GLM and AME models
-## Script 2  of the model presentation 
-##Based on Juan's code for Reiter-Stam
+## For just K=2,3
 
 rm(list=ls())
 
 resultsPath = '~/Dropbox/netsMatter/replications/Weeks2012/replication/output/'
 inputPath= '~/Dropbox/netsMatter/replications/Weeks2012/replication/input/'
-plotPath = '~/Dropbox/netsMatter/replications/Weeks2012/replication/output/'
+plotPath = '~/Dropbox/netsMatter/replications/0_finalRepFigs/'
 
 ### libraries needed
 library(dplyr)
@@ -18,13 +17,11 @@ library(Cairo)
 library(reshape2)
 source('helperEx.R')
 source('setup.R')
-library(amen)
+#library(amen)
 
 
 
 # load data
-load( paste0(resultsPath,'model_k02017-03-15_v2.rda') ) ; ameFit_k0=ameFit
-load( paste0(resultsPath,'model_k12017-03-15_v2.rda') ) ; ameFit_k1=ameFit
 load( paste0(resultsPath,'model_k22017-04-04_v2.rda') ) ; ameFit_k2=ameFit
 load( paste0(resultsPath,'model_k32017-03-14_v2.rda') ) ; ameFit_k3=ameFit
 
@@ -35,8 +32,6 @@ load(paste0(inputPath,'weeks_baseModel.rda')); base_mod1=round(modSumm,3) #this 
 ##### AUC and PR
 
 ## read data
-
-s()
 
 load(paste0(resultsPath, 'WeeksamenData.rda')) ## xDyadList, xNodeList.R, xNodeList.s, Ylist 
 
@@ -57,26 +52,6 @@ logitPred = data.frame(
 logitPred = logitPred[logitPred$statea != logitPred$stateb,]
 ################################################
 ################################################
-
-## Amen - K0
-
-load(paste0(resultsPath, 'model_k02017-03-15_v2.rda'))
-actual = melt(yList)
-preds = ameFit$'EZ'
-amePred_k0 = melt(preds)
-amePred_k0$prob = 1/(1+exp(-amePred_k0$value))
-amePred_k0$actual = actual$value
-amePred_k0 = na.omit(amePred_k0)
-
-## Amen - K1
-
-load(paste0(resultsPath, 'model_k12017-03-15_v2.rda'))
-actual = melt(yList)
-preds = ameFit$'EZ'
-amePred_k1 = melt(preds)
-amePred_k1$prob = 1/(1+exp(-amePred_k1$value))
-amePred_k1$actual = actual$value
-amePred_k1 = na.omit(amePred_k1)
 ## Amen - K2
 load(paste0(resultsPath, 'model_k22017-04-04_v2.rda'))
 actual = melt(yList)
@@ -96,10 +71,7 @@ amePred_k3 = na.omit(amePred_k3)
 ################################
 
 ## Organize pred DFs
-predDfs = list(Logit=logitPred,
-    AME_k0 = amePred_k0, 
-    AME_k1 = amePred_k1, AME_k2 = amePred_k2, 
-    AME_k3 = amePred_k3)
+predDfs = list(Logit=logitPred, AME_k2 = amePred_k2, AME_k3 = amePred_k3)
 
 
 ## AUC ROC
@@ -107,10 +79,6 @@ rocLogit =
   roc(prediction = logitPred$prob, actual = logitPred$actual) %>% 
   mutate(model = 'Logit')
 
-rocAme0 = roc(prediction = amePred_k0$prob, actual = amePred_k0$actual) %>% 
-  mutate(model = 'AME_K0') 
-rocAme1 = roc(prediction = amePred_k1$prob, actual = amePred_k1$actual) %>% 
-  mutate(model = 'AME_K1')
 rocAme2 = roc(prediction = amePred_k2$prob, actual = amePred_k2$actual) %>% 
   mutate(model = 'AME_K2')
 rocAme3 = roc(prediction = amePred_k3$prob, actual = amePred_k3$actual) %>% 
@@ -118,7 +86,7 @@ rocAme3 = roc(prediction = amePred_k3$prob, actual = amePred_k3$actual) %>%
 
 
 pRoc = rbind(rocLogit,
-    rocAme0, rocAme1, rocAme2, rocAme3)
+    rocAme2, rocAme3)
 
 pRoc$model = as.factor(pRoc$model)
 ggCols = brewer.pal(length(levels(pRoc$model)), 'Set1')
@@ -126,17 +94,11 @@ rocPlot(pRoc, linetypes = c(1:5), legPos = 'top')
 ggsave(filename = paste0(resultsPath, 'weeks_auc.pdf'), device =
        cairo_pdf, width=7, height=7)
 
-# AUC PR
-## rocLogit = 
-##   rocdf(pred = logitPred$prob, obs = logitPred$actual, type = 'pr') %>% 
-##     mutate(model = 'Logit')
+##AUC PR
+rocLogit = 
+  rocdf(pred = logitPred$prob, obs = logitPred$actual, type = 'pr') %>% 
+    mutate(model = 'Logit')
 
-rocAme0 = 
-  rocdf(pred = amePred_k0$prob, obs = amePred_k0$actual, type = 'pr') %>% 
-  mutate(model = 'AME_K0')
-rocAme1 = 
-  rocdf(pred = amePred_k1$prob, obs = amePred_k1$actual, type = 'pr') %>% 
-  mutate(model = 'AME_K1')
 rocAme2 = 
   rocdf(pred = amePred_k2$prob, obs = amePred_k2$actual, type = 'pr') %>% 
   mutate(model = 'AME_K2')
@@ -144,11 +106,11 @@ rocAme3 =
   rocdf(pred = amePred_k3$prob, obs = amePred_k3$actual, type = 'pr') %>% 
   mutate(model = 'AME_K3')
 
-pRoc = rbind(#rocLogit,
-    rocAme0, rocAme1, rocAme2, rocAme3)
+pRoc = rbind(rocLogit,
+    rocAme2, rocAme3)
 pRoc$model = as.factor(pRoc$model)
 rocPlot(pRoc, linetypes = c(1:5), type = 'pr', legPos = 'top')
-ggsave(filename = paste0(resultsPath, 'weeks_pr.pdf'), device = cairo_pdf, width=7, height=7)
+ggsave(filename = paste0(plotPath, 'weeks_pr.pdf'), device = cairo_pdf, width=7, height=7)
 
 
 trim = function (x) { gsub("^\\s+|\\s+$", "", x) } ##should have loaded in setup.R
@@ -217,7 +179,7 @@ ggplot(uvDF, aes(x=X1, y=X2, color=type, label=name)) +
   )
 
 ggsave( 
-       file=paste0(resultsPath,'weeks_2dPlot.pdf'), 
+       file=paste0(plotPath,'weeks_2dPlot.pdf'), 
        width=12, height=10, device=cairo_pdf)
 
 print("ROC and Circle Plots Made")

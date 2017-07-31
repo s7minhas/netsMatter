@@ -1,4 +1,4 @@
-## This script produces coefficient plots for AME output K=0:3 Aand the GLM model
+## This script produces coefficienAt plots for AME output K=0:3 Aand the GLM model
 ## Script 1 of the model presentation 
 ##Based on Juan's code for Reiter-Stam and mine for Weeks
 
@@ -20,11 +20,12 @@ library(amen)
 
 ## Load in the data
 
-load( paste0(resultsPath,'ameFit_k0.rda') ) ; ameFit_k0=ameFit
-load( paste0(resultsPath,'ameFit_k1.rda') ) ; ameFit_k1=ameFit
-load( paste0(resultsPath,'ameFit_k2.rda') ) ; ameFit_k2=ameFit
-load( paste0(resultsPath,'ameFit_k3.rda') ) ; ameFit_k3=ameFit
+load( paste0(resultsPath,'ameFitIntercepts_k0.rda') ) ; ameFit_k0=ameFit
+load( paste0(resultsPath,'ameFitIntercepts_k1.rda') ) ; ameFit_k1=ameFit
+load( paste0(resultsPath,'ameFitIntercepts_k2.rda') ) ; ameFit_k2=ameFit
+load( paste0(resultsPath,'ameFitIntercepts_k3.rda') ) ; ameFit_k3=ameFit
 
+ameFit_k0$BETA[1:5,]
 ## GLM-- results of base model
 
 load(paste0(resultsPath,'McDonald_baseModel.rda'));  base_mod1=round(modSumm,3) #this is original coefficient estimates
@@ -34,6 +35,7 @@ load(paste0(resultsPath,'McDonald_baseModel.rda'));  base_mod1=round(modSumm,3) 
 dv= 'cw2mid'
 
 ivs=c("Spline0","Spline1","Spline2","Spline3","Shared Alliance","Contiguous","Log Capabilities Ratio","Trade Dependence","Preconflict GDP Change","Lowest Dyadic Polity Score","Capabilities","Logged GDP","Logged Cap. Distance","Major Power In Dyad","Higest Barrier To Trade")
+
 
 
 # sum stats
@@ -54,6 +56,7 @@ attributes(base_mod1)
 head(ameFit_k2$BETA)
 
 colnames(ameFit_k2$BETA)
+base_mod1
 
      
 rownames(glmBETA) = NULL
@@ -65,19 +68,14 @@ glmBETA$mod = 'GLM'
 glmBETA$med = glmBETA$mean
 glmBETA$prezvar = c("Intercept", ivs)
 
-attributes(ameFit_k0)
-
-class(ameFit_k0$BETA)
-
-dim(ameFit_k0$BETA) ## still 15, which means no intercept. wth?
-
-head(ameFit_k0$BETA)
-
 ## AME IVS
 
+unique(ameBETA3$var)
+unique(ameBETA2$var)
 ## same as the GLM here
 
 ## AME K0
+
 
 ameBETA = cbind(ameFit_k0$BETA, rho = ameFit_k0$VC[,'rho'])
 ameBETA = t(apply(ameBETA, 2, summStats))
@@ -85,7 +83,7 @@ colnames(ameBETA) = c('mean', 'med', 'sd', 'lo95','lo90','hi90','hi95')
 ameBETA = data.frame(ameBETA, stringsAsFactors = F)
 ameBETA$var = rownames(ameBETA) ; rownames(ameBETA) = NULL
 ameBETA$mod = 'AME_K0'
-ameBETA$prezvar = c(ivs, "rho") ## CHECK: WHY IS THERE NO INTERCEPT?
+ameBETA$prezvar = c('Intercept', ivs, "rho")
 
 # AME K1
 ameBETA1 = cbind(ameFit_k1$BETA, rho = ameFit_k1$VC[,'rho'])
@@ -94,7 +92,7 @@ colnames(ameBETA1) = c('mean', 'med', 'sd', 'lo95','lo90','hi90','hi95')
 ameBETA1 = data.frame(ameBETA1, stringsAsFactors = F)
 ameBETA1$var = rownames(ameBETA1) ; rownames(ameBETA1) = NULL
 ameBETA1$mod = 'AME_K1'
-ameBETA1$prezvar = c(ivs, "rho")
+ameBETA1$prezvar = c("Intercept", ivs, "rho")
 
 # AME K2
 ameBETA2 = cbind(ameFit_k2$BETA, rho = ameFit_k2$VC[,'rho'])
@@ -112,13 +110,17 @@ colnames(ameBETA3) = c('mean', 'med', 'sd', 'lo95','lo90','hi90','hi95')
 ameBETA3 = data.frame(ameBETA3, stringsAsFactors = F)
 ameBETA3$var = rownames(ameBETA3) ; rownames(ameBETA3) = NULL
 ameBETA3$mod = 'AME_K3'
-ameBETA3$prezvar = c( ivs, "rho")
+ameBETA3$prezvar = c("Intercept", ivs, "rho")
 
 ## combine and clean up
 ## note that have to remove GLM results because
 ## the AME results have more parameters
 pDat = rbind(glmBETA, ameBETA, ameBETA1, ameBETA2, ameBETA3)
 
+head(pDat)
+
+pDat[which(pDat$prezvar=="Intercept"),]
+pDat[which(pDat$prezvar=="Spline0"),]
 
 # create groups for plotting
 vars = unique(pDat$prezvar)

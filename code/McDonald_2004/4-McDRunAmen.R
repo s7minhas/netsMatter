@@ -41,15 +41,16 @@ source("config.R")
 ## if we're continuing to run:
 print(paste0("Single latent dimension, which is ", latDims))
 
-### 7/29 Can't load previous data run without intercepts 
-## load previous model run
-## prevModelFiles = paste0(dPath, 'ameFit_k', latDims,'.rda')
-## load(prevModelFiles)
-## ls()
+### 7/29 Can't load previous data run without intercepts
+
+## If needed: load previous model run
+
+prevModelFiles = paste0(dPath, 'ameFitIntercepts_k', latDims,'.rda')
+load(prevModelFiles)
 
 #head(fit$'BETA')
 
-##startVals0=ameFit$'startVals'
+startVals0=ameFit$'startVals'
 
 
 ################################
@@ -63,11 +64,11 @@ seed=6889
 ameFit =  ame_repL(
     Y=yList,Xdyad=xDyadList,Xrow=NULL,Xcol=NULL,
     model="bin",symmetric=FALSE, # McDonald model is symmetric, but shouldn't matter
-    intercept=FALSE, ## updated 7/29 b/c do want intercepts
+    intercept=TRUE, ## updated 7/29 b/c do want intercepts
     R=latDims,
     nscan=imps, seed=seed, burn=brn, odens=ods,
     plot=FALSE, print=FALSE, gof=TRUE,
-    ## startVals=startVals0, ## cant mix start vals with no intercepts
+    startVals=startVals0,
     periodicSave=TRUE, outFile=paste0(dPath, 'ameFitIntercepts_k', latDims,'.rda')
     )   
 

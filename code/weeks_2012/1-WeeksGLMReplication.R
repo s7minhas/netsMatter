@@ -45,6 +45,8 @@ modForm = formula(
 	)
 mod = glm(modForm, data=modData, family=binomial(link='logit'))
 
+round(summary(mod)$coefficients, 3)
+      
 # none of the pkgs working so going manual
 
 clust = modData$dirdyadid

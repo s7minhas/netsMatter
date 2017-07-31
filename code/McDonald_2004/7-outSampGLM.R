@@ -149,12 +149,5 @@ glmOutSamp_wFullSpec=glmOutSamp(glmForm=form_mod)
 ##save current work:
 
 ## too large to save:
-##save(glmOutSamp_wFullSpec, file=paste0(dataPath, "McDGLMPerf.rda"))
+save(glmOutSamp_wFullSpec, file=paste0(dataPath, "McDGLMPerf.rda"))
 
-
-ls() 
-
-attributes(glmOutSamp_wFullSpec)
-
-glmOutSamp_wFullSpec$aucROC
-glmOutSamp_wFullSpec$aucPR
