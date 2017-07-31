@@ -171,14 +171,14 @@ rocLogit =
 rocAme2 = 
   roc(prediction = ameOutSamp_k2$outPerf$pred, 
       actual = ameOutSamp_k2$outPerf$actual) %>% 
-  mutate(model = 'AME (K = 2)')
+  mutate(model = 'AME')
 rocAme3 = 
   roc(prediction = ameOutSamp_k3$outPerf$pred, 
       actual = ameOutSamp_k3$outPerf$actual) %>% 
   mutate(model = 'AME (K = 3)')
 
 # plotting
-pRoc = rbind(rocLogit,rocAme2, rocAme3)
+pRoc = rbind(rocLogit,rocAme2)
 pRoc$model = as.factor(pRoc$model)
 ggCols = brewer.pal(length(levels(pRoc$model)), 'Set1')
 rocPlot(pRoc, linetypes = c(1,1,1), legPos = 'top')
@@ -193,17 +193,17 @@ rocLogit =
 rocAme2 = 
   rocdf(pred = ameOutSamp_k2$outPerf$pred, 
         obs =  ameOutSamp_k2$outPerf$actual, type = 'pr') %>% 
-  mutate(model = 'AME (K = 2)')
+  mutate(model = 'AME')
 rocAme3 = 
   rocdf(pred = ameOutSamp_k3$outPerf$pred, 
         obs =  ameOutSamp_k3$outPerf$actual, type = 'pr') %>% 
   mutate(model = 'AME (K = 3)')
 
 # plotting
-pRoc = rbind(rocLogit,rocAme2, rocAme3)
+pRoc = rbind(rocLogit,rocAme2)
 pRoc$model = as.factor(pRoc$model)
 ggCols = brewer.pal(length(levels(pRoc$model)), 'Set1')
-rocPlot(pRoc, linetypes = c(1,1,1), legPos = 'top', type = 'pr')
+rocPlot(pRoc, linetypes = c(1,1), legPos = 'top', type = 'pr')
 ggsave(filename = paste0(plotPath, 'reiter_pr_outsamp.pdf'), device = cairo_pdf, 
        width=7, height=7)
 
