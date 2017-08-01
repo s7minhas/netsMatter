@@ -22,7 +22,7 @@ library(amen)
 
 ## load data:
 load( paste0(resultsPath,'model_k22017-04-04_v2.rda') ) ; ameFit_k2=ameFit
-load( paste0(resultsPath,'model_k32017-03-14_v2.rda') ) ; ameFit_k3=ameFit
+##load( paste0(resultsPath,'model_k32017-03-14_v2.rda') ) ; ameFit_k3=ameFit
 load(paste0(inputPath,'weeks_baseModel.rda')); base_mod1=round(modSumm,3) #this is original coefficient estimates
 
 ## Meaningful names on IVs:
@@ -93,20 +93,20 @@ ameBETA2$var = rownames(ameBETA2) ; rownames(ameBETA2) = NULL
 ameBETA2$mod = 'AME_K2'
 ameBETA2$prezvar =  c("Intercept", ivsAME, "rho")
 
-# AME K3
-ameBETA3 = cbind(ameFit_k3$BETA, rho = ameFit_k3$VC[,'rho'])
-ameBETA3 = t(apply(ameBETA3, 2, summStats))
-colnames(ameBETA3) = c('mean', 'med', 'sd', 'lo95','lo90','hi90','hi95')
-ameBETA3 = data.frame(ameBETA3, stringsAsFactors = F)
-ameBETA3$var = rownames(ameBETA3) ; rownames(ameBETA3) = NULL
-ameBETA3$mod = 'AME_K3'
-ameBETA3$prezvar = c("Intercept", ivsAME, "rho")
+## AME K3
+## ameBETA3 = cbind(ameFit_k3$BETA, rho = ameFit_k3$VC[,'rho'])
+## ameBETA3 = t(apply(ameBETA3, 2, summStats))
+## colnames(ameBETA3) = c('mean', 'med', 'sd', 'lo95','lo90','hi90','hi95')
+## ameBETA3 = data.frame(ameBETA3, stringsAsFactors = F)
+## ameBETA3$var = rownames(ameBETA3) ; rownames(ameBETA3) = NULL
+## ameBETA3$mod = 'AME_K3'
+## ameBETA3$prezvar = c("Intercept", ivsAME, "rho")
 
 ## combine and clean up
 ## note that have to remove GLM results because
 ## the AME results have more parameters
 
-pDat = rbind(glmBETA, ameBETA2, ameBETA3)
+pDat = rbind(glmBETA, ameBETA2) #, ameBETA3)
 
 # create groups for plotting
 vars = unique(pDat$prezvar)

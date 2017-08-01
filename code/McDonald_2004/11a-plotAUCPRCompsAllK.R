@@ -6,10 +6,7 @@ rm(list=ls())
 
 resultsPath = '~/Dropbox/netsMatter/replications/McDonald_2004/data/'
 
-
-
 ### libraries needed
-library(RColorBrewer)
 library(dplyr)
 library(magrittr)
 library(ggplot2)
@@ -18,6 +15,7 @@ library(gridExtra)
 library(Cairo)
 library(reshape2)
 library(amen)
+library(RColorBrewer)
 ##library(tidyverse)
 ##library(latex2exp)
 
@@ -25,6 +23,13 @@ source('../reiter_stam_2003/helperEx.R')
 source('setup.R')
 
 ### Load data
+
+## In-sample:
+
+load( paste0(resultsPath,'ameFit_k0.rda') ) ; ameFit_k0=ameFit
+load( paste0(resultsPath,'ameFit_k1.rda') ) ; ameFit_k1=ameFit
+load( paste0(resultsPath,'ameFit_k2.rda') ) ; ameFit_k2=ameFit
+load( paste0(resultsPath,'ameFit_k3.rda') ) ; ameFit_k3=ameFit
 
 ##########
 ## Sender/Receiver effects 
@@ -39,19 +44,38 @@ source('setup.R')
 ## addEffPlot(fit = effdat, addEffData = T, row = F)
 ## ggsave(filename = paste0(resultsPath, 'McDonald_receiver_k2.pdf'), device = cairo_pdf, width=7, height=7)
 
-
 ##############
 ##### AUC and PR
 
+## read data
+
+load(paste0(resultsPath, "McDonald_baseModelGLMObj.rda")) ## mod = GLM object
+## some renaming for consistency with other projects
+mod_dat=mod$data
+
+dv="cw2mid" ## will adjust the script below to be more general
+
+
+logitModProbs = 1/(1+exp(-predict(mod))) #numeric vector
+
+logitPred = data.frame(
+    actual=mod_dat[,dv],prob=logitModProbs,
+  statea = mod_dat$ccode1,
+  stateb = mod_dat$ccode2)
+logitPred = logitPred[logitPred$statea != logitPred$stateb,]
+################################################
+################################################
 ## Performance
 ###(out of sample) 
 ################################
 
-
 ##Load out-sample results
 
 load('~/Dropbox/netsMatter/replications/McDonald_2004/data/McDGLMPerf.rda')
+load('~/Dropbox/netsMatter/replications/McDonald_2004/data/outsampResults0.rda'); ameOutSamp_k0 <- ameOutSamp_NULL
+load('~/Dropbox/netsMatter/replications/McDonald_2004/data/outsampResults1.rda'); ameOutSamp_k1 <- ameOutSamp_NULL
 load('~/Dropbox/netsMatter/replications/McDonald_2004/data/outsampResults2.rda'); ameOutSamp_k2 <- ameOutSamp_NULL
+load('~/Dropbox/netsMatter/replications/McDonald_2004/data/outsampResults3.rda'); ameOutSamp_k3 <- ameOutSamp_NULL
 
 ## ROC plots
 
@@ -61,40 +85,77 @@ rocLogit =
       actual = glmOutSamp_wFullSpec$outPerf$actual) %>% 
     mutate(model = 'Logit')
 
+rocAme0 = 
+  roc(prediction = ameOutSamp_k0$outPerf$pred, 
+      actual = ameOutSamp_k0$outPerf$actual) %>% 
+    mutate(model = 'AME (K = 0)')
+
+rocAme1 = 
+  roc(prediction = ameOutSamp_k1$outPerf$pred, 
+      actual = ameOutSamp_k1$outPerf$actual) %>% 
+    mutate(model = 'AME (K = 1)')
+
 rocAme2 = 
   roc(prediction = ameOutSamp_k2$outPerf$pred, 
       actual = ameOutSamp_k2$outPerf$actual) %>% 
   mutate(model = 'AME (K = 2)')
 
+rocAme3 = 
+  roc(prediction = ameOutSamp_k3$outPerf$pred, 
+      actual = ameOutSamp_k3$outPerf$actual) %>% 
+  mutate(model = 'AME (K = 3)')
 
 ### plotting
-pRoc = rbind(rocLogit,rocAme2) 
+
+unique(pRoc$model)
+
+pRoc = rbind(rocLogit,rocAme0, rocAme1, rocAme2, rocAme3) 
+
 pRoc$model = as.factor(pRoc$model)
+
 ggCols = brewer.pal(length(levels(pRoc$model)), 'Set1')
-rocPlot(pRoc, linetypes = c(1,1,1), legPos = 'top')
-ggsave(filename = paste0(resultsPath, 'McDonald_auc_outsamp.pdf'), device = cairo_pdf, width=7, height=7)
+rocPlot(pRoc, linetypes = c(1,1,1,1,1,1), legPos = 'top')
+
+ggsave(filename = paste0(resultsPath, 'McDonald_auc_outsamp_all.pdf'), device = cairo_pdf, width=7, height=7)
 
 
 ## PR
-
 # pr
 rocLogit = 
   rocdf(pred = glmOutSamp_wFullSpec$outPerf$pred, 
         obs =  glmOutSamp_wFullSpec$outPerf$actual, type = 'pr') %>% 
-  mutate(model = 'Logit')
+    mutate(model = 'Logit')
+
+
+rocAme0 = 
+  rocdf(pred = ameOutSamp_k0$outPerf$pred, 
+        obs =  ameOutSamp_k0$outPerf$actual, type = 'pr') %>% 
+    mutate(model = 'AME (K = 0)')
+
+
+rocAme1 = 
+  rocdf(pred = ameOutSamp_k1$outPerf$pred, 
+        obs =  ameOutSamp_k1$outPerf$actual, type = 'pr') %>% 
+    mutate(model = 'AME (K = 1)')
+
 rocAme2 = 
   rocdf(pred = ameOutSamp_k2$outPerf$pred, 
         obs =  ameOutSamp_k2$outPerf$actual, type = 'pr') %>% 
     mutate(model = 'AME (K = 2)')
 
+rocAme3 = 
+  rocdf(pred = ameOutSamp_k3$outPerf$pred, 
+        obs =  ameOutSamp_k3$outPerf$actual, type = 'pr') %>% 
+    mutate(model = 'AME (K = 3)')
 
 # plotting
-pRoc = rbind(rocLogit,rocAme2)
+pRoc = rbind(rocLogit,rocAme0, rocAme1, rocAme2, rocAme3)
+
 pRoc$model = as.factor(pRoc$model)
 ggCols = brewer.pal(length(levels(pRoc$model)), 'Set1')
-rocPlot(pRoc, linetypes = c(1,1,1), legPos = 'top', type = 'pr')
-ggsave(filename = paste0(resultsPath, 'McDonald_pr_outsamp.pdf'), device = cairo_pdf, 
-       width=7, height=7)
+rocPlot(pRoc, linetypes = c(1,1,1,1,1), legPos = 'top', type = 'pr')
+ggsave(filename = paste0(resultsPath, 'McDonald_pr_outsamp_all.pdf'),
+       device = cairo_pdf,  width=7, height=7)
 
 
 ## AUC ROC
@@ -102,54 +163,54 @@ rocLogit =
   roc(prediction = logitPred$prob, actual = logitPred$actual) %>% 
   mutate(model = 'Logit')
 
-#rocAme0 = roc(prediction = amePred_k0$prob, actual = amePred_k0$actual) %>% 
-#  mutate(model = 'AME_K0') 
-#rocAme1 = roc(prediction = amePred_k1$prob, actual = amePred_k1$actual) %>% 
-#  mutate(model = 'AME_K1')
+rocAme0 = roc(prediction = amePred_k0$prob, actual = amePred_k0$actual) %>% 
+ mutate(model = 'AME_K0') 
+rocAme1 = roc(prediction = amePred_k1$prob, actual = amePred_k1$actual) %>% 
+ mutate(model = 'AME_K1')
 rocAme2 = roc(prediction = amePred_k2$prob, actual = amePred_k2$actual) %>% 
   mutate(model = 'AME_K2')
-##rocAme3 = roc(prediction = amePred_k3$prob, actual = amePred_k3$actual) %>% 
-##  mutate(model = 'AME_K3')
+rocAme3 = roc(prediction = amePred_k3$prob, actual = amePred_k3$actual) %>%
+    mutate(model = 'AME_K3')
 
 
-pRoc = rbind(rocLogit,
-    ## rocAme0, rocAme1,
-    rocAme2) #, rocAme3)
+pRoc = rbind(rocLogit,rocAme0, rocAme1,
+    rocAme2, rocAme3)
 
 pRoc$model = as.factor(pRoc$model)
 ggCols = brewer.pal(length(levels(pRoc$model)), 'Set1')
 rocPlot(pRoc, linetypes = c(1:5), legPos = 'top')
-ggsave(filename = paste0(resultsPath, 'McD_auc.pdf'), device =
+ggsave(filename = paste0(resultsPath, 'McD_auc_all.pdf'), device =
        cairo_pdf, width=7, height=7)
+
+print("Saved AUC plots")
 
 # AUC PR
  rocLogit = 
   rocdf(pred = logitPred$prob, obs = logitPred$actual, type = 'pr') %>% 
     mutate(model = 'Logit')
 
-## rocAme0 = 
-##   rocdf(pred = amePred_k0$prob, obs = amePred_k0$actual, type = 'pr') %>% 
-##   mutate(model = 'AME_K0')
-## rocAme1 = 
-##   rocdf(pred = amePred_k1$prob, obs = amePred_k1$actual, type = 'pr') %>% 
-##   mutate(model = 'AME_K1')
+rocAme0 = 
+  rocdf(pred = amePred_k0$prob, obs = amePred_k0$actual, type = 'pr') %>% 
+  mutate(model = 'AME_K0')
+rocAme1 = 
+  rocdf(pred = amePred_k1$prob, obs = amePred_k1$actual, type = 'pr') %>% 
+  mutate(model = 'AME_K1')
 
 rocAme2 = 
   rocdf(pred = amePred_k2$prob, obs = amePred_k2$actual, type = 'pr') %>% 
   mutate(model = 'AME_K2')
 
-## rocAme3 = 
-##   rocdf(pred = amePred_k3$prob, obs = amePred_k3$actual, type = 'pr') %>% 
-##   mutate(model = 'AME_K3')
+rocAme3 = 
+  rocdf(pred = amePred_k3$prob, obs = amePred_k3$actual, type = 'pr') %>% 
+  mutate(model = 'AME_K3')
 
-pRoc = rbind(rocLogit, rocAme2)
-
-#    rocAme0, rocAme1, rocAme2, rocAme3)
+pRoc = rbind(rocLogit, rocAme0, rocAme1, rocAme2, rocAme3)
 
 pRoc$model = as.factor(pRoc$model)
 rocPlot(pRoc, linetypes = c(1:5), type = 'pr', legPos = 'top')
-ggsave(filename = paste0(resultsPath, 'McD_pr.pdf'), device = cairo_pdf, width=7, height=7)
+ggsave(filename = paste0(resultsPath, 'McD_pr_auc.pdf'), device = cairo_pdf, width=7, height=7)
 
+print("saved PR Plots")
 
 trim = function (x) { gsub("^\\s+|\\s+$", "", x) } ##should have loaded in setup.R
 
