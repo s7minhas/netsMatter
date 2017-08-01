@@ -47,7 +47,7 @@ ggCoef = function(data, group = NULL)
                               shape = 21, fill = "WHITE")
   zp1 = zp1 + coord_flip() + labs(x = "", y = '', 
                                   color = 'model type')
-  zp1 = zp1 + theme_bw() +
+  zp1 = zp1 + theme_bw() + scale_color_brewer(palette = 'Set1') + 
     theme(
       legend.position='top', legend.title=element_blank(),
       legend.text=element_text(family="Source Sans Pro Light"),

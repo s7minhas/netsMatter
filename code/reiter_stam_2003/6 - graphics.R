@@ -130,7 +130,7 @@ pDat$var = factor(pDat$var,levels = rev(levels(pDat$var)))
 
 # plot
 ggCoef(data = pDat)
-ggsave(filename = paste0('/Users/juanftellez/Dropbox/netsMatter/replications/0_finalRepFigs', 'reiter_coefs_all.pdf'), device = cairo_pdf, width=7, height=7)
+ggsave(filename = paste0(plotPath, 'reiter_coefs_all.pdf'), device = cairo_pdf, width=7, height=7)
 
 
 # ggCoef(data = pDat, group = 1) ; ggsave(filename = paste0(resultsPath, 'reiter_coefs1.pdf'), device = cairo_pdf, width=7, height=7)
