@@ -52,7 +52,7 @@ print("packages loaded")
                                         ## load amen
 
 ## for github install:
-devtools::install_github('s7minhas/amen') ; library(amen)
+devtools::install_github('s7minhas/amen', ref = 'dev') ; library(amen)
 
 ## for my local clone:
 
