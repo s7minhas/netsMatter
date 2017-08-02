@@ -12,16 +12,11 @@ library(reshape2)
 source('/Users/howardliu/Dropbox/netsMatter/replications/example/outputResultsEx/helperEx.R')
 library(amen)
 
-#load( paste0(resultsPath,'ameFit_k2_v1.rda') ) #; ameFit_k2=ameFit
-load('/Users/howardliu/Dropbox/netsMatter/replications/rose2004/amenData_rose.rda')
 
 
 ##### coeff plots #####
 # load data
-load( paste0(resultsPath,'ameFit_k1_re.rda') ) ; ameFit_k0=ameFit; rm(ameFit)
-load( paste0(resultsPath,'ameFit_k1_v1.rda') ) ; ameFit_k1=ameFit; rm(ameFit)
-load( paste0(resultsPath,'ameFit_k2_v1.rda') ) ; ameFit_k2=ameFit; rm(ameFit)
-load( paste0(resultsPath,'ameFit_k3_v1.rda') ) ; ameFit_k3=ameFit; rm(ameFit)
+load( paste0(resultsPath,'ameFit_k2_v2_imps_50000_intercept.rda') ); ameFit_k2=ameFit
 
 
 # sum stats function
@@ -31,7 +26,8 @@ summStats = function(x){
 }
 
 # GLM
-load(paste0(pathResults, 'glmModel_rose.rda')) # load GLM mod results
+#load(paste0(pathResults, 'glmModel_rose.rda')) # load GLM mod results
+source("/Users/howardliu/netsMatter/code/rose2004/replication_rose.R")
 base_mod1 <- baseModelSumm
 glmBETA = data.frame(var = rownames(base_mod1),
                      mean = base_mod1[ ,1],
@@ -45,39 +41,13 @@ glmBETA$mod = 'GLM'
 glmBETA$med = glmBETA$mean
 
 # drop extras and unnecessary params
-glmBETA = glmBETA[-which( glmBETA$var %in% c('(Intercept)')),]
-glmBETA = glmBETA[1:17,] ## delete fixed effect, only keep variables
+#glmBETA = glmBETA[-which( glmBETA$var %in% c('(Intercept)')),]
+glmBETA = glmBETA[1:18,] ## delete fixed effect, only keep variables
 # glmBETA = glmBETA[,-which( names(glmBETA) %in% c('sd'))] # drop sd column
 
-glmBETA$var = c( 'bothin', 'onein', 'gsp', 'ldist', 'lrgdp', 'lrgdppc', 'regional', 'custrict', 'comlang',
+glmBETA$var = c('intercept','bothin', 'onein', 'gsp', 'ldist', 'lrgdp', 'lrgdppc', 'regional', 'custrict', 'comlang',
                  'border', 'landl', 'island', 'lareap',  'comcol', 'curcol', 'colony', 'comctry')
 
-# AME K0
-ameBETA = cbind(ameFit_k0$BETA, rho = ameFit_k0$VC[,'rho'])
-ameBETA = t(apply(ameBETA, 2, summStats))
-colnames(ameBETA) = c('mean', 'med', 'sd', 'lo95','lo90','hi90','hi95')
-ameBETA = data.frame(ameBETA, stringsAsFactors = F)
-ameBETA$var = rownames(ameBETA) ; rownames(ameBETA) = NULL
-ameBETA$mod = 'AME_K0'
-
-# drop extras and unnecessary params
-ameBETA = ameBETA[-which(ameBETA$var %in% c('rho')),] # 'rho dropped
-
-ameBETA$var = c( 'bothin', 'onein', 'gsp', 'ldist', 'lrgdp', 'lrgdppc', 'regional', 'custrict', 'comlang',
-                 'border', 'landl', 'island', 'lareap',  'comcol', 'curcol', 'colony', 'comctry')
-
-# AME K1
-ameBETA1 = cbind(ameFit_k1$BETA, rho = ameFit_k1$VC[,'rho'])
-ameBETA1 = t(apply(ameBETA1, 2, summStats))
-colnames(ameBETA1) = c('mean', 'med', 'sd', 'lo95','lo90','hi90','hi95')
-ameBETA1 = data.frame(ameBETA1, stringsAsFactors = F)
-ameBETA1$var = rownames(ameBETA1) ; rownames(ameBETA1) = NULL
-ameBETA1$mod = 'AME_K1'
-# drop extras and unnecessary params
-ameBETA1 = ameBETA1[-which(ameBETA1$var %in% c('rho')),] # 'rho dropped
-
-ameBETA1$var = c( 'bothin', 'onein', 'gsp', 'ldist', 'lrgdp', 'lrgdppc', 'regional', 'custrict', 'comlang',
-                 'border', 'landl', 'island', 'lareap',  'comcol', 'curcol', 'colony', 'comctry')
 
 # AME K2
 ameBETA2 = cbind(ameFit_k2$BETA, rho = ameFit_k2$VC[,'rho'])
@@ -89,47 +59,49 @@ ameBETA2$mod = 'AME_K2'
 # drop extras and unnecessary params
 ameBETA2 = ameBETA2[-which(ameBETA2$var %in% c('rho')),] # 'rho dropped
 
-ameBETA2$var = c( 'bothin', 'onein', 'gsp', 'ldist', 'lrgdp', 'lrgdppc', 'regional', 'custrict', 'comlang',
+ameBETA2$var = c('intercept', 'bothin', 'onein', 'gsp', 'ldist', 'lrgdp', 'lrgdppc', 'regional', 'custrict', 'comlang',
                  'border', 'landl', 'island', 'lareap',  'comcol', 'curcol', 'colony', 'comctry')
 
-# AME K3
-ameBETA3 = cbind(ameFit_k3$BETA, rho = ameFit_k3$VC[,'rho'])
-ameBETA3 = t(apply(ameBETA3, 2, summStats))
-colnames(ameBETA3) = c('mean', 'med', 'sd', 'lo95','lo90','hi90','hi95')
-ameBETA3 = data.frame(ameBETA3, stringsAsFactors = F)
-ameBETA3$var = rownames(ameBETA3) ; rownames(ameBETA3) = NULL
-ameBETA3$mod = 'AME_K3'
-
-# drop extras and unnecessary params
-ameBETA3 = ameBETA3[-which(ameBETA3$var %in% c('rho')),] # 'rho dropped
-
-ameBETA3$var = c( 'bothin', 'onein', 'gsp', 'ldist', 'lrgdp', 'lrgdppc', 'regional', 'custrict', 'comlang',
-                 'border', 'landl', 'island', 'lareap',  'comcol', 'curcol', 'colony', 'comctry')
-# combine and clean up
-pDat = rbind(glmBETA, ameBETA, ameBETA1, ameBETA2, ameBETA3)
-
+# # AME K3
+# ameBETA3 = cbind(ameFit_k3$BETA, rho = ameFit_k3$VC[,'rho'])
+# ameBETA3 = t(apply(ameBETA3, 2, summStats))
+# colnames(ameBETA3) = c('mean', 'med', 'sd', 'lo95','lo90','hi90','hi95')
+# ameBETA3 = data.frame(ameBETA3, stringsAsFactors = F)
+# ameBETA3$var = rownames(ameBETA3) ; rownames(ameBETA3) = NULL
+# ameBETA3$mod = 'AME_K3'
+# 
+# # drop extras and unnecessary params
+# ameBETA3 = ameBETA3[-which(ameBETA3$var %in% c('rho')),] # 'rho dropped
+# 
+# ameBETA3$var = c( 'bothin', 'onein', 'gsp', 'ldist', 'lrgdp', 'lrgdppc', 'regional', 'custrict', 'comlang',
+#                  'border', 'landl', 'island', 'lareap',  'comcol', 'curcol', 'colony', 'comctry')
+# # combine and clean up
+# # pDat = rbind(glmBETA, ameBETA, ameBETA1, ameBETA2, ameBETA3)
+pDat = rbind(glmBETA, ameBETA2)
 
 # create groups for plotting
 vars = unique(pDat$var)
 pDat$group = NA
-varOrder = c( 'bothin', 'onein', 'gsp', 'ldist', 'lrgdp', 'lrgdppc', 'regional', 'custrict', 'comlang',
+varOrder = c( 'intercept', 'bothin', 'onein', 'gsp', 'ldist', 'lrgdp', 'lrgdppc', 'regional', 'custrict', 'comlang',
                  'border', 'landl', 'island', 'lareap',  'comcol', 'curcol', 'colony', 'comctry')
 pDat$var = factor(pDat$var,levels = varOrder, ordered = F)
 pDat$var = factor(pDat$var,levels = rev(levels(pDat$var)))
 
 pDat$group[pDat$mod == "GLM"] = 0
-pDat$group[pDat$mod == "AME_K0"] = 1
-pDat$group[pDat$mod == "AME_K1"] = 2
+# pDat$group[pDat$mod == "AME_K0"] = 1
+# pDat$group[pDat$mod == "AME_K1"] = 2
 pDat$group[pDat$mod == "AME_K2"] = 3
-pDat$group[pDat$mod == "AME_K3"] = 4
+# pDat$group[pDat$mod == "AME_K3"] = 4
 
-library(dplyr)
-# only k =2 and 3
-pDat1 = pDat %>% filter(. , mod == "GLM" | mod == "AME_K2" | mod == "AME_K3")
+# library(dplyr)
+# # only k =2 and 3
+# # pDat1 = pDat %>% dplyr::filter(. , mod == "GLM" | mod == "AME_K2" | mod == "AME_K3")
+# pDat1 = pDat %>% dplyr::filter(. , mod == "GLM" | mod == "AME_K2" )
 
 # rename variables
-pDat1$var %>% unique
-pDat1$var = str_replace_all(pDat1$var, "bothin", "Both in GATT/WTO") %>%
+pDat$var %>% unique
+pDat$var = str_replace_all(pDat$var, "intercept", "Intercept") %>%
+  str_replace_all(., "bothin", "Both in GATT/WTO") %>%
   str_replace_all(., "onein", "One in GATT/WTO") %>%
   str_replace_all(., "gsp", "GSP") %>%
   str_replace_all(., "ldist", "Log distance") %>%
@@ -146,10 +118,17 @@ pDat1$var = str_replace_all(pDat1$var, "bothin", "Both in GATT/WTO") %>%
   str_replace_all(., "curcol", "Currently colonized") %>%
   str_replace_all(., "colony", "Ever colony") %>%
   str_replace_all(., "comctry", "Common country") 
-head(pDat1)
-# fixate the var order
-pDat1$var = factor(pDat1$var, levels = pDat1$var, ordered = F)
-pDat1$var = factor(pDat1$var, levels = rev(levels(pDat1$var)) )
+head(pDat)
+
+varOrder = c('Both in GATT/WTO', 'One in GATT/WTO', 'GSP', 'Log distance',  'Log product real GDP',
+             'Log product real GDPpc', 'Regional FTA', 'Currency union', 'Common language', 'Land border',
+             'Number landlocked' ,'Number islands', 'Log product land area', 'Common colonizer','Currently colonized',
+             'Ever colony','Common country' )
+pDat$var[1:18]
+
+
+pDat$var = factor(pDat$var,levels = varOrder, ordered = F)
+pDat$var = factor(pDat$var,levels = rev(levels(pDat$var)))
 
 # plot function
 
@@ -177,15 +156,55 @@ ggCoef = function(data, group = NULL)
 
 
 
+# plot function
+
+ggCoef = function(data, group = NULL)
+{
+  if(!is.null(group))
+  {
+    zp1 = ggplot(data[data$group == group, ], aes(color = mod))
+  } else{
+    zp1 = ggplot(data, aes(color = mod))
+  }
+
+  zp1 = zp1 + geom_hline(yintercept = 0, colour = gray(1/2), lty = 2)
+  zp1 = zp1 + geom_linerange(aes(x = var, ymin = lo90,
+                                 ymax = hi90),
+                             lwd = 1, position = position_dodge(width = .6))
+  zp1 = zp1 + geom_pointrange(aes(x = var, y = mean, ymin = lo95,
+                                  ymax = hi95, fatten = 3),
+                              lwd = 1/2, position = position_dodge(width = .6),
+                              shape = 21, fill = "WHITE")
+  zp1 = zp1 + coord_flip() + labs(x = "", y = '',
+                                  color = 'model type') +
+    scale_color_manual(values=c("#e41a1c", "#377eb8"))
+
+  zp1 = zp1 + theme_bw() +
+    theme(
+      legend.position='top', legend.title=element_blank(),
+      #legend.text=element_text(family="Source Sans Pro Light"),
+      panel.border=element_blank(),
+      axis.ticks=element_blank(),
+      #axis.text.x=element_text(family="Source Sans Pro Light"),
+      axis.text.y=element_text(hjust=0)
+    )
+
+  return(zp1)
+}
+
+
+
+
+
 # plot
-ggCoef(data = pDat1,group = NULL) ; ggsave(filename = paste0(plotPath, 'rose_coefs_all.pdf'), device = cairo_pdf, width=12, height=11)
-# ggCoef(data = pDat, group = 1) #; ggsave(filename = paste0(resultsPath, 'reiter_coefs1.pdf'), device = cairo_pdf, width=7, height=7)
-# ggCoef(data = pDat, group = 2) #; ggsave(filename = paste0(resultsPath, 'reiter_coefs2.pdf'), device = cairo_pdf, width=7, height=7)
-# ggCoef(data = pDat, group = 3) #; ggsave(filename = paste0(resultsPath, 'reiter_coefs3.pdf'), device = cairo_pdf, width=7, height=7)
-# ggCoef(data = pDat, group = 4) #; ggsave(filename = paste0(resultsPath, 'reiter_coefs4.pdf'), device = cairo_pdf, width=7, height=7)
+ggCoef(data = pDat,group = NULL) ;
+ggsave(filename = paste0('/Users/howardliu/Dropbox/netsMatter/replications/0_finalRepFigs/', 'rose_coefs_intercept.pdf'), device = cairo_pdf, width=7, height=7)
+dev.off()
 
-
-
+pDat2 = pDat[-c(1,19),]
+ggCoef(data = pDat2,group = NULL) ;
+ggsave(filename = paste0('/Users/howardliu/Dropbox/netsMatter/replications/0_finalRepFigs/', 'rose_coefs_NOintercept.pdf'), device = cairo_pdf, width=7, height=7)
+dev.off()
 
 
 
