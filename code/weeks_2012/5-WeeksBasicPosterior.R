@@ -1,5 +1,13 @@
+
+##This file takes Ame output and generates goodness of fit and beta distribution plots
+## to diagnose convergence
+
 if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
  dPath='~/Dropbox/netsMatter/replications/Weeks2012/replication/output/'}
+
+if(Sys.info()['user']== 'margaret'){
+    source('~/projects/netsmatter/code/netsMatter/code/weeks_2012/setup.R')
+}
 
 
 loadPkg=function(toLoad){

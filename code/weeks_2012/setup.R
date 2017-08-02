@@ -4,10 +4,9 @@
 
 ## if on Dave's server
 if(Sys.info()['user']== 'margaret' | Sys.info()['user']== 'root' ){
-    dataPath='~/projects/netsmatter/data/'
+    dataPath="./" #moved data to same directory
     dPath='./results/'
-    gPath='~/projects/netsmatter/code/netsMatter/code/weeks_2012/'                                          #graphicPath='/results/' # path to dir where i will store any graphics
-    #resultsPath='/results/' # path to dir where i will store results
+    gPath='~/projects/netsmatter/code/netsMatter/code/weeks_2012/'    
     funcPath=paste0(gPath, 'code/helpers/') # helpers directory in ~/Research
 }
 
@@ -25,7 +24,6 @@ if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
 }
 
 ## need to declare these, based on the system-specific dPath and gPath
-
 
 # install/load libraries
 loadPkg=function(toLoad){
@@ -54,7 +52,7 @@ print("packages loaded")
 ## for github install:
 devtools::install_github('s7minhas/amen', ref = 'dev') ; library(amen)
 
-## for my local clone:
+## for my local clone on the server
 
 ## if(Sys.info()['user']== 'margaret'  | Sys.info()['user']== 'root'){
 ##     print("Loading local clone of AMEN")
@@ -78,3 +76,5 @@ num = function(x){ as.numeric(char(x)) }
 trim = function (x) { gsub("^\\s+|\\s+$", "", x) }
 
 print(sessionInfo())
+
+print("Setup.R loaded")
