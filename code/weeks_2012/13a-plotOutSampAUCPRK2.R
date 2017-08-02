@@ -1,5 +1,5 @@
 ## This script produces AUC and RO plots comparing GLM and AME models
-## Script 2  of the model presentation 
+## Script 2  of the model presentation; this one only presents k=2
 ##Based on Juan's code for Reiter-Stam
 
 rm(list=ls())
@@ -53,8 +53,11 @@ ggsave(filename = paste0(resultsPath, 'Weeks_receiver_k2.pdf'), device = cairo_p
 
 
 ##Load out-sample results
+## warning: this will take several minutes to load:
+##(The GLM out samp file is 3.2G!)
 
-load('~/Dropbox/netsMatter/replications/McDonald_2004/data/McDGLMPerf.rda')
+load('~/Dropbox/netsMatter/replications/Weeks2012/replication/output/weeksOutPerf.rda')
+
 load('~/Dropbox/netsMatter/replications/McDonald_2004/data/outsampResults2.rda'); ameOutSamp_k2 <- ameOutSamp_NULL
 
 ## ROC plots
@@ -76,12 +79,12 @@ pRoc = rbind(rocLogit,rocAme2)
 pRoc$model = as.factor(pRoc$model)
 ggCols = brewer.pal(length(levels(pRoc$model)), 'Set1')
 rocPlot(pRoc, linetypes = c(1,1,1), legPos = 'top')
-ggsave(filename = paste0(resultsPath, 'McDonald_auc_outsamp.pdf'), device = cairo_pdf, width=7, height=7)
+ggsave(filename = paste0(resultsPath, 'Weeks_auc_outsamp.pdf'), device = cairo_pdf, width=7, height=7)
 
 
 ## PR
 
-# pr
+## pr
 rocLogit = 
   rocdf(pred = glmOutSamp_wFullSpec$outPerf$pred, 
         obs =  glmOutSamp_wFullSpec$outPerf$actual, type = 'pr') %>% 
@@ -92,12 +95,12 @@ rocAme2 =
     mutate(model = 'AME (K = 2)')
 
 
-# plotting
+## plotting
 pRoc = rbind(rocLogit,rocAme2)
 pRoc$model = as.factor(pRoc$model)
 ggCols = brewer.pal(length(levels(pRoc$model)), 'Set1')
 rocPlot(pRoc, linetypes = c(1,1,1), legPos = 'top', type = 'pr')
-ggsave(filename = paste0(resultsPath, 'McDonald_pr_outsamp.pdf'), device = cairo_pdf, 
+ggsave(filename = paste0(resultsPath, 'Weeks_pr_outsamp.pdf'), device = cairo_pdf, 
        width=7, height=7)
 
 
@@ -151,13 +154,14 @@ pRoc = rbind(rocLogit, rocAme2)
 #    rocAme0, rocAme1, rocAme2, rocAme3)
 
 pRoc$model = as.factor(pRoc$model)
-rocPlot(pRoc, linetypes = c(1:5), type = 'pr', legPos = 'top')
-ggsave(filename = paste0(resultsPath, 'McD_pr.pdf'), device = cairo_pdf, width=7, height=7)
+ggCols = brewer.pal(length(levels(pRoc$model)), 'Set1') 
+rocPlot(pRoc, linetypes = c(1,1), legPos = 'top')
+ggsave(filename = paste0(resultsPath, 'Weeks_roc.pdf'), device = cairo_pdf, width=7, height=7)
 
 
 trim = function (x) { gsub("^\\s+|\\s+$", "", x) } ##should have loaded in setup.R
 
-# get auc summary
+## get auc summary
 aucSumm = do.call('rbind', 
     lapply(predDfs, function(x){ 
         cbind( 'AUC'=getAUC(x$prob, x$actual), 'AUC (PR)'=auc_pr(x$actual, x$prob) ) 
@@ -168,7 +172,7 @@ aucSumm = trim(format(round(aucSumm, 2), nsmall=2))
 ### Nodal effects
 
 ## load AME node-level data:
-load(paste0(resultsPath, 'amenData.rda')) ## xDyadList, xNodeList.R, xNodeList.s, Ylist
+load(paste0(resultsPath, 'WeeksamenData.rda')) ## xDyadList, xNodeList.R, xNodeList.s, Ylist
 
 ## subset data
 yList2 = yList[42:47]
@@ -198,7 +202,7 @@ circPlot=ggCirc(Y=yArrSumm, U=ameFit$U, V=ameFit$V, vscale=.6,
   scale_color_manual(values=uvCols)
 
 ggsave(circPlot, 
-       file=paste0(resultsPath,'McD_circPlot.pdf'), 
+       file=paste0(resultsPath,'Weeks_circPlot.pdf'), 
        width=12, height=10, device=cairo_pdf)
 ################
 

@@ -18,6 +18,14 @@ load( paste0(dPath,'model_k12017-03-15_v2.rda') ) ; ameFit_k1=ameFit
 load( paste0(dPath,'model_k22017-04-04_v2.rda') ) ; ameFit_k2=ameFit
 load( paste0(dPath,'model_k32017-03-14_v2.rda') ) ; ameFit_k3=ameFit
 
+
+## attributes
+
+attributes(ameFit_k0)
+
+colnames(ameFit_k0$BETA)
+
+
 # check out goodness of fit stats
 
 pdf(file=paste0(dPath, "gofPlotK0.pdf"))

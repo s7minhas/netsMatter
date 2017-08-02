@@ -7,6 +7,7 @@ rm(list=ls())
 resultsPath = '~/Dropbox/netsMatter/replications/McDonald_2004/data/'
 
 ### libraries needed
+library(RColorBrewer)
 library(dplyr)
 library(magrittr)
 library(ggplot2)
@@ -14,7 +15,7 @@ library(stringr)
 library(gridExtra)
 library(Cairo)
 library(reshape2)
-source('../weeks_2012/helperEx.R')
+source('../reiter_stam_2003/helperEx.R')
 library(amen)
 
 
@@ -126,7 +127,8 @@ pDat$group[pDat$prezvar %in% ivs[6:10]] = 2
 pDat$group[pDat$prezvar %in% c(ivs[11:15], "rho")] = 3
 head(pDat)
 
-# plot function for AME models
+##plot function for AME models
+
 ggCoef = function(data, group = NULL)
 {
   if(!is.null(group))
@@ -145,7 +147,7 @@ ggCoef = function(data, group = NULL)
                               shape = 21, fill = "WHITE", fatten=.5)
   zp1 = zp1 + coord_flip() + labs(x = "", y = '', 
                                   color = 'model type')
-  zp1 = zp1 + theme_bw() +
+  zp1 = zp1  + scale_color_brewer(palette = 'Set1')+ theme_bw() +
     theme(
       legend.position='top', legend.title=element_blank(),
       legend.text=element_text(family="Source Sans Pro Light"),

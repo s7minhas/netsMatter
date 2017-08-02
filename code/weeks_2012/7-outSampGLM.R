@@ -26,7 +26,7 @@ load(paste0(path, 'WeeksamenData.rda'))
 ls()
 # crossval params
 seed=6886
-folds=30
+folds=7
 ################
 
 dyadicVars <- c('mzinit', "dependlow" , "majmaj", "minmaj", "majmin", "contigdum","logdist","s_wt_glo","pcyrsmzinit", "pcyrsmzinits1", "pcyrsmzinits2","pcyrsmzinits3")  %>%  strsplit(x = ., split = " ") %>%
@@ -214,20 +214,19 @@ form_mod
 
 glmOutSamp_wFullSpec=glmOutSamp(glmForm=form_mod)
 
+print('glm out samp run')
 ##save current work:
-
-ls()
-
-attributes(glmOutSamp_wFullSpec)
 
 smallGLMoutSamp <- list(glmOutSamp_wFullSpec$aucROC, glmOutSamp_wFullSpec$aucPR)
 
 names(smallGLMoutSamp) <- c("GLMaucROC", "GLMaucPR" )
 
 ## too large to save:
+print("saving full out samp")
 
 savePath <- '~/Dropbox/netsMatter/replications/Weeks2012/replication/output/'
 
-##save(glmOutSamp_wFullSpec, file=paste0(savePath, "weeksOutPerf.rda"))
+save(glmOutSamp_wFullSpec, file=paste0(savePath, "weeksOutPerf.rda"))
 
+print("saving small out samp")
 save(smallGLMoutSamp,file=paste0(savePath, "smallGLMoutSamp.rda"))
