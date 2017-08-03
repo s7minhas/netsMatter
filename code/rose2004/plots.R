@@ -69,10 +69,10 @@ ameBETA2$var = c('intercept', 'bothin', 'onein', 'gsp', 'ldist', 'lrgdp', 'lrgdp
 # ameBETA3 = data.frame(ameBETA3, stringsAsFactors = F)
 # ameBETA3$var = rownames(ameBETA3) ; rownames(ameBETA3) = NULL
 # ameBETA3$mod = 'AME_K3'
-# 
+#
 # # drop extras and unnecessary params
 # ameBETA3 = ameBETA3[-which(ameBETA3$var %in% c('rho')),] # 'rho dropped
-# 
+#
 # ameBETA3$var = c( 'bothin', 'onein', 'gsp', 'ldist', 'lrgdp', 'lrgdppc', 'regional', 'custrict', 'comlang',
 #                  'border', 'landl', 'island', 'lareap',  'comcol', 'curcol', 'colony', 'comctry')
 # # combine and clean up
@@ -117,7 +117,7 @@ pDat$var = str_replace_all(pDat$var, "intercept", "Intercept") %>%
   str_replace_all(., "comcol", "Common colonizer") %>%
   str_replace_all(., "curcol", "Currently colonized") %>%
   str_replace_all(., "colony", "Ever colony") %>%
-  str_replace_all(., "comctry", "Common country") 
+  str_replace_all(., "comctry", "Common country")
 head(pDat)
 
 varOrder = c('Both in GATT/WTO', 'One in GATT/WTO', 'GSP', 'Log distance',  'Log product real GDP',
@@ -193,25 +193,20 @@ ggCoef = function(data, group = NULL)
 }
 
 
-
-
-
 # plot
 ggCoef(data = pDat,group = NULL) ;
 ggsave(filename = paste0('/Users/howardliu/Dropbox/netsMatter/replications/0_finalRepFigs/', 'rose_coefs_intercept.pdf'), device = cairo_pdf, width=7, height=7)
 dev.off()
 
-pDat2 = pDat[-c(1,19),]
-ggCoef(data = pDat2,group = NULL) ;
-ggsave(filename = paste0('/Users/howardliu/Dropbox/netsMatter/replications/0_finalRepFigs/', 'rose_coefs_NOintercept.pdf'), device = cairo_pdf, width=7, height=7)
-dev.off()
+# pDat2 = pDat[-c(1,19),]
+# ggCoef(data = pDat2,group = NULL) ;
+# ggsave(filename = paste0('/Users/howardliu/Dropbox/netsMatter/replications/0_finalRepFigs/', 'rose_coefs_NOintercept.pdf'), device = cairo_pdf, width=7, height=7)
+# dev.off()
 
 
 
 
-
-
-# AB Effect plot
+######### AB Effect plot #######
 getAddEffData = function(fit, row=TRUE, addDegree=FALSE, yList=NULL, orderByDegree=FALSE){
     if(row){addEffData = data.frame(addEff=fit$APM, stringsAsFactors = FALSE) ; yLabel='Sender Effects'}
     if(!row){addEffData = data.frame(addEff=fit$BPM, stringsAsFactors = FALSE) ; yLabel='Receiver Effects'}
@@ -239,11 +234,15 @@ getAddEffData = function(fit, row=TRUE, addDegree=FALSE, yList=NULL, orderByDegr
     return(addEffData)
 }
 
-addEffData = getAddEffData(fit = ameFit)
-rm(addEffData)
+
 addEffPlot = function(fit, row=TRUE, addDegree=FALSE, yList=NULL, orderByDegree=FALSE, addEffData=NULL){
     if(is.null(addEffData)){
         addEffData = getAddEffData(fit, row, addDegree, yList, orderByDegree)
+        ## take only max 10 and min 10
+        MAX10 = addEffData$max %>% .[order(.)] %>% rev %>% .[10]
+        MIN10 = addEffData$min %>% .[order(.)] %>% .[10]
+        addEffData = filter(addEffData, max >= MAX10 | min <= MIN10)
+
         # convert to ccode by ifs (Rose2004 used)
         ccode = read.csv("/Users/howardliu/Dropbox/netsMatter/replications/rose2004/ifs_countrycode.csv", header=T)
         #ccode = ccode %>% .[complete.cases(.),]
@@ -263,7 +262,7 @@ addEffPlot = function(fit, row=TRUE, addDegree=FALSE, yList=NULL, orderByDegree=
             panel.border=element_blank(), axis.ticks=element_blank(),
             #text = element_text(size=2),
             axis.text.x=element_text(angle=0, hjust=1, size=6),
-            axis.text.y = element_text(size=4,angle=0,hjust=1,vjust=0,face="plain")
+            axis.text.y = element_text(size=10,angle=0,hjust=1,vjust=0,face="plain")
             # axis.text.x=element_text(angle=90, hjust=1, size=6)
             ) +
         geom_hline(yintercept=0,color='red') +
@@ -275,15 +274,17 @@ addEffPlot = function(fit, row=TRUE, addDegree=FALSE, yList=NULL, orderByDegree=
     }
     return(gg)
 }
-desktop ="/Users/howardliu/desktop/"
+
 ABplot_sender = addEffPlot(fit = ameFit, row=TRUE, yList= yList)
+ABplot_sender
 ggsave(ABplot_sender,
-       file=paste0(plotPath,'ABplot_sender_rose.pdf'),
+       file=paste0(plotPath,'ABplot_sender_rose_intercept_10.pdf'),
        width=12, height=11, device=cairo_pdf)
 
 ABplot_receiver = addEffPlot(fit = ameFit, row=FALSE, yList= yList)
+ABplot_receiver
 ggsave(ABplot_receiver,
-       file=paste0(plotPath,'ABplot_receiver_rose.pdf'),
+       file=paste0(plotPath,'ABplot_receiver_rose_intercept_10.pdf'),
        width=12, height=11, device=cairo_pdf)
 
 
@@ -291,46 +292,45 @@ ggsave(ABplot_receiver,
 ######################################################
 # [3] nodal effects and multiplicative effects plots
 ######################################################
-
+### circPlot
 #create a list of actor names from your data, this should be in your original dataframe
-vNameKey<-list()
-# or vNameKey = rownames(ameModel$Y)
-
 # load data
 #load(paste0(pathData, 'nigeriaMatList_acled_v7.rda')) # loads yList object
-#yrs = char(2000:2016) ; yList = yList[yrs]
-yList %>% length
-yList2 = yList[1:3]
+# #yrs = char(2000:2016) ; yList = yList[yrs]
+# yList %>% length
+# yList2 = yList[1:3]
 
-#load(paste0(pathResults, 'ameResults.rda')) # load AME mod results
-
-
-# subset data
-#yList2 = yList[42:47]
-yArr = listToArray(actors=sort(unique(unlist(lapply(yList,rownames)))),
-                   Y=yList2, Xdyad=NULL, Xrow=NULL, Xcol=NULL)$Y
+yArr = listToArray(actors=sort(unique(unlist(lapply(ameFit$Y,rownames)))),
+                   Y=ameFit$Y, Xdyad=NULL, Xrow=NULL, Xcol=NULL)$Y
 yArrSumm = apply(yArr, c(1,2), sum, na.rm=TRUE)
 diag(yArrSumm) = 0
 
-nrow(yArrSumm)
 # fix actor names
-# rownames(yArrSumm) =
-#   countrycode::countrycode(rownames(yArrSumm), origin = 'cown', 'country.name', warn = T)
-# colnames(yArrSumm) =
-#   countrycode::countrycode(colnames(yArrSumm), origin = 'cown', 'country.name', warn = T)
+# convert to ccode by ifs (Rose2004 used)
+ccode = read.csv("/Users/howardliu/Dropbox/netsMatter/replications/rose2004/ifs_countrycode.csv", header=T)
+        #ccode = ccode %>% .[complete.cases(.),]
+        # delete NA
+name = data.frame(rowNme = as.factor(rownames(yArrSumm)))
+ccode$code = as.factor(ccode$code)
+name =left_join(name, ccode, by =c("rowNme" = "code") )
+
+
+rownames(yArrSumm) = name$countryname
+colnames(yArrSumm) = name$countryname
 
 ################
 uvCols = brewer.pal(11, 'RdBu')[c(11-2, 3)]
+
 circPlot=ggCirc(
-  Y=yArrSumm, U=ameFit$U, V=ameFit$V, vscale=.6,
-   force=3,
-  lcol='gray85', lsize=.05) +
-  scale_color_manual(values=uvCols)
+    Y=yArrSumm, U=ameFit$U, V=ameFit$V, vscale=.7,
+    #family="Source Sans Pro Light",
+    force=1,
+    removeIsolates=FALSE, showActLinks=FALSE) +
+    scale_color_manual(values=uvCols)
 circPlot
-# options()$expression  --> look
-# ggsave(circPlot,
-#        file=paste0(resultsPath,'reiter_circPlot.pdf'),
-#        width=12, height=10, device=cairo_pdf)
+ggsave(circPlot,
+         file='~/Dropbox/netsMatter/replications/rose2004/circPlot_rose.pdf',
+         width=12, height=10, device=cairo_pdf)
 ################
 
 
