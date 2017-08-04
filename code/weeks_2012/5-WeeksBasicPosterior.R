@@ -21,10 +21,10 @@ loadPkg=function(toLoad){
 loadPkg('magrittr')
 
 # load data
-load( paste0(dPath,'model_k02017-03-15_v2.rda') ) ; ameFit_k0=ameFit
-load( paste0(dPath,'model_k12017-03-15_v2.rda') ) ; ameFit_k1=ameFit
-load( paste0(dPath,'model_k22017-04-04_v2.rda') ) ; ameFit_k2=ameFit
-load( paste0(dPath,'model_k32017-03-14_v2.rda') ) ; ameFit_k3=ameFit
+load( paste0(dPath,'model_k0_2017-08-02.rda') ) ; ameFit_k0=ameFit
+load( paste0(dPath,'model_k1_2017-08-02.rda') ) ; ameFit_k1=ameFit
+load( paste0(dPath,'model_k2_2017-08-02.rda') ) ; ameFit_k2=ameFit
+load( paste0(dPath,'model_k3_2017-08-02.rda') ) ; ameFit_k3=ameFit
 
 
 ## attributes
@@ -33,6 +33,9 @@ attributes(ameFit_k0)
 
 colnames(ameFit_k0$BETA)
 
+length(unique(colnames(ameFit_k0$BETA)))
+
+head(ameFit_k0$BETA)
 
 # check out goodness of fit stats
 
@@ -74,20 +77,26 @@ apply(ameFit_k0$BETA, 2, summStats) %>% t()
 
 ## check out VC params
 
-pdf(file=paste0(dPath, "paramPlotK0.pdf"))
+
+## Date mark for ease of parsing the plots
+
+dat <- as.character(Sys.Date())
+
+
+pdf(file=paste0(dPath, dat, "paramPlotK0.pdf"))
 amen::paramPlot(ameFit_k0$VC)
 dev.off()
 
 
-pdf(file=paste0(dPath, "paramPlotK2.pdf"))
+pdf(file=paste0(dPath, dat, "paramPlotK2.pdf"))
 amen::paramPlot(ameFit_k2$VC)
 dev.off()
 
-pdf(file=paste0(dPath, "paramPlotK3.pdf"))
+pdf(file=paste0(dPath, dat, "paramPlotK3.pdf"))
 amen::paramPlot(ameFit_k3$VC)
 dev.off()
 
-pdf(file=paste0(dPath, "paramPlotK1.pdf"))
+pdf(file=paste0(dPath, dat, "paramPlotK1.pdf"))
 amen::paramPlot(ameFit_k1$VC)
 dev.off()
 
@@ -96,131 +105,105 @@ dev.off()
 ## nead to break up the beta coef lists:
 
 
-pdf(file=paste0(dPath, "BetaplotK0p1.pdf"))
+pdf(file=paste0(dPath, dat, "BetaplotK0p1.pdf"))
 amen::paramPlot(ameFit_k0$BETA[,1:5])
 dev.off()
 
 
-pdf(file=paste0(dPath, "BetaplotK0p2.pdf"))
+pdf(file=paste0(dPath, dat, "BetaplotK0p2.pdf"))
 amen::paramPlot(ameFit_k0$BETA[,6:10])
 dev.off()
 
-pdf(file=paste0(dPath, "BetaplotK0p3.pdf"))
+pdf(file=paste0(dPath, dat, "BetaplotK0p3.pdf"))
 amen::paramPlot(ameFit_k0$BETA[,11:15])
 dev.off()
 
 
-pdf(file=paste0(dPath, "BetaplotK0p4.pdf"))
+pdf(file=paste0(dPath, dat, "BetaplotK0p4.pdf"))
 amen::paramPlot(ameFit_k0$BETA[,16:20])
 dev.off()
 
 
-pdf(file=paste0(dPath, "BetaplotK0p5.pdf"))
-amen::paramPlot(ameFit_k0$BETA[,21:25])
-dev.off()
-
-
-pdf(file=paste0(dPath, "BetaplotK0p6.pdf"))
-amen::paramPlot(ameFit_k0$BETA[,25:28])
+pdf(file=paste0(dPath, dat, "BetaplotK0p5.pdf"))
+amen::paramPlot(ameFit_k0$BETA[,21:23])
 dev.off()
 
 ####
 ##Beta plots for lat dims=1
 
-pdf(file=paste0(dPath, "BetaplotK1.pdf"))
-amen::paramPlot(ameFit_k1$BETA)
-dev.off()
 
-pdf(file=paste0(dPath, "BetaplotK1p1.pdf"))
+pdf(file=paste0(dPath, dat, "BetaplotK1p1.pdf"))
 amen::paramPlot(ameFit_k1$BETA[,1:5])
 dev.off()
 
 
-pdf(file=paste0(dPath, "BetaplotK1p2.pdf"))
+pdf(file=paste0(dPath, dat, "BetaplotK1p2.pdf"))
 amen::paramPlot(ameFit_k1$BETA[,6:10])
 dev.off()
 
-pdf(file=paste0(dPath, "BetaplotK1p3.pdf"))
+pdf(file=paste0(dPath, dat, "BetaplotK1p3.pdf"))
 amen::paramPlot(ameFit_k1$BETA[,11:15])
 dev.off()
 
 
-pdf(file=paste0(dPath, "BetaplotK1p4.pdf"))
+pdf(file=paste0(dPath, dat, "BetaplotK1p4.pdf"))
 amen::paramPlot(ameFit_k1$BETA[,16:20])
 dev.off()
 
 
-pdf(file=paste0(dPath, "BetaplotK1p5.pdf"))
-amen::paramPlot(ameFit_k1$BETA[,21:25])
+pdf(file=paste0(dPath, dat, "BetaplotK1p5.pdf"))
+amen::paramPlot(ameFit_k1$BETA[,21:23])
 dev.off()
 
-
-pdf(file=paste0(dPath, "BetaplotK1p6.pdf"))
-amen::paramPlot(ameFit_k1$BETA[,25:28])
-dev.off()
 
 ## Beta Plots for K2
 
 
-pdf(file=paste0(dPath, "BetaplotK2.pdf"))
-amen::paramPlot(ameFit_k2$BETA)
-dev.off()
-
-pdf(file=paste0(dPath, "BetaplotK2p1.pdf"))
+pdf(file=paste0(dPath, dat, "BetaplotK2p1.pdf"))
 amen::paramPlot(ameFit_k2$BETA[,1:5])
 dev.off()
 
 
-pdf(file=paste0(dPath, "BetaplotK2p2.pdf"))
+pdf(file=paste0(dPath, dat, "BetaplotK2p2.pdf"))
 amen::paramPlot(ameFit_k2$BETA[,6:10])
 dev.off()
 
-pdf(file=paste0(dPath, "BetaplotK2p3.pdf"))
+pdf(file=paste0(dPath, dat, "BetaplotK2p3.pdf"))
 amen::paramPlot(ameFit_k2$BETA[,11:15])
 dev.off()
 
 
-pdf(file=paste0(dPath, "BetaplotK2p4.pdf"))
+pdf(file=paste0(dPath, dat, "BetaplotK2p4.pdf"))
 amen::paramPlot(ameFit_k2$BETA[,16:20])
 dev.off()
 
 
-pdf(file=paste0(dPath, "BetaplotK2p5.pdf"))
-amen::paramPlot(ameFit_k2$BETA[,21:25])
-dev.off()
-
-
-pdf(file=paste0(dPath, "BetaplotK2p6.pdf"))
-amen::paramPlot(ameFit_k2$BETA[,25:28])
+pdf(file=paste0(dPath, dat, "BetaplotK2p5.pdf"))
+amen::paramPlot(ameFit_k2$BETA[,21:23])
 dev.off()
 
 
 #### BETA PLOT K=3
 
-pdf(file=paste0(dPath, "BetaplotK3p1.pdf"))
+pdf(file=paste0(dPath, dat, "BetaplotK3p1.pdf"))
 amen::paramPlot(ameFit_k3$BETA[,1:5])
 dev.off()
 
 
-pdf(file=paste0(dPath, "BetaplotK3p2.pdf"))
+pdf(file=paste0(dPath, dat, "BetaplotK3p2.pdf"))
 amen::paramPlot(ameFit_k3$BETA[,6:10])
 dev.off()
 
-pdf(file=paste0(dPath, "BetaplotK3p3.pdf"))
+pdf(file=paste0(dPath, dat, "BetaplotK3p3.pdf"))
 amen::paramPlot(ameFit_k3$BETA[,11:15])
 dev.off()
 
 
-pdf(file=paste0(dPath, "BetaplotK3p4.pdf"))
+pdf(file=paste0(dPath, dat, "BetaplotK3p4.pdf"))
 amen::paramPlot(ameFit_k3$BETA[,16:20])
 dev.off()
 
 
-pdf(file=paste0(dPath, "BetaplotK3p5.pdf"))
-amen::paramPlot(ameFit_k3$BETA[,21:25])
-dev.off()
-
-
-pdf(file=paste0(dPath, "BetaplotK3p6.pdf"))
-amen::paramPlot(ameFit_k3$BETA[,25:28])
+pdf(file=paste0(dPath, dat, "BetaplotK3p5.pdf"))
+amen::paramPlot(ameFit_k3$BETA[,21:23])
 dev.off()
