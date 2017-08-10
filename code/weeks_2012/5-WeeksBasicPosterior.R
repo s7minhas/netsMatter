@@ -21,10 +21,10 @@ loadPkg=function(toLoad){
 loadPkg('magrittr')
 
 # load data
-load( paste0(dPath,'model_k0_2017-08-02.rda') ) ; ameFit_k0=ameFit
-load( paste0(dPath,'model_k1_2017-08-02.rda') ) ; ameFit_k1=ameFit
-load( paste0(dPath,'model_k2_2017-08-02.rda') ) ; ameFit_k2=ameFit
-load( paste0(dPath,'model_k3_2017-08-02.rda') ) ; ameFit_k3=ameFit
+load( paste0(dPath,'model_k0.rda') ) ; ameFit_k0=ameFit
+load( paste0(dPath,'model_k1.rda') ) ; ameFit_k1=ameFit
+load( paste0(dPath,'model_k2.rda') ) ; ameFit_k2=ameFit
+load( paste0(dPath,'model_k3.rda') ) ; ameFit_k3=ameFit
 
 
 ## attributes
