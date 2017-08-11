@@ -21,8 +21,7 @@ library(amen)
 
 
 ## load data:
-load( paste0(resultsPath,'model_k22017-04-04_v2.rda') ) ; ameFit_k2=ameFit
-##load( paste0(resultsPath,'model_k32017-03-14_v2.rda') ) ; ameFit_k3=ameFit
+load( paste0(resultsPath,'model_k2.rda') ) ; ameFit_k2=ameFit
 load(paste0(inputPath,'weeks_baseModel.rda')); base_mod1=round(modSumm,3) #this is original coefficient estimates
 
 ## Meaningful names on IVs:
