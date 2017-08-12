@@ -8,18 +8,13 @@ inputPath= '~/Dropbox/netsMatter/replications/Weeks2012/replication/input/'
 plotPath = '~/Dropbox/netsMatter/replications/0_finalRepFigs/'
 
 ### libraries needed
-library(dplyr)
-library(magrittr)
-library(ggplot2)
-library(stringr)
-library(gridExtra)
-library(Cairo)
-library(reshape2)
+
 source('helperEx.R')
-library(amen)
 
+toLoad <- c("dplyr", "magrittr", "ggplot2", "stringr", "gridExtra",
+            "Cairo", "reshape2", 'amen')
 
-
+loadPkg(toLoad)
 ## load data:
 load( paste0(resultsPath,'model_k2.rda') ) ; ameFit_k2=ameFit
 load(paste0(inputPath,'weeks_baseModel.rda')); base_mod1=round(modSumm,3) #this is original coefficient estimates
@@ -27,15 +22,18 @@ load(paste0(inputPath,'weeks_baseModel.rda')); base_mod1=round(modSumm,3) #this 
 ## Meaningful names on IVs:
 
 ivsGLM <- c("Machine", "Junta", "Boss", "Strongman",
-         "Other Type","New/Unstable Regime", "Receiver Dem", "Military Capabilities Side1", "Military Capabilities Side2", "Initator Share of Capabilities",
-         "Low Trade Dependence", "Both Major Powers",
-         "Minor/Major",
-         "Major/Minor", "Contiguous", "Log Dist. Between Capitals",
-         "Alliance Similarity Side 1",
-         "Alliance Similarity Leader",
-         "Alliance Similarity Leader Side 2",
-         "Time Since Last Conflict", "Spline1", "Spline2", "Spline3")
-         
+            "Other Type","New/Unstable Regime", "Democracy_Target",
+            "Military Capabilities_Initiator",
+            "Military Capabilities_Target ",
+            "Initator Share of Capabilities ",## remember this has no AMEN equivalent
+            "Low Trade Dependence ",
+            "Both Major Powers", "Minor/Major",
+            "Major/Minor", "Contiguous", "Log Dist. Between Capitals",
+            "Alliance Similarity_Dyad ",
+            "Alliance Similarity With System Leader_Initiator",
+            "Alliance Similarity Leader_Target",
+            "Time Since Last Conflict", "Spline1", "Spline2", "Spline3")
+
 
 # sum stats
 summStats = function(x){
@@ -45,7 +43,7 @@ summStats = function(x){
 
 ## Point estimates for the GLM model
 
-glmBETA = data.frame(var = rownames(base_mod1), 
+glmBETA = data.frame(var = as.character(rownames(base_mod1)), 
     mean = base_mod1[ ,1], 
     sd = base_mod1[ ,2])
 
@@ -60,30 +58,35 @@ glmBETA$mod = 'GLM'
 glmBETA$med = glmBETA$mean
 glmBETA$prezvar = c("Intercept", ivsGLM)
 
-glmBETA
-base_mod1
+glmBETA$var = factor(glmBETA$var,levels = rownames(base_mod1), ordered = F)## factor
 
+glmBETA$var
+rownames(base_mod1)
 
 ## AME IVS
 
 ## note: 7/29 note: went back into the AMEN build script and verified that
 ## all independent variables were accounted for. All are there, other than initiator's share of dyadic capabilities. Including this one generated downstream problems with the AMEN build.
 
-ivsAME <- c("Machine_sender", "Junta_sender", "Boss_sender", "Strongman_sender",
-         "Other Type_sender","New/Unstable Regime_sender",
-            "Military Capabilities Side 1_sender","System Leader Side 1_sender",
-            "Machine_receiver",
-            "Junta_receiver", "Boss_receiver", "Strongman_receiver", 
-            "Other Type_receiver","New/Unstable Regime_receiver",
-            "Military Capabilities Side 1_receiver",
-            "System Leader Side 1_receiver",
-            "Low Trade Dependence_dyad", "Both Major Powers_dyad",
-            "Minor/Major_dyad", "Major/Minor_dyad", "Contiguous_dyad",
-            "Log Dist_dyad", "AllianceSimilarity_dyad",
-            "Time Since Last Conflict_dyad", "Spline1_dyad", "Spline2_dyad", "Spline3_dyad")
-
-
 # AME K2
+
+ameVarsLevels <- c("intercept", "machinejlw_1.row", "juntajlw_1.row",  "bossjlw_1.row", "strongmanjlw_1.row", "allotherauts_1.row", "newregime_1.row", "democracy_2.col", "cap_1.row", "cap_2.col","dependlow.dyad","majmaj.dyad","minmaj.dyad", "majmin.dyad", "contigdum.dyad","logdist.dyad","s_wt_glo.dyad", "s_lead_1.row", "s_lead_2.col","pcyrsmzinit.dyad", "pcyrsmzinits1.dyad", "pcyrsmzinits2.dyad", "pcyrsmzinits3.dyad")
+
+
+ivsAME <- c("Machine", "Junta", "Boss", "Strongman",
+            "Other Type","New/Unstable Regime", "Democracy_Target",
+            "Military Capabilities_Initiator",
+            "Military Capabilities_Target ",
+            ##"Initator Share of Capabilities ",##isn't in AME build
+            "Low Trade Dependence ",
+            "Both Major Powers", "Minor/Major",
+            "Major/Minor", "Contiguous", "Log Dist. Between Capitals",
+            "Alliance Similarity_Dyad ",
+            "Alliance Similarity With System Leader_Initiator",
+            "Alliance Similarity Leader_Target",
+            "Time Since Last Conflict", "Spline1", "Spline2", "Spline3")
+
+
 ameBETA2 = cbind(ameFit_k2$BETA, rho = ameFit_k2$VC[,'rho'])
 ameBETA2 = t(apply(ameBETA2, 2, summStats))
 colnames(ameBETA2) = c('mean', 'med', 'sd', 'lo95','lo90','hi90','hi95')
@@ -92,20 +95,23 @@ ameBETA2$var = rownames(ameBETA2) ; rownames(ameBETA2) = NULL
 ameBETA2$mod = 'AME_K2'
 ameBETA2$prezvar =  c("Intercept", ivsAME, "rho")
 
-## AME K3
-## ameBETA3 = cbind(ameFit_k3$BETA, rho = ameFit_k3$VC[,'rho'])
-## ameBETA3 = t(apply(ameBETA3, 2, summStats))
-## colnames(ameBETA3) = c('mean', 'med', 'sd', 'lo95','lo90','hi90','hi95')
-## ameBETA3 = data.frame(ameBETA3, stringsAsFactors = F)
-## ameBETA3$var = rownames(ameBETA3) ; rownames(ameBETA3) = NULL
-## ameBETA3$mod = 'AME_K3'
-## ameBETA3$prezvar = c("Intercept", ivsAME, "rho")
+ameBETA2$var = factor(ameBETA2$var,levels = c(ameVarsLevels, "rho"),
+    ordered = F)## factor
+
+
+levels(glmBETA$var)
+ameBETA2$var
+
+dim(ameBETA2)
+dim(glmBETA)
+
+colnames(ameBETA2)
+colnames(glmBETA)
 
 ## combine and clean up
-## note that have to remove GLM results because
-## the AME results have more parameters
 
-pDat = rbind(glmBETA, ameBETA2) #, ameBETA3)
+
+pDat = rbind(glmBETA, ameBETA2)
 
 # create groups for plotting
 vars = unique(pDat$prezvar)
@@ -113,30 +119,19 @@ pDat$group = NA
 
 
 ## Reorder variables so the coef plots look nice
-ivsGLM
-ivsAME
 
-sort(ivsGLM)
-sort(ivsAME)
+pDat$prezvar = factor(pDat$prezvar,levels = c("Intercept", ivsGLM, "rho"),
+    ordered = F)## factor
 
-## set the order of the variables as alphabetical for vars other than the intercept and rho
-varOrder = c("Intercept", sort(c(ivsGLM, ivsAME)), "rho")
-
-pDat$prezvar = factor(pDat$prezvar,levels = varOrder, ordered = F)## factor
 pDat$prezvar = factor(pDat$prezvar,levels = rev(levels(pDat$prezvar)))## reverse levels needed b/c of how the coordflip rotates
+
 
 
 levels(pDat$prezvar)
 
-pDat$group[pDat$prezvar %in% c(varOrder[1:8])] = 1
-pDat$group[pDat$prezvar %in% varOrder[9:18]] = 2
-pDat$group[pDat$prezvar %in% varOrder[19:27]] = 3
-pDat$group[pDat$prezvar %in% varOrder[28:36]] = 4
-pDat$group[pDat$prezvar %in% varOrder[37:45]] = 5
-pDat$group[pDat$prezvar %in% varOrder[46:52]] = 6
-
-head(pDat)
-
+length(unique(levels(pDat$prezvar)))
+           
+pDat
 
 ## plot function for AME models
 
@@ -157,16 +152,17 @@ ggCoefAME = function(data, group = NULL)
                               lwd = 1/2, position = position_dodge(width = .7),
       shape = 21, fill = "WHITE", fatten=.65)
   zp1 = zp1 + coord_flip() + labs(x = "", y = '', 
-                                  color = 'model type')
-  zp1 = zp1 + theme_bw() +
-    theme(
-      legend.position='top', legend.title=element_blank(),
-      legend.text=element_text(family="Source Sans Pro Light"),
-      panel.border=element_blank(),
-      axis.ticks=element_blank(),
-      axis.text.x=element_text(family="Source Sans Pro Light"),
+      color = 'model type')
+  zp1 = zp1 + scale_color_brewer(palette = 'Set1')+ theme_bw()
+      zp1 = zp1 + theme_bw() +
+          theme(
+              legend.position='top', legend.title=element_blank(),
+              legend.text=element_text(family="Source Sans Pro Light"),
+              panel.border=element_blank(),
+              axis.ticks=element_blank(),
+              axis.text.x=element_text(family="Source Sans Pro Light"),
       axis.text.y=element_text(family="Source Sans Pro Light", hjust=0)
-    )
+              )
   return(zp1)
 }
 
@@ -175,7 +171,8 @@ ggCoefAME = function(data, group = NULL)
 
 ## Take out the splines and Rho:
 
-pDat <- pDat[!( pDat$var=="pcyrsmzinits.dyad"
+pDat <- pDat[!( pDat$var=="pcyrsmzinit.dyad"
+               |pDat$var=="pcyrsmzinits"
                |pDat$var=="pcyrsmzinits1.dyad" ##remove the splines from AME
                | pDat$var=="pcyrsmzinits2.dyad"
                | pDat$var=="pcyrsmzinits3.dyad"
@@ -194,6 +191,8 @@ pDatFocused <- pDat[!(pDat$var=="dependlow.dyad"
 ### Save plots
 
 ## All coefficients
+
+
 ggCoefAME(data = pDat) ;
 ggsave(filename = paste0(plotPath, 'weeks_coefs_all.pdf'),
        device = cairo_pdf, width=7, height=7)
@@ -215,7 +214,7 @@ pDat[1:30, ]
 pDatSmallEffects <- pDat[which(pDat$mean >= -1 &
                                pDat$mean <= 1),]
 
-dim(pDatSmallEffects) ## 59x11
+dim(pDatSmallEffects) ## 31x11
 
 ggCoefAME(dat=pDatSmallEffects)
 ggsave(filename = paste0(plotPath, 'weeks_coefs_smallEffects.pdf'),
@@ -224,3 +223,4 @@ ggsave(filename = paste0(plotPath, 'weeks_coefs_smallEffects.pdf'),
 ## Conclude
 
 print("End of Coefficient Plot Creation-- check output directory")
+
