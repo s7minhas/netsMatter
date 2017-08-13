@@ -1,6 +1,5 @@
 ##This script for the GLM comparison 
 
-
 ## Plan on 5/10:
 ## First run GLM with just the dyadic vars
 ## then add in each of the sender and reciever
@@ -12,21 +11,21 @@
 rm(list=ls())
 
 ## load script to load package
-source('LoadPackage.R')
+source('loadPackage.R')
 
-library(dplyr)
-library(reshape2)
-library(tidyr)
+toLoad <- c("dplyr", "reshape2", "tidyr")
+
+loadPkg(toLoad)
+
 ################
 path = '~/Dropbox/netsMatter/replications/Weeks2012/replication/output/'
 ################
 # load data
 load(paste0(path, 'WeeksamenData.rda'))
 
-ls()
-# crossval params
+## crossval params
 seed=6886
-folds=7
+folds=4
 ################
 
 dyadicVars <- c('mzinit', "dependlow" , "majmaj", "minmaj", "majmin", "contigdum","logdist","s_wt_glo","pcyrsmzinit", "pcyrsmzinits1", "pcyrsmzinits2","pcyrsmzinits3")  %>%  strsplit(x = ., split = " ") %>%

@@ -1,4 +1,7 @@
 ################
+## 8/12: This script is depreciated,
+## making sure that is the case before moving it into the archive
+## directory
 # workspace
 rm(list=ls())
 

@@ -7,21 +7,23 @@ rm(list=ls())
 resultsPath = '~/Dropbox/netsMatter/replications/McDonald_2004/data/'
 
 ### libraries needed
-library(dplyr)
-library(magrittr)
-library(ggplot2)
-library(stringr)
-library(gridExtra)
-library(Cairo)
-library(reshape2)
-library(amen)
-library(RColorBrewer)
-##library(tidyverse)
-##library(latex2exp)
 
 source('../reiter_stam_2003/helperEx.R')
 source('setup.R')
 
+toLoad <-c("dplyr",
+"magrittr",
+"ggplot2",
+"stringr",
+"gridExtra",
+"Cairo",
+"reshape2",
+"amen",
+"RColorBrewer",
+"tidyverse",
+"latex2exp")
+
+loadPkg(toLoad)
 ### Load data
 
 ## In-sample:
@@ -157,70 +159,6 @@ rocPlot(pRoc, linetypes = c(1,1,1,1,1), legPos = 'top', type = 'pr')
 ggsave(filename = paste0(resultsPath, 'McDonald_pr_outsamp_all.pdf'),
        device = cairo_pdf,  width=7, height=7)
 
-
-## AUC ROC
-rocLogit = 
-  roc(prediction = logitPred$prob, actual = logitPred$actual) %>% 
-  mutate(model = 'Logit')
-
-rocAme0 = roc(prediction = amePred_k0$prob, actual = amePred_k0$actual) %>% 
- mutate(model = 'AME_K0') 
-rocAme1 = roc(prediction = amePred_k1$prob, actual = amePred_k1$actual) %>% 
- mutate(model = 'AME_K1')
-rocAme2 = roc(prediction = amePred_k2$prob, actual = amePred_k2$actual) %>% 
-  mutate(model = 'AME_K2')
-rocAme3 = roc(prediction = amePred_k3$prob, actual = amePred_k3$actual) %>%
-    mutate(model = 'AME_K3')
-
-
-pRoc = rbind(rocLogit,rocAme0, rocAme1,
-    rocAme2, rocAme3)
-
-pRoc$model = as.factor(pRoc$model)
-ggCols = brewer.pal(length(levels(pRoc$model)), 'Set1')
-rocPlot(pRoc, linetypes = c(1:5), legPos = 'top')
-ggsave(filename = paste0(resultsPath, 'McD_auc_all.pdf'), device =
-       cairo_pdf, width=7, height=7)
-
-print("Saved AUC plots")
-
-# AUC PR
- rocLogit = 
-  rocdf(pred = logitPred$prob, obs = logitPred$actual, type = 'pr') %>% 
-    mutate(model = 'Logit')
-
-rocAme0 = 
-  rocdf(pred = amePred_k0$prob, obs = amePred_k0$actual, type = 'pr') %>% 
-  mutate(model = 'AME_K0')
-rocAme1 = 
-  rocdf(pred = amePred_k1$prob, obs = amePred_k1$actual, type = 'pr') %>% 
-  mutate(model = 'AME_K1')
-
-rocAme2 = 
-  rocdf(pred = amePred_k2$prob, obs = amePred_k2$actual, type = 'pr') %>% 
-  mutate(model = 'AME_K2')
-
-rocAme3 = 
-  rocdf(pred = amePred_k3$prob, obs = amePred_k3$actual, type = 'pr') %>% 
-  mutate(model = 'AME_K3')
-
-pRoc = rbind(rocLogit, rocAme0, rocAme1, rocAme2, rocAme3)
-
-pRoc$model = as.factor(pRoc$model)
-rocPlot(pRoc, linetypes = c(1:5), type = 'pr', legPos = 'top')
-ggsave(filename = paste0(resultsPath, 'McD_pr_auc.pdf'), device = cairo_pdf, width=7, height=7)
-
-print("saved PR Plots")
-
-trim = function (x) { gsub("^\\s+|\\s+$", "", x) } ##should have loaded in setup.R
-
-# get auc summary
-aucSumm = do.call('rbind', 
-    lapply(predDfs, function(x){ 
-        cbind( 'AUC'=getAUC(x$prob, x$actual), 'AUC (PR)'=auc_pr(x$actual, x$prob) ) 
-    } ) ) ; rownames(aucSumm) = names(predDfs)
-aucSumm = aucSumm[order(aucSumm[,1],decreasing=TRUE),]
-aucSumm = trim(format(round(aucSumm, 2), nsmall=2))
 
 ### Nodal effects
 
