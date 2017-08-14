@@ -24,22 +24,54 @@ loadPkg(toLoad)
 
 ## Load in-sample results for K=2
 load(paste0(resultsPath, 'model_k2.rda')); ameFit_k2 <- ameFit
+
 ## Sender/Reciever effects
 ## ## k = 2
+
+### Sender
 
 effdat = getAddEffData(fit = ameFit_k2) ##This function is in helperEx.R
 effdat$actor = countrycode::countrycode(effdat$actor, 'cown', 'country.name')
 
-addEffPlot(fit = effdat, addEffData = T, row = T)
-ggsave(filename = paste0(resultsPath, 'Weeks_sender_k2.pdf'), device = cairo_pdf, width=7, height=7)
+##want just largest 20 random effects
 
-addEffPlot(fit = effdat, addEffData = T, row = F)
-ggsave(filename = paste0(resultsPath, 'Weeks_receiver_k2.pdf'), device = cairo_pdf, width=7, height=7)
+dim(effdat)
+head(effdat)
+
+effdatordered<- effdat[order(effdat$addEff),][115:164,] #just 20 largest effects
+
+addEffPlot(fit = effdatordered, addEffData = T, row = T)
+
+ggsave(filename = paste0(resultsPath, 'Weeks_highest50_sender_k2.pdf'),
+       device = cairo_pdf, width=7, height=7)
+
+## Reciever
+
+## build reciever dataL
+
+recDat <- getAddEffData(fit=ameFit_k2, row=FALSE)
+
+head(recDat)
+head(effdat)
+
+recDat$actor = countrycode::countrycode(recDat$actor, 'cown', 'country.name')
+
+addEffPlot(fit = recDat, addEffData = T, row = F)
+
+
+## Reduced version:
+
+recDatOrdered <- recDat[order(recDat$addEff),][115:164,]
+
+addEffPlot(fit = recDatOrdered, addEffData = T, row = F)
+
+ggsave(filename = paste0(resultsPath,
+           'Weeks_highest50_receiver_k2.pdf'), device = cairo_pdf,
+       width=7, height=7)
 
 
 ##############
 ##### AUC and PR
-
 ## Performance
 ###(out of sample) 
 ################################
@@ -53,7 +85,8 @@ load(paste0(resultsPath,'weeksOutPerf.rda'))
 
 load(paste0(resultsPath, 'outsampResults2.rda')); ameOutSamp_k2 <-
      ameOutSamp_NULL
-     
+
+
 
 ## ROC plots
 

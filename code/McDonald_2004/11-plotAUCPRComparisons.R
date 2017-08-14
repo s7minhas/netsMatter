@@ -7,7 +7,6 @@ rm(list=ls())
 resultsPath = '~/Dropbox/netsMatter/replications/McDonald_2004/data/'
 
 
-
 ### libraries needed
 library(RColorBrewer)
 library(dplyr)
@@ -26,18 +25,41 @@ source('setup.R')
 
 ### Load data
 
+load(paste0(resultsPath, 'ameFit_k2.rda')); ameFit_k2=ameFit
+
+ls()
+
 ##########
 ## Sender/Receiver effects 
 #########
+## Sender
+## k = 2
+effdat = getAddEffData(fit = ameFit_k2) ##This function is in helperEx.R
+effdat$actor = countrycode::countrycode(effdat$actor, 'cown', 'country.name')
 
-## ## k = 2
-## effdat = getAddEffData(fit = ameFit_k2) ##This function is in helperEx.R
-## effdat$actor = countrycode::countrycode(effdat$actor, 'cown', 'country.name')
+addEffPlot(fit = effdat, addEffData = T, row = T)
+ggsave(filename = paste0(resultsPath, 'McDonald_sender_k2.pdf'), device = cairo_pdf, width=7, height=7)
 
-## addEffPlot(fit = effdat, addEffData = T, row = T)
-## ggsave(filename = paste0(resultsPath, 'McDonald_sender_k2.pdf'), device = cairo_pdf, width=7, height=7)
-## addEffPlot(fit = effdat, addEffData = T, row = F)
-## ggsave(filename = paste0(resultsPath, 'McDonald_receiver_k2.pdf'), device = cairo_pdf, width=7, height=7)
+## limited version:
+effdattop50 <- effdat[order(effdat$addEff),][76:125,]
+
+addEffPlot(fit = effdattop50, addEffData = T, row = T)
+ggsave(filename = paste0(resultsPath, 'McDonald_top50_sender_k2.pdf'), device = cairo_pdf, width=7, height=7)
+
+
+## Reciever
+recdat = getAddEffData(fit = ameFit_k2, row=FALSE)
+recdat$actor = countrycode::countrycode(recdat$actor, 'cown', 'country.name')
+
+addEffPlot(fit = recdat, addEffData = T, row = F)
+ggsave(filename = paste0(resultsPath, 'McDonald_receiver_k2.pdf'), device = cairo_pdf, width=7, height=7)
+
+## small:
+
+recdattop50 <- recdat[order(recdat$addEff), ][76:125,]
+
+addEffPlot(fit = recdattop50, addEffData = T, row = F)
+ggsave(filename = paste0(resultsPath, 'McDonald_top50_receiver_k2.pdf'), device = cairo_pdf, width=7, height=7)
 
 
 ##############
@@ -161,7 +183,9 @@ aucSumm = do.call('rbind',
 aucSumm = aucSumm[order(aucSumm[,1],decreasing=TRUE),]
 aucSumm = trim(format(round(aucSumm, 2), nsmall=2))
 
+##########################################
 ### Nodal effects
+#########################################
 
 ## load AME node-level data:
 load(paste0(resultsPath, 'amenData.rda')) ## xDyadList, xNodeList.R, xNodeList.s, Ylist
@@ -180,8 +204,8 @@ rownames(yArrSumm) =
 colnames(yArrSumm) =
   countrycode::countrycode(colnames(yArrSumm), origin = 'cown', 'country.name', warn = T)
 
-################
- 
+############################
+############################ 
 uvCols = brewer.pal(11, 'RdBu')[c(11-2, 3)]
 
 dim(yArrSumm)
