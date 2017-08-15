@@ -1,5 +1,5 @@
 ## This script produces AUC and RO plots comparing GLM and AME models
-## Script 2  of the model presentation 
+## For all of K0:3 
 ##Based on Juan's code for Reiter-Stam
 
 rm(list=ls())
@@ -18,7 +18,6 @@ toLoad <-c("dplyr",
 "gridExtra",
 "Cairo",
 "reshape2",
-"amen",
 "RColorBrewer",
 "tidyverse",
 "latex2exp")
@@ -33,22 +32,9 @@ load( paste0(resultsPath,'ameFit_k1.rda') ) ; ameFit_k1=ameFit
 load( paste0(resultsPath,'ameFit_k2.rda') ) ; ameFit_k2=ameFit
 load( paste0(resultsPath,'ameFit_k3.rda') ) ; ameFit_k3=ameFit
 
-##########
-## Sender/Receiver effects 
-#########
-
-## ## k = 2
-## effdat = getAddEffData(fit = ameFit_k2) ##This function is in helperEx.R
-## effdat$actor = countrycode::countrycode(effdat$actor, 'cown', 'country.name')
-
-## addEffPlot(fit = effdat, addEffData = T, row = T)
-## ggsave(filename = paste0(resultsPath, 'McDonald_sender_k2.pdf'), device = cairo_pdf, width=7, height=7)
-## addEffPlot(fit = effdat, addEffData = T, row = F)
-## ggsave(filename = paste0(resultsPath, 'McDonald_receiver_k2.pdf'), device = cairo_pdf, width=7, height=7)
-
-##############
+#################
 ##### AUC and PR
-
+###################
 ## read data
 
 load(paste0(resultsPath, "McDonald_baseModelGLMObj.rda")) ## mod = GLM object

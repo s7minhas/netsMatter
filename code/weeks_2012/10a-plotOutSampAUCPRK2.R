@@ -12,63 +12,9 @@ source('../reiter_stam_2003/helperEx.R')
 source('setup.R')
 
 toLoad <- c("RColorBrewer","dplyr" ,"magrittr" ,"ggplot2" ,"stringr"
-            ,"gridExtra","Cairo"
-            ,"reshape2","amen","tidyverse","latex2exp")
+            ,"gridExtra","Cairo","reshape2","tidyverse","latex2exp")
 
 loadPkg(toLoad)
-### Load data
-
-##########
-## Sender/Receiver effects 
-#########
-
-## Load in-sample results for K=2
-load(paste0(resultsPath, 'model_k2.rda')); ameFit_k2 <- ameFit
-
-## Sender/Reciever effects
-## ## k = 2
-
-### Sender
-
-effdat = getAddEffData(fit = ameFit_k2) ##This function is in helperEx.R
-effdat$actor = countrycode::countrycode(effdat$actor, 'cown', 'country.name')
-
-##want just largest 20 random effects
-
-dim(effdat)
-head(effdat)
-
-effdatordered<- effdat[order(effdat$addEff),][115:164,] #just 20 largest effects
-
-addEffPlot(fit = effdatordered, addEffData = T, row = T)
-
-ggsave(filename = paste0(resultsPath, 'Weeks_highest50_sender_k2.pdf'),
-       device = cairo_pdf, width=7, height=7)
-
-## Reciever
-
-## build reciever dataL
-
-recDat <- getAddEffData(fit=ameFit_k2, row=FALSE)
-
-head(recDat)
-head(effdat)
-
-recDat$actor = countrycode::countrycode(recDat$actor, 'cown', 'country.name')
-
-addEffPlot(fit = recDat, addEffData = T, row = F)
-
-
-## Reduced version:
-
-recDatOrdered <- recDat[order(recDat$addEff),][115:164,]
-
-addEffPlot(fit = recDatOrdered, addEffData = T, row = F)
-
-ggsave(filename = paste0(resultsPath,
-           'Weeks_highest50_receiver_k2.pdf'), device = cairo_pdf,
-       width=7, height=7)
-
 
 ##############
 ##### AUC and PR

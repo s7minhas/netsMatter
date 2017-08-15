@@ -36,8 +36,6 @@ load(paste0(inputPath,'weeks_baseModel.rda')); base_mod1=round(modSumm,3) #this 
 
 ## read data
 
-s()
-
 load(paste0(resultsPath, 'WeeksamenData.rda')) ## xDyadList, xNodeList.R, xNodeList.s, Ylist 
 
 load(paste0(inputPath, "weeks_baseModelGLMObj.rda")) ## mod = GLM object

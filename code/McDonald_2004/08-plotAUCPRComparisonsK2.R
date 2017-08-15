@@ -1,72 +1,35 @@
-## This script produces AUC and RO plots comparing GLM and AME models
-## Script 2  of the model presentation 
+## This script produce AUC and ROC plots comparing GLM and AME models, for K=2 
 ##Based on Juan's code for Reiter-Stam
 
 rm(list=ls())
 
 resultsPath = '~/Dropbox/netsMatter/replications/McDonald_2004/data/'
-
+ls()
 
 ### libraries needed
-library(RColorBrewer)
-library(dplyr)
-library(magrittr)
-library(ggplot2)
-library(stringr)
-library(gridExtra)
-library(Cairo)
-library(reshape2)
-library(amen)
-##library(tidyverse)
-##library(latex2exp)
 
 source('../reiter_stam_2003/helperEx.R')
 source('setup.R')
 
+toLoad <- c("RColorBrewer",
+"dplyr",
+"magrittr",
+"ggplot2",
+"stringr",
+"gridExtra",
+"Cairo",
+            "reshape2")
+
+loadPkg(toLoad)
 ### Load data
 
 load(paste0(resultsPath, 'ameFit_k2.rda')); ameFit_k2=ameFit
 
-ls()
-
-##########
-## Sender/Receiver effects 
-#########
-## Sender
-## k = 2
-effdat = getAddEffData(fit = ameFit_k2) ##This function is in helperEx.R
-effdat$actor = countrycode::countrycode(effdat$actor, 'cown', 'country.name')
-
-addEffPlot(fit = effdat, addEffData = T, row = T)
-ggsave(filename = paste0(resultsPath, 'McDonald_sender_k2.pdf'), device = cairo_pdf, width=7, height=7)
-
-## limited version:
-effdattop50 <- effdat[order(effdat$addEff),][76:125,]
-
-addEffPlot(fit = effdattop50, addEffData = T, row = T)
-ggsave(filename = paste0(resultsPath, 'McDonald_top50_sender_k2.pdf'), device = cairo_pdf, width=7, height=7)
-
-
-## Reciever
-recdat = getAddEffData(fit = ameFit_k2, row=FALSE)
-recdat$actor = countrycode::countrycode(recdat$actor, 'cown', 'country.name')
-
-addEffPlot(fit = recdat, addEffData = T, row = F)
-ggsave(filename = paste0(resultsPath, 'McDonald_receiver_k2.pdf'), device = cairo_pdf, width=7, height=7)
-
-## small:
-
-recdattop50 <- recdat[order(recdat$addEff), ][76:125,]
-
-addEffPlot(fit = recdattop50, addEffData = T, row = F)
-ggsave(filename = paste0(resultsPath, 'McDonald_top50_receiver_k2.pdf'), device = cairo_pdf, width=7, height=7)
-
-
-##############
+#######################
 ##### AUC and PR
-
-## Performance
-###(out of sample) 
+####
+### Performance
+###(out of sample, k=2 
 ################################
 
 
