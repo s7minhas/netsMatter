@@ -163,6 +163,18 @@ ggsave(filename = paste0(resultsPath, 'reiter_receiver_k3.pdf'), device = cairo_
 load('/Users/juanftellez/Dropbox/netsMatter/replications/Reiter_Stam_2003/output/glmCrossValResults.rda')
 load('/Users/juanftellez/Dropbox/netsMatter/replications/Reiter_Stam_2003/output/ameCrossValResults.rda')
 
+# auc
+getAUC(prediction = ameOutSamp_k2$outPerf$pred, 
+       actual = ameOutSamp_k2$outPerf$actual)
+getAUC(prediction = glmOutSamp_wFullSpec$outPerf$pred, 
+       actual = glmOutSamp_wFullSpec$outPerf$actual)
+
+# PR
+auc_pr(pred = ameOutSamp_k2$outPerf$pred, 
+       obs = ameOutSamp_k2$outPerf$actual)
+auc_pr(pred = glmOutSamp_wFullSpec$outPerf$pred, 
+       obs = glmOutSamp_wFullSpec$outPerf$actual)
+
 # roc
 rocLogit = 
   roc(prediction = glmOutSamp_wFullSpec$outPerf$pred, 
