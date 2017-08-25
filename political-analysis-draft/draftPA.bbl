@@ -1,0 +1,138 @@
+\begin{thebibliography}{}
+
+\bibitem[\protect\citename{Aronow {\em et~al.\ }\relax,
+  }2015]{aronow:etal:2015}
+Aronow, Peter~M., Samii, Cyrus, \& Assenova, Valentina~A. 2015.
+\newblock Cluster--Robust Variance Estimation for Dyadic Data.
+\newblock {\em Political Analysis}, {\bf 23}(4), 564--577.
+
+\bibitem[\protect\citename{Beck {\em et~al.\ }\relax, }1998]{beck:etal:1998}
+Beck, Nathaniel, Katz, Jonathan~N., \& Tucker, Richard. 1998.
+\newblock Taking Time Seriously: Time-series-cross-section Analysis with a
+  Binary Dependent Variable.
+\newblock {\em American Journal of Political Science}, {\bf 42}(2), 1260--1288.
+
+\bibitem[\protect\citename{Bennett \& Stam, }2000]{bennett:stam:2000}
+Bennett, D.~Scott, \& Stam, Allan~C. 2000.
+\newblock {Research Design and Estimator Choices in the Analysis of Interstate
+  Dyads: When Decisions Matter}.
+\newblock {\em Journal of Conflict Resolution}, {\bf 44}(5), 653--685.
+
+\bibitem[\protect\citename{Gibler, }2017]{gibler:2017}
+Gibler, Douglas~M. 2017.
+\newblock State Development, Parity, and International Conflict.
+\newblock {\em American Political Science Review}, {\bf 111}(1), 21--38.
+
+\bibitem[\protect\citename{Hoff, }2005]{hoff:2005}
+Hoff, Peter~D. 2005.
+\newblock Bilinear Mixed-Effects Models for Dyadic Data.
+\newblock {\em Journal of the American Statistical Association}, {\bf
+  100}(4690), 286--295.
+
+\bibitem[\protect\citename{Hoff, }2008]{hoff:2008}
+Hoff, Peter~D. 2008.
+\newblock Modeling homophily and stochastic equivalence in symmetric relational
+  data.
+\newblock {\em Pages  657--664 of:} Platt, John~C., Koller, Daphne, Singer,
+  Yoram, \& Roweis, Sam~T. (eds), {\em Advances in Neural Information
+  Processing Systems 20}.
+\newblock Processing Systems 21.
+\newblock Cambridge, MA, USA: MIT Press.
+
+\bibitem[\protect\citename{Hoff, }2015]{hoff:2015}
+Hoff, Peter~D. 2015.
+\newblock Multilinear Tensor Regression for Longitudinal Relational Data.
+\newblock {\em The Annals of Applied Statistics}, {\bf 9}(3), 1169--1193.
+
+\bibitem[\protect\citename{Hoff {\em et~al.\ }\relax, }2017]{amenpkg}
+Hoff, Peter~D., Fosdick, Bailey, Volfovsky, Alex, He, Yanjun, \& Minhas,
+  Shahryar. 2017 (July).
+\newblock {\em Additive and Multiplicative Effects Models for Networks and
+  Relational Data, version 1.4}.
+\newblock Comprehensive R-Archive Network.
+
+\bibitem[\protect\citename{Li \& Loken, }2002]{li:loken:2002}
+Li, Heng, \& Loken, Eric. 2002.
+\newblock A Unified Theory of Statistical Analysis and Inference for Variance
+  Component Models For Dyadic Data.
+\newblock {\em Statistica Sinica}, {\bf 12}(2), 519--535.
+
+\bibitem[\protect\citename{Manger {\em et~al.\ }\relax,
+  }2012]{manger:etal:2012}
+Manger, Mark~S., Pickup, Mark~A., \& Snijders, Tom~A.B. 2012.
+\newblock A Hierarchy of Preferences: A Longitudinal Network Analysis Approach
+  to {PTA} Formation.
+\newblock {\em Journal of Conflict Resolution}, {\bf 56}(5), 852--877.
+
+\bibitem[\protect\citename{Maoz, }n.d.]{maoz:2005}
+Maoz, Zeev.
+\newblock {\em Dyadic Militarized Interstate Disputes Dataset Version 2.0}.
+
+\bibitem[\protect\citename{McDonald, }2004]{mcdonald:2004}
+McDonald, Patrick~J. 2004.
+\newblock Peace through Trade or Free Trade?
+\newblock {\em Journal of Conflict Resolution}, {\bf 48}(4), 547--572.
+
+\bibitem[\protect\citename{Organski, }1958]{organski:1958}
+Organski, A.F.K. 1958.
+\newblock {\em World Politics: the Stages of Political Development}.
+\newblock New York: Alfred A. Knopf.
+
+\bibitem[\protect\citename{Reiter \& Stam, }2003]{reiter:stam:2003}
+Reiter, Dan, \& Stam, Allan~C. 2003.
+\newblock Identifying the Culprit: Democracy, Dictatorship, and Dispute
+  Initiation.
+\newblock {\em American Political Science Review}, {\bf 97}(2), 333--337.
+
+\bibitem[\protect\citename{Rose, }2004]{rose:2004}
+Rose, Andrew~K. 2004.
+\newblock Do We Really Know That the {WTO} Increases Trade?
+\newblock {\em American Economic Review}, {\bf 94}(1), 98--114.
+
+\bibitem[\protect\citename{Snijders, }2011]{snijders:2011}
+Snijders, Tom~A.B. 2011.
+\newblock Statistical Models for Social Networks.
+\newblock {\em Annual Review of Sociology}, {\bf 37}, 131--53.
+
+\bibitem[\protect\citename{Tomz {\em et~al.\ }\relax, }2007]{tomz:etal:2007}
+Tomz, Michael, Goldstein, Judith, \& Rivers, Douglas. 2007.
+\newblock Do We Really Know That the WTO Increases Trade?
+\newblock {\em American Economic Review}, {\bf 97}(5), 2005--2018.
+
+\bibitem[\protect\citename{Ward {\em et~al.\ }\relax, }2013]{ward:etal:2013}
+Ward, Michael~D., Metternich, Nils~W., Dorff, Cassy~L., Gallop, Max,
+  Hollenbach, Florian~M., Schultz, Anna, \& Weschle, Simon. 2013.
+\newblock Learning from the Past and Stepping into the Future: Toward a New
+  Generation of Conflict Prediction.
+\newblock {\em International Studies Review}, {\bf 16}(4), 473--644.
+
+\bibitem[\protect\citename{Warner {\em et~al.\ }\relax,
+  }1979]{warner:etal:1979}
+Warner, Rebecca, Kenny, David, \& Stoto, Michael. 1979.
+\newblock A New Round Robin Analysis of Variance for Social Interaction Data.
+\newblock {\em Journal of Personality and Social Psychology}, {\bf 37},
+  1742--1757.
+
+\bibitem[\protect\citename{Wasserman \& Faust, }1994]{wasserman:faust:1994}
+Wasserman, Stanley, \& Faust, Katherine. 1994.
+\newblock {\em Social Network Analysis: {M}ethods and Applications}.
+\newblock Cambridge: Cambridge University Press.
+
+\bibitem[\protect\citename{Weeks, }2012]{weeks:2012}
+Weeks, Jessica~L. 2012.
+\newblock Strongmen and Straw Men: Authoritarian Regimes and the Initiation of
+  International Conflict.
+\newblock {\em American Political Science Review}, {\bf 106}(2), 326--347.
+
+\bibitem[\protect\citename{Wong, }1982]{wong:1982}
+Wong, George~Y. 1982.
+\newblock Round robin analysis of variance via maximum likelihood.
+\newblock {\em Journal of the American Statistical Association}, {\bf 77}(380),
+  714--724.
+
+\bibitem[\protect\citename{Zinnes, }1967]{zinnes:1967}
+Zinnes, Dina~A. 1967.
+\newblock An Analytical Study of the Balance of Power Theories.
+\newblock {\em Journal of Peace Research}, {\bf 3}, 270--288.
+
+\end{thebibliography}
