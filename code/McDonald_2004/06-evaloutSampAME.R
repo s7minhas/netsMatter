@@ -1,12 +1,18 @@
 ## Script to look at the AME xval output
 
-dataPath <- "~/Dropbox/netsMatter/replications/McDonald_2004/data/"
+rm(list=ls())
+if(Sys.info()['user']=='s7m'){
+	dataPath <- "~/Dropbox/Research/netsMatter/replications/McDonald_2004/data/"	
+} else {
+	dataPath <- "~/Dropbox/netsMatter/replications/McDonald_2004/data/"	
+}
+
 
 
 ## GLM
 
 load(paste0(dataPath, "smallMcDGLMStats.rda"))
-GLMoutSamp
+# GLMoutSamp
 
 
 ls()
@@ -16,7 +22,7 @@ smallMcDGLMStats$ROC
 smallMcDGLMStats$PR
 
 ##K0
-
+setwd(dataPath)
 load("outsampResults0.rda")
 
 outFitK0 <- ameOutSamp_NULL

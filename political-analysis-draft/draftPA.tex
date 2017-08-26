@@ -308,15 +308,15 @@ For the purpose of this study, we choose five prominent studies from the broad f
 \begin{table}
 \caption{Features of the Studies Replicated. }
 \scalebox{.8}{
-  \begin{tabular}{ccrcc}
-  Study & Model & N. of Dyads & Type of Dyads & Clustered $\sigma_{\hat{\beta}}$ \\ \toprule
-  Reiter \& Stam (2003) & Logit & $753,456$ & Directed & Robust \\
-  McDonald (2004) & Logit &$92,354$& Undirected &Robust\\
-  Rose (2004) &OLS&$234,597$&Directed&Robust \\
-  Weeks (2012) & Logit & $901,540$ & Directed & Robust \\
- Gibler (2017) &Logit& $650,557$&UnDirected& no \\
-  \bottomrule
-\end{tabular}
+	\begin{tabular}{ccrcc}
+		Study & Model & N. of Dyads & Type of Dyads & Clustered $\sigma_{\hat{\beta}}$ \\ \toprule
+		Weeks (2012) & Logit & $901,540$ & Directed & Robust \\
+		Reiter \& Stam (2003) & Logit & $753,456$ & Directed & Robust \\
+		Rose (2004) &OLS&$234,597$&Directed&Robust \\
+		McDonald (2004) & Logit &$92,354$& Undirected &Robust\\
+		Gibler (2017) &Logit& $650,557$&UnDirected& no \\
+	\bottomrule
+	\end{tabular}
 }
 \end{table}
 
@@ -348,36 +348,33 @@ The broader goal, beyond introducing the use of the AME framework in an applied 
 
 \begin{table}[ht]
 \centering
-\begin{tabular}{r p{4cm} l}
-  \hline
- & Central Finding & Does it Replicate in a Network Model? \\ 
-  \hline
-Reiter and Stam (2003) & Personalist Regimes Attack Democracies, Not Vice Versa & Replicates \\ 
-  McDonald (2004) & Lower Trade Barriers and Higher Trade Lead to Peace & Fails to Replicate \\ 
-  Rose (2004) & WTO Membership Does not Effect Trade & Replicates \\ 
-  Weeks (2012) & Bosses, Juntas and Strongmen are more Aggressive, Machines are Not & Fails to Replicate \\ 
-  Gibler (2017) & Power Parity at time of Entry to International System Inceases Conflict & Fails to Replicate \\ 
-   \hline
-\end{tabular}
+	\begin{tabular}{r p{4cm} l}
+	\hline
+		& Central Finding & Does it Replicate in a Network Model? \\ 
+		\hline
+		Weeks (2012) & Bosses, Juntas and Strongmen are more Aggressive, Machines are Not & Fails to Replicate \\
+		Reiter \& Stam (2003) & Personalist Regimes Attack Democracies, Not Vice Versa & Replicates \\ 
+		Rose (2004) & WTO Membership Does not Effect Trade & Replicates \\ 
+		McDonald (2004) & Lower Trade Barriers and Higher Trade Lead to Peace & Fails to Replicate \\ 
+		% Gibler (2017) & Power Parity at time of Entry to International System Inceases Conflict & Fails to Replicate \\ 
+	\hline
+	\end{tabular}
 \end{table}
 
 \begin{table}[ht]
 \centering
-\begin{tabular}{rl cc}
-  \hline
- & Model & AUC (ROC) & AUC(PR) \\ 
-  \hline
-\multirow{2}{*}{Reiter and Stam (2003)} & GLM & 0.92 & 0.08 \\ 
-~  & AME & 0.96 &  0.15 \\ 
-\multirow{2}{*}{McDonald (2004)} & GLM & &  \\ 
-~  & AME & &  \\ 
-\multirow{2}{*}{Rose (2004)} & GLM & &  \\ 
-~  & AME & &  \\ 
-\multirow{2}{*}{Weeks (2012)} & GLM & 0.64 & 0.004  \\ 
-~  & AME & 0.97 &  0.15 \\ 
-\multirow{2}{*}{Gibler (2017)} & GLM & &  \\ 
-~  & AME & &  \\ 
-   \hline
+\begin{tabular}{ll cc}
+~ & ~ & GLM & AME \\
+\multirow{2}{*}{Weeks (2012)} & AUC (ROC) & 0.64 & 0.97 \\
+~ & AUC (PR) & 0.004 & 0.15 \\
+\multirow{2}{*}{Reiter \& Stam (2003)} & AUC (ROC) & 0.92 & 0.96 \\
+~ & AUC (PR) & 0.08 & 0.15 \\
+\multirow{2}{*}{Rose (2004)} & RMSE & 3.23 & 1.99 \\
+~ & RM-D-SE & 2.01 & 1.06 \\
+\multirow{2}{*}{McDonald (2004)} & AUC (ROC) & 0.92 & 0.99 \\
+~ & AUC (PR) & 0.13 & 0.28 \\
+% \multirow{2}{*}{Gibler (2017)} & AUC (ROC) & 0.92 & 0.96 \\
+% ~ & AUC (PR) & 0.08 & 0.15 \\
 \end{tabular}
 \end{table}
 
@@ -404,23 +401,23 @@ The replication of \citet{weeks:2012} likely has the sharpest divergence between
 \caption{\label{fig:weekscirc} Visualization of multiplicative effects for Weeks (2012). Blue represents groups with common sending patterns and red represents groups with common receiving patterns.}
 \end{figure}
 
-\subsection{Replication of Reiter and Stam (2003)}
+\subsection{Replication of Reiter \& Stam (2003)}
 
-\citet{reiter:stam:2003} examine the relationship between democracy, dictatorship and the initiation of militarized disputes.  They use directed dyads and find that dyads involving a democratic leader on the one hand and a personalist dictator on the other tend to be violent. They also discover that dictators are likely to challenge democracies, but that this is not reciprocal.  In addition, military regimes and single-party regimes are more prone to initiate disputes with democracies, than the other way around.  They use the MID data, but note that ``We code a state as having initiated a dispute if it is on `side A' of a MID, the conventional approach to coding initiation. This means that the state was on the side that took the first action in the dispute, whether that action was the threat, display, or use of force. We code joiners as initiators or targets, though the results do not change if we do not code joiners as initiators or targets. \ldots Though coding initiation will always be difficult, the `side A' variable has been widely used in past conflict scholarship (page 334).'' Independent variables are largely taken from an earlier study and focus on various encodings of regime types, contiguity, alliance, and capability measures. As is prevalent in these kinds of studies, Reiter and Stam employ a logistic regression that includes an indicator of the time since the last dispute as well as three cubic splines. The database for this study is constructed using EUGene \citep{bennett:stam:2000} and comprises approximately three-quarters of a million stacked dyads. Based on their statistical analysis, they conclude that institutional constraints affect the propensity of democratic and non-democratic leaders to engage in military conflict. 
+\citet{reiter:stam:2003} examine the relationship between democracy, dictatorship and the initiation of militarized disputes.  They use directed dyads and find that dyads involving a democratic leader on the one hand and a personalist dictator on the other tend to be violent. They also discover that dictators are likely to challenge democracies, but that this is not reciprocal.  In addition, military regimes and single-party regimes are more prone to initiate disputes with democracies, than the other way around.  They use the MID data, but note that ``We code a state as having initiated a dispute if it is on `side A' of a MID, the conventional approach to coding initiation. This means that the state was on the side that took the first action in the dispute, whether that action was the threat, display, or use of force. We code joiners as initiators or targets, though the results do not change if we do not code joiners as initiators or targets. \ldots Though coding initiation will always be difficult, the `side A' variable has been widely used in past conflict scholarship (page 334).'' Independent variables are largely taken from an earlier study and focus on various encodings of regime types, contiguity, alliance, and capability measures. As is prevalent in these kinds of studies, Reiter \& Stam employ a logistic regression that includes an indicator of the time since the last dispute as well as three cubic splines. The database for this study is constructed using EUGene \citep{bennett:stam:2000} and comprises approximately three-quarters of a million stacked dyads. Based on their statistical analysis, they conclude that institutional constraints affect the propensity of democratic and non-democratic leaders to engage in military conflict. 
 
 In the original model, the variable ``Pers/Democ Directed Dyad" (which represents a Personalist $\rightarrow$ Democractic directed dyad) is clearly positive while the variable ``Democ/Personalist Directed Dyad'' is zero and the difference between the two coefficients is clearly distinct from zero. In our replication using the AME framework, we also find that Pers-Democ directed dyad has a positive effect with zero excluded from the 95\% confidence interval while Democ-Pers directed dyad is indistinguishable from zero. Using this model, however, we can no longer conclusively say that the Pers/Democratic coefficient is larger than the Democ/Personalist one.
-Our replication using the AME approach therefore cast doubt on Reiter and Stam's key claim that MIDs initiated by personalist dictatorships against democracies are more likely than MIDS initiated by democracies. Further, the effect of most of the covariates in the literature thought to predict interstate MIDs are much closer to zero when using the AME framework, as seen in Figure~\ref{fig:reitCoef}. Finally, our modeling approach outperforms the original model by better, and more accurately, predicting MIDs out-of-sample (Figure~\ref{fig:reitauc} and Figure ~\ref{fig:reitpr}).  
+Our replication using the AME approach therefore cast doubt on Reiter \& Stam's key claim that MIDs initiated by personalist dictatorships against democracies are more likely than MIDS initiated by democracies. Further, the effect of most of the covariates in the literature thought to predict interstate MIDs are much closer to zero when using the AME framework, as seen in Figure~\ref{fig:reitCoef}. Finally, our modeling approach outperforms the original model by better, and more accurately, predicting MIDs out-of-sample (Figure~\ref{fig:reitauc} and Figure ~\ref{fig:reitpr}).  
 
 \begin{figure}
 \includegraphics[width=\textwidth]{reiter_coefs_all.pdf}
-\caption{\label{fig:reitCoef} Coefficient plot of Reiter and Stam (2003)'s original model (blue) compared to AME model (red). }
+\caption{\label{fig:reitCoef} Coefficient plot of Reiter \& Stam (2003)'s original model (blue) compared to AME model (red). }
 \end{figure}
 
 \begin{figure}
 \centering   
 \subfigure[AUC]{\label{fig:reitauc}\includegraphics[width=65mm]{reiter_auc_outsamp.pdf}}
 \subfigure[Precision and Recall]{\label{fig:reitpr}\includegraphics[width=65mm]{reiter_pr_outsamp.pdf}}
-\caption{Assessments of out-of-sample predictive performance for Reiter and Stam (2003) using ROC curves and PR curves.}
+\caption{Assessments of out-of-sample predictive performance for Reiter \& Stam (2003) using ROC curves and PR curves.}
 \end{figure}
 
 \newpage

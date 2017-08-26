@@ -11,7 +11,7 @@ packs = c('dplyr', 'ggplot2', 'foreign', 'readr', 'lmtest')
 
 #
 source("LoadPkg.R")
-source("/Users/juanftellez/OneDrive/netsMatter/code/saleyhan_2008/clusteredSE.R")
+source("/Users/juanftellez/OneDrive/netsMatter/code/helpers/clusteredSE.R")
 
 #
 loadPkg(packs)
