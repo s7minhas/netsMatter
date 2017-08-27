@@ -322,6 +322,30 @@ For the purpose of this study, we choose five prominent studies from the broad f
 
 We obtained the data for each of these studies from their replication archives and replicated the main results of each of the articles.\footnote{Without exception this was straightforward to accomplish, thanks to an increasing norm in the social sciences of open data sharing.} We examine each of the models using the AME framework described above.  Our goal is to ascertain whether the ignored interdependencies---the non-iid structure of the relational data---would result in different model estimates when they were addressed in an AME framework, and more importantly to see if there were substantive opportunities that were presented with the dynamic factor approach.  
 
+Finally, we assess whether there is any substantive finding that emerges or indeed if any disappear once the interdependencies in the data are modeled.%%%Dont we want to talk more about performance here???? - MG
+
+The broader goal, beyond introducing the use of the AME framework in an applied setting, is to examine the extent to which interdependencies within typical dyadic data make much difference in what we have learned about international relations from empirical studies over the past decade or so.  We believe that it does, and that the dynamic latent factor model provides a step forward.
+
+\begin{table}[ht]
+\centering
+	\begin{tabular}{l| p{7cm} l}
+	& \multirow{2}{*}{Central Finding} & Does it Replicate \\ 
+	& &  in a Network Model? \\
+	\hline\hline
+		Weeks (2012) & Bosses, Juntas and Strongmen are more Aggressive, Machines are Not & \textbf{Fails to Replicate} \\
+		\hline
+		Reiter \& Stam (2003) & Personalist Regimes Attack Democracies, Not Vice Versa & Replicates \\ 
+		\hline
+		Rose (2004) & WTO Membership Does not Effect Trade & Replicates \\ 
+		\hline
+		McDonald (2004) & Lower Trade Barriers and Higher Trade Lead to Peace & \textbf{Fails to Replicate} \\ 
+		\hline
+		Gibler (2017) & Power Parity at time of Entry to International System Inceases Conflict & \textbf{Fails to Replicate} \\ 
+	\hline\hline
+	\end{tabular}
+	\caption{Here we provide a brief summary of the key variable in each of the five replications and a note about whether or not the finding is replicated when using our network based approach. Cases in which the finding is not replicated are highlighted in bold.}
+	\label{tab:modelFindingSumm}
+\end{table}
 
 We also examine the accuracy of the predictions made with each approach. Out of sample cross validation strategy. 
 
@@ -342,50 +366,29 @@ We utilize three performance criterions to compare the models: Receiver Operator
 To better assess which models predict the presence of conflict, not just its absence, we look at PR Curves. These examine the trade-offs between the percentage of conflicts a model predicts, and the percentage of predicted conflicts which occur. Lastly, we examine separation plots \citep{greenhill:etal:2011}. These provide an intuitive visualization of the accuracy of our predictions by juxtaposing a line showing the predicted probability of conflict with whether conflict actually occurs for all cases (where the cases are sorted by the predicted probability and then colored to indicate the outcome). Here a perfect model would have all cases where conflict actually exists on the right with a predicted probability of $1$, and would predict $0$ in all other cases. All of the models' performance out of sample by these metrics are displayed in figure \ref{fig:roc_ame}. The AME model with covariates is the best performing model out of sample in all cases. This model outperforms each of the GLM variants by a notable margin.
 % % % % % % % % % % % % % % % % % % 
 
-Finally, we assess whether there is any substantive finding that emerges or indeed if any disappear once the interdependencies in the data are modeled.%%%Dont we want to talk more about performance here???? - MG
-
-The broader goal, beyond introducing the use of the AME framework in an applied setting, is to examine the extent to which interdependencies within typical dyadic data make much difference in what we have learned about international relations from empirical studies over the past decade or so.  We believe that it does, and that the dynamic latent factor model provides a step forward.
-
 \begin{table}[ht]
 \centering
-	\begin{tabular}{l| p{7cm} l}
-		& \multirow{2}{*}{Central Finding} & Does it Replicate \\ 
-		& &  in a Network Model? \\
-		\hline\hline
-		Weeks (2012) & Bosses, Juntas and Strongmen are more Aggressive, Machines are Not & Fails to Replicate \\
+	\begin{tabular}{l|l cc}
+	~ & ~ & GLM & AME \\
+	\hline\hline
+		\multirow{2}{*}{Weeks (2012)} & Area Under ROC Curve (AUC-ROC) & 0.64 & \textbf{0.97} \\
+		~ & Area Under PR Curve (AUC-PR) & 0.00 & \textbf{0.15} \\
 		\hline
-		Reiter \& Stam (2003) & Personalist Regimes Attack Democracies, Not Vice Versa & Replicates \\ 
+		\multirow{2}{*}{Reiter \& Stam (2003)} & AUC (ROC) & 0.92 & \textbf{0.96} \\
+		~ & AUC (PR) & 0.08 & \textbf{0.15} \\
 		\hline
-		Rose (2004) & WTO Membership Does not Effect Trade & Replicates \\ 
+		\multirow{2}{*}{McDonald (2004)} & AUC (ROC) & 0.92 & \textbf{0.99} \\
+		~ & AUC (PR) & 0.13 & \textbf{0.28} \\
 		\hline
-		McDonald (2004) & Lower Trade Barriers and Higher Trade Lead to Peace & Fails to Replicate \\ 
+		\multirow{2}{*}{Gibler (2017)} & AUC (ROC) & 0.52 & \textbf{0.91} \\
+		~ & AUC (PR) & 0.00 & \textbf{0.08} \\
 		\hline
-		Gibler (2017) & Power Parity at time of Entry to International System Inceases Conflict & Fails to Replicate \\ 
+		\multirow{2}{*}{Rose (2004)} & Root Mean Squared Error (RMSE) & 3.23 & \textbf{1.99} \\
+		~ & Root Median Squared Error (RMDSE) & 2.01 & \textbf{1.06} \\
 	\hline\hline
 	\end{tabular}
-\end{table}
-
-\begin{table}[ht]
-\centering
-\begin{tabular}{l|l cc}
-~ & ~ & GLM & AME \\
-\hline\hline
-\multirow{2}{*}{Weeks (2012)} & Area Under ROC Curve (AUC-ROC) & 0.64 & 0.97 \\
-~ & Area Under PR Curve (AUC-PR) & 0.004 & 0.15 \\
-\hline
-\multirow{2}{*}{Reiter \& Stam (2003)} & AUC (ROC) & 0.92 & 0.96 \\
-~ & AUC (PR) & 0.08 & 0.15 \\
-\hline
-\multirow{2}{*}{McDonald (2004)} & AUC (ROC) & 0.92 & 0.99 \\
-~ & AUC (PR) & 0.13 & 0.28 \\
-\hline
-\multirow{2}{*}{Gibler (2017)} & AUC (ROC) & 0.52 & xx \\
-~ & AUC (PR) & 0.004 & xx \\
-\hline
-\multirow{2}{*}{Rose (2004)} & Root Mean Squared Error (RMSE) & 3.23 & 1.99 \\
-~ & Root Median Squared Error (RMDSE) & 2.01 & 1.06 \\
-\hline\hline
-\end{tabular}
+	\caption{Here we provide a summary of the out-of-sample performance based on our cross-validation strategy for each of the five replications when using the standard dyadic approach and our network based approach. Four of the five studies involved a binary dependent variable, so for those measures we provide area under the curve (AUC) statistics. The fifth involved a gaussian dependent variable and for that we use the root mean squared error (RMSE) and root median squared error (RMDSE). Cases in which our network based approach outperformed the standard approach are highlighted in bold.}
+	\label{tab:modelPerfSumm}
 \end{table}
 
 \subsection{Replication of Weeks (2012)}
