@@ -44,102 +44,94 @@ cores=folds=4
 ################
 
 ################
-glmOutSamp = function(glmForm){
+################
+# divide dataset into folds
+set.seed(seed)
+yListFolds = lapply(yList, function(y){
+  yFold=matrix(sample(1:folds, length(y), replace=TRUE),
+    nrow=nrow(y),ncol=ncol(y), dimnames=dimnames(y))
+  diag(yFold) = NA
+  return(yFold) })
+################
 
-  ################
-  # divide dataset into folds
-  set.seed(seed)
-  yListFolds = lapply(yList, function(y){
-    yFold=matrix(sample(1:folds, length(y), replace=TRUE),
-      nrow=nrow(y),ncol=ncol(y), dimnames=dimnames(y))
-    diag(yFold) = NA
-    return(yFold) })
-  ################
-  
-  ################
-  # run models by fold
-  yCrossValTrain = lapply(1:folds, function(f){
-    yListMiss = lapply(1:length(yList), function(t){
-      foldID = yListFolds[[t]] ; y = yList[[t]]
-      foldID[foldID==f]=NA ; foldID[foldID != f] = 1
-      y=y*foldID
-      return(y) })
-    names(yListMiss) = names(yList)
-    return(yListMiss) }) ; names(yCrossValTrain) = as.character(1:folds)
-  
-  # melt into glm format
-  yCrossValTrain = lapply(yCrossValTrain, function(y){
-    y = melt(y) ; y$id = paste(y$Var1, y$Var2, y$L1, sep='_')
-    xd = melt(xDyadList)
-    xd = tidyr::spread(xd, key = Var3, value = value)
-    xd$id = paste(xd$Var1, xd$Var2, xd$L1, sep='_')
-    glmData = y
-    for(v in ivs){
-      glmData$tmp = xd[match(glmData$id,xd$id),v]
-      names(glmData)[ncol(glmData)] = v }
-    glmData = glmData[which(glmData$Var1!=glmData$Var2),]
-    return(glmData)	
-  })
-  
-  # run glm
-  fitCrossVal = lapply(yCrossValTrain, function(glmData){
-    glmData$value[glmData$value>1] = 1
-    fit = glm(glmForm, data=glmData, family='binomial')	
-    return(fit)
-  })
-  
-  # get preds
-  outPerf = do.call('rbind', lapply(1:folds, function(f){
-    # get probs
-    testData = cbind(
-      int=1,
-      yCrossValTrain[[f]][
-          is.na(yCrossValTrain[[f]]$value),
-          names(coef(fitCrossVal[[f]]))[-1]
-        ]
-      )
-    prob = 1/(1+exp(-as.matrix(testData) %*% coef(fitCrossVal[[f]])))
-    
-    # get actual
-    actual=unlist(lapply(1:length(yListFolds), function(t){
-      foldID = yListFolds[[t]] ; y = yList[[t]]
-      foldID[foldID!=f]=NA ; foldID[!is.na(foldID)] = 1
-      # y=c(y*foldID) ; return(y[!is.na(y)])      
-      return( y[!is.na(foldID)] )
-    }))
-    if(length(actual)!=length(prob)){stop('shit went wrong.')}
-    res = data.frame(actual=actual, pred=prob, fold=f, stringsAsFactors = FALSE)
-    if(any(grepl('lagDV',glmForm))){res=na.omit(res)}
-    return(res)
-  }))
-  
-  # get perf stats
-  aucByFold=do.call('rbind', lapply(1:folds, function(f){
-    slice = na.omit(outPerf[outPerf$fold==f,])
-    if(length(unique(slice$actual))==1){ return(NULL) }
-    perf=cbind(fold=f,
-               aucROC=getAUC(slice$pred, slice$actual),
-               aucPR=auc_pr(slice$actual, slice$pred)
+################
+# run models by fold
+yCrossValTrain = lapply(1:folds, function(f){
+  yListMiss = lapply(1:length(yList), function(t){
+    foldID = yListFolds[[t]] ; y = yList[[t]]
+    foldID[foldID==f]=NA ; foldID[foldID != f] = 1
+    y=y*foldID
+    return(y) })
+  names(yListMiss) = names(yList)
+  return(yListMiss) }) ; names(yCrossValTrain) = as.character(1:folds)
+
+# melt into glm format
+yCrossValTrain = lapply(yCrossValTrain, function(y){
+  y = melt(y) ; y$id = paste(y$Var1, y$Var2, y$L1, sep='_')
+  xd = melt(xDyadList)
+  xd = tidyr::spread(xd, key = Var3, value = value)
+  xd$id = paste(xd$Var1, xd$Var2, xd$L1, sep='_')
+  glmData = y
+  for(v in ivs){
+    glmData$tmp = xd[match(glmData$id,xd$id),v]
+    names(glmData)[ncol(glmData)] = v }
+  glmData = glmData[which(glmData$Var1!=glmData$Var2),]
+  return(glmData)	
+})
+
+# run glm
+fitCrossVal = lapply(yCrossValTrain, function(glmData){
+  glmData$value[glmData$value>1] = 1
+  fit = glm(modForm, data=glmData, family='binomial')	
+  return(fit)
+})
+
+# get preds
+outPerf = do.call('rbind', lapply(1:folds, function(f){
+  # get probs
+  testData = cbind(
+    int=1,
+    yCrossValTrain[[f]][
+        is.na(yCrossValTrain[[f]]$value),
+        names(coef(fitCrossVal[[f]]))[-1]
+      ]
     )
-    return(perf) } ))
-  aucROC=getAUC(outPerf$pred, outPerf$actual)
-  aucPR=auc_pr(outPerf$actual, outPerf$pred)
-  ################
+  prob = 1/(1+exp(-as.matrix(testData) %*% coef(fitCrossVal[[f]])))
   
-  ################
-  out = list(
-    outPerf=outPerf, aucByFold=aucByFold,
-    aucROC=aucROC, aucPR=aucPR )
-  return(out)
-  ################
-}
+  # get actual
+  actual=unlist(lapply(1:length(yListFolds), function(t){
+    foldID = yListFolds[[t]] ; y = yList[[t]]
+    foldID[foldID!=f]=NA ; foldID[!is.na(foldID)] = 1
+    # y=c(y*foldID) ; return(y[!is.na(y)])      
+    return( y[!is.na(foldID)] )
+  }))
+  if(length(actual)!=length(prob)){stop('shit went wrong.')}
+  res = data.frame(actual=actual, pred=prob, fold=f, stringsAsFactors = FALSE)
+  if(any(grepl('lagDV',modForm))){res=na.omit(res)}
+  return(res)
+}))
+
+# get perf stats
+aucByFold=do.call('rbind', lapply(1:folds, function(f){
+  slice = na.omit(outPerf[outPerf$fold==f,])
+  if(length(unique(slice$actual))==1){ return(NULL) }
+  perf=cbind(fold=f,
+             aucROC=getAUC(slice$pred, slice$actual),
+             aucPR=auc_pr(slice$actual, slice$pred)
+  )
+  return(perf) } ))
+outPerf = na.omit(outPerf)
+aucROC=getAUC(outPerf$pred, outPerf$actual)
+aucPR=auc_pr(outPerf$actual, outPerf$pred)
 ################
 
 ################
+glmOutSamp_wFullSpec = list(
+  outPerf=outPerf, aucByFold=aucByFold,
+  aucROC=aucROC, aucPR=aucPR )
+################
 
-# run with ame full spec
-glmOutSamp_wFullSpec=glmOutSamp( glmForm=modForm )
-
+################
 # save
 save(
   glmOutSamp_wFullSpec,

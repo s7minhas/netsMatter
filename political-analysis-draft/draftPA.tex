@@ -348,33 +348,43 @@ The broader goal, beyond introducing the use of the AME framework in an applied 
 
 \begin{table}[ht]
 \centering
-	\begin{tabular}{r p{4cm} l}
-	\hline
-		& Central Finding & Does it Replicate in a Network Model? \\ 
-		\hline
+	\begin{tabular}{l| p{7cm} l}
+		& \multirow{2}{*}{Central Finding} & Does it Replicate \\ 
+		& &  in a Network Model? \\
+		\hline\hline
 		Weeks (2012) & Bosses, Juntas and Strongmen are more Aggressive, Machines are Not & Fails to Replicate \\
+		\hline
 		Reiter \& Stam (2003) & Personalist Regimes Attack Democracies, Not Vice Versa & Replicates \\ 
+		\hline
 		Rose (2004) & WTO Membership Does not Effect Trade & Replicates \\ 
+		\hline
 		McDonald (2004) & Lower Trade Barriers and Higher Trade Lead to Peace & Fails to Replicate \\ 
-		% Gibler (2017) & Power Parity at time of Entry to International System Inceases Conflict & Fails to Replicate \\ 
-	\hline
+		\hline
+		Gibler (2017) & Power Parity at time of Entry to International System Inceases Conflict & Fails to Replicate \\ 
+	\hline\hline
 	\end{tabular}
 \end{table}
 
 \begin{table}[ht]
 \centering
-\begin{tabular}{ll cc}
+\begin{tabular}{l|l cc}
 ~ & ~ & GLM & AME \\
-\multirow{2}{*}{Weeks (2012)} & AUC (ROC) & 0.64 & 0.97 \\
-~ & AUC (PR) & 0.004 & 0.15 \\
+\hline\hline
+\multirow{2}{*}{Weeks (2012)} & Area Under ROC Curve (AUC-ROC) & 0.64 & 0.97 \\
+~ & Area Under PR Curve (AUC-PR) & 0.004 & 0.15 \\
+\hline
 \multirow{2}{*}{Reiter \& Stam (2003)} & AUC (ROC) & 0.92 & 0.96 \\
 ~ & AUC (PR) & 0.08 & 0.15 \\
-\multirow{2}{*}{Rose (2004)} & RMSE & 3.23 & 1.99 \\
-~ & RM-D-SE & 2.01 & 1.06 \\
+\hline
 \multirow{2}{*}{McDonald (2004)} & AUC (ROC) & 0.92 & 0.99 \\
 ~ & AUC (PR) & 0.13 & 0.28 \\
-% \multirow{2}{*}{Gibler (2017)} & AUC (ROC) & 0.92 & 0.96 \\
-% ~ & AUC (PR) & 0.08 & 0.15 \\
+\hline
+\multirow{2}{*}{Gibler (2017)} & AUC (ROC) & 0.52 & xx \\
+~ & AUC (PR) & 0.004 & xx \\
+\hline
+\multirow{2}{*}{Rose (2004)} & Root Mean Squared Error (RMSE) & 3.23 & 1.99 \\
+~ & Root Median Squared Error (RMDSE) & 2.01 & 1.06 \\
+\hline\hline
 \end{tabular}
 \end{table}
 
