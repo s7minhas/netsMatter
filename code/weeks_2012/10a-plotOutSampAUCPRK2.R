@@ -32,7 +32,20 @@ load(paste0(resultsPath,'weeksOutPerf.rda'))
 load(paste0(resultsPath, 'outsampResults2.rda')); ameOutSamp_k2 <-
      ameOutSamp_NULL
 
+### Report some statistics about relative performance:
+getAUC(prediction=glmOutSamp_wFullSpec$outPerf$pred,
+       actual=glmOutSamp_wFullSpec$outPerf$actual)
 
+
+getAUC(prediction=ameOutSamp_k2$outPerf$pred,
+       actual=ameOutSamp_k2$outPerf$actual)
+
+
+auc_pr(pred=glmOutSamp_wFullSpec$outPerf$pred,
+       obs=glmOutSamp_wFullSpec$outPerf$actual)
+
+auc_pr(pred=ameOutSamp_k2$outPerf$pred,
+       obs=ameOutSamp_k2$outPerf$actual)
 
 ## ROC plots
 
@@ -46,7 +59,6 @@ rocAme2 =
   roc(prediction = ameOutSamp_k2$outPerf$pred, 
       actual = ameOutSamp_k2$outPerf$actual) %>% 
   mutate(model = 'AME (K = 2)')
-
 
 ### plotting
 pRoc = rbind(rocLogit,rocAme2) 
