@@ -18,11 +18,11 @@
 % Generate some fake text
 \usepackage{blindtext}
 
-% add watermark
-\usepackage{draftwatermark}
-\SetWatermarkText{Draft: Not Ready}
-\SetWatermarkScale{.5}
-\SetWatermarkColor[gray]{0.9}
+% % add watermark
+% \usepackage{draftwatermark}
+% \SetWatermarkText{Draft: Not Ready}
+% \SetWatermarkScale{.5}
+% \SetWatermarkColor[gray]{0.9}
 
 % layout control
 \usepackage{geometry}
@@ -227,6 +227,24 @@ In this article, we introduce a Bayesian approach for directly modeling relation
 This latent factor approach is able to better capture \first-, \second-, and \third-order interdependencies than the standard approaches. It also produces results that are more precise, and often different, than those found in these literatures, and as such offers substantive insights, which are occluded by ignoring the interdependent nature of the relational data that characterizes many studies in the field of international relations. Finally, we show that out-of-sample  predictions (cross-validations) are substantially improved with this approach.  
 %We note in closing that the computational requirements of this approach are substantial in terms of computing time. Cloud and parallel methods reduce this burden.
 
+\section{\textbf{Limitations of Standard Framework}}
+
+Generalized linear models are typically expressed via a stochastic and systematic component. The stochastic component reflects assumptions about the probability distribution from which the data are generated: $y_{ij} \sim P(Y | \theta_{ij})$, with a probability density or mass function such as the normal, binomial, or Poisson. Each dyad in the sample is independently drawn from a particular distribution, given $\theta_{ij}$. The systematic component characterizes the model for the parameters of that distribution and describes how $\theta_{ij}$ varies as a function of a set of nodal and dyadic covariates, $\mathbf{X}_{ij}$: $\theta_{ij} = \bm\beta^{T} \mathbf{X}_{ij}$. A fundamental assumption we make when applying this modeling technique is that given $\mathbf{X}_{ij}$ and the parameters of the distribution, each of the dyadic observations is conditionally independent.
+
+The importance of this assumption becomes clearer in the process of estimating a GLM via maximum likelihood. After having chosen a set of covariates and specifying a distribution, the joint density function over all dyads using the observations from Table 1 is given:
+
+\vspace{-8mm}
+\begin{align}
+\begin{aligned}
+	P(y_{ij}, y_{ik}, \ldots, y_{lk} | \theta_{ij}, \theta_{ik}, \ldots, \theta_{lk}) &= P(y_{ij} | \theta_{ij}) \times P(y_{ik} | \theta_{ik}) \times \ldots \times P(y_{lk} | \theta_{lk}) \\
+	P(\mathbf{Y} \; | \; \bm{\theta}) &= \prod_{\alpha=1}^{n \times (n-1)} P(y_{\alpha} | \theta_{\alpha})  \\
+\end{aligned}
+\end{align}
+
+\noindent The joint probability is converted into a likelihood: $\displaystyle \mathcal{L} (\bm{\theta} | \mathbf{Y}) = \prod_{\alpha=1}^{n \times (n-1)} P(y_{\alpha} | \theta_{\alpha})$.
+
+The parameters are estimated by maximizing the likelihood. The likelihood as defined above is only valid if  $y_{ij}$ is independent of $y_{ji}$ and $y_{ik}$ given the set of covariates we specified, or the values of $\theta_{ij}$.
+
 \section{\textbf{Additive and Multiplicative Effect Models for Networks}}
 
 The AME approach can be used to conduct inference on cross-sectional and longitudinal networks with binary, ordinal, or continuous linkages. It is flexible and easy to use for analyzing the kind of relational data often found in social science.  It accounts for nodal and dyadic dependence patterns, as well as higher-order dependencies such as homophily and stochastic equivalence. 
@@ -234,6 +252,20 @@ The AME approach can be used to conduct inference on cross-sectional and longitu
 We do not know whether interdependence dominates international relations, but as noted by Thoreau in reference to rumors that dairymen on strike were watering down milk: ``\ldots some circumstantial evidence is very strong, as when you find a trout in the milk.''  At a very minimum, it is necessary to examine whether there is interdependence since it challenges substantive arguments as well as statistical modeling \citep{snijders:2011}. Ignoring the assumption of independence is a widely-noted shortcoming of many studies, but it continues to be the standard practice in much scholarship. Fortunately, it is easy to empirically examine dependencies in relational data.
 
 The additive and multiplicative effects model (AME) can help to eliminate this color-blindness to interdependence. It was introduced in \cite{hoff:2008} and elaborated in \cite{hoff:2015}; the open-source computer package associated with this approach is \cite{amenpkg}. We describe it below.
+
+Parameter interpretation is straightforward because it has a simple regression basis as shown in Equation~\ref{eqn:ame} which portrays directed matrix \:
+
+\begin{align}
+\begin{aligned}
+	y_{ij} &= g(\theta_{ij}) \\
+	&\theta_{ij} = \bm\beta^{\top} \mathbf{X}_{ij} + e_{ij} \\
+	&e_{ij} = a_{i} + b_{j}  + \epsilon_{ij} + \alpha(\textbf{u}_{i}, \textbf{v}_{j}) \text{  , where } \\
+	&\qquad \alpha(\textbf{u}_{i}, \textbf{v}_{j}) = \textbf{u}_{i}^{\top} \textbf{D} \textbf{v}_{j} = \sum_{k \in K} d_{k} u_{ik} v_{jk}. \\
+\label{eqn:ame}
+\end{aligned}
+\end{align}
+
+With this framework, it is straightforward to model dyadic observations as conditionally independent given $\bm\theta$, where $\bm\theta$ depends on the the unobserved random effects modeled to account for the potential \first, \second, and \third-order dependencies. In Equation~\ref{eqn:srmCov}, $a_{i} + b_{j}  + \epsilon_{ij}$ represent the additive random effects in this framework and account for sender, receiver, and within-dyad dependence. The multiplicative effects, $\textbf{u}_{i}^{\top} \textbf{D} \textbf{v}_{j}$, capture higher-order dependence patterns in $\bm\theta$ after accounting for any known covariate information. A Bayesian procedure in which parameters are iteratively updated using a Gibbs sampler is available in the \pkg{amen} $\sf{R}$ package to estimate this type of generalized linear mixed effects model from Gaussian, binary, ordinal, and other relational data types.
 
 \subsection*{\textbf{Addressing Dependencies in Dyadic Data}}
 
@@ -246,6 +278,7 @@ The presence of these interdependencies in relational data complicates the pract
 \subsection{\textbf{Social Relations Model: Additive Part of AME}}
 
 \citet{warner:etal:1979} developed a social relations model (SRM), using ANOVA decomposition, that focuses on such dependencies. SRM provides the error structure for the additive effects component of the AME framework. SRM decomposes the variance of dyadic observations in terms of a) heterogeneity across row means (often called out-degree), b) column means (or, in-degree), c) correlation between row and column means, and d) correlations within dyads.  \citet{wong:1982,li:loken:2002} provide a random effects representation of the SRM:
+
 \begin{align}
 \begin{aligned}
 	y_{ij} &= \mu + e_{ij} \\
@@ -261,12 +294,11 @@ wherein $\mu$ is the density of a network, and $e_{ij}$ represents residual vari
 
 The SRM covariance structure described in Equation~\ref{eqn:srmCov} can be incorporated into the systematic component of a GLM framework to produce the social relations regression model (SRRM): $\bm\beta^{\top} \mathbf{X}_{ij} + a_{i} + b_{j} + \epsilon_{ij}$, where $ \bm\beta^{\top} \mathbf{X}_{ij}$ accommodates the inclusion of dyadic, sender, and receiver covariates \citep{hoff:2005}. This is a regression framework with additive, random effects, but it models variances and covariances often seen in relational data. Furthermore, this accommodates a diversity of outcome distributions. In the case of binary data, this can be done by utilizing a random effects logistic (or probit) latent variable representation. 
 
-% It has been employed in \citet{hoff:ward:2004, ward:hoff:2007, ward:etal:2007,cao:2009, fletcher:etal:2011, breunig:etal:2012, ward:etal:2012,cao:ward:2014} and is the basis for many recommender systems.
-
 \subsection{\textbf{Latent Factor Model: Multiplicative Part of AME}}
 
 The additive part described above does not handle third-order dependency. A third-order dependency is the dependency between triads, not dyads. Third-order effects can arise from the presence of some set of shared attributes between actors that affects their probability of interacting with one another. Individuals try to close triads because this is thought to be a more stable or preferable social situation \citep{wasserman:faust:1994,zinnes:1967}.
-For example, a common finding is that democracies are more likely to form trade agreements with one another. Both geographic proximity and a country's political system are examples of homophily, which captures the idea that the relationships between actors with similar characteristics in a network are likely to be stronger than nodes with different characteristics. Homophily can be used to explain the emergence of patterns such as transitivity (``a friend of a friend is a friend'') and balance (``an enemy of a friend is an enemy''), which have a long history in international relations dating back to Sun Tzu. A binary network where actors tend to form ties based on shared characteristics  often leads to a network with a high number of ``transitive triads'' in which  sets of actors $\{i,j,k\}$ are each linked to one another. Thus, unless we specify a list of exogenous variables that determine this prevalence of triads, the probability of $j$ and $k$ forming a tie is not independent of the ties that already exist between those actors and others.
+
+For example, a common finding is that democracies are more likely to form trade agreements with one another. Both geographic proximity and a country's political system are examples of homophily, which captures the idea that the relationships between actors with similar characteristics in a network are likely to be stronger than nodes with different characteristics. Homophily can be used to explain the emergence of patterns such as transitivity (``a friend of a friend is a friend'') and balance (``an enemy of a friend is an enemy''), which have a long history in international relations. A binary network where actors tend to form ties based on shared characteristics  often leads to a network with a high number of ``transitive triads'' in which  sets of actors $\{i,j,k\}$ are each linked to one another. Thus, unless we specify a list of exogenous variables that determine this prevalence of triads, the probability of $j$ and $k$ forming a tie is not independent of the ties that already exist between those actors and others.
 
 Another third-order dependence pattern is stochastic equivalence. Actors $i,j$ are stochastically equivalent if the probability of $i$ relating to every other actor is similar to the probability for $j$. Equivalence implies the existence of groups of nodes in a network with similar relational patterns.  Recent work has found stochastic equivalence to be important \citep{manger:etal:2012}. Latent variables can account for third-order dependence patterns within the context of the SRRM. These models assume that relationships between nodes are mediated by a small number ($K$) of node-specific unobserved latent variables. 
 
@@ -285,19 +317,10 @@ Many observed  networks exhibit varying degrees of stochastic equivalence and ho
 
 In directed (asymmetric) networks there are two sets of latent positions, denoted $\textbf{u}$ and $\textbf{v}$, representing the sending and receiving positions separately.  Thus, actors in the network have a vector of latent characteristics describing their behavior as a sender, denoted by $\textbf{u}$, and as a receiver, $\textbf{v}$: $\textbf{u}_{i}, \textbf{v}_{j} \in \mathbb{R}^{K}$. This can alter the probability of an interaction between $ij$ additively: $\textbf{u}_{i}^{\top} \textbf{D} \textbf{v}_{j}$, where $\textbf{D}$ is a $K \times K$ diagonal matrix.
 
-The LFM captures a wide range of interdependence patterns that arise in relational data such as often studied in international relations. Parameter interpretation is straightforward because it has a simple regression basis as shown in Equation~\ref{eqn:ame} which portrays directed matrix \:
+The LFM captures a wide range of interdependence patterns that arise in relational data such as often studied in international relations. 
 
-\begin{align}
-\begin{aligned}
-	y_{ij} &= g(\theta_{ij}) \\
-	&\theta_{ij} = \bm\beta^{\top} \mathbf{X}_{ij} + e_{ij} \\
-	&e_{ij} = a_{i} + b_{j}  + \epsilon_{ij} + \alpha(\textbf{u}_{i}, \textbf{v}_{j}) \text{  , where } \\
-	&\qquad \alpha(\textbf{u}_{i}, \textbf{v}_{j}) = \textbf{u}_{i}^{\top} \textbf{D} \textbf{v}_{j} = \sum_{k \in K} d_{k} u_{ik} v_{jk}. \\
-\label{eqn:ame}
-\end{aligned}
-\end{align}
+\section{Simulation study}
 
-With this framework, it is straightforward to model dyadic observations as conditionally independent given $\bm\theta$, where $\bm\theta$ depends on the the unobserved random effects modeled to account for the potential \first, \second, and \third-order dependencies. In Equation~\ref{eqn:srmCov}, $a_{i} + b_{j}  + \epsilon_{ij}$ represent the additive random effects in this framework and account for sender, receiver, and within-dyad dependence. The multiplicative effects, $\textbf{u}_{i}^{\top} \textbf{D} \textbf{v}_{j}$, capture higher-order dependence patterns in $\bm\theta$ after accounting for any known covariate information. A Bayesian procedure in which parameters are iteratively updated using a Gibbs sampler is available in the \pkg{amen} $\sf{R}$ package to estimate this type of generalized linear mixed effects model from Gaussian, binary, ordinal, and other relational data types.
 
 \section{Replications}
  
@@ -322,7 +345,7 @@ For the purpose of this study, we choose five prominent studies from the broad f
 
 We obtained the data for each of these studies from their replication archives and replicated the main results of each of the articles.\footnote{Without exception this was straightforward to accomplish, thanks to an increasing norm in the social sciences of open data sharing.} We examine each of the models using the AME framework described above.  Our goal is to ascertain whether the ignored interdependencies---the non-iid structure of the relational data---would result in different model estimates when they were addressed in an AME framework, and more importantly to see if there were substantive opportunities that were presented with the dynamic factor approach.  
 
-Finally, we assess whether there is any substantive finding that emerges or indeed if any disappear once the interdependencies in the data are modeled.%%%Dont we want to talk more about performance here???? - MG
+Finally, we assess whether there is any substantive finding that emerges or indeed if any disappear once the interdependencies in the data are modeled.
 
 The broader goal, beyond introducing the use of the AME framework in an applied setting, is to examine the extent to which interdependencies within typical dyadic data make much difference in what we have learned about international relations from empirical studies over the past decade or so.  We believe that it does, and that the dynamic latent factor model provides a step forward.
 
@@ -390,6 +413,7 @@ To better assess which models predict the presence of conflict, not just its abs
 	\caption{Here we provide a summary of the out-of-sample performance based on our cross-validation strategy for each of the five replications when using the standard dyadic approach and our network based approach. Four of the five studies involved a binary dependent variable, so for those measures we provide area under the curve (AUC) statistics. The fifth involved a gaussian dependent variable and for that we use the root mean squared error (RMSE) and root median squared error (RMDSE). Cases in which our network based approach outperformed the standard approach are highlighted in bold.}
 	\label{tab:modelPerfSumm}
 \end{table}
+\FloatBarrier
 
 \subsection{Replication of Weeks (2012)}
 
@@ -398,20 +422,20 @@ To better assess which models predict the presence of conflict, not just its abs
 The replication of \citet{weeks:2012} likely has the sharpest divergence between the General Linear Model results and those of the AME Model. In Weeks's initial models, as detailed in figure \ref{fig:weeksCoef} she finds that machines are less prone to initiate conflict than the reference category, whereas Juntas, Bosses and Strong-men are more conflict-prone, in line with her theoretical expectations. When we look at the posterior distribution of these coefficients in the AME results, we find that none of these values are distinguishable from zero. We similarly find less pronounced effects for military capabilities. One explanation for this divergence is the AME model's ability to account for third order effects. Inspection of the multiplicative effects in figure \ref{fig:weekscirc} reveals a number of clusters of states which exhibit structural equivalence -- in the top right corner we see states like the US, the UK, and Israel who often send conflict to similar targets. In particular, we observe a cluster of ``rogue states,'' who are receivers of conflict, in the top right (Iran, Iraq, Syria, Libya, North Korea). In the bottom corner we see a cluster of authoritarian senders including Iraq, Russia, Syria, North Korea and China. In general, these clusters have similar governmental types (Iraq, Syria, Libya, and North Korea all fell under the ``boss" category), and similar conflict behavior. So, in the GLM, which ignores these third order dependencies, much of these results might have been attributed to regime type. The AME model, on the other hand, finds that it is more efficient to attribute this behavior to the multiplicative effects. In terms of out of sample performance, shown in figure \ref{fig:weeksauc}, the AME model performs markedly better than the GLM out of sample, lending credence to the possibility that these third order dependencies cause spurious effects for regime type.
 
 \begin{figure}
-\includegraphics[width=\textwidth]{weeks_coefs_all.pdf}
-\caption{\label{fig:weeksCoef} Coefficient plot of Weeks' (2012) original model (blue) compared to AME model (red). }
+	\includegraphics[width=\textwidth]{weeks_coefs_all.pdf}
+	\caption{\label{fig:weeksCoef} Coefficient plot of Weeks' (2012) original model (blue) compared to AME model (red). }
 \end{figure}
 
 \begin{figure}
 \centering   
-\subfigure[AUC]{\label{fig:weeksauc}\includegraphics[width=65mm]{weeks_auc_outsamp.pdf}}
-\subfigure[Precision and Recall]{\label{fig:reitpr}\includegraphics[width=65mm]{weeks_pr_outsamp.pdf}}
-\caption{Assessments of out-of-sample predictive performance for Weeks (2012) using ROC curves and PR curves.}
+	\subfigure[AUC]{\label{fig:weeksauc}\includegraphics[width=65mm]{weeks_auc_outsamp.pdf}}
+	\subfigure[Precision and Recall]{\label{fig:reitpr}\includegraphics[width=65mm]{weeks_pr_outsamp.pdf}}
+	\caption{Assessments of out-of-sample predictive performance for Weeks (2012) using ROC curves and PR curves.}
 \end{figure}
 
 \begin{figure}
-\includegraphics[width=\textwidth]{weeks_circPlot.pdf}
-\caption{\label{fig:weekscirc} Visualization of multiplicative effects for Weeks (2012). Blue represents groups with common sending patterns and red represents groups with common receiving patterns.}
+	\includegraphics[width=\textwidth]{weeks_circPlot.pdf}
+	\caption{\label{fig:weekscirc} Visualization of multiplicative effects for Weeks (2012). Blue represents groups with common sending patterns and red represents groups with common receiving patterns.}
 \end{figure}
 
 \subsection{Replication of Reiter \& Stam (2003)}

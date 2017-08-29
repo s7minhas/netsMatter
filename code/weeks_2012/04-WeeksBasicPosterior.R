@@ -9,7 +9,6 @@ if(Sys.info()['user']== 'margaret'){
     source('~/projects/netsmatter/code/netsMatter/code/weeks_2012/setup.R')
 }
 
-
 loadPkg=function(toLoad){
     for(lib in toLoad){
             if(!(lib %in% installed.packages()[,1])){ 
