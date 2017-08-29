@@ -4,12 +4,17 @@
 
 rm(list=ls())
 
-resultsPath = '~/Dropbox/netsMatter/replications/Weeks2012/replication/output/'
-
 ### libraries needed
 
-source('../reiter_stam_2003/helperEx.R')
-source('setup.R')
+if(Sys.info()['user']=='s7m'){
+  source('~/Research/netsMatter/code/weeks_2012/setup.R')
+  source('~/Research/netsMatter/code/reiter_stam_2003/helperEx.R')
+  resultsPath = '~/Dropbox/Research/netsMatter/replications/Weeks2012/replication/output/'
+} else {
+  source('setup.R')
+  source('../reiter_stam_2003/helperEx.R')
+  resultsPath = '~/Dropbox/netsMatter/replications/Weeks2012/replication/output/'
+}
 
 toLoad <- c("RColorBrewer","dplyr" ,"magrittr" ,"ggplot2" ,"stringr"
             ,"gridExtra","Cairo","reshape2","tidyverse","latex2exp")
@@ -28,7 +33,6 @@ loadPkg(toLoad)
 ##(The GLM out samp file is 3.2G!)
 
 load(paste0(resultsPath,'weeksOutPerf.rda'))
-
 load(paste0(resultsPath, 'outsampResults2.rda')); ameOutSamp_k2 <-
      ameOutSamp_NULL
 
@@ -36,6 +40,10 @@ load(paste0(resultsPath, 'outsampResults2.rda')); ameOutSamp_k2 <-
 getAUC(prediction=glmOutSamp_wFullSpec$outPerf$pred,
        actual=glmOutSamp_wFullSpec$outPerf$actual)
 
+=======
+load(paste0(resultsPath, 'outsampResults2.rda'))
+ameOutSamp_k2 <- ameOutSamp_NULL
+>>>>>>> 0e4d01c8fa9bdd87f43371be0826ca1b9214a25b
 
 getAUC(prediction=ameOutSamp_k2$outPerf$pred,
        actual=ameOutSamp_k2$outPerf$actual)

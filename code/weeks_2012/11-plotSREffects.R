@@ -6,8 +6,18 @@ rm(list=ls())
 
 ### libraries needed
 
-source('../reiter_stam_2003/helperEx.R')
-source('../McDonald_2004/setup.R')
+if(Sys.info()['user']=='s7m'){
+  source('~/Research/netsMatter/code/McDonald_2004/setup.R')
+  source('~/Research/netsMatter/code/reiter_stam_2003/helperEx.R')
+  resultsPath = '~/Dropbox/Research/netsMatter/replications/Weeks2012/replication/output/'
+  weeksPath <- resultsPath
+} else {
+  source('../McDonald_2004/setup.R')
+  source('../reiter_stam_2003/helperEx.R')
+  resultsPath = '~/Dropbox/netsMatter/replications/Weeks2012/replication/output/'
+  weeksPath <- resultsPath
+}
+
 
 toLoad <- c("RColorBrewer",
 "dplyr",
@@ -27,9 +37,7 @@ loadPkg(toLoad)
 ##############################################
 
 ## Load K2 data:
-load('~/Dropbox/netsMatter/replications/Weeks2012/replication/output/model_k2.rda')
-
-weeksPath <- '~/Dropbox/netsMatter/replications/Weeks2012/replication/output/'
+load(paste0(weeksPath, 'model_k2.rda'))
 
 
 ####

@@ -1,8 +1,20 @@
 ################  rose2004 use glm   ###########
 ################
 # load data
-pathResults = "/Users/howardliu/Dropbox/netsMatter/replications/rose2004/"
+rm(list=ls())
+
+if(Sys.info()['user']=='howardliu'){
+  source('~/netsMatter/code/rose2004/loadPkg.R')
+  pathResults = "/Users/howardliu/Dropbox/netsMatter/replications/rose2004/"
+}
+if(Sys.info()['user']=='s7m'){
+  source('~/Research/netsMatter/code/rose2004/loadPkg.R')
+  pathDrop = '~/Dropbox/Research/netsMatter/'
+  pathResults = paste0(pathDrop, 'replications/rose2004/')
+} 
+
 load(paste0(pathResults, 'amenData_rose.rda'))
+
 #rm(list=c('fit', 'fitDyadCovar', 'fitFullSpec'))
 
 # crossval params

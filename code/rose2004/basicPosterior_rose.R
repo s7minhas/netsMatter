@@ -1,11 +1,17 @@
 if(Sys.info()['user']=='howardliu'){
-	source('~/netsMatter/code/rose2004/loadPkg.R') }
+	source('~/netsMatter/code/rose2004/loadPkg.R')
+	resultsPath = "/Users/howardliu/Dropbox/netsMatter/replications/rose2004/outputData/"
+}
+if(Sys.info()['user']=='s7m'){
+	source('~/Research/netsMatter/code/rose2004/loadPkg.R')
+	pathDrop = '~/Dropbox/Research/netsMatter/'
+	resultsPath = paste0(pathDrop, 'replications/rose2004/outputData/')
+}	
 
 #
 loadPkg('magrittr')
 
 # load data
-resultsPath = "/Users/howardliu/Dropbox/netsMatter/replications/rose2004/outputData/"
 load( paste0(resultsPath,'ameFit_k0_re.rda') ) ; ameFit_k0=ameFit
 load( paste0(resultsPath,'ameFit_k1_re.rda') ) ; ameFit_k1=ameFit
 load( paste0(resultsPath,'ameFit_k2_v1_rose.rda') ) ; ameFit_k2=ameFit

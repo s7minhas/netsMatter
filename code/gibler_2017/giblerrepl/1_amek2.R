@@ -34,7 +34,7 @@ seed=6886
     nscan=imps, seed=seed, burn=brn, odens=ods,
     plot=FALSE, print=FALSE
   )
-  save(ameFit, file='mdwameFit_k2Model6big.rda')
+  save(ameFit, file='mdwameFit_k2.rda')
 
   par(mfrow=c(2,3))
   plot(density(ameFit$BETA[,1]))
