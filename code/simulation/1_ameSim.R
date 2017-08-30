@@ -46,18 +46,17 @@ simRun = function(seed, n, mu, beta, gamma){
 
 ##############################
 # params
-imps = 100
+imps = 2
 intEff=-2 ; x1Eff=1 ; x2Eff=1
 
 #
-writeLines(c(''), paste0(simResPath,'ameSim30Log.txt'))
+getTime = function(){format(Sys.time(), '%X')}
+writeLines(c('n=30 using 7 cores\n'), paste0(simResPath,'ameSim30Log.txt'))
 cl=makeCluster(7) ; registerDoParallel(cl)
 ameSim30 = foreach(imp = 1:imps, .packages=c('amen')) %dopar% {
 	out=simRun(seed=imp, n=30, mu=intEff, beta=x1Eff, gamma=x2Eff)
-	writeLines(
-		paste0(imp, ' out of ', imps, ' completed: ', round(imp/imps,2)*100, '%'),
-		paste0(simResPath,'ameSim30Log.txt'), append=TRUE
-		)
+	sink(paste0(simResPath,'ameSim30Log.txt'), append=TRUE)
+	cat(paste0(imp, ' out of ', imps, ' completed: ', getTime(),'\n'))
 	return(out) }  ; stopCluster(cl)
 save( ameSim30, file=paste0(simResPath, 'ameSim30.rda') )
 
@@ -66,22 +65,18 @@ writeLines(c(''), paste0(simResPath,'ameSim50Log.txt'))
 cl=makeCluster(7) ; registerDoParallel(cl)
 ameSim50 = foreach(imp = 1:imps, .packages=c('amen')) %dopar% {
 	out=simRun(seed=imp, n=50, mu=intEff, beta=x1Eff, gamma=x2Eff)
-	writeLines(
-		paste0(imp, ' out of ', imps, ' completed: ', round(imp/imps,2)*100, '%'),
-		paste0(simResPath,'ameSim50Log.txt'), append=TRUE
-		)	
+	sink(paste0(simResPath,'ameSim50Log.txt'), append=TRUE)
+	cat(paste0(imp, ' out of ', imps, ' completed: ', getTime(),'\n'))
 	return(out) } ; stopCluster(cl)
 save( ameSim50, file=paste0(simResPath, 'ameSim50.rda') )
 
 #
 writeLines(c(''), paste0(simResPath,'ameSim100Log.txt'))
 cl=makeCluster(7) ; registerDoParallel(cl)
-ameSim50 = foreach(imp = 1:imps, .packages=c('amen')) %dopar% {
+ameSim100 = foreach(imp = 1:imps, .packages=c('amen')) %dopar% {
 	out=simRun(seed=imp, n=100, mu=intEff, beta=x1Eff, gamma=x2Eff)
-	writeLines(
-		paste0(imp, ' out of ', imps, ' completed: ', round(imp/imps,2)*100, '%'),
-		paste0(simResPath,'ameSim100Log.txt'), append=TRUE
-		)	
+	sink(paste0(simResPath,'ameSim100Log.txt'), append=TRUE)
+	cat(paste0(imp, ' out of ', imps, ' completed: ', getTime(),'\n'))
 	return(out) } ; stopCluster(cl)
 save( ameSim100, file=paste0(simResPath, 'ameSim100.rda') )
 
