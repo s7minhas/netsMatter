@@ -40,13 +40,13 @@ simRun = function(seed, n, mu, beta, gamma){
 	u = list(naive=fit0$U, ame=fit1$U, oracle=fitO$U)
 	v = list(naive=fit0$V, ame=fit1$V, oracle=fitO$V) 
 	gof = list(naive=fit0$GOF, ame=fit1$GOF, oracle=fitO$GOF)
-	out = list(beta=beta, uv=uv, u=u, v=v, gof=gof)	
+	out = list(beta=beta, uv=uv, u=u, v=v, W=W, gof=gof)
 	return(out) }
 ##############################
 
 ##############################
 # params
-imps = 2
+imps = 1000
 intEff=-2 ; x1Eff=1 ; x2Eff=1
 
 #

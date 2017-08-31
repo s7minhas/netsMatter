@@ -3,23 +3,21 @@
 ##Based on Juan's code for Reiter-Stam
 
 rm(list=ls())
-
-resultsPath = '~/Dropbox/netsMatter/replications/McDonald_2004/data/'
 ls()
 
+if(Sys.info()['user']=='s7m'){
+  resultsPath = '~/Dropbox/Research/netsMatter/replications/McDonald_2004/data/'
+  gPath = '~/Research/netsMatter/code/'
+  source(paste0(gPath, 'reiter_stam_2003/helperEx.R'))
+  source(paste0(gPath, 'McDonald_2004/setup.R')) } else {
+  resultsPath = '~/Dropbox/netsMatter/replications/McDonald_2004/data/'
+  source('../reiter_stam_2003/helperEx.R')
+  source('setup.R') }
+
 ### libraries needed
-
-source('../reiter_stam_2003/helperEx.R')
-source('setup.R')
-
 toLoad <- c("RColorBrewer",
-"dplyr",
-"magrittr",
-"ggplot2",
-"stringr",
-"gridExtra",
-"Cairo",
-            "reshape2")
+  "dplyr", "magrittr", "ggplot2", "stringr", 
+  "gridExtra", "Cairo", "reshape2")
 
 loadPkg(toLoad)
 ### Load data
@@ -323,6 +321,7 @@ circPlot=ggCirc(Y=yArrSumm, U=ameFit$U, V=ameFit$V, vscale=.6,
   family="Source Sans Pro Light", force=3, 
   lcol='gray85', lsize=.05) +
   scale_color_manual(values=uvCols)
+
 
 ggsave(circPlot, 
        file=paste0(resultsPath,'McD_circPlot.pdf'), 
