@@ -22,14 +22,14 @@ facet_labeller = function(string){ TeX(string) }
 NSIM = 1000 ; intEff=-2 ; x1Eff=1 ; x2Eff=1
 
 # load sim results
-load(paste0(simResPath, 'ameSim30.rda')) ; load(paste0(simResPath, 'ameSim50.rda'))
-load(paste0(simResPath, 'deprc/ameSim100.rda'))
+for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,'.rda')) }
 
 #
-modKey = data.frame(dirty=names(ameSim30[[1]]$beta))
+modKey = data.frame(dirty=names(ameSim50[[1]]$beta))
 modKey$clean = c('Naive', 'AME', 'Oracle')
 ##############################
 
+##############################
 getCoverage = function(ameSim, model, n, varName, varNum, actual){
 	intSumm = data.frame( do.call('rbind', lapply(ameSim, function(x){
 		quantile(x$beta[[model]][,varNum], probs=c(0.025, 0.975))
@@ -37,70 +37,73 @@ getCoverage = function(ameSim, model, n, varName, varNum, actual){
 	intSumm$coverage = ( intSumm[,1]<actual & actual<intSumm[,2] )
 	intSumm$model = model
 	intSumm$n = n
-	intSumm$varName 
+	intSumm$varName = varName
+	intSumm$actual = actual
 	return(intSumm)	
 }
 
-
-ameSimCover = lapply(c('naive','ame','oracle'), function(m){
-	getCoverage(ameSim30, model=m, n=30, varName='X1', varNum=2, actual=x1Eff) })
-
-ameSimCover = rbind(
-	getCoverage(ameSim30, model='naive', n=30, varName='X1', varNum=2, actual=x1Eff),
-	getCoverage(ameSim30, model='ame', n=30, varName='X1', varNum=2, actual=x1Eff),
-	getCoverage(ameSim30, model='oracle', n=30, varName='X1', varNum=2, actual=x1Eff),
-	)
-
-
-
-FIT0_x1Eff_n30 = do.call('rbind',
-	lapply(ameSim30, function(x){
-		quantile(x$beta$'naive'[,2],probs=c(.025,.975))
-	}) )
-
-FIT1_x1Eff_n30 = do.call('rbind',
-	lapply(ameSim30, function(x){
-		quantile(x$beta$'ame'[,2],probs=c(.025,.975))
-	}) )
-
-FITO_x1Eff_n30 = do.call('rbind',
-	lapply(ameSim30, function(x){
-		quantile(x$beta$'oracle'[,2],probs=c(.025,.975))
-	}) )
-
-## coverage 
-mean( FIT0_x1Eff_n30[,1]<x1Eff & x1Eff<FIT0_x1Eff_n30[,2] )
-mean( FIT1_x1Eff_n30[,1]<x1Eff & x1Eff<FIT1_x1Eff_n30[,2] )
-mean( FITO_x1Eff_n30[,1]<x1Eff & x1Eff<FITO_x1Eff_n30[,2] )
-
-##############################
-# check calibration
-getCalibDF = function(ameSim){
-	calibDF = lapply(ameSim, function(x){
-		betaMod=lapply(x$beta, function(z){
-			apply(z[,1:2], 2, function(y){
-				qts = quantile(y,c(0.025, 0.975))
-
-				qts[2] - qts[1]
-			}) })
-		betaMod = betaMod %>% reshape2::melt() %>%
-			mutate(
-				var=rep(c('Intercept','X1'), length(x$beta)),
-				act = rep(c(intEff, x1Eff), length(x$beta)),
-				) %>%
-			rename(model = L1, width=value)
-		return(betaMod) })
-	return( suppressMessages( reshape2::melt(calibDF,id=names(calibDF[[1]])) ) ) }
+#
+cover50x1 = do.call('rbind',lapply(c('naive','ame','oracle'), function(m){
+	getCoverage(ameSim50, model=m, n=50, varName='X1', varNum=2, actual=x1Eff) }))
+cover100x1 = do.call('rbind',lapply(c('naive','ame','oracle'), function(m){
+	getCoverage(ameSim100, model=m, n=100, varName='X1', varNum=2, actual=x1Eff) }))
+cover50int = do.call('rbind',lapply(c('naive','ame','oracle'), function(m){
+	getCoverage(ameSim50, model=m, n=50, varName='Intercept', varNum=1, actual=intEff) }))
+cover100int = do.call('rbind',lapply(c('naive','ame','oracle'), function(m){
+	getCoverage(ameSim100, model=m, n=100, varName='Intercept', varNum=1, actual=intEff) }))
 
 #
-ameSimCalib = rbind(
-	cbind(getCalibDF(ameSim30), n=30),
-	cbind(getCalibDF(ameSim30), n=50),
-	cbind(getCalibDF(ameSim30), n=100) )
+ameSimCover = data.frame( rbind(
+	cover50x1, cover100x1, cover50int, cover100int ))
+rm(list=c(
+	paste0('ameSim',c(100, 50)),
+	pasteVec(c( 'cover50','cover100'),c('x1','int'))) )
 
-ameSimCalib %>% group_by(model, var, n) %>% summarise(widthAvg=mean(width))
-
-ggplot(ameSimCalib, aes(x=model, y=width)) + 
-	geom_boxplot() + 
-	facet_grid(var ~ n, scales='free_y')
+# summ by model
+coverSumm = ameSimCover %>% group_by(model,n, varName) %>%
+	summarise(coverage=mean(coverage)) %>% data.frame()
 ##############################
+
+##############################
+#
+coverSumm$model = modKey$clean[match(coverSumm$model, modKey$dirty)]
+coverSumm$model = factor(coverSumm$model, levels=modKey$clean)
+coverSumm$varName[coverSumm$varName=='X1'] = '$\\beta$'
+coverSumm$varName[coverSumm$varName=='Intercept'] = '$\\mu$'
+
+#
+ggCoverPlot = function(var){
+	g = ggplot( filter(coverSumm, varName==paste0('$\\',var,'$')),
+			aes(x=model, y=coverage, fill=model,color=model)) +
+		geom_hline(aes(yintercept=.95), color='grey60', size=2, alpha=.5) +
+		geom_linerange(aes(ymin=0, ymax=coverage),size=1.25) + 
+		geom_point(size=2) + 
+		facet_grid(varName~n, scales='free_y',
+			labeller=as_labeller(facet_labeller, default = label_parsed)) + 			
+		xlab('') + 
+		scale_y_continuous('', breaks=seq(0,1.2,.2), labels=seq(0,1.2,.2), limits=c(0,1)) +
+		annotate('text', x=1, y=.9, label='95% CI', color='black', size=3, fontface='bold') +
+		theme(
+			legend.position='top',
+			legend.title=element_blank(),
+			axis.ticks=element_blank(),
+			panel.border=element_blank(),
+			axis.text=element_text(size=8
+				# , family="Source Code Pro Light")
+			),
+			strip.text.x = element_text(size=9, color='white'
+				# ,family="Source Code Pro Semibold"
+				),
+			strip.text.y = element_text(size=9, color='white' 
+				# ,family="Source Code Pro Semibold",
+				,angle=0
+				),		
+			strip.background = element_rect(fill = "#525252", color='#525252')
+			)	
+	ggsave(g, height=3, width=8,
+		file=paste0(graphicsPath, 'ameSimCover_',var,'.pdf')
+		# , device=cairo_pdf
+		) }	
+
+ggCoverPlot('mu') ; ggCoverPlot('beta')
+##############################	

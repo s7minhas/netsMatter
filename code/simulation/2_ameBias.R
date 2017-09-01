@@ -22,10 +22,10 @@ facet_labeller = function(string){ TeX(string) }
 NSIM = 1000 ; intEff=-2 ; x1Eff=1 ; x2Eff=1
 
 # load sim results
-dmp=lapply(c(30,50,100),function(n){ load(paste0(simResPath,'ameSim',n,'.rda')) })
+for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,'.rda')) }
 
 #
-modKey = data.frame(dirty=names(ameSim30[[1]]$beta))
+modKey = data.frame(dirty=names(ameSim50[[1]]$beta))
 modKey$clean = c('Naive', 'AME', 'Oracle')
 ##############################
 
@@ -45,10 +45,11 @@ getBiasDF = function(ameSim){
 
 #
 ameSimBias = rbind(
-	cbind(getBiasDF(ameSim30), n=30),
-	cbind(getBiasDF(ameSim30), n=50),
-	cbind(getBiasDF(ameSim30), n=100) )
+	cbind(getBiasDF(ameSim50), n=50),
+	cbind(getBiasDF(ameSim100), n=100) )
+##############################
 
+##############################
 # clean
 ameSimBias = ameSimBias %>% group_by(model, var, n) %>%
 	mutate( mse = mean(bias^2) ) %>% data.frame()

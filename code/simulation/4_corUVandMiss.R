@@ -22,12 +22,10 @@ facet_labeller = function(string){ TeX(string) }
 NSIM = 1000 ; intEff=-2 ; x1Eff=1 ; x2Eff=1
 
 # load sim results
-load(paste0(simResPath, 'ameSim30.rda'))
-load(paste0(simResPath, 'ameSim50.rda'))
-load(paste0(simResPath, 'deprc/ameSim100.rda'))
+for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,'.rda')) }
 
 #
-modKey = data.frame(dirty=names(ameSim30[[1]]$beta))
+modKey = data.frame(dirty=names(ameSim50[[1]]$beta))
 modKey$clean = c('Naive', 'AME', 'Oracle')
 ##############################
 
@@ -38,9 +36,55 @@ genMissVar = function(n, imps=NSIM){
 	lapply(1:imps, function(seed){ n=n ; 
 		set.seed(seed) ; xw = matrix(rnorm(n*2),n,2)
 		W = tcrossprod(xw[,2]) ; return(W) }) }
-W30 = genMissVar(30)
-W50 = genMissVar(50)
-W100 = genMissVar(100, imps=NSIM/10)
 
+#
+getCor = function(ameSim, W){
+	cor = lapply(1:length(ameSim), function(i){
+		uv = c(ameSim[[i]]$uv$ame)
+		w = c(W[[i]])
+		cor(uv, w, use='pairwise.complete.obs') })	
+	return(unlist(cor)) }
 
+#
+ameSimCor = rbind(
+	cbind(getCor(ameSim50, genMissVar(50)), n=50),
+	cbind(getCor(ameSim100, genMissVar(100)), n=100)
+	) %>% data.frame()
+ameSimCor$n = paste0('n = ',ameSimCor$n)
+ameSimCor$n = factor(ameSimCor$n, levels=paste0('n = ',c(100,50)))
+
+loadPkg('plyr')
+ameSimCorMeans = ddply(ameSimCor, .(n), summarise, sMedian=median(V1))
+ameSimCorDensity = ddply(ameSimCor, .(n), .fun=function(x){
+	tmp = density(x$V1); x1 = tmp$x; y1 = tmp$y
+	q95 = x1 >= quantile(x$V1,0.025) & x1 <= quantile(x$V1,0.975)
+	q90 = x1 >= quantile(x$V1,0.05) & x1 <= quantile(x$V1,0.95)
+	data.frame(x=x1,y=y1,q95=q95, q90=q90) } )
+##############################
+
+##############################
+loadPkg('RColorBrewer')
+col = brewer.pal(3, 'Set1')[3]
+g = ggplot() +
+	geom_line(data=ameSimCorDensity, aes(x=x,y=y)) +
+	geom_ribbon(data=subset(ameSimCorDensity,q95),
+		aes(x=x,ymax=y),ymin=0,alpha=0.5) +
+	geom_ribbon(data=subset(ameSimCorDensity,q90),
+		aes(x=x,ymax=y),ymin=0,alpha=0.9) + 
+	geom_vline(data=ameSimCorMeans, 
+		aes(xintercept=sMedian),linetype='solid',size=1, color=col) +	
+	facet_grid(n~.) + 	
+	xlab('') + ylab('') +
+	theme(
+		axis.ticks=element_blank(),
+		panel.border=element_blank(),
+		axis.text.y=element_blank(),
+		strip.text.x = element_text(size=9, color='white'),
+		strip.text.y = element_text(size=9, color='white'),
+		strip.background = element_rect(fill = "#525252", color='#525252')
+		)
+
+#
+ggsave(g, height=3, width=8,
+	file=paste0(graphicsPath, 'ameSimCorr.pdf'))
 ##############################

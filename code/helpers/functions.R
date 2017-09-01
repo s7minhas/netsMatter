@@ -18,6 +18,7 @@ loadPkg(c(
 theme_set(theme_bw())
 
 # misc
+pasteVec = function(x,y){ as.vector( outer( x, y, paste0 ) ) }
 char = function(x){ as.character(x) }
 num = function(x){ as.numeric(char(x)) }
 trim = function (x) { gsub("^\\s+|\\s+$", "", x) }
