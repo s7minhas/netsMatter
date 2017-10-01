@@ -1,24 +1,12 @@
-\section{\textbf{Limitations of Standard Framework}}
-
-Generalized linear models are typically expressed via a stochastic and systematic component. The stochastic component reflects assumptions about the probability distribution from which the data are generated: $y_{ij} \sim P(Y | \theta_{ij})$, with a probability density or mass function such as the normal, binomial, or Poisson. Each dyad in the sample is independently drawn from a particular distribution, given $\theta_{ij}$. The systematic component characterizes the model for the parameters of that distribution and describes how $\theta_{ij}$ varies as a function of a set of nodal and dyadic covariates, $\mathbf{X}_{ij}$: $\theta_{ij} = \bm\beta^{T} \mathbf{X}_{ij}$. A fundamental assumption we make when applying this modeling technique is that given $\mathbf{X}_{ij}$ and the parameters of the distribution, each of the dyadic observations is conditionally independent.
-
-The importance of this assumption becomes clearer in the process of estimating a GLM via maximum likelihood. After having chosen a set of covariates and specifying a distribution, the joint density function over all dyads using the observations from Table 1 is given:
-
-\vspace{-8mm}
-\begin{align}
-\begin{aligned}
-	P(y_{ij}, y_{ik}, \ldots, y_{lk} | \theta_{ij}, \theta_{ik}, \ldots, \theta_{lk}) &= P(y_{ij} | \theta_{ij}) \times P(y_{ik} | \theta_{ik}) \times \ldots \times P(y_{lk} | \theta_{lk}) \\
-	P(\mathbf{Y} \; | \; \bm{\theta}) &= \prod_{\alpha=1}^{n \times (n-1)} P(y_{\alpha} | \theta_{\alpha})  \\
-\end{aligned}
-\end{align}
-
-\noindent The joint probability is converted into a likelihood: $\displaystyle \mathcal{L} (\bm{\theta} | \mathbf{Y}) = \prod_{\alpha=1}^{n \times (n-1)} P(y_{\alpha} | \theta_{\alpha})$.
-
-The parameters are estimated by maximizing the likelihood. The likelihood as defined above is only valid if  $y_{ij}$ is independent of $y_{ji}$ and $y_{ik}$ given the set of covariates we specified, or the values of $\theta_{ij}$.
-
 \section{\textbf{Dependencies in Dyadic Data}}
 
 Relational, or dyadic, data provide measurements of how sets of actors relate to one another. Typically, pairs of actors are examined. These pairs are called \textit{dyads}. Such data can be arranged as a directed dyadic design in which the unit of analysis is some set of $n$ actors that have been paired together to form a matrix of dyads, i. e., represented as a $n \times n$ matrix, $\mathbf{Y}$, with diagonals typically undefined. The $ij^{th}$ entry defines the relationship of $i$ and $j$ and can be continuous or discrete. It can also be symmetric (known as undirected) or asymmetric (called directed). This is not the stacked dyad structure normally found in social science, but it is equivalent and presents a format in which the interdependencies are exposed and transparent. The standard statistical approach to these data uses a linear or generalized linear model (GLM) which assumes that each of the dyadic observations is conditionally independent on observed regressors, even though events and relationships between these actors is most often \textit{inter}dependent. 
+
+\begin{figure}
+	\includegraphics[width=1\textwidth]{df_adj_net3.png}
+	\caption{Relational data from dyadic designs to networks}
+	\label{fig:ddToNet}
+\end{figure}
 
 One important dependency is nodal dependency, whereby each actor has similar interactions with many of its partners, leading to significant heterogeneity in activity levels across nodes. An important implication of this across-node heterogeneity is within-node homogeneity of ties: the values across a row, say $\{y_{ij},y_{ik},y_{il}\}$, are similar to each other because each has a common sender. If a sender $i$ is more active active in the network than other senders, it will have greater homogeneity of its linkages. More popular targets show greater similarity across linkages in a given column, $\{y_{ji},y_{ki},y_{li}\}$. Actors which are more likely to send ties in a network are also more likely to receive them. As a result the rows and columns in an adjacency matrix may be correlated. Another structural interdependence is reciprocity. This is a second-order, or dyadic dependency whereby values of $y_{ij}$ and $y_{ji}$ are correlated. If the data are simply stacked dyads in some arbitrary order, this kind of dependency is harder to visualize, but exists nonetheless.
 
