@@ -1,10 +1,29 @@
 \begin{thebibliography}{}
 
+\bibitem[\protect\citename{Adamic \& Glance, }2005]{adamic:glance:2005}
+Adamic, Lada~A., \& Glance, Natalie. 2005.
+\newblock The political blogosphere and the 2004 {US} election: {D}ivided they
+  blog.
+\newblock {\em Pages  36--43 of:} {\em Proceedings of the 3rd international
+  workshop on Link discovery}.
+\newblock ACM.
+
+\bibitem[\protect\citename{Anderson {\em et~al.\ }\relax,
+  }1992]{anderson:etal:1992}
+Anderson, Carolyn~J., Wasserman, Stanley, \& Faust, Katherine. 1992.
+\newblock Building stochastic blockmodels.
+\newblock {\em Social Networks}, {\bf 14}(1), 137--161.
+
 \bibitem[\protect\citename{Aronow {\em et~al.\ }\relax,
   }2015]{aronow:etal:2015}
 Aronow, Peter~M., Samii, Cyrus, \& Assenova, Valentina~A. 2015.
 \newblock Cluster--Robust Variance Estimation for Dyadic Data.
 \newblock {\em Political Analysis}, {\bf 23}(4), 564--577.
+
+\bibitem[\protect\citename{Barab{\'a}si \& R{\'e}ka, }1999]{barabasi:reka:1999}
+Barab{\'a}si, Albert-L{\'a}szl{\'o}, \& R{\'e}ka, Albert. 1999.
+\newblock Emergence of Scaling in Random Networks.
+\newblock {\em Science}, {\bf 286}(October 15), 509--510.
 
 \bibitem[\protect\citename{Beck {\em et~al.\ }\relax, }1998]{beck:etal:1998}
 Beck, Nathaniel, Katz, Jonathan~N., \& Tucker, Richard. 1998.
@@ -46,25 +65,10 @@ Hoff, Peter~D. 2008.
 \newblock Processing Systems 21.
 \newblock Cambridge, MA, USA: MIT Press.
 
-\bibitem[\protect\citename{Hoff {\em et~al.\ }\relax, }2017]{amenpkg}
-Hoff, Peter~D., Fosdick, Bailey, Volfovsky, Alex, He, Yanjun, \& Minhas,
-  Shahryar. 2017 (July).
-\newblock {\em Additive and Multiplicative Effects Models for Networks and
-  Relational Data, version 1.4}.
-\newblock Comprehensive R-Archive Network.
-
-\bibitem[\protect\citename{Li \& Loken, }2002]{li:loken:2002}
-Li, Heng, \& Loken, Eric. 2002.
-\newblock A Unified Theory of Statistical Analysis and Inference for Variance
-  Component Models For Dyadic Data.
-\newblock {\em Statistica Sinica}, {\bf 12}(2), 519--535.
-
-\bibitem[\protect\citename{Manger {\em et~al.\ }\relax,
-  }2012]{manger:etal:2012}
-Manger, Mark~S., Pickup, Mark~A., \& Snijders, Tom~A.B. 2012.
-\newblock A Hierarchy of Preferences: A Longitudinal Network Analysis Approach
-  to {PTA} Formation.
-\newblock {\em Journal of Conflict Resolution}, {\bf 56}(5), 852--877.
+\bibitem[\protect\citename{Keohane, }1989]{keohane:1989}
+Keohane, Robert~O. 1989.
+\newblock Reciprocity in international relations.
+\newblock {\em International Organization}, {\bf 40}(1).
 
 \bibitem[\protect\citename{Maoz, }n.d.]{maoz:2005}
 Maoz, Zeev.
@@ -74,6 +78,12 @@ Maoz, Zeev.
 McDonald, Patrick~J. 2004.
 \newblock Peace through Trade or Free Trade?
 \newblock {\em Journal of Conflict Resolution}, {\bf 48}(4), 547--572.
+
+\bibitem[\protect\citename{Minhas {\em et~al.\ }\relax,
+  }2016]{minhas:etal:2016:arxiv}
+Minhas, Shahryar, Hoff, Peter~D., \& Ward, Michael~D. 2016 (October).
+\newblock {\em {Let's Say Amen for Latent Factor Models}}.
+\newblock Working paper.
 
 \bibitem[\protect\citename{Organski, }1958]{organski:1958}
 Organski, A.F.K. 1958.
@@ -85,6 +95,11 @@ Reiter, Dan, \& Stam, Allan~C. 2003.
 \newblock Identifying the Culprit: Democracy, Dictatorship, and Dispute
   Initiation.
 \newblock {\em American Political Science Review}, {\bf 97}(2), 333--337.
+
+\bibitem[\protect\citename{Richardson, }1960]{richardson:1960}
+Richardson, Lewis~F. 1960.
+\newblock {\em Arms and Insecurity}.
+\newblock Chicago and Pittsburgh, PA: Quadrangle/Boxwood.
 
 \bibitem[\protect\citename{Rose, }2004]{rose:2004}
 Rose, Andrew~K. 2004.
@@ -108,13 +123,6 @@ Ward, Michael~D., Metternich, Nils~W., Dorff, Cassy~L., Gallop, Max,
   Generation of Conflict Prediction.
 \newblock {\em International Studies Review}, {\bf 16}(4), 473--644.
 
-\bibitem[\protect\citename{Warner {\em et~al.\ }\relax,
-  }1979]{warner:etal:1979}
-Warner, Rebecca, Kenny, David, \& Stoto, Michael. 1979.
-\newblock A New Round Robin Analysis of Variance for Social Interaction Data.
-\newblock {\em Journal of Personality and Social Psychology}, {\bf 37},
-  1742--1757.
-
 \bibitem[\protect\citename{Wasserman \& Faust, }1994]{wasserman:faust:1994}
 Wasserman, Stanley, \& Faust, Katherine. 1994.
 \newblock {\em Social Network Analysis: {M}ethods and Applications}.
@@ -125,12 +133,6 @@ Weeks, Jessica~L. 2012.
 \newblock Strongmen and Straw Men: Authoritarian Regimes and the Initiation of
   International Conflict.
 \newblock {\em American Political Science Review}, {\bf 106}(2), 326--347.
-
-\bibitem[\protect\citename{Wong, }1982]{wong:1982}
-Wong, George~Y. 1982.
-\newblock Round robin analysis of variance via maximum likelihood.
-\newblock {\em Journal of the American Statistical Association}, {\bf 77}(380),
-  714--724.
 
 \bibitem[\protect\citename{Zinnes, }1967]{zinnes:1967}
 Zinnes, Dina~A. 1967.
