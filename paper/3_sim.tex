@@ -1,12 +1,10 @@
 \section{Simulation study}
 
-We use a simulation study to highlight the ability of AME to conduct inference on exogenous parameters in the presence of network dependencies. We are particularly interested in whether the LSM can adjust for confounding when the confounding variable is unmeasured. In the simulation design, we study how the level of confounding affects the performance of AME relative to the GLM. We evaluate performance in terms of bias and inferential error. For simplicity and computational efficiency we consider a unidimensional latent space. 
+We utilize a simulation study to highlight the utility of AME as an inferential tool for dyadic analysis. We are particularly interested in whether AME can provide unbiased and well calibrated estimates of coefficient parameters in the presence of unobserved network dependencies. Specifically, we are concerned with conducting inference on a regression parameter $\beta$ of a linear model for a network in the case where there is an omitted variable. Say that the true data-generating process for a particular $Y$ is given by:
 
-Here we consider inference for a regression parameter $\beta$ of a linear or generalized linear model for a network in the case where there is an omitted variable. The true data-generating models we consider are of the form 
+$y_{i,j} \sim  \mu + \beta x_{i,j} + \gamma w_{i,j} + \epsilon_{i,j} $
 
-$y_{i,j} \sim  \mu + \beta x_i x_j + \gamma w_i w_j + \epsilon_{i,j} $
-
-where $Y= \{y_{i,j}\}\in \mathbb R^{n\times n}$ is an observed sociomatix, $x = \{x_i \} \in \mathbb R^n$ is a vector of observed node-specific characteristics, and $w = \{ w_i\} \in \mathbb R^n$ is a vector of unobserved node-specific characteristics. We compare inference for $\beta$ using three models:
+where $Y= \{y_{i,j}\}\in \mathbb R^{n\times n}$ is an observed sociomatix, $x = \{x_{i,j} \} \in \mathbb R^{n \times n}$ is a matrix of observed dyad-specific characteristics, and $w = \{ w_{i,j}\} \in \mathbb R^{n \times n}$ is a matrix of unobserved dyad-specific characteristics. We compare inference for $\beta$ using three models:
 
 \begin{itemize}
 	\item A naive regression model assuming independent errors; 
@@ -14,11 +12,7 @@ where $Y= \{y_{i,j}\}\in \mathbb R^{n\times n}$ is an observed sociomatix, $x = 
 	\item An ``oracle'' regression model that includes both $x_{i,j}=x_i x_j$ and $w_{i,j}=w_i w_j$. 
 \end{itemize}
 
-We make these comparisons in the context of a binary network outcome with a probit regression model. 
-
-One way to compare inferences across models is  with bias and variance of the parameter estimates. Both of these quantities are combined to get the MSE. 
-
-Alternatively, bias and precision can be summarized by confidence interval coverage and width. Coverage should ideally be at the nominal level. If two methods have the same actual coverage rate, the one with the narrower intervals is preferred. 
+We make these comparisons in the context of a linear network outcome with the AME probit regression model described in the previous section. 
 
 \begin{figure}
 	\centering
@@ -28,6 +22,8 @@ Alternatively, bias and precision can be summarized by confidence interval cover
 	\includegraphics[width=1\textwidth]{ameSimBias_beta.pdf}
 \end{figure}
 
+One way to compare inferences across models is  with bias and variance of the parameter estimates. Both of these quantities are combined to get the MSE. 
+
 \begin{figure}
 	\centering
 	\caption{Coverage in parameter when homophily is ignored.}
@@ -35,6 +31,8 @@ Alternatively, bias and precision can be summarized by confidence interval cover
 	\includegraphics[width=1\textwidth]{ameSimCover_mu.pdf} \\
 	\includegraphics[width=1\textwidth]{ameSimCover_beta.pdf}
 \end{figure}
+
+Alternatively, bias and precision can be summarized by confidence interval coverage and width. Coverage should ideally be at the nominal level. If two methods have the same actual coverage rate, the one with the narrower intervals is preferred. 
 
 \begin{figure}
 	\centering
