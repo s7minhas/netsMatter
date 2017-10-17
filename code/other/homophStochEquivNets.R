@@ -36,9 +36,11 @@ adjMat[high,oth] = rbinom(length(adjMat[high,oth]), 1, .05) # med - high
 # adjMat[med,oth] = rbinom(length(adjMat[med,oth]), 1, 0) # med - med
 
 
-# oops undirected
+# # oops undirected
 # adjMat[lower.tri(adjMat)] = 0
 # adjMat[lower.tri(adjMat)] = t(adjMat)[lower.tri(adjMat)]
+# g = graph_from_adjacency_matrix(adjMat, mode='undirected', weighted=NULL, diag=FALSE)
+
 g = graph_from_adjacency_matrix(adjMat, mode='directed', weighted=NULL, diag=FALSE)
 
 # layout
@@ -81,7 +83,7 @@ V(g)$nSize = degree(g)
 set.seed(6886)
 ggNet=ggraph(g, layout='nicely') + 
     geom_edge_fan(aes(alpha = ..index..), show.legend = FALSE) + 
-    geom_node_point(aes(color=color), size=V(g)$nSize) + 
+    geom_node_point(aes(color=color, shape=color), size=V(g)$nSize) + 
     scale_color_manual(values=ccols) +
     theme_bw() + 
     theme(
@@ -92,4 +94,6 @@ ggNet=ggraph(g, layout='nicely') +
     	legend.position = 'none',
     	panel.grid = element_blank()
     	)
-ggsave(ggNet, file=paste0('~/Research/netsMatter/paper/stochEquiv.pdf'))
+ggNet
+
+ggsave(ggNet, file=paste0('~/Research/netsMatter/paper/stochEquiv.pdf'), width=8, height=4)

@@ -1,74 +1,110 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{34}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+\expandafter\ifx\csname selectlanguage\endcsname\relax
+  \def\selectlanguage#1{\relax}\fi
 
-\bibitem[\protect\citename{Adamic \& Glance, }2005]{adamic:glance:2005}
-Adamic, Lada~A., \& Glance, Natalie. 2005.
-\newblock The political blogosphere and the 2004 {US} election: {D}ivided they
-  blog.
-\newblock {\em Pages  36--43 of:} {\em Proceedings of the 3rd international
-  workshop on Link discovery}.
-\newblock ACM.
+\bibitem[\protect\citename{Adamic and Glance, }2005]{adamic:glance:2005}
+Adamic, Lada~A., and Glance, Natalie. 2005.
+\newblock  \titlecap{The political blogosphere and the 2004 {US} election:
+  {D}ivided they bloglog.}
+\newblock {Pages  36--43 of:} {\em Proceedings of the 3rd International
+  Workshop on Link Discovery}.
+\newblock New York, N.Y.: ACM, for ACM.
 
-\bibitem[\protect\citename{Anderson {\em et~al.\ }\relax,
-  }1992]{anderson:etal:1992}
-Anderson, Carolyn~J., Wasserman, Stanley, \& Faust, Katherine. 1992.
-\newblock Building stochastic blockmodels.
+\bibitem[\protect\citename{Anderson {et~al.}, }1992]{anderson:etal:1992}
+Anderson, Carolyn~J., Wasserman, Stanley, and Faust, Katherine. 1992.
+\newblock  \titlecap{Building stochastic blockmodels.}
 \newblock {\em Social Networks}, {\bf 14}(1), 137--161.
 
-\bibitem[\protect\citename{Aronow {\em et~al.\ }\relax,
-  }2015]{aronow:etal:2015}
-Aronow, Peter~M., Samii, Cyrus, \& Assenova, Valentina~A. 2015.
-\newblock Cluster--Robust Variance Estimation for Dyadic Data.
+\bibitem[\protect\citename{Aronow {et~al.}, }2015]{aronow:etal:2015}
+Aronow, Peter~M., Samii, Cyrus, and Assenova, Valentina~A. 2015.
+\newblock  \titlecap{Cluster-Robust Variance Estimation for Dyadic Data.}
 \newblock {\em Political Analysis}, {\bf 23}(4), 564--577.
 
-\bibitem[\protect\citename{Barab{\'a}si \& R{\'e}ka, }1999]{barabasi:reka:1999}
-Barab{\'a}si, Albert-L{\'a}szl{\'o}, \& R{\'e}ka, Albert. 1999.
-\newblock Emergence of Scaling in Random Networks.
+\bibitem[\protect\citename{Barab{\'a}si and R{\'e}ka,
+  }1999]{barabasi:reka:1999}
+Barab{\'a}si, Albert-L{\'a}szl{\'o}, and R{\'e}ka, Albert. 1999.
+\newblock  \titlecap{Emergence of Scaling in Random Networks.}
 \newblock {\em Science}, {\bf 286}(October 15), 509--510.
 
-\bibitem[\protect\citename{Beck {\em et~al.\ }\relax, }1998]{beck:etal:1998}
-Beck, Nathaniel, Katz, Jonathan~N., \& Tucker, Richard. 1998.
-\newblock Taking Time Seriously: Time-series-cross-section Analysis with a
-  Binary Dependent Variable.
+\bibitem[\protect\citename{Beck and Katz, }1995]{beck:katz:1995}
+Beck, Nathaniel, and Katz, Jonathan~N. 1995.
+\newblock  \titlecap{What to do (and not to do) with Pooled Time-Series
+  Cross-Section Data.}
+\newblock {\em American Political Science Review}, {\bf 89}(3), 634--647.
+
+\bibitem[\protect\citename{Beck {et~al.}, }1998]{beck:etal:1998}
+Beck, Nathaniel, Katz, Jonathan~N., and Tucker, Richard. 1998.
+\newblock  \titlecap{Taking Time Seriously: {T}ime-series-cross-section
+  Analysis with a Binary Dependent Variable.}
 \newblock {\em American Journal of Political Science}, {\bf 42}(2), 1260--1288.
 
-\bibitem[\protect\citename{Bennett \& Stam, }2000]{bennett:stam:2000}
-Bennett, D.~Scott, \& Stam, Allan~C. 2000.
-\newblock {Research Design and Estimator Choices in the Analysis of Interstate
-  Dyads: When Decisions Matter}.
+\bibitem[\protect\citename{Bennett and Stam, }2000]{bennett:stam:2000}
+Bennett, D.~Scott, and Stam, Allan~C. 2000.
+\newblock  \titlecap{Research Design and Estimator Choices in the Analysis of
+  Interstate Dyads: {W}hen Decisions Matter.}
 \newblock {\em Journal of Conflict Resolution}, {\bf 44}(5), 653--685.
+
+\bibitem[\protect\citename{Dorff and Minhas, }2016]{dorff:minhas:2016}
+Dorff, Cassy, and Minhas, Shahryar. 2016.
+\newblock  \titlecap{When Do States Say Uncle? {Network} Dependence and
+  Sanction Compliance.}
+\newblock {\em International Interactions}, {\bf In press}.
+
+\bibitem[\protect\citename{Erikson {et~al.}, }2014]{erikson:pinto:2014}
+Erikson, Robert~S., Pinto, Pablo~M., and Rader, Kelly~T. 2014.
+\newblock  \titlecap{Dyadic analysis in International Relations: {A} cautionary
+  tale.}
+\newblock {\em Political Analysis}, {\bf 22}(4), 457--463.
 
 \bibitem[\protect\citename{Gibler, }2017]{gibler:2017}
 Gibler, Douglas~M. 2017.
-\newblock State Development, Parity, and International Conflict.
+\newblock  \titlecap{State Development, Parity, and International Conflict.}
 \newblock {\em American Political Science Review}, {\bf 111}(1), 21--38.
 
-\bibitem[\protect\citename{Greenhill {\em et~al.\ }\relax,
-  }2011]{greenhill:etal:2011}
-Greenhill, Brian, Ward, Michael~D., \& Sacks, Audrey. 2011.
-\newblock The Separation Plot: A New Visual Method for Evaluating the Fit of
-  Binary Data.
+\bibitem[\protect\citename{Greenhill {et~al.}, }2011]{greenhill:etal:2011}
+Greenhill, Brian, Ward, Michael~D., and Sacks, Audrey. 2011.
+\newblock  \titlecap{The Separation Plot: {A} New Visual Method for Evaluating
+  the Fit of Binary Data.}
 \newblock {\em American Journal of Political Science}, {\bf 55}(4), 991--1002.
-
-\bibitem[\protect\citename{Hoff, }2005]{hoff:2005}
-Hoff, Peter~D. 2005.
-\newblock Bilinear Mixed-Effects Models for Dyadic Data.
-\newblock {\em Journal of the American Statistical Association}, {\bf
-  100}(4690), 286--295.
 
 \bibitem[\protect\citename{Hoff, }2008]{hoff:2008}
 Hoff, Peter~D. 2008.
-\newblock Modeling homophily and stochastic equivalence in symmetric relational
-  data.
-\newblock {\em Pages  657--664 of:} Platt, John~C., Koller, Daphne, Singer,
-  Yoram, \& Roweis, Sam~T. (eds), {\em Advances in Neural Information
-  Processing Systems 20}.
+\newblock  \titlecap{Modeling homophily and stochastic equivalence in symmetric
+  relational data.}
+\newblock {Pages  657--664 of:} Platt, John~C., Koller, Daphne, Singer, Yoram,
+  and Roweis, Sam~T. (eds), {\em Advances in Neural Information Processing
+  Systems 20}.
 \newblock Processing Systems 21.
 \newblock Cambridge, MA, USA: MIT Press.
 
+\bibitem[\protect\citename{Hoff, }2015]{hoff:2015:arxiv}
+Hoff, Peter~D. 2015.
+\newblock  \titlecap{Dyadic Data Analysis with \texttt{amen}.}
+\newblock {\em arxiv}, {\bf arxiv:1506.08237}, 1--48.
+
+\bibitem[\protect\citename{Hoff and Ward, }2004]{hoff:ward:2004}
+Hoff, Peter~D., and Ward, Michael~D. 2004.
+\newblock  \titlecap{Modeling Dependencies in International Relations
+  Networks.}
+\newblock {\em Political Analysis}, {\bf 12}(2), 160--175.
+
 \bibitem[\protect\citename{Keohane, }1989]{keohane:1989}
 Keohane, Robert~O. 1989.
-\newblock Reciprocity in international relations.
+\newblock  \titlecap{Reciprocity in international relations.}
 \newblock {\em International Organization}, {\bf 40}(1).
+
+\bibitem[\protect\citename{King and Roberts, }2014]{king:roberts:2014}
+King, Gary, and Roberts, Margaret~E. 2014.
+\newblock  \titlecap{How Robust Standard Errors Expose Methodological Problems
+  They Do Not Fix, and What to Do about It.}
+\newblock {\em Political Analysis}, {\bf 23}(2), 159--179.
+
+\bibitem[\protect\citename{Li and Loken, }2002]{li:loken:2002}
+Li, Heng, and Loken, Eric. 2002.
+\newblock  \titlecap{A Unified Theory of Statistical Analysis and Inference for
+  Variance Component Models For Dyadic Data.}
+\newblock {\em Statistica Sinica}, {\bf 12}(2), 519--535.
 
 \bibitem[\protect\citename{Maoz, }n.d.]{maoz:2005}
 Maoz, Zeev.
@@ -76,24 +112,35 @@ Maoz, Zeev.
 
 \bibitem[\protect\citename{McDonald, }2004]{mcdonald:2004}
 McDonald, Patrick~J. 2004.
-\newblock Peace through Trade or Free Trade?
+\newblock  \titlecap{Peace through Trade or Free Trade?}
 \newblock {\em Journal of Conflict Resolution}, {\bf 48}(4), 547--572.
 
-\bibitem[\protect\citename{Minhas {\em et~al.\ }\relax,
-  }2016]{minhas:etal:2016:arxiv}
-Minhas, Shahryar, Hoff, Peter~D., \& Ward, Michael~D. 2016 (October).
-\newblock {\em {Let's Say Amen for Latent Factor Models}}.
+\bibitem[\protect\citename{Minhas {et~al.}, }2016]{minhas:etal:2016:arxiv}
+Minhas, Shahryar, Hoff, Peter~D., and Ward, Michael~D. 2016 (October).
+\newblock {\em Let's Say Amen for Latent Factor Models}.
 \newblock Working paper.
+
+\bibitem[\protect\citename{Mucha {et~al.}, }2010]{mucha:etal:2010}
+Mucha, Peter~J., Richardson, Thomas, Macon, K., Porter, Mason~A., and Onnela,
+  J.~P. 2010.
+\newblock  \titlecap{Community Structure in Time-Dependent, Multiscale, and
+  Multiplex Networks.}
+\newblock {\em Science}, {\bf 328}(5980), 876ff.
 
 \bibitem[\protect\citename{Organski, }1958]{organski:1958}
 Organski, A.F.K. 1958.
-\newblock {\em World Politics: the Stages of Political Development}.
+\newblock {\em World Politics: {T}he Stages of Political Development}.
 \newblock New York: Alfred A. Knopf.
 
-\bibitem[\protect\citename{Reiter \& Stam, }2003]{reiter:stam:2003}
-Reiter, Dan, \& Stam, Allan~C. 2003.
-\newblock Identifying the Culprit: Democracy, Dictatorship, and Dispute
-  Initiation.
+\bibitem[\protect\citename{Poast, }2010]{poast:2010}
+Poast, Paul. 2010.
+\newblock  \titlecap{(Mis)Using Dyadic Data to Analyze Multilateral Events.}
+\newblock {\em Political Analysis}, {\bf 18}(4), 403--425.
+
+\bibitem[\protect\citename{Reiter and Stam, }2003]{reiter:stam:2003}
+Reiter, Dan, and Stam, Allan~C. 2003.
+\newblock  \titlecap{Identifying the Culprit: {D}emocracy, Dictatorship, and
+  Dispute Initiation.}
 \newblock {\em American Political Science Review}, {\bf 97}(2), 333--337.
 
 \bibitem[\protect\citename{Richardson, }1960]{richardson:1960}
@@ -103,40 +150,56 @@ Richardson, Lewis~F. 1960.
 
 \bibitem[\protect\citename{Rose, }2004]{rose:2004}
 Rose, Andrew~K. 2004.
-\newblock Do We Really Know That the {WTO} Increases Trade?
+\newblock  \titlecap{Do We Really Know That the {WTO} Increases Trade?}
 \newblock {\em American Economic Review}, {\bf 94}(1), 98--114.
 
-\bibitem[\protect\citename{Snijders, }2011]{snijders:2011}
-Snijders, Tom~A.B. 2011.
-\newblock Statistical Models for Social Networks.
-\newblock {\em Annual Review of Sociology}, {\bf 37}, 131--53.
+\bibitem[\protect\citename{Signorino, }1999]{signorino:1999}
+Signorino, Curtis. 1999.
+\newblock  \titlecap{Strategic Interaction and the Statistical Analysis of
+  International Conflict.}
+\newblock {\em American Political Science Review}, {\bf 92}(2), 279--298.
 
-\bibitem[\protect\citename{Tomz {\em et~al.\ }\relax, }2007]{tomz:etal:2007}
-Tomz, Michael, Goldstein, Judith, \& Rivers, Douglas. 2007.
-\newblock Do We Really Know That the WTO Increases Trade?
+\bibitem[\protect\citename{Singer, }1972]{singer:1972}
+Singer, J.~David. 1972.
+\newblock  \titlecap{The {Correlates of War Project}: {C}ontinuity, Diversity,
+  and Convergence.}
+\newblock {Chap. 2 of:} Singer, J.~David (ed), {\em Quantitative International
+  Politics: {A}n Appraisal}.
+\newblock Special Studies in International Politics and Government, vol. VI.
+\newblock Praeger.
+
+\bibitem[\protect\citename{Tomz {et~al.}, }2007]{tomz:etal:2007}
+Tomz, Michael, Goldstein, Judith, and Rivers, Douglas. 2007.
+\newblock  \titlecap{Do We Really Know That the WTO Increases Trade?}
 \newblock {\em American Economic Review}, {\bf 97}(5), 2005--2018.
 
-\bibitem[\protect\citename{Ward {\em et~al.\ }\relax, }2013]{ward:etal:2013}
+\bibitem[\protect\citename{Ward {et~al.}, }2013]{ward:etal:2013}
 Ward, Michael~D., Metternich, Nils~W., Dorff, Cassy~L., Gallop, Max,
-  Hollenbach, Florian~M., Schultz, Anna, \& Weschle, Simon. 2013.
-\newblock Learning from the Past and Stepping into the Future: Toward a New
-  Generation of Conflict Prediction.
+  Hollenbach, Florian~M., Schultz, Anna, and Weschle, Simon. 2013.
+\newblock  \titlecap{Learning from the Past and Stepping into the Future:
+  {T}oward a New Generation of Conflict Prediction.}
 \newblock {\em International Studies Review}, {\bf 16}(4), 473--644.
 
-\bibitem[\protect\citename{Wasserman \& Faust, }1994]{wasserman:faust:1994}
-Wasserman, Stanley, \& Faust, Katherine. 1994.
+\bibitem[\protect\citename{Wasserman and Faust, }1994]{wasserman:faust:1994}
+Wasserman, Stanley, and Faust, Katherine. 1994.
 \newblock {\em Social Network Analysis: {M}ethods and Applications}.
 \newblock Cambridge: Cambridge University Press.
 
 \bibitem[\protect\citename{Weeks, }2012]{weeks:2012}
 Weeks, Jessica~L. 2012.
-\newblock Strongmen and Straw Men: Authoritarian Regimes and the Initiation of
-  International Conflict.
+\newblock  \titlecap{Strongmen and Straw Men: {A}uthoritarian Regimes and the
+  Initiation of International Conflict.}
 \newblock {\em American Political Science Review}, {\bf 106}(2), 326--347.
 
 \bibitem[\protect\citename{Zinnes, }1967]{zinnes:1967}
 Zinnes, Dina~A. 1967.
-\newblock An Analytical Study of the Balance of Power Theories.
+\newblock  \titlecap{An Analytical Study of the Balance of Power Theories.}
 \newblock {\em Journal of Peace Research}, {\bf 3}, 270--288.
+
+\bibitem[\protect\citename{Zinnes, }1980]{zinnes:1980}
+Zinnes, Dina~A. 1980.
+\newblock  \titlecap{Three Puzzles in Search of a Researcher: {P}residential
+  Address.}
+\newblock {\em International Studies Quarterly}, {\bf 24}(3), 315--342.
 
 \end{thebibliography}

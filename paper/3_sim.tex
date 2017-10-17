@@ -1,5 +1,7 @@
 \section{Simulation study}
 
+We use a simulation study to highlight the ability of AME to conduct inference on exogenous parameters in the presence of network dependencies. We are particularly interested in whether the LSM can adjust for confounding when the confounding variable is unmeasured. In the simulation design, we study how the level of confounding affects the performance of AME relative to the GLM. We evaluate performance in terms of bias and inferential error. For simplicity and computational efficiency we consider a unidimensional latent space. 
+
 Here we consider inference for a regression parameter $\beta$ of a linear or generalized linear model for a network in the case where there is an omitted variable. The true data-generating models we consider are of the form 
 
 $y_{i,j} \sim  \mu + \beta x_i x_j + \gamma w_i w_j + \epsilon_{i,j} $
