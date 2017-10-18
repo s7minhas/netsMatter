@@ -2,52 +2,47 @@
  
 \subsection{Design}
 
-For the purpose of this study, we choose five prominent studies from the broad field of international relations and international political economy that utilize relation data \citep{mcdonald:2004, reiter:stam:2003, rose:2004, weeks:2012, gibler:2017}. We chose to replicate studies that were written fairly recently, since 2000, and that have been cited over 100 times. Each of these pieces was published in a prominent journal and is well-known in the literature. They all used the standard approach in political science, which is to employ some form of general linearized regression that ignores dyadic interdependencies. Post estimation, standard errors are often adjusted in an attempt to account for clustering of observations.
+We choose five prominent studies from the broad field of international relations and international political economy that utilize relational data \citep{reiter:stam:2003, mcdonald:2004,  rose:2004, weeks:2012, gibler:2017}. These studies are recent and have been cited over 100 times. Each of these pieces was published in a prominent journal and is well-known in the literature. Each used the standard approach in political science, which is to employ some form of a general linearized regression that ignores dyadic interdependencies, except as they may reveal themselves in included variables. Also part of the gold standard is a post estimation cleanup thought to be a paliative, and each of these studies adjust the posterior standard errors in an attempt to account for the clustering of observations.
 
 \begin{table}
 \caption{Features of the Studies Replicated. }
 	\begin{tabular}{lcccccc}
-		 & Model & \# of Actors & Years  & \# of Dyads & Type of Dyads & Clustered $\sigma_{\hat{\beta}}$ \\ \hline\hline
-		Weeks (2012) & Logit & & & $901,540$ & Directed & Robust \\
-		Reiter \& Stam (2003) & Logit & & & $753,456$ & Directed & Robust \\
-		McDonald (2004) & Logit & & & $92,354$ & Undirected & Robust\\		
-		Gibler (2017) & Logit & & & $650,557$ & UnDirected & no \\		
-		Rose (2004) & OLS & & & $234,597$ & Directed & Robust \\
-	\hline\hline
+& Model & N. Actors & Years  & N. Dyads & Dyads Type & Clustering $\sigma_{\hat{\beta}}$ \\ \toprule
+Reiter \& Stam (2003) & Logit & & & $753,456$ & Directed & Robust \\	McDonald (2004) & Logit & & & $92,354$ & Undirected & Robust\\
+Rose (2004) & OLS & ? &  ?& $234,597$ & Directed & Robust \\	 
+Weeks (2012) & Logit & ? & ?& $901,540$ & Directed & Robust \\
+Gibler (2017) & Logit & ?& ?& $650,557$ & UnDirected & no \\ \bottomrule
 	\end{tabular}
 \end{table}
 
-We obtained the data for each of these studies from their replication archives and replicated the main results of each of the articles.\footnote{Without exception this was straightforward to accomplish, thanks to an increasing norm in the social sciences of open data sharing.} We examine each of the models using the AME framework described above.  Our goal is to ascertain whether the ignored interdependencies---the non-iid structure of the relational data---would result in different model estimates when they were addressed in an AME framework, and more importantly to see if there were substantive opportunities that were presented with the dynamic factor approach.  
+We obtained the data for each of these studies from their replication archives and replicated the main results of each of the articles.\footnote{Without exception this was straightforward to accomplish, thanks to an increasing norm in the social sciences of open data sharing.} We also examine each of the models using the AME framework described above.  Our goal is to ascertain whether the ignored interdependencies---the non-iid structure of the relational data---would result in different model estimates when they were addressed in an AME framework, and more importantly to see if there were substantive opportunities that were presented with the dynamic factor approach.  
 
-Finally, we assess whether there is any substantive finding that emerges or indeed if any disappear once the interdependencies in the data are modeled.
+Finally, in each study we assess whether there is any new substantive finding that emerges or indeed if any disappear once the interdependencies in the data are modeled.
 
-The broader goal, beyond introducing the use of the AME framework in an applied setting, is to examine the extent to which interdependencies within typical dyadic data make much difference in what we have learned about international relations from empirical studies over the past decade or so.  We believe that it does, and that the dynamic latent factor model provides a step forward.
+The broader goal, beyond introducing the use of the AME framework in an applied setting, is to examine the extent to which interdependencies within typical dyadic data make much difference in what we have learned about international relations from recent empirical studies that use a framework that ignores dependencies.  We believe that it does, and that the dynamic latent factor model provides a step forward.
+
+
+WE NEED TO TALK ABOUT THIS TABLE AND WHAT THE CRITERIA WERE FOR THE FINAL COLUMN.
 
 \begin{table}[ht]
 \centering
-	\begin{tabular}{l| p{7cm} l}
-	& \multirow{2}{*}{Central Finding} & Does it Replicate \\ 
-	& &  in a Network Model? \\
-	\hline\hline
-		Weeks (2012) & Bosses, Juntas and Strongmen are more Aggressive, Machines are Not & \textbf{Fails to Replicate} \\
-		\hline
-		Reiter \& Stam (2003) & Personalist Regimes Attack Democracies, Not Vice Versa & Replicates \\ 
-		\hline
-		McDonald (2004) & Lower Trade Barriers and Higher Trade Lead to Peace & \textbf{Fails to Replicate} \\ 
-		\hline
-		Gibler (2017) & Power Parity at time of Entry to International System Inceases Conflict & \textbf{Fails to Replicate} \\ 		
-		\hline
-		Rose (2004) & WTO Membership Does not Effect Trade & Replicates \\ 
-	\hline\hline
+\caption{Here we provide a brief summary of the key variable in each of the five replications and a note about whether or not the finding is replicated when using our network based approach. Cases in which the substantive finding is not replicated are highlighted in bold.}
+\begin{tabular}{l p{7cm} l} \toprule
+\multirow{2}{*}{Study} & \multirow{2}{*}{Central Finding} & Does it Replicate \\ 
+	& &  in a Network Model? \\ \toprule
+Reiter \& Stam (2003) & Personalist Regimes Attack Democracies, Not Vice Versa & Replicates \\ \midrule
+McDonald (2004) & Lower Trade Barriers and Higher Trade Lead to Peace & \textbf{Fails to Replicate} \\ \midrule
+Rose (2004) & WTO Membership Does not Effect Trade & Replicates \\ \midrule
+Weeks (2012) & Bosses, Juntas and Strongmen are more Aggressive, Machines are Not & \textbf{Fails to Replicate} \\\midrule
+Gibler (2017) & Power Parity at Time of Entry to International System Inceases Conflict & \textbf{Fails to Replicate} \\ \bottomrule
 	\end{tabular}
-	\caption{Here we provide a brief summary of the key variable in each of the five replications and a note about whether or not the finding is replicated when using our network based approach. Cases in which the finding is not replicated are highlighted in bold.}
-	\label{tab:modelFindingSumm}
+			\label{tab:modelFindingSumm}
 \end{table}
 
-We also examine the accuracy of the predictions made with each approach. Out of sample cross validation strategy. 
+We also examine the accuracy of the predictions made with each approach. Out-of-sample cross validation strategy. 
 
 % % % % % % % % % % % % % % % % % % 
-By accounting for exogenous and network dependent patterns that give rise to conflict systems we are able to better account for the data generating process underlying relational data structures. To show that this is the case, we examine whether our approach achieves better predictive performance in an out of sample context than traditional dyadic models. To evaluate our model, we randomly divide the $\binom n 2 \times T$ data values into $k=30$ sets, letting $s_{ij,t}$ be the set to which pair $ij,t$ is assigned. Then for each $s \in \{1,\ldots,k\}$, we:
+By accounting for exogenous and network dependent patterns that give rise to conflict systems we are able to better account for the data generating process underlying relational data structures. To show that this is the case, we examine whether our approach achieves better predictive performance in an out-of-sample context than traditional dyadic models. To evaluate our model, we randomly divide the $\binom n 2 \times T$ data values into $k=30$ sets, letting $s_{ij,t}$ be the set to which pair $ij,t$ is assigned. Then for each $s \in \{1,\ldots,k\}$, we:
 
 \begin{enumerate}
 	\item estimate model parameters with $\{y_{ij,t}: s_{ij,t} \neq s\}$, the data not in set $s$,
@@ -56,39 +51,33 @@ By accounting for exogenous and network dependent patterns that give rise to con
 
 \noindent The result of this procedure is a set of sociomatrices $\bm \hat Y$, in which each entry $\hat y_{ij,t}$ is a predicted value obtained from using a subset of the data that does not include $y_{ij,t}$. 
 
-We set a number of benchmarks for comparison. First we compare the AME model to a GLM model using the same covariates to show the effect of accounting for network dependencies on predicting conflict. We supplement this with an alternative GLM that includes not just these covariates, but also a lagged dependent variable and a lagged reciprocity term. The lagged dependent variable is the equivalent of saying that conflict and peace are relatively likely to persist between dyads, while the inclusion of a lagged reciprocity term in a GLM framework is a simple way to account for retaliatory strikes.
+We set a number of benchmarks for comparison. First, we compare the AME model to a GLM model (that used in the original study) using the same covariates to show the effect of accounting for network dependencies on predicting conflict. We supplement this with an alternative GLM that includes not just these covariates, but also a lagged dependent variable and a lagged reciprocity term. The lagged dependent variable is the equivalent of saying that conflict and peace are relatively likely to persist between dyads, while the inclusion of a lagged reciprocity term in a GLM framework is a simple way to account for retaliatory strikes.
 
-We utilize three performance criterions to compare the models: Receiver Operator Characteristic (ROC) curves, Precision Recall (PR) curves, and separation plots. ROC curves look at the trade-off between true positive rates and false positive rates at different thresholds of classification. An issue with an ROC Curve when looking at conflict, is that it is relatively rare at the dyadic level: in most years only 3\% of possible dyads are in conflict with one another. If peace is common, even a poor model will have a very low False Positive Rate. 
-
-To better assess which models predict the presence of conflict, not just its absence, we look at PR Curves. These examine the trade-offs between the percentage of conflicts a model predicts, and the percentage of predicted conflicts which occur. Lastly, we examine separation plots \citep{greenhill:etal:2011}. These provide an intuitive visualization of the accuracy of our predictions by juxtaposing a line showing the predicted probability of conflict with whether conflict actually occurs for all cases (where the cases are sorted by the predicted probability and then colored to indicate the outcome). Here a perfect model would have all cases where conflict actually exists on the right with a predicted probability of $1$, and would predict $0$ in all other cases. All of the models' performance out of sample by these metrics are displayed in figure \ref{fig:roc_ame}. The AME model with covariates is the best performing model out of sample in all cases. This model outperforms each of the GLM variants by a notable margin.
+We utilize three performance criterions to compare the models: Receiver Operator Characteristic (ROC) curves, Precision Recall (PR) curves, and separation plots. ROC curves look at the trade-off between true positive rates and false positive rates at different thresholds of classification. An issue with an ROC Curve when looking at conflict, is that it is relatively rare at the dyadic level: in most years only 3\% of possible dyads are in conflict with one another. If peace is common, even a poor model will have a very low False Positive Rate. The ROC curves are best for balanced samples with as many events as non-events. To better assess which models predict the presence of conflict, not just its absence, we look at PR Curves. These examine the trade-offs between the percentage of conflicts a model predicts, and the percentage of predicted conflicts which occur. Lastly, we examine separation plots \citep{greenhill:etal:2011}. These provide an intuitive visualization of the accuracy of our predictions by juxtaposing a line showing the predicted probability of conflict with whether conflict actually occurs for all cases (where the cases are sorted by the predicted probability and then colored to indicate the outcome). Here a perfect model would have all cases where conflict actually exists on the right with a predicted probability of $1$, and would predict $0$ in all other cases. All of the models' performance out of sample by these metrics are displayed in figure \ref{fig:roc_ame}. The AME model with covariates is the best performing model out of sample in all cases. This model outperforms each of the GLM variants by a notable margin.
 % % % % % % % % % % % % % % % % % % 
 
 \begin{table}[ht]
 \centering
 	\begin{tabular}{l|l cc}
 	~ & ~ & GLM & AME \\
-	\hline\hline
-		\multirow{2}{*}{Weeks (2012)} & Area Under ROC Curve (AUC-ROC) & 0.64 & \textbf{0.97} \\
-		~ & Area Under PR Curve (AUC-PR) & 0.00 & \textbf{0.15} \\
-		\hline
-		\multirow{2}{*}{Reiter \& Stam (2003)} & AUC (ROC) & 0.92 & \textbf{0.96} \\
-		~ & AUC (PR) & 0.08 & \textbf{0.15} \\
-		\hline
-		\multirow{2}{*}{McDonald (2004)} & AUC (ROC) & 0.92 & \textbf{0.99} \\
-		~ & AUC (PR) & 0.13 & \textbf{0.28} \\
-		\hline
-		\multirow{2}{*}{Gibler (2017)} & AUC (ROC) & 0.52 & \textbf{0.91} \\
-		~ & AUC (PR) & 0.00 & \textbf{0.08} \\
-		\hline
-		\multirow{2}{*}{Rose (2004)} & Root Mean Squared Error (RMSE) & 3.23 & \textbf{1.99} \\
-		~ & Root Median Squared Error (RMDSE) & 2.01 & \textbf{1.06} \\
-	\hline\hline
+	\toprule
+\multirow{2}{*}{Reiter \& Stam (2003)} & AUC (ROC) & 0.92 & \textbf{0.96} \\
+		~ & AUC (PR) & 0.08 & \textbf{0.15} \\		\midrule
+\multirow{2}{*}{McDonald (2004)} & AUC (ROC) & 0.92 & \textbf{0.99} \\
+		~ & AUC (PR) & 0.13 & \textbf{0.28} \\		\midrule
+\multirow{2}{*}{Rose (2004)} & Root Mean Squared Error (RMSE) & 3.23 & \textbf{1.99} \\
+		~ & Root Median Squared Error (RMDSE) & 2.01 & \textbf{1.06} \\	\midrule
+\multirow{2}{*}{Weeks (2012)} & Area Under ROC Curve (AUC-ROC) & 0.64 & \textbf{0.97} \\
+		~ & Area Under PR Curve (AUC-PR) & 0.00 & \textbf{0.15} \\		\midrule
+\multirow{2}{*}{Gibler (2017)} & AUC (ROC) & 0.52 & \textbf{0.91} \\
+		~ & AUC (PR) & 0.00 & \textbf{0.08} \\			\bottomrule
 	\end{tabular}
 	\caption{Here we provide a summary of the out-of-sample performance based on our cross-validation strategy for each of the five replications when using the standard dyadic approach and our network based approach. Four of the five studies involved a binary dependent variable, so for those measures we provide area under the curve (AUC) statistics. The fifth involved a gaussian dependent variable and for that we use the root mean squared error (RMSE) and root median squared error (RMDSE). Cases in which our network based approach outperformed the standard approach are highlighted in bold.}
 	\label{tab:modelPerfSumm}
 \end{table}
 \FloatBarrier
 
+%%% TO HERE
 \subsection{Replication of Weeks (2012)}
 
 \citet{weeks:2012} examines the influence of domestic institutions on the initiation of military conflicts by autocratic leaders.  She argues that in some circumstances autocrats are held accountable for their foreign policy decisions. She adds the nuance that autocratic audiences are not homogeneous. When the autocratic regime is nonmilitary, the domestic audience do not favor military actions, but in military autocracies this is not the case. Further she argues that in personalistic regimes without a military or civilian domestic audience, the leaders tend to be more likely to employ military force in their foreign policy.  To study this question, she uses a dyadic design in which the dependent variable is ``whether country A in a directed dyad initiated military conflict against country B during year t'' (page 337).  These data come from the Militarized Interstate Disputes database \citep{maoz:2005}.  One major innovation in her study resides in the nuanced way in which she conceptualized and coded regime type into four types: a) Machine, b) Junta, c) Boss, and d) Strongmen. She also includes a variety of putative control variables focusing on capabilities for both sides of the dyad, alliances, geography, trade dependence, regime instability, and the regime type of ``side B.''  She uses a logistic regression, but follows \citet{beck:etal:1998} and includes splines to capture temporal covariation in the dependent variable along with  fixed, unit effects. The analysis is done for dyads, but is considered to be from the perspective of the actor that initiated the dispute. Her time frame is from 1946-1999.  The basic finding is that a) juntas, bosses, and strongmen are more likely to initiate conflict than machines (and maybe democracies) and that b) machines are no more belligerent than democracies.  These insights are mainly determined by looking at coefficients and their putative significance in Tables 1 and 2 (pages 339--340). She makes the argument that ignoring important nuances between different types of autocracies hinders our understanding of the initiation of military conflict by autocracies. 
