@@ -1,14 +1,14 @@
 ## replication Rose 2004 WTO --> trade
 
 # load pkg
-source("/Users/howardliu/Dropbox/netsRep_Howard_Max/rose2004/clusteredSE.R")
-source("/Users/howardliu/Dropbox/netsRep_Howard_Max/rose2004/LoadPkg.R")
+source("/Users/howardliu/Dropbox/netsMatter/replications/rose2004/clusteredSE.R")
+source("/Users/howardliu/Dropbox/netsMatter/replications/rose2004/LoadPkg.R")
 
 packs = c('foreign','dplyr', 'ggplot2', 'readr', 'lmtest','multiwayvcov')
 loadPkg(packs)
 
 # data
-data = read.dta("/Users/howardliu/Dropbox/netsRep_Howard_Max/rose2004/data4web.dta")
+data = read.dta("/Users/howardliu/Dropbox/netsMatter/replications/rose2004/data4web.dta")
 #names(data)
 
 # mod1
