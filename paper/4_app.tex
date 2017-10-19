@@ -1,11 +1,11 @@
-\section{Replications}
+\section{Re-estimation with AME}
  
 \subsection{Design}
 
 We choose five prominent studies from the broad field of international relations and international political economy that utilize relational data \citep{reiter:stam:2003, mcdonald:2004,  rose:2004, weeks:2012, gibler:2017}. These studies are recent and have been cited over 100 times. Each of these pieces was published in a prominent journal and is well-known in the literature. Each used the standard approach in political science, which is to employ some form of a general linearized regression that ignores dyadic interdependencies, except as they may reveal themselves in included variables. Also part of the gold standard is a post estimation cleanup thought to be a paliative, and each of these studies adjust the posterior standard errors in an attempt to account for the clustering of observations.
 
 \begin{table}
-\caption{Features of the Studies Replicated. }
+\caption{Features of the Studies Re-estimated. }
 	\begin{tabular}{lcccccc}
 & Model &  N. Actors  & N. Dyads & Dyads Type & Clustering $\sigma_{\hat{\beta}}$ \\ \toprule
 Reiter \& Stam (2003) & Logit & 193 & $753,456$ & Directed & Robust \\	
@@ -76,36 +76,12 @@ We utilize three performance criterions to compare the models: Receiver Operator
 \end{table}
 \FloatBarrier
 
-%%% TO HERE
-\subsection{Replication of Weeks (2012)}
-
-\citet{weeks:2012} examines the influence of domestic institutions on the initiation of military conflicts by autocratic leaders.  She argues that in some circumstances autocrats are held accountable for their foreign policy decisions. She adds the nuance that autocratic audiences are not homogeneous. When the autocratic regime is nonmilitary, the domestic audience do not favor military actions, but in military autocracies this is not the case. Further she argues that in personalistic regimes without a military or civilian domestic audience, the leaders tend to be more likely to employ military force in their foreign policy.  To study this question, she uses a dyadic design in which the dependent variable is ``whether country A in a directed dyad initiated military conflict against country B during year t'' (page 337).  These data come from the Militarized Interstate Disputes database \citep{maoz:2005}.  One major innovation in her study resides in the nuanced way in which she conceptualized and coded regime type into four types: a) Machine, b) Junta, c) Boss, and d) Strongmen. She also includes a variety of putative control variables focusing on capabilities for both sides of the dyad, alliances, geography, trade dependence, regime instability, and the regime type of ``side B.''  She uses a logistic regression, but follows \citet{beck:etal:1998} and includes splines to capture temporal covariation in the dependent variable along with  fixed, unit effects. The analysis is done for dyads, but is considered to be from the perspective of the actor that initiated the dispute. Her time frame is from 1946-1999.  The basic finding is that a) juntas, bosses, and strongmen are more likely to initiate conflict than machines (and maybe democracies) and that b) machines are no more belligerent than democracies.  These insights are mainly determined by looking at coefficients and their putative significance in Tables 1 and 2 (pages 339--340). She makes the argument that ignoring important nuances between different types of autocracies hinders our understanding of the initiation of military conflict by autocracies. 
-
-The replication of \citet{weeks:2012} likely has the sharpest divergence between the General Linear Model results and those of the AME Model. In Weeks's initial models,  she finds that machines are less prone to initiate conflict than the reference category, whereas Juntas, Bosses and Strong-men are more conflict-prone, in line with her theoretical expectations. When we look at the posterior distribution of these coefficients in the AME results, we find that none of these values are distinguishable from zero. We similarly find less pronounced effects for military capabilities. One explanation for this divergence is the AME model's ability to account for third order effects. Inspection of the multiplicative effects in Figure~\ref{fig:weekscirc} reveals a number of clusters of states which exhibit structural equivalence -- in the top right corner we see states like the US, the UK, and Israel who often send conflict to similar targets. In particular, we observe a cluster of ``rogue states,'' who are receivers of conflict, in the top right (Iran, Iraq, Syria, Libya, North Korea). In the bottom corner we see a cluster of authoritarian senders including Iraq, Russia, Syria, North Korea and China. In general, these clusters have similar governmental types (Iraq, Syria, Libya, and North Korea all fell under the ``boss" category), and similar conflict behavior. So, in the GLM, which ignores these third order dependencies, much of these results might have been attributed to regime type. The AME model, on the other hand, finds that it is more efficient to attribute this behavior to the multiplicative effects. In terms of out of sample performance, shown in Figure~\ref{fig:weeksauc}, the AME model performs markedly better than the GLM out of sample, lending credence to the possibility that these third order dependencies cause spurious effects for regime type.
-
-\begin{figure}
-	\includegraphics[width=\textwidth]{weeks_coefs_all.pdf}
-	\caption{\label{fig:weeksCoef} Coefficient plot of Weeks' (2012) original model (blue) compared to AME model (red). }
-\end{figure}
-
-\begin{figure}
-\centering   
-	\subfigure[AUC]{\label{fig:weeksauc}\includegraphics[width=65mm]{weeks_auc_outsamp.pdf}}
-	\subfigure[Precision and Recall]{\label{fig:reitpr}\includegraphics[width=65mm]{weeks_pr_outsamp.pdf}}
-	\caption{Assessments of out-of-sample predictive performance for Weeks (2012) using ROC curves and PR curves.}
-\end{figure}
-
-\begin{figure}
-	\includegraphics[width=\textwidth]{weeks_circPlot.pdf}
-	\caption{\label{fig:weekscirc} Visualization of multiplicative effects for Weeks (2012). Blue represents groups with common sending patterns and red represents groups with common receiving patterns.}
-\end{figure}
-
 \subsection{Replication of Reiter \& Stam (2003)}
 
 \citet{reiter:stam:2003} examine the relationship between democracy, dictatorship and the initiation of militarized disputes.  They use directed dyads and find that dyads involving a democratic leader on the one hand and a personalist dictator on the other tend to be violent. They also discover that dictators are likely to challenge democracies, but that this is not reciprocal.  In addition, military regimes and single-party regimes are more prone to initiate disputes with democracies, than the other way around.  They use the MID data, but note that ``We code a state as having initiated a dispute if it is on `side A' of a MID, the conventional approach to coding initiation. This means that the state was on the side that took the first action in the dispute, whether that action was the threat, display, or use of force. We code joiners as initiators or targets, though the results do not change if we do not code joiners as initiators or targets. \ldots Though coding initiation will always be difficult, the `side A' variable has been widely used in past conflict scholarship (page 334).'' Independent variables are largely taken from an earlier study and focus on various encodings of regime types, contiguity, alliance, and capability measures. As is prevalent in these kinds of studies, Reiter \& Stam employ a logistic regression that includes an indicator of the time since the last dispute as well as three cubic splines. The database for this study is constructed using EUGene \citep{bennett:stam:2000} and comprises approximately three-quarters of a million stacked dyads. Based on their statistical analysis, they conclude that institutional constraints affect the propensity of democratic and non-democratic leaders to engage in military conflict. 
 
-In the original model, the variable ``Pers/Democ Directed Dyad" (which represents a Personalist $\rightarrow$ Democractic directed dyad) is clearly positive while the variable ``Democ/Personalist Directed Dyad'' is zero and the difference between the two coefficients is clearly distinct from zero. In our replication using the AME framework, we also find that Pers-Democ directed dyad has a positive effect with zero excluded from the 95\% confidence interval while Democ-Pers directed dyad is indistinguishable from zero. Using this model, however, we can no longer conclusively say that the Pers/Democratic coefficient is larger than the Democ/Personalist one.
-Our replication using the AME approach therefore cast some doubt on Reiter \& Stam's key claim that MIDs initiated by personalist dictatorships against democracies are more likely than MIDS initiated by democracies. Further, the effect of most of the covariates in the literature thought to predict interstate MIDs are much closer to zero when using the AME framework. Finally, our modeling approach outperforms the original model by better, and more accurately, predicting MIDs out-of-sample (Figure~\ref{fig:reitaucpr} and Figure ~\ref{fig:reitpr}).  
+In the original model, the variable ``Pers/Democ Directed Dyad" (which represents a Personalist $\rightarrow$ Democractic directed dyad) is clearly positive while the variable ``Democ/Personalist Directed Dyad'' is zero and the difference between the two coefficients is clearly distinct from zero. In our re-estimation using the AME framework, we also find that Pers-Democ directed dyad has a positive effect with zero excluded from the 95\% confidence interval while Democ-Pers directed dyad is indistinguishable from zero. Using this model, however, we can no longer conclusively say that the Pers/Democratic coefficient is larger than the Democ/Personalist one.
+Our re-extimation using the AME approach therefore cast some doubt on Reiter \& Stam's key claim that MIDs initiated by personalist dictatorships against democracies are more likely than MIDS initiated by democracies. Further, the effect of most of the covariates in the literature thought to predict interstate MIDs are much closer to zero when using the AME framework. Finally, our modeling approach outperforms the original model by better, and more accurately, predicting MIDs out-of-sample (Figure~\ref{fig:reitaucpr} and Figure ~\ref{fig:reitpr}).  
 
 \begin{figure}
 \includegraphics[width=\textwidth]{reiter_coefs_all.pdf}
@@ -118,6 +94,26 @@ Our replication using the AME approach therefore cast some doubt on Reiter \& St
 \subfigure[Precision and Recall]{\label{fig:reitpr}\includegraphics[width=65mm]{reiter_pr_outsamp.pdf}}
 \caption{Assessments of out-of-sample predictive performance for Reiter \& Stam (2003) using ROC curves and PR curves.}
 \end{figure}
+
+\floatbarrier
+\subsection{Replication of McDonald (2004)}
+
+\citet{mcdonald:2004} studies whether trade promotes peace between nations. The link between conflict and trade is perplexing, with many presistent, yet competing explanations. \citet{mcdonald:2004} includes the argument that interdependence between states ``makes conflict less likely because of its efficiency over conquest in acquiring resources\ldots (547)''. Accordingly, his primary contribution is to provide evidence challenging the generalized linkage between peace and trade and to offer a new measurement of the key independent variable, trade. \citet{mcdonald:2004} refines the trade variable, arguing that \textit{free} trade, rather than trade alone, reduces the likelihood of conflict between states. His key hypothesis that greater levels of protection increase the probability of interstate conflict, an argument that builds on the work of classic liberalism and connects free trade to the power of domestic audiences. \citet{mcdonald:2004} measures free trade in two ways. The first captures the idea that larger protected sectors generate greater societal pressures resulting in pockets of support for war. This protection variable measures the proportion of customs revenue divided by total imports in the state that possesses the greater such ratio in each dyad. This measure captures the score of the state in the dyad that possesses higher barriers to trade (560). \citet{mcdonald:2004} also includes a measure of economic integration  calculated as ``the lower proportion of total dyadic trade (imports plus exports) divided by state $i$'s GDP or total dyadic trade divided by state $j$'s GDP'' (560). The binary, dependent variable is the onset of a new militarized interstate dispute within a given dyad. \citet{mcdonald:2004} employs logistic regression to examine the putative statistical significance of these variables. The models include splines to correct for temporal dependence, and robust standard errors clustered on each dyad.
+
+% TO DO: include discussion and analysis of different K's in appendix (for M cD)
+\begin{figure}
+\includegraphics[width=\textwidth]{McDonald_coefs.pdf}
+\caption{\label{fig:mcdCoefs}Coefficient plot of McDonald (2004)'s original model (blue) compared to AME model (red).}
+\end{figure}
+
+%\begin{figure}
+%\centering   
+%\subfigure[AUC]{\label{fig:mcDauc}\includegraphics[width=65mm]{McDonald_auc_outsamp.pdf}}
+%\subfigure[Precision and Recall]{\label{fig:mcDpr}\includegraphics[width=65mm]{McDonald_pr_outsamp.pdf}}
+%\caption{\label{fig:mcdall} Assessments of out-of-sample predictive performance for McDonald (2004) using ROC curves and PR curves.}
+%\end{figure}
+
+Our re-estimation with AME reveals that trade relations are highly interdependent and exhibit important patterns of transitivity.  Or, in other words, if countries $i$ and $j$ are highly dependent and countries $j$ and $k$ are also highly dependent, then we are likely to observe high dependency between countries $i$ and $k$. Our findings support those of Traag and Lupu (2013) which argue that indirect trade relations reduce the probability of conflict. This indicates that conflict is less likely between members of a trade community. Once we control for these dependencies, we can more clearly interpret the positive link between trade and conflict. Figure~\ref{fig:mcdCoefs} shows the coefficients for both the original and AME model. The most striking thing is that AME finds a positive---not negative as found by McDonald---association between trade dependence and conflict. The AME coefficient is not only in the opposite direction, but it is approximately three times more precisely estimated.  At the same time, the AME has ROC and PR curves (not shown) that dominate the OLS results found in McDonald (2004).
 
 \subsection{Replication of Rose (2004)}
 
@@ -143,28 +139,31 @@ When we compare the results of Rose's original OLS model to the AME model accoun
 %\label{fig:rosesr}
 %\end{figure}
 
-\newpage
-\subsection{Replication of McDonald (2004)}
+ 
 
-\citet{mcdonald:2004} studies whether trade promotes peace between nations. The link between conflict and trade is perplexing, with many presistent, yet competing explanations. \citet{mcdonald:2004} includes the argument that interdependence between states ``makes conflict less likely because of its efficiency over conquest in acquiring resources\ldots (547)''. Accordingly, his primary contribution is to provide evidence challenging the generalized linkage between peace and trade and to offer a new measurement of the key independent variable, trade. \citet{mcdonald:2004} refines the trade variable, arguing that \textit{free} trade, rather than trade alone, reduces the likelihood of conflict between states. His key hypothesis that greater levels of protection increase the probability of interstate conflict, an argument that builds on the work of classic liberalism and connects free trade to the power of domestic audiences. \citet{mcdonald:2004} measures free trade in two ways. The first captures the idea that larger protected sectors generate greater societal pressures resulting in pockets of support for war. This protection variable measures the proportion of customs revenue divided by total imports in the state that possesses the greater such ratio in each dyad. This measure captures the score of the state in the dyad that possesses higher barriers to trade (560). \citet{mcdonald:2004} also includes a measure of economic integration  calculated as ``the lower proportion of total dyadic trade (imports plus exports) divided by state $i$'s GDP or total dyadic trade divided by state $j$'s GDP'' (560). The binary, dependent variable is the onset of a new militarized interstate dispute within a given dyad. \citet{mcdonald:2004} employs logistic regression to examine the putative statistical significance of these variables. The models include splines to correct for temporal dependence, and robust standard errors clustered on each dyad.
 
-% TO DO: include discussion and analysis of different K's in appendix (for M cD)
+\subsection{Replication of Weeks (2012)}
+
+\citet{weeks:2012} examines the influence of domestic institutions on the initiation of military conflicts by autocratic leaders.  She argues that in some circumstances autocrats are held accountable for their foreign policy decisions. She adds the nuance that autocratic audiences are not homogeneous. When the autocratic regime is nonmilitary, the domestic audience do not favor military actions, but in military autocracies this is not the case. Further she argues that in personalistic regimes without a military or civilian domestic audience, the leaders tend to be more likely to employ military force in their foreign policy.  To study this question, she uses a dyadic design in which the dependent variable is ``whether country A in a directed dyad initiated military conflict against country B during year t'' (page 337).  These data come from the Militarized Interstate Disputes database \citep{maoz:2005}.  One major innovation in her study resides in the nuanced way in which she conceptualized and coded regime type into four types: a) Machine, b) Junta, c) Boss, and d) Strongmen. She also includes a variety of putative control variables focusing on capabilities for both sides of the dyad, alliances, geography, trade dependence, regime instability, and the regime type of ``side B.''  She uses a logistic regression, but follows \citet{beck:etal:1998} and includes splines to capture temporal covariation in the dependent variable along with  fixed, unit effects. The analysis is done for dyads, but is considered to be from the perspective of the actor that initiated the dispute. Her time frame is from 1946-1999.  The basic finding is that a) juntas, bosses, and strongmen are more likely to initiate conflict than machines (and maybe democracies) and that b) machines are no more belligerent than democracies.  These insights are mainly determined by looking at coefficients and their putative significance in Tables 1 and 2 (pages 339--340). She makes the argument that ignoring important nuances between different types of autocracies hinders our understanding of the initiation of military conflict by autocracies. 
+
+The re-estimation of \citet{weeks:2012} likely has the sharpest divergence between the General Linear Model results and those of the AME Model. In Weeks's initial models,  she finds that machines are less prone to initiate conflict than the reference category, whereas Juntas, Bosses and Strong-men are more conflict-prone, in line with her theoretical expectations. When we look at the posterior distribution of these coefficients in the AME results, we find that none of these values are distinguishable from zero. We similarly find less pronounced effects for military capabilities. One explanation for this divergence is the AME model's ability to account for third order effects. Inspection of the multiplicative effects in Figure~\ref{fig:weekscirc} reveals a number of clusters of states which exhibit structural equivalence -- in the top right corner we see states like the US, the UK, and Israel who often send conflict to similar targets. In particular, we observe a cluster of ``rogue states,'' who are receivers of conflict, in the top right (Iran, Iraq, Syria, Libya, North Korea). In the bottom corner we see a cluster of authoritarian senders including Iraq, Russia, Syria, North Korea and China. In general, these clusters have similar governmental types (Iraq, Syria, Libya, and North Korea all fell under the ``boss" category), and similar conflict behavior. So, in the GLM, which ignores these third order dependencies, much of these results might have been attributed to regime type. The AME model, on the other hand, finds that it is more efficient to attribute this behavior to the multiplicative effects. In terms of out of sample performance, shown in Figure~\ref{fig:weeksauc}, the AME model performs markedly better than the GLM out of sample, lending credence to the possibility that these third order dependencies cause spurious effects for regime type.
+
 \begin{figure}
-\includegraphics[width=\textwidth]{McDonald_coefs.pdf}
-\caption{\label{fig:mcdCoefs}Coefficient plot of McDonald (2004)'s original model (blue) compared to AME model (red).}
+	\includegraphics[width=\textwidth]{weeks_coefs_all.pdf}
+	\caption{\label{fig:weeksCoef} Coefficient plot of Weeks' (2012) original model (blue) compared to AME model (red). }
 \end{figure}
 
-%\begin{figure}
-%\centering   
-%\subfigure[AUC]{\label{fig:mcDauc}\includegraphics[width=65mm]{McDonald_auc_outsamp.pdf}}
-%\subfigure[Precision and Recall]{\label{fig:mcDpr}\includegraphics[width=65mm]{McDonald_pr_outsamp.pdf}}
-%\caption{\label{fig:mcdall} Assessments of out-of-sample predictive performance for McDonald (2004) using ROC curves and PR curves.}
-%\end{figure}
+\begin{figure}
+\centering   
+	\subfigure[AUC]{\label{fig:weeksauc}\includegraphics[width=65mm]{weeks_auc_outsamp.pdf}}
+	\subfigure[Precision and Recall]{\label{fig:reitpr}\includegraphics[width=65mm]{weeks_pr_outsamp.pdf}}
+	\caption{Assessments of out-of-sample predictive performance for Weeks (2012) using ROC curves and PR curves.}
+\end{figure}
 
-% TO DO: fix bib
-
-Our replication reveals that trade relations are highly interdependent and exhibit important patterns of transitivity.  Or, in other words, if countries $i$ and $j$ are highly dependent and countries $j$ and $k$ are also highly dependent, then we are likely to observe high dependency between countries $i$ and $k$. Our findings support those of Traag and Lupu (2013) which argue that indirect trade relations reduce the probability of conflict. This indicates that conflict is less likely between members of a trade community. Once we control for these dependencies, we can more clearly interpret the positive link between trade and conflict. Figure~\ref{fig:mcdCoefs} shows the coefficients for both the original and AME model. The most striking thing is that AME finds a positive---not negative as found by McDonald---association between trade dependence and conflict. The AME coefficient is not only in the opposite direction, but it is approximately three times more precisely estimated.  At the same time, the AME has ROC and PR curves (not shown) that dominate the OLS results found in McDonald (2004).
-
+\begin{figure}
+	\includegraphics[width=\textwidth]{weeks_circPlot.pdf}
+	\caption{\label{fig:weekscirc} Visualization of multiplicative effects for Weeks (2012). Blue represents groups with common sending patterns and red represents groups with common receiving patterns.}
+\end{figure}
 
 
 \subsection{Replication of Gibler (2017)}
@@ -207,3 +206,6 @@ Beyond more informative fixed effect coefficients, the \texttt{amen} approach al
 \includegraphics[width=\textwidth]{netplots}
 \end{figure}
 \FloatBarrier
+
+
+\subsection{Lessons Learned from Re-estimating Five Prominent Studies}
