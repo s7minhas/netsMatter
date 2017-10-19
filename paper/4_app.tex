@@ -52,7 +52,7 @@ In addition, we also examine the predictions made with each approach using an ou
 
 We set a number of benchmarks for comparison. First, we compare the AME model to a GLM model (that used in the original study) using the same covariates to show the effect of accounting for network dependencies on predicting conflict. We supplement this with an alternative GLM that includes not just these covariates, but also a lagged dependent variable and a lagged reciprocity term. The lagged dependent variable is the equivalent of saying that conflict and peace are relatively likely to persist between dyads, while the inclusion of a lagged reciprocity term in a GLM framework is a simple way to account for retaliatory strikes.
 
-We utilize three performance criterions to compare the models: Receiver Operator Characteristic (ROC) curves, Precision Recall (PR) curves, and separation plots. ROC curves look at the trade-off between true positive rates and false positive rates at different thresholds of classification. An issue with an ROC Curve when looking at conflict, is that it is relatively rare at the dyadic level: in most years only 3\% of possible dyads are in conflict with one another. If peace is common, even a poor model will have a very low False Positive Rate. The ROC curves are best for balanced samples with as many events as non-events. To better assess which models predict the presence of conflict, not just its absence, we look at PR Curves. These examine the trade-offs between the percentage of conflicts a model predicts, and the percentage of predicted conflicts which occur. Lastly, we examine separation plots \citep{greenhill:etal:2011}. These provide an intuitive visualization of the accuracy of our predictions by juxtaposing a line showing the predicted probability of conflict with whether conflict actually occurs for all cases (where the cases are sorted by the predicted probability and then colored to indicate the outcome). Here a perfect model would have all cases where conflict actually exists on the right with a predicted probability of $1$, and would predict $0$ in all other cases. All of the models' performance out of sample by these metrics are displayed in figure \ref{fig:roc_ame}. The AME model with covariates is the best performing model out of sample in all cases. This model outperforms each of the GLM variants by a notable margin.
+We utilize three performance criteria to compare the models: Receiver Operator Characteristic (ROC) curves, Precision Recall (PR) curves, and separation plots. ROC curves look at the trade-off between true positive rates and false positive rates at different thresholds of classification. An issue with an ROC Curve when looking at conflict, is that it is relatively rare at the dyadic level: in most years only 3\% of possible dyads are in conflict with one another. If peace is common, even a poor model will have a very low False Positive Rate. The ROC curves are best for balanced samples with as many events as non-events. To better assess which models predict the presence of conflict, not just its absence, we look at PR Curves. These examine the trade-offs between the percentage of conflicts a model predicts, and the percentage of predicted conflicts which occur. Lastly, we examine separation plots \citep{greenhill:etal:2011}. These provide an intuitive visualization of the accuracy of our predictions by juxtaposing a line showing the predicted probability of conflict with whether conflict actually occurs for all cases (where the cases are sorted by the predicted probability and then colored to indicate the outcome). Here a perfect model would have all cases where conflict actually exists on the right with a predicted probability of $1$, and would predict $0$ in all other cases. All of the models' performance out of sample by these metrics are displayed in figure \ref{fig:roc_ame}. The AME model with covariates is the best performing model out of sample in all cases. This model outperforms each of the GLM variants by a notable margin.
 % % % % % % % % % % % % % % % % % % 
 
 \begin{table}[ht]
@@ -60,16 +60,16 @@ We utilize three performance criterions to compare the models: Receiver Operator
 	\begin{tabular}{l|l cc}
 	~ & ~ & GLM & AME \\
 	\toprule
-\multirow{2}{*}{Reiter \& Stam (2003)} & AUC (ROC) & 0.92 & \textbf{0.96} \\
-		~ & AUC (PR) & 0.08 & \textbf{0.15} \\		\midrule
-\multirow{2}{*}{McDonald (2004)} & AUC (ROC) & 0.92 & \textbf{0.99} \\
-		~ & AUC (PR) & 0.13 & \textbf{0.28} \\		\midrule
-\multirow{2}{*}{Rose (2004)} & Root Mean Squared Error (RMSE) & 3.23 & \textbf{1.99} \\
-		~ & Root Median Squared Error (RMDSE) & 2.01 & \textbf{1.06} \\	\midrule
-\multirow{2}{*}{Weeks (2012)} & Area Under ROC Curve (AUC-ROC) & 0.64 & \textbf{0.97} \\
-		~ & Area Under PR Curve (AUC-PR) & 0.00 & \textbf{0.15} \\		\midrule
-\multirow{2}{*}{Gibler (2017)} & AUC (ROC) & 0.52 & \textbf{0.91} \\
-		~ & AUC (PR) & 0.00 & \textbf{0.08} \\			\bottomrule
+\multirow{2}{*}{Reiter \& Stam (2003)} & AUC (ROC) & 0.92 &   {0.96} \\
+		~ & AUC (PR) & 0.08 &  {0.15} \\		\midrule
+\multirow{2}{*}{McDonald (2004)} & AUC (ROC) & 0.92 &  {0.99} \\
+		~ & AUC (PR) & 0.13 &  {0.28} \\		\midrule
+\multirow{2}{*}{Rose (2004)} & $ (1/n \sum \varepsilon^2)^{1/2} $ (RMSE) & 3.23 &  {1.99} \\
+		~ & $(\text{median}\quad (\varepsilon^2))^{1/2}$ (RMDSE) & 2.01 &  {1.06} \\	\midrule
+\multirow{2}{*}{Weeks (2012)} & Area Under ROC Curve (AUC-ROC) & 0.64 &  {0.97} \\
+		~ & Area Under PR Curve (AUC-PR) & 0.00 &  {0.15} \\		\midrule
+\multirow{2}{*}{Gibler (2017)} & AUC (ROC) & 0.52 &  {0.91} \\
+		~ & AUC (PR) & 0.00 &  {0.08} \\			\bottomrule
 	\end{tabular}
 	\caption{Here we provide a summary of the out-of-sample performance based on our cross-validation strategy for each of the five replications when using the standard dyadic approach and our network based approach. Four of the five studies involved a binary dependent variable, so for those measures we provide area under the curve (AUC) statistics. The Rose study involved a Gaussian dependent variable and for that we use the root mean squared error (RMSE) and root median squared error (RMDSE). Cases in which our network based approach outperformed the standard approach are highlighted in bold.}
 	\label{tab:modelPerfSumm}
@@ -211,3 +211,24 @@ NEW GRAPHICS TO COME AND BE DESCRIBED.
 
 
 \subsection{Lessons Learned from Re-estimating Five Prominent Studies}
+
+First and foremost, many  findings which emerge from models that do not
+take interdependencies into account lose their statistical significance when network effects
+are estimated via AME. This should not be news---since the finding has long been in the theoretical literature, 
+but given the state of current literature in international relations is still pertinent.  Not only
+are coefficients biased in the OLS and logit approaches to the analysis of dyadic data, but they are
+often imprecisely measured, with inflated standard errors.  
+This means that significant testing (for better or worse) is compromised when network effects are ignored.
+
+Second, even when the results from the AME estimation conform with those found in an OLS or logistic regression, new insights
+emerge from the additional information derived. In particular, there is actual information about the dependencies so that
+clusters can be identified, and the extent of reciprocity at the dyad level, as well as among senders and receivers.  This kind of information
+is absent in standard approaches and add to our ability to explain specific as well as general results.
+
+Third, it is clear that the AME approach dominates the OLS and Logit-based approaches in terms of performance. Not only it is better at correctly identifying cases in which the dependent variable takes a value of $0$ (via the ROC curves and associated statistics), but it also dominates at correctly identifying occurrences of the dependent variable in the data (seen via the PR curves and associated statistics).  In the case of studies
+with continuous dependent variables, the AME approach has average error statistics that are about one-half that found in the OLS model. It is rare for
+studies in this area to provide performance statistics, but at the same time that at least one of the studies is unable to identify a single case in spite of having almost a million observations.
+
+Fourth, it is useful to suggest that a lot of what is \textit{known} about international relations based on studies of dyadic data should be taken
+with a grain of salt, until the interdependencies are taken into account.
+
