@@ -11,7 +11,7 @@ We choose five prominent studies from the broad field of international relations
 Reiter \& Stam (2003) & Logit & & & $753,456$ & Directed & Robust \\	McDonald (2004) & Logit & & & $92,354$ & Undirected & Robust\\
 Rose (2004) & OLS & ? &  ?& $234,597$ & Directed & Robust \\	 
 Weeks (2012) & Logit & ? & ?& $901,540$ & Directed & Robust \\
-Gibler (2017) & Logit & ?& ?& $650,557$ & UnDirected & no \\ \bottomrule
+Gibler (2017) & Logit & 21,275 & 193 & $650,557$ & UnDirected & no \\ \bottomrule
 	\end{tabular}
 \end{table}
 
@@ -21,8 +21,9 @@ Finally, in each study we assess whether there is any new substantive finding th
 
 The broader goal, beyond introducing the use of the AME framework in an applied setting, is to examine the extent to which interdependencies within typical dyadic data make much difference in what we have learned about international relations from recent empirical studies that use a framework that ignores dependencies.  We believe that it does, and that the dynamic latent factor model provides a step forward.
 
-
-WE NEED TO TALK ABOUT THIS TABLE AND WHAT THE CRITERIA WERE FOR THE FINAL COLUMN.
+Given current practices, most scholars have a single variable in a complicated empirical model that they look at for evaluating the validity of their empirically estimated models.  Whether putative control variables, for example, are precisely estimated is less important. Generally, interpretations focus on a small set of independent variables.  In the study by Reiter and Stam (2003) the main question is to determine in mixed dyads--consisting of a democratic country and country ruled by a personalist dictatorship--whether it is the
+democratic country or the personalist country that is associated with a greater likelihood that the dyad is in a dispute.  In a regression including fourteen coefficients, they focus on whether the variables that capture whether the initiator is a democratic country are statistically significant.\footnote{In particular, the variables \texttt{Pers/Democ} and \texttt{Democ/Pers} in Model 3, in Table 1, page 335.} In our evaluation we focus on the same question in the re-examination of the Reiter and Stam study to determine whether the model replicates when reestimated within the AME framework. Each of the other four studies also has a crucial finding that we hone in on to further draw into focus the potential differences brought about by utilizing an AME estimation procedure.  In Table~\ref{tab:modelFindingSumm}, we present the overall results; the term \textbf{fails to replicate} indicates only that the sign and/or significance of the crucial finding in the original study is not also found in the AME estimation.
+ 
 
 \begin{table}[ht]
 \centering
@@ -39,10 +40,7 @@ Gibler (2017) & Power Parity at Time of Entry to International System Inceases C
 			\label{tab:modelFindingSumm}
 \end{table}
 
-We also examine the accuracy of the predictions made with each approach. Out-of-sample cross validation strategy. 
-
-% % % % % % % % % % % % % % % % % % 
-By accounting for exogenous and network dependent patterns that give rise to conflict systems we are able to better account for the data generating process underlying relational data structures. To show that this is the case, we examine whether our approach achieves better predictive performance in an out-of-sample context than traditional dyadic models. To evaluate our model, we randomly divide the $\binom n 2 \times T$ data values into $k=30$ sets, letting $s_{ij,t}$ be the set to which pair $ij,t$ is assigned. Then for each $s \in \{1,\ldots,k\}$, we:
+In addition, we also examine the predictions made with each approach using an out-of-sample cross validation strategy. By accounting for exogenous and network dependent patterns that give rise to conflict systems we are able to better account for the data generating process underlying relational data structures. To show that this is the case, we examine whether our approach achieves better predictive performance in an out-of-sample context than traditional dyadic models. To evaluate our model, we randomly divide the $\binom n 2 \times T$ data values into $k=30$ sets, letting $s_{ij,t}$ be the set to which pair $ij,t$ is assigned. Then for each $s \in \{1,\ldots,k\}$, we:
 
 \begin{enumerate}
 	\item estimate model parameters with $\{y_{ij,t}: s_{ij,t} \neq s\}$, the data not in set $s$,
@@ -72,7 +70,7 @@ We utilize three performance criterions to compare the models: Receiver Operator
 \multirow{2}{*}{Gibler (2017)} & AUC (ROC) & 0.52 & \textbf{0.91} \\
 		~ & AUC (PR) & 0.00 & \textbf{0.08} \\			\bottomrule
 	\end{tabular}
-	\caption{Here we provide a summary of the out-of-sample performance based on our cross-validation strategy for each of the five replications when using the standard dyadic approach and our network based approach. Four of the five studies involved a binary dependent variable, so for those measures we provide area under the curve (AUC) statistics. The fifth involved a gaussian dependent variable and for that we use the root mean squared error (RMSE) and root median squared error (RMDSE). Cases in which our network based approach outperformed the standard approach are highlighted in bold.}
+	\caption{Here we provide a summary of the out-of-sample performance based on our cross-validation strategy for each of the five replications when using the standard dyadic approach and our network based approach. Four of the five studies involved a binary dependent variable, so for those measures we provide area under the curve (AUC) statistics. The Rose study involved a Gaussian dependent variable and for that we use the root mean squared error (RMSE) and root median squared error (RMDSE). Cases in which our network based approach outperformed the standard approach are highlighted in bold.}
 	\label{tab:modelPerfSumm}
 \end{table}
 \FloatBarrier
