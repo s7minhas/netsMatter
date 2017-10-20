@@ -2,7 +2,7 @@
  
 \subsection{Design}
 
-We choose five prominent studies from the broad field of international relations and international political economy that utilize relational data \citep{reiter:stam:2003, mcdonald:2004,  rose:2004, weeks:2012, gibler:2017}. These studies are recent and have been cited over 100 times. Each of these pieces was published in a prominent journal and is well-known in the literature. Each used the standard approach in political science, which is to employ some form of a general linearized regression that ignores dyadic interdependencies, except as they may reveal themselves in included variables. Also part of the gold standard is a post estimation cleanup thought to be a paliative, and each of these studies adjust the posterior standard errors in an attempt to account for the clustering of observations.
+We choose five prominent studies from the broad field of international relations and international political economy that utilize relational data \citep{reiter:stam:2003, mcdonald:2004,  rose:2004, weeks:2012, gibler:2017}. These studies are recent and have been cited over 100 times. Each of these pieces was published in a prominent journal and is well-known in the literature. Each used the standard approach in political science, which is to employ some form of a general linearized regression that ignores dyadic interdependencies, except as they may reveal themselves in included variables. Also part of the gold standard is a post estimation cleanup thought to be a palliative, and each of these studies adjust the posterior standard errors in an attempt to account for the clustering of observations.
 
 \begin{table}
 \caption{Features of the Studies Re-estimated. }
@@ -23,8 +23,7 @@ Finally, in each study we assess whether there is any new substantive finding th
 The broader goal, beyond introducing the use of the AME framework in an applied setting, is to examine the extent to which interdependencies within typical dyadic data make much difference in what we have learned about international relations from recent empirical studies that use a framework that ignores dependencies.  We believe that it does, and that the dynamic latent factor model provides a step forward.
 
 Given current practices, most scholars have a single variable in a complicated empirical model that they look at for evaluating the validity of their empirically estimated models.  Whether putative control variables, for example, are precisely estimated is less important. Generally, interpretations focus on a small set of independent variables.  In the study by Reiter and Stam (2003) the main question is to determine in mixed dyads---consisting of a democratic country and country ruled by a personalist dictatorship---whether it is the
-democratic country or the personalist country that is associated with a greater likelihood that the dyad is in a dispute.  In a regression including fourteen coefficients, they focus on whether the variables that capture whether the initiator is a democratic country are statistically significant.\footnote{In particular, the variables \texttt{Pers/Democ} and \texttt{Democ/Pers} in Model 3, in Table 1, page 335.} In our evaluation we focus on the same question in the re-examination of the Reiter and Stam study to determine whether the model replicates when reestimated within the AME framework. Each of the other four studies also has a crucial finding that we hone in on to further draw into focus the potential differences brought about by utilizing an AME estimation procedure.  In Table~\ref{tab:modelFindingSumm}, we present the overall results; the term \textbf{fails to replicate} indicates only that the sign and/or significance of the crucial finding in the original study is not also found in the AME estimation.
- 
+democratic country or the personalist country that is associated with a greater likelihood that the dyad is in a dispute.  In a regression including fourteen coefficients, they focus on whether the variables that capture whether the initiator is a democratic country are statistically significant.\footnote{In particular, the variables \texttt{Pers/Democ} and \texttt{Democ/Pers} in Model 3, in Table 1, page 335.} In our evaluation we focus on the same question in the re-examination of the Reiter and Stam study to determine whether the model replicates when re-estimated within the AME framework. Each of the other four studies also has a crucial finding that we hone in on to further draw into focus the potential differences brought about by utilizing an AME estimation procedure.  In Table~\ref{tab:modelFindingSumm}, we present the overall results; the term \textit{does not replicate} indicates only that the sign and/or significance of the putatively crucial finding in the original study is not also found in the AME estimation.
 
 \begin{table}[ht]
 \centering
@@ -60,16 +59,16 @@ We utilize three performance criteria to compare the models: Receiver Operator C
 	\begin{tabular}{l|l cc}
 	~ & ~ & GLM & AME \\
 	\toprule
-\multirow{2}{*}{Reiter \& Stam (2003)} & AUC (ROC) & 0.92 &   {0.96} \\
-		~ & AUC (PR) & 0.08 &  {0.15} \\		\midrule
-\multirow{2}{*}{McDonald (2004)} & AUC (ROC) & 0.92 &  {0.99} \\
-		~ & AUC (PR) & 0.13 &  {0.28} \\		\midrule
-\multirow{2}{*}{Rose (2004)} & $ (1/n \sum \varepsilon^2)^{1/2} $ (RMSE) & 3.23 &  {1.99} \\
-		~ & $(\text{median}\quad (\varepsilon^2))^{1/2}$ (RMDSE) & 2.01 &  {1.06} \\	\midrule
-\multirow{2}{*}{Weeks (2012)} & Area Under ROC Curve (AUC-ROC) & 0.64 &  {0.97} \\
-		~ & Area Under PR Curve (AUC-PR) & 0.00 &  {0.15} \\		\midrule
-\multirow{2}{*}{Gibler (2017)} & AUC (ROC) & 0.52 &  {0.91} \\
-		~ & AUC (PR) & 0.00 &  {0.08} \\			\bottomrule
+\multirow{2}{*}{Reiter \& Stam (2003)} & Area Under ROC Curve, AUC-ROC & 0.92 & {0.96} \\
+		~ & Area Under PR Curve, AUC-PR & 0.08 &  {0.15} \\		\midrule
+\multirow{2}{*}{McDonald (2004)} & AUC-ROC & 0.92 &  {0.99} \\
+		~ & AUC-PR & 0.13 &  {0.28} \\		\midrule
+\multirow{2}{*}{Rose (2004)} & Root Mean Squared Error RMSE & 3.23 &  {1.99} \\
+		~ & Root Median Squared Error RMDSE & 2.01 &  {1.06} \\	\midrule
+\multirow{2}{*}{Weeks (2012)} & AUC-ROC & 0.64 &  {0.97} \\
+		~ & AUC-PR & 0.00 &  {0.15} \\		\midrule
+\multirow{2}{*}{Gibler (2017)} & AUC-ROC & 0.52 &  {0.91} \\
+		~ & AUC-PR & 0.00 &  {0.08} \\			\bottomrule
 	\end{tabular}
 	\caption{Here we provide a summary of the out-of-sample performance based on our cross-validation strategy for each of the five replications when using the standard dyadic approach and our network based approach. Four of the five studies involved a binary dependent variable, so for those measures we provide area under the curve (AUC) statistics. The Rose study involved a Gaussian dependent variable and for that we use the root mean squared error (RMSE) and root median squared error (RMDSE). Cases in which our network based approach outperformed the standard approach are highlighted in bold.}
 	\label{tab:modelPerfSumm}
@@ -98,7 +97,7 @@ Our re-estimation using the AME approach therefore cast some doubt on Reiter \& 
 
 \subsection{Replication of McDonald (2004)}
 
-\citet{mcdonald:2004} studies whether trade promotes peace between nations. The link between conflict and trade is perplexing, with many presistent, yet competing explanations. \citet{mcdonald:2004} includes the argument that interdependence between states ``makes conflict less likely because of its efficiency over conquest in acquiring resources\ldots (547)''. Accordingly, his primary contribution is to provide evidence challenging the generalized linkage between peace and trade and to offer a new measurement of the key independent variable, trade. \citet{mcdonald:2004} refines the trade variable, arguing that \textit{free} trade, rather than trade alone, reduces the likelihood of conflict between states. His key hypothesis that greater levels of protection increase the probability of interstate conflict, an argument that builds on the work of classic liberalism and connects free trade to the power of domestic audiences. \citet{mcdonald:2004} measures free trade in two ways. The first captures the idea that larger protected sectors generate greater societal pressures resulting in pockets of support for war. This protection variable measures the proportion of customs revenue divided by total imports in the state that possesses the greater such ratio in each dyad. This measure captures the score of the state in the dyad that possesses higher barriers to trade (560). \citet{mcdonald:2004} also includes a measure of economic integration  calculated as ``the lower proportion of total dyadic trade (imports plus exports) divided by state $i$'s GDP or total dyadic trade divided by state $j$'s GDP'' (560). The binary, dependent variable is the onset of a new militarized interstate dispute within a given dyad. \citet{mcdonald:2004} employs logistic regression to examine the putative statistical significance of these variables. The models include splines to correct for temporal dependence, and robust standard errors clustered on each dyad.
+\citet{mcdonald:2004} studies whether trade promotes peace between nations. The link between conflict and trade is perplexing, with many persistent, yet competing explanations. \citet{mcdonald:2004} includes the argument that interdependence between states ``makes conflict less likely because of its efficiency over conquest in acquiring resources\ldots (547)''. Accordingly, his primary contribution is to provide evidence challenging the generalized linkage between peace and trade and to offer a new measurement of the key independent variable, trade. \citet{mcdonald:2004} refines the trade variable, arguing that \textit{free} trade, rather than trade alone, reduces the likelihood of conflict between states. His key hypothesis that greater levels of protection increase the probability of interstate conflict, an argument that builds on the work of classic liberalism and connects free trade to the power of domestic audiences. \citet{mcdonald:2004} measures free trade in two ways. The first captures the idea that larger protected sectors generate greater societal pressures resulting in pockets of support for war. This protection variable measures the proportion of customs revenue divided by total imports in the state that possesses the greater such ratio in each dyad. This measure captures the score of the state in the dyad that possesses higher barriers to trade (560). \citet{mcdonald:2004} also includes a measure of economic integration  calculated as ``the lower proportion of total dyadic trade (imports plus exports) divided by state $i$'s GDP or total dyadic trade divided by state $j$'s GDP'' (560). The binary, dependent variable is the onset of a new militarized interstate dispute within a given dyad. \citet{mcdonald:2004} employs logistic regression to examine the putative statistical significance of these variables. The models include splines to correct for temporal dependence, and robust standard errors clustered on each dyad.
 
 % TO DO: include discussion and analysis of different K's in appendix (for M cD)
 \begin{figure}
@@ -121,26 +120,11 @@ In 2004, Andrew Rose published a study in the \textit{American Economic Review} 
 
 When we compare the results of Rose's original OLS model to the AME model accounting for network dependencies, the results are generally similar. The main result of the model---the null effect of membership in the WTO, as represented by the ``One-In" and ``Both-In" variables---persists in the AME model. However, while in the original model there was a clear positive relationship between Real GDP and Trade, most of this effect vanishes in the AME model. The random effects shown in Figure~\ref{fig:roser} reveal the cause of much of this divergence. Here, the states with the most positive random effects are also states with high GDP, though not necessarily high GDP/capita.\footnote{Note: Qatar exhibits strongly negative random effects.} Thus, the effect of GDP in the original model was, in part, an artifact of first-order dependencies. Most of the other results of the model are constant across each model, though some geographic features, such as islands and landlocked states, have a more clear effect on trade once we account for these network dependencies. When we account for network interdependencies, we observe a markedly lower Root Mean Squared Error out-of-sample---$3.23$ for the OLS model and $1.77$ for the AME model. While the basic model replicates with the basic result, there are substantial and substantive improvements gleaned from the AME results.
 
-%\begin{figure}
-%\includegraphics[width=\textwidth]{rose_coefs_all_final.pdf}
-% \caption{Coefficient plot of Rose (2004)'s original model (blue) compared to AME model (red).}\label{fig:roseCoef}
-%\end{figure}
-
 \begin{figure}
 \includegraphics[width=\textwidth]{rose_aeff_top10.pdf}
  \caption{Nodal Random Effects for AME estimation of Rose (2004)}\label{fig:roser}
 \end{figure}
 \FloatBarrier
-%\begin{figure}
-%\centering   
-%\subfigure[Nodal Random Effects]%{\label{fig:rosesend}\includegraphics[width=65mm]{ABplot_rose_top10.pdf}}
-%\subfigure[Receiver Random Effects]{\label{fig:rosereceive}\includegraphics[width=65mm]{ABplot_receiver_rose.pdf}}
-%\caption{Sender and receiver random effects for AME estimation of Rose (2004).}
-%\label{fig:rosesr}
-%\end{figure}
-
- 
-
 
 \subsection{Replication of Weeks (2012)}
 
@@ -148,11 +132,6 @@ When we compare the results of Rose's original OLS model to the AME model accoun
 
 The re-estimation of \citet{weeks:2012} likely has the sharpest divergence between the General Linear Model results and those of the AME Model. In Weeks's initial models,  she finds that machines are less prone to initiate conflict than the reference category, whereas Juntas, Bosses and Strong-men are more conflict-prone, in line with her theoretical expectations. When we look at the posterior distribution of these coefficients in the AME results, we find that none of these values are distinguishable from zero. We similarly find less pronounced effects for military capabilities. One explanation for this divergence is the AME model's ability to account for third order effects. Inspection of the multiplicative effects in Figure~\ref{fig:weekscirc} reveals a number of clusters of states which exhibit structural equivalence -- in the top right corner we see states like the US, the UK, and Israel who often send conflict to similar targets. In particular, we observe a cluster of ``rogue states,'' who are receivers of conflict, in the top right (Iran, Iraq, Syria, Libya, North Korea). In the bottom corner we see a cluster of authoritarian senders including Iraq, Russia, Syria, North Korea and China. In general, these clusters have similar governmental types (Iraq, Syria, Libya, and North Korea all fell under the ``boss" category), and similar conflict behavior. So, in the GLM, which ignores these third order dependencies, much of these results might have been attributed to regime type. The AME model, on the other hand, finds that it is more efficient to attribute this behavior to the multiplicative effects. In terms of out-of-sample performance, shown in Figure~\ref{fig:weeksauc}, the AME model performs markedly better than the GLM out of sample, lending credence to the possibility that these third order dependencies cause spurious effects for regime type.
 
-%. THINK THIS IS GONE 
-%\begin{figure}
-%	\includegraphics[width=\textwidth]{weeks_coefs_all.pdf}
-%	\caption{\label{fig:weeksCoef} Coefficient plot of Weeks' (2012) original model (blue) compared to AME model (red). }
-%\end{figure}
 \begin{figure}
 	\includegraphics[width=\textwidth]{weeks_circPlot.pdf}
 	\caption{\label{fig:weekscirc} Visualization of multiplicative effects for Weeks (2012). Blue represents groups with common sending patterns and red represents groups with common receiving patterns.}
@@ -167,13 +146,15 @@ The re-estimation of \citet{weeks:2012} likely has the sharpest divergence betwe
 
 \subsection{Replication of Gibler (2017)}
 
-% We chose this article because it is published in 2017, demonstrating that the concern with interdependence continues to the present and because it was published in the so-called flagship journal of political science, \textit{The American Political Science Review.} It examines the link between dyadic capability differences and international conflict in terms of how and when states became independent members of the international system.  It assumes that membership in the international system---defined in typical ways---has a substantial influence on capabilities. In the same way that capabilities don't seem to vary enormously over time, at least comparatively, states become independent in a particular location, clustered with surrounding states. Neither does this change much over time. Gibler shows that the long-standing relationship between the relative parity of capabilities and initiation of international conflict is almost completely mediated by the initial conditions for the members of the dyad when they joined the international system as sovereign members. This finding calls into question many IR theories about the role of balance in terms of generating international conflict \citep{organski:1958}.
 
 The replications we have undertaken are all from articles over the past fifteen years.  A more recent example is \citet{gibler:2017} which examines the onset of militarized disputes using capabilities, joint democracy, alliances, and power parity in a undirected dyadic study using logistic regression and dyad clustered standard errors.   In addition to this, Gibler shows that the long-standing relationship between the relative parity of capabilities and initiation of international conflict is almost completely mediated by the initial conditions for the members of the dyad when they joined the international system as sovereign members. This finding calls into question many IR theories about the role of balance in terms of generating international conflict \citep{organski:1958}.
 
+
+THIS TABLE WILL BECOME A FIGURE, and skedaddle. 
+
 \begin{table}
 \begin{center}
-\caption{Comparison of Gibler (2017) Model 6 results with AME results. This was run over a chain of $10,000$ iterations.  \label{tab:gibme}}
+\caption{Comparison of Gibler (2017) Model 6 results with AME results. This was run over a chain of $10,000 \text{BAZILLION}$ iterations.  \label{tab:gibme}}
 \begin{tabular}{lrr} \toprule
 & \multicolumn{2}{c}{$\hat{\beta}$ Estimates}\\ \cmidrule{2-3}
 Variable & \texttt{logit} & \texttt{amen} \\ \midrule
@@ -190,49 +171,36 @@ Rivalry &\bf 2.031&\bf 0.721\\
 Constant &\bf -5.526 & \bf  -2.581\\ \bottomrule
 \end{tabular}\\
 \end{center}
-{\bf Note}: {\bf Bold} indicates conventional statistical significance at $p < 0.05$ or less in Gibler (2017). For comparative purposes, only, we have employed the same criterion to the results from the \texttt{amen} estimation.
+{\bf Note}: {\bf Bold} indicates conventional statistical significance at $p < 0.05$ or less in Gibler (2017). For comparative purposes, only, we have employed the same criterion to the results from the \texttt{amen} estimation. NEED TO BE FIXED if staying.
 \end{table}
 
-We re-estimated model 6 from Table 6 (2017,34). The results are presented in Table~\ref{tab:gibme} in order to facilitate explicit comparison.
-The results obtained with \texttt{amen} stand in stark contrast to those found with a logistic regression (with dyad clustered, robust standard errors).  Most importantly, the primary variable from the Gibler study, parity of the members of a dyad at the year in which they entered the international system, is shown to be unimportant in the amen results.  Not only is the value of the this parameter small, but it has a very large relative standard error, over a magnitude larger than the parameter itself ($z= 0.038$). In addition, joint democracy follows the same pattern of importance in the logistic results, but this disappears once interdependencies are modeled.  As might be expected the strong geographic clustering in the original study is about one-quarter as strong in the \texttt{amen} estimations. Similarly, rivalry coefficients are about one-third the size in the \texttt{amen} formulation, but a great deal more precisely measured ($z=18.116$). 
+We re-estimated model 6 from Table 6 (2017, 34). The results are presented in Table~\ref{tab:gibme} in order to facilitate explicit comparison.
+The results obtained with \texttt{amen} stand in stark contrast to those found with a logistic regression (with dyad clustered, robust standard errors).  Most importantly, the primary variable from the Gibler study, parity of the members of a dyad at the year in which they entered the international system, is shown to be unimportant in the AME results.  Not only is the value of this parameter small, but it has a very large relative standard error---over a magnitude larger than the parameter itself ($z= 0.038$). In addition, the variable indicating whether both members of the dyad were coded as democracies (joint democracy) follows the same pattern: important and strong in the logistic results, but this disappears once interdependencies are modeled.  As might be expected, the strong geographic clustering in the original study is about one-quarter as strong in the AME estimations. Similarly, rivalry coefficients are about one-third the size in the AME formulation, but a great deal more precisely measured ($z=18.116$). 
 
-We utilized the original and the AME results from Gibler's model 6 in Table 6 (as above) to calculate the expected values for one scenario. We focused on the variables measuring rivalry.  We used mean or modal values for all independent variables, except we 
+We utilized the original and the AME results from Gibler's model 6 in Table 6 (as above) to calculate the expected values for one scenario. We focused on the variables measuring rivalry.  We used mean or modal values for all independent variables, except we changed the rivalry variable to indicate that there was a rivalry when the actual data suggest there is none.  The expected values of this scenario are essentially a first difference plot comparing results with the model when estimated in two different ways: Gibler's GLM estimation and our AME approach.  As this Figure~\ref{fig:gibmargeff} illustrates, the AME results differ from the GLM in two distinct ways. First, the expected value of the dependent variable---the probability of the onset of a militarized interstate dispute, is considerably higher when taking interdependencies into account with the AME model.  These are rare events, so the probabilities are low, but the difference is a factor of $3x$. Thus, you get quite substantially different expected values from these two models.  Second, the GLM model has a standard errors which underestimate the true variability, in part because some of them are assumed to be zero.  This shows up in the narrow density of predicted outcomes for the GLM model, compared to the density seen with the AME. The latter reflects a wider range of potential outcomes, reflecting the incorporation of uncertainty in the AME model.
 
-Beyond more informative fixed effect coefficients, the \texttt{amen} approach also provides information about the interdependencies that were modeled. The most pertinent of these may be the dyadic and triadic dependencies which are presented in Figure~\ref{fig:gibler:dyadtriad}, which further reveal that the assumption of independence among the dyadic data in this study can be strongly rejected. Perhaps most importantly, the main substantive conclusions of the 2017 Gibler study do not seem warranted from the perspective of the results obtained with the \texttt{amen} estimation that explicitly models \first- \second-, and \third-order interdependencies. Not only do the estimated coefficients tell a different story, but the assumptions under which the original results would hold are shown to be violated by the data.
+\begin{figure}
+	\caption{}
+	\includegraphics[width=\textwidth]{gibler_srmvc.pdf}
+ 	\label{fig:gibmargeff}
+ \end{figure}
 
-% MDW to SM:  yeah, Rose has so many variables that the network effects aren't that strong.
-% Maybe we should mention this. If you put in a gazillion variables you might be okay.
-% SM to MW: hmmm we should talk about the utility of this.
-% see fig gibler_srmvc.pdf in the paper dir
-% \begin{figure}
-% 	\caption{}
-% 	\includegraphics[width=\textwidth]{gibler_srmvc.pdf}
-% 	\label{fig:gibler:dyadtriad}
-% \end{figure}
-% \FloatBarrier
-
+Beyond more informative fixed-effects coefficients, the AME approach also provides information about the interdependencies that were modeled. The assumption of independence among the dyadic data in this study can be strongly rejected. Perhaps most importantly, the main substantive conclusions of the 2017 Gibler study do not seem warranted from the perspective of the results obtained with the \texttt{amen} estimation that explicitly models \first- \second-, and \third-order interdependencies. Not only do the estimated coefficients tell a different story, but the assumptions under which the original results would hold are shown to be violated by the data.
 
 \subsection{Lessons Learned from Re-estimating Five Prominent Studies}
 
-First and foremost, many  findings which emerge from models that do not
-take interdependencies into account lose their statistical significance when network effects
-are estimated via AME. This should not be news---since the finding has long been in the theoretical literature, 
-but given the state of current literature in international relations is still pertinent.  Not only
-are coefficients biased in the OLS and logit approaches to the analysis of dyadic data, but they are
-often imprecisely measured, with inflated standard errors.  
-This means that significant testing (for better or worse) is compromised when network effects are ignored.
+First and foremost, many  findings which emerge from models that do not take interdependencies into account lose their statistical significance when network effects are estimated via AME. This should not be news---since the finding has long been in the theoretical literature, but given the state of current literature in international relations is still pertinent.  Not only
+are coefficients biased in the OLS and logit approaches to the analysis of dyadic data, but they are often imprecisely measured, with inflated standard errors.  This means that significant testing (for better or worse) is compromised when network effects are ignored.
 
 Second, even when the results from the AME estimation conform with those found in an OLS or logistic regression, new insights
-emerge from the additional information derived. In particular, there is actual information about the dependencies so that
-clusters can be identified, and the extent of reciprocity at the dyad level, as well as among senders and receivers.  This kind of information
+emerge from the additional information derived. In particular, there is actual information about the dependencies so that clusters can be identified, and the extent of reciprocity at the dyad level, as well as among senders and receivers.  This kind of information
 is absent in standard approaches and add to our ability to explain specific as well as general results.
 
-Third, it is clear that the AME approach dominates the OLS and Logit-based approaches in terms of performance. Not only it is better at correctly identifying cases in which the dependent variable takes a value of $0$ (via the ROC curves and associated statistics), but it also dominates at correctly identifying occurrences of the dependent variable in the data (seen via the PR curves and associated statistics).  In the case of studies
-with continuous dependent variables, the AME approach has average error statistics that are about one-half that found in the OLS model. It is rare for
-studies in this area to provide performance statistics, but at the same time that at least one of the studies is unable to identify a single case in spite of having almost a million observations.
+Third, it is evident that the actual results---not the estimated coefficents and their covariances---which are generated by the models differ greatly in expectations.  This implies that policy experimentations with the models, as well as scenario-based simulations and forecasting of GLM models are likely to often give misleading results compared to the AME approach.
 
-Fourth, it is useful to suggest that a lot of what is \textit{known} about international relations based on studies of dyadic data should be taken
-with a grain of salt, and awaits a reassessment using methods that do not rely on an assumption that all the dyads are
-independent and identically distributed.
+Fourth, it is clear that the AME approach dominates the OLS and Logit-based approaches in terms of performance. Not only it is better at correctly identifying cases in which the dependent variable takes a value of $0$ (via the ROC curves and associated statistics), but it also dominates at correctly identifying occurrences of the dependent variable in the data (seen via the PR curves and associated statistics).  In the case of studies
+with continuous dependent variables, the AME approach has average error statistics that are about one-half that found in the OLS model. It is rare for studies in this area to provide performance statistics, but at the same time that at least one of the studies is unable to identify a single case in spite of having almost a million observations.
+
+Fifth, it is useful to suggest that a lot of what is \textit{known} about international relations based on studies of dyadic data should be taken with a grain of salt, and awaits a reassessment using methods that do not rely on an assumption that all the dyads are independent and identically distributed.
 
 
