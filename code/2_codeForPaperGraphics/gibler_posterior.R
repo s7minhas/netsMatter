@@ -118,20 +118,12 @@ scenDiffs = rbind(
 # 	facet_wrap(~scen, ncol=1, scales='free_x')
 
 scenDiffs = scenDiffs[scenDiffs$scen %in% c('Contiguity','Rivalry'),]
-ggplot(scenDiffs, aes(x=value, fill=mod)) +
+scenGG=ggplot(scenDiffs, aes(x=value, fill=mod)) +
 	# geom_point(aes(y=med), size=2.5) +
 	# geom_linerange(aes(ymin=lo95,ymax=hi95), linetype=1, size=.5) + 
 	# geom_linerange(aes(ymin=lo90,ymax=hi90), linetype=1, size=1.5) + 
 	geom_density() +
 	# coord_flip() + 
-	facet_wrap(~scen, ncol=1, scales='free_x')	
-
-# loadPkg('ggjoy')
-# ggplot(scenDiffs, aes(x=value, y=scen, fill=mod)) +
-# 	# geom_point(aes(y=med), size=2.5) +
-# 	# geom_linerange(aes(ymin=lo95,ymax=hi95), linetype=1, size=.5) + 
-# 	# geom_linerange(aes(ymin=lo90,ymax=hi90), linetype=1, size=1.5) + 
-# 	geom_joy(scale=1)
-# 	# coord_flip() + 
-# 	# facet_wrap(~scen, ncol=1, scales='free_x')		
+	facet_wrap(~scen, ncol=1, scales='free_x')
+ggsave(scenGG, file=paste0(plotPath, 'gibler_margeff.pdf'), width=7, height=4)
 ############################################
