@@ -94,6 +94,7 @@ Our re-estimation using the AME approach therefore cast some doubt on Reiter \& 
 \subfigure[Precision and Recall]{\label{fig:reitpr}\includegraphics[width=65mm]{reiter_pr_outsamp.pdf}}
 \caption{Assessments of out-of-sample predictive performance for Reiter \& Stam (2003) using ROC curves and PR curves.}
 \end{figure}
+\FloatBarrier
 
 \subsection{Replication of McDonald (2004)}
 
@@ -104,7 +105,7 @@ Our re-estimation using the AME approach therefore cast some doubt on Reiter \& 
 \includegraphics[width=\textwidth]{McDonald_coefs.pdf}
 \caption{\label{fig:mcdCoefs}Coefficient plot of McDonald (2004)'s original model (blue) compared to AME model (red).}
 \end{figure}
-
+\FloatBarrier
 %\begin{figure}
 %\centering   
 %\subfigure[AUC]{\label{fig:mcDauc}\includegraphics[width=65mm]{McDonald_auc_outsamp.pdf}}
@@ -127,9 +128,9 @@ When we compare the results of Rose's original OLS model to the AME model accoun
 
 \begin{figure}
 \includegraphics[width=\textwidth]{rose_aeff_top10.pdf}
- \caption{Nodal Random Effects for AME estimation of Rose (2004).}\label{fig:roser}
+ \caption{Nodal Random Effects for AME estimation of Rose (2004)}\label{fig:roser}
 \end{figure}
-
+\FloatBarrier
 %\begin{figure}
 %\centering   
 %\subfigure[Nodal Random Effects]%{\label{fig:rosesend}\includegraphics[width=65mm]{ABplot_rose_top10.pdf}}
@@ -145,25 +146,24 @@ When we compare the results of Rose's original OLS model to the AME model accoun
 
 \citet{weeks:2012} examines the influence of domestic institutions on the initiation of military conflicts by autocratic leaders.  She argues that in some circumstances autocrats are held accountable for their foreign policy decisions. She adds the nuance that autocratic audiences are not homogeneous. When the autocratic regime is nonmilitary, the domestic audience do not favor military actions, but in military autocracies this is not the case. Further she argues that in personalistic regimes without a military or civilian domestic audience, the leaders tend to be more likely to employ military force in their foreign policy.  To study this question, she uses a dyadic design in which the dependent variable is ``whether country A in a directed dyad initiated military conflict against country B during year t'' (page 337).  These data come from the Militarized Interstate Disputes database \citep{maoz:2005}.  One major innovation in her study resides in the nuanced way in which she conceptualized and coded regime type into four types: a) Machine, b) Junta, c) Boss, and d) Strongmen. She also includes a variety of putative control variables focusing on capabilities for both sides of the dyad, alliances, geography, trade dependence, regime instability, and the regime type of ``side B.''  She uses a logistic regression, but follows \citet{beck:etal:1998} and includes splines to capture temporal covariation in the dependent variable along with  fixed, unit effects. The analysis is done for dyads, but is considered to be from the perspective of the actor that initiated the dispute. Her time frame is from 1946-1999.  The basic finding is that a) juntas, bosses, and strongmen are more likely to initiate conflict than machines (and maybe democracies) and that b) machines are no more belligerent than democracies.  These insights are mainly determined by looking at coefficients and their putative significance in Tables 1 and 2 (pages 339--340). She makes the argument that ignoring important nuances between different types of autocracies hinders our understanding of the initiation of military conflict by autocracies. 
 
-The re-estimation of \citet{weeks:2012} likely has the sharpest divergence between the General Linear Model results and those of the AME Model. In Weeks's initial models,  she finds that machines are less prone to initiate conflict than the reference category, whereas Juntas, Bosses and Strong-men are more conflict-prone, in line with her theoretical expectations. When we look at the posterior distribution of these coefficients in the AME results, we find that none of these values are distinguishable from zero. We similarly find less pronounced effects for military capabilities. One explanation for this divergence is the AME model's ability to account for third order effects. Inspection of the multiplicative effects in Figure~\ref{fig:weekscirc} reveals a number of clusters of states which exhibit structural equivalence -- in the top right corner we see states like the US, the UK, and Israel who often send conflict to similar targets. In particular, we observe a cluster of ``rogue states,'' who are receivers of conflict, in the top right (Iran, Iraq, Syria, Libya, North Korea). In the bottom corner we see a cluster of authoritarian senders including Iraq, Russia, Syria, North Korea and China. In general, these clusters have similar governmental types (Iraq, Syria, Libya, and North Korea all fell under the ``boss" category), and similar conflict behavior. So, in the GLM, which ignores these third order dependencies, much of these results might have been attributed to regime type. The AME model, on the other hand, finds that it is more efficient to attribute this behavior to the multiplicative effects. In terms of out of sample performance, shown in Figure~\ref{fig:weeksauc}, the AME model performs markedly better than the GLM out of sample, lending credence to the possibility that these third order dependencies cause spurious effects for regime type.
+The re-estimation of \citet{weeks:2012} likely has the sharpest divergence between the General Linear Model results and those of the AME Model. In Weeks's initial models,  she finds that machines are less prone to initiate conflict than the reference category, whereas Juntas, Bosses and Strong-men are more conflict-prone, in line with her theoretical expectations. When we look at the posterior distribution of these coefficients in the AME results, we find that none of these values are distinguishable from zero. We similarly find less pronounced effects for military capabilities. One explanation for this divergence is the AME model's ability to account for third order effects. Inspection of the multiplicative effects in Figure~\ref{fig:weekscirc} reveals a number of clusters of states which exhibit structural equivalence -- in the top right corner we see states like the US, the UK, and Israel who often send conflict to similar targets. In particular, we observe a cluster of ``rogue states,'' who are receivers of conflict, in the top right (Iran, Iraq, Syria, Libya, North Korea). In the bottom corner we see a cluster of authoritarian senders including Iraq, Russia, Syria, North Korea and China. In general, these clusters have similar governmental types (Iraq, Syria, Libya, and North Korea all fell under the ``boss" category), and similar conflict behavior. So, in the GLM, which ignores these third order dependencies, much of these results might have been attributed to regime type. The AME model, on the other hand, finds that it is more efficient to attribute this behavior to the multiplicative effects. In terms of out-of-sample performance, shown in Figure~\ref{fig:weeksauc}, the AME model performs markedly better than the GLM out of sample, lending credence to the possibility that these third order dependencies cause spurious effects for regime type.
 
+%. THINK THIS IS GONE 
+%\begin{figure}
+%	\includegraphics[width=\textwidth]{weeks_coefs_all.pdf}
+%	\caption{\label{fig:weeksCoef} Coefficient plot of Weeks' (2012) original model (blue) compared to AME model (red). }
+%\end{figure}
 \begin{figure}
-	\includegraphics[width=\textwidth]{weeks_coefs_all.pdf}
-	\caption{\label{fig:weeksCoef} Coefficient plot of Weeks' (2012) original model (blue) compared to AME model (red). }
+	\includegraphics[width=\textwidth]{weeks_circPlot.pdf}
+	\caption{\label{fig:weekscirc} Visualization of multiplicative effects for Weeks (2012). Blue represents groups with common sending patterns and red represents groups with common receiving patterns.}
 \end{figure}
 
 \begin{figure}
 \centering   
 	\subfigure[AUC]{\label{fig:weeksauc}\includegraphics[width=65mm]{weeks_auc_outsamp.pdf}}
 	\subfigure[Precision and Recall]{\label{fig:reitpr}\includegraphics[width=65mm]{weeks_pr_outsamp.pdf}}
-	\caption{Assessments of out-of-sample predictive performance for Weeks (2012) using ROC curves and PR curves.}
+	\caption{Assessments of out-of-sample predictive performance for Weeks (2012) using ROC curves and PR curves}
 \end{figure}
-
-\begin{figure}
-	\includegraphics[width=\textwidth]{weeks_circPlot.pdf}
-	\caption{\label{fig:weekscirc} Visualization of multiplicative effects for Weeks (2012). Blue represents groups with common sending patterns and red represents groups with common receiving patterns.}
-\end{figure}
-
 
 \subsection{Replication of Gibler (2017)}
 
