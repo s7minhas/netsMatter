@@ -9,9 +9,11 @@ loadPkg=function(toLoad){
 
 # some necessary libs
 loadPkg(c(
-	'reshape2',
+	'amen',
+	'reshape2', 'tidyr', 'dplyr', 'stringr',
 	'ggplot2', 'latex2exp', 'Cairo',	# plotting
-	'xtable' # tables
+	'xtable', # tables
+	'countrycode'
 	))
 
 # Set a theme for gg

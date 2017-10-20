@@ -1,46 +1,39 @@
-############################################
+# setup ###########################################
 rm(list=ls())
 
 if(Sys.info()['user'] %in% c('s7m', 'janus829')){
 	resultsPath = '~/Dropbox/Research/netsMatter/replications/gibler_2017/outputData/'
 	plotPath = '~/Dropbox/Research/netsMatter/replications/0_finalRepFigs/' }
 
-#
 source('~/Research/netsMatter/code/helpers/functions.R')
 source('~/Research/netsMatter/code/helpers/ameHelpers.R')
-
-#
-loadPkg(c('amen','countrycode'))
 ############################################
 
-############################################
-#
-load(paste0(resultsPath,'McDonald_baseModel.rda'))
+# modData ###########################################
+load(paste0(resultsPath,'mdwameFit_k2_v4.rda'))
 load( paste0(resultsPath,'glmFit.rda') )
 ############################################
 
-############################################
-# coef summ
-# paramPlot(ameFit$BETA[,1:12])
-# paramPlot(ameFit$BETA[,12:23])
-
+# coefSumm ###########################################
 ameSumm = t(apply(ameFit$BETA, 2, function(x){ c(
 	mu=mean(x),
 	quantile(x, probs=c(0.025,0.05,0.95,0.975))) }))
-# modSumm
 ############################################
 
+# plot srm var ###########################################
+# for undirected just do dist of nodal var
+vaViz = ggplot(data.frame(ameFit$VC), aes(x=va)) +
+	geom_density() +
+	geom_vline(aes(xintercept=0), linetype=2, color = "black") +
+	xlab(TeX('Within-Sender Variance ($\\\\sigma_{a]^{2}$)')) +
+	ylab('Density') +
+	theme(
+		axis.ticks=element_blank(), 
+		panel.border=element_blank()
+		)
+ggsave(vaViz, file=paste0(plotPath, 'gibler_srmvc.pdf'), width=7, height=4)
 ############################################
-#
-effdat = getAddEffData(fit = ameFit) ##This function is in helperEx.R
-effdat$actor = countrycode::countrycode(effdat$actor, 'cown', 'country.name')
-effdat$actor = factor(effdat$actor,  levels=effdat[order(effdat$addEff),'actor'])
 
-## All countries
-addEffPlot(fit = effdat, addEffData = effdat, row = T)
-############################################
-
-############################################
-#
+# plot of first diffs ###########################################
 
 ############################################
