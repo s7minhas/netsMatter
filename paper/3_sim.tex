@@ -1,6 +1,6 @@
 \section{Simulation study}
 
-We utilize a simulation study to highlight the utility of AME as an inferential tool for dyadic analysis. The goal of the simulation is to assess how well AME can provide unbiased and well calibrated estimates of coefficient parameters in the presence of unobserved network dependencies. [link to previous discussion] Specifically, we are concerned with conducting inference on a regression parameter $\beta$ of a linear model for a network in the case where there is an omitted variable. Say that the true data-generating process for a particular $Y$ is given by:
+We utilize a simulation study to highlight the utility of AME as an inferential tool for dyadic analysis. The goal of the simulation is to assess how well AME can provide unbiased and well calibrated estimates of coefficient parameters in the presence of unobserved dependencies. Specifically, we are concerned with conducting inference on a regression parameter $\beta$ of a linear model for a network in the case where there is an omitted variable. Say that the true data-generating process for a particular $Y$ is given by:
 
 \begin{align*}
 	y_{i,j} \sim  \mu + \beta x_{i,j} + \gamma w_{i,j} + \epsilon_{i,j} \\
@@ -11,11 +11,11 @@ where $Y= \{y_{i,j}\}\in \mathbb R^{n\times n}$ is an observed sociomatix, $x = 
 
 \begin{itemize}
 	\item the standard IR approach assuming independent errors; 
-	\item the AME approach outlined in the previous section;
+	\item the AME approach outlined in the previous section with a unidimensional latent factor space ($K=1$);
 	\item and an ``oracle'' regression model that includes both $x_{i,j}$ and $w_{i,j}$. 
 \end{itemize}
 
-We run this simulation 
+To run the simulation we vary the size of the network under study at 50 and 100.
 
 \begin{figure}
 	\centering
