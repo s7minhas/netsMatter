@@ -19,7 +19,8 @@ load(paste0(pathResults, 'amenData_rose.rda'))
 
 # crossval params
 seed=6886
-folds=30
+# folds=30
+folds=4
 ################
 base_vars = c('ltrade','bothin', 'onein', 'gsp', 'ldist', 'lrgdp', 'lrgdppc', 'regional',
               'custrict',
@@ -68,26 +69,10 @@ foldVec = foldVec[which(foldVec$Var1!=foldVec$Var2),]
     return(fit)
   })
 
-  # for(f in 1:30){
-  # testData = cbind(int=1,yCrossValTrain[[f]][which(foldVec$value == f),names(coef(fitCrossVal[[f]]))[-1]])
-  # #prob = 1/(1+exp(-as.matrix(testData) %*% coef(fitCrossVal[[f]])))
-  # prob =  as.matrix(testData) %*% coef(fitCrossVal[[f]])
-  # foldIndex = foldVec[which(foldVec$value == f),]
-  # foldIndex = foldIndex[which(!is.na(prob)),]
-  # prob = prob[!is.na(prob)]
-
-  # get actual
-  # actual = c()
-  # for(i in 1:dim(foldIndex)[1]){
-  #   ll = foldIndex$L1[i]
-  #   actual = c(actual, yList[[ll]][which(rownames(yList[[ll]]) == foldIndex$Var1[i]), which(rownames(yList[[ll]]) == foldIndex$Var2[i])])
-  # }
-  # print(length(actual) == length(prob))}
     # get preds
   outPerf = do.call('rbind', lapply(1:folds, function(f){
     # get probs
     testData = cbind(int=1,yCrossValTrain[[f]][which(foldVec$value == f),names(coef(fitCrossVal[[f]]))[-1]])
-    #prob = 1/(1+exp(-as.matrix(testData) %*% coef(fitCrossVal[[f]])))
     prob =  as.matrix(testData) %*% coef(fitCrossVal[[f]])
     foldIndex = foldVec[which(foldVec$value == f),]
     foldIndex = foldIndex[which(!is.na(prob)),]
@@ -101,26 +86,9 @@ foldVec = foldVec[which(foldVec$Var1!=foldVec$Var2),]
     }
     if(length(actual)!=length(prob)){stop('shit went wrong.')}
     res = data.frame(actual=actual, pred=prob, fold=f, stringsAsFactors = FALSE)
-#    if(any(grepl('lagDV',glmForm))){res=na.omit(res)}
     return(res)
   }))
-    # get binperfhelpers (not for normal data)
-  # loadPkg(c('ROCR', 'RColorBrewer', 'caTools'))
-  # source('/Users/howardliu/netsMatter/code/rose2004/binPerfHelpers.R')
-  #
-  # # get perf stats
-  # aucByFold=do.call('rbind', lapply(1:folds, function(f){
-  #   slice = outPerf[outPerf$fold==f,]
-  #   if(length(unique(slice$actual))==1){ return(NULL) }
-  #   perf=cbind(fold=f,
-  #              aucROC=getAUC(slice$pred, slice$actual),
-  #              aucPR=auc_pr(slice$actual, slice$pred)
-  #   )
-  #   return(perf) } ))
-  # aucROC=getAUC(outPerf$pred, outPerf$actual)
-  # aucPR=auc_pr(outPerf$actual, outPerf$pred)
-  # ################
-  #
+
   ################
   rmse = sqrt(mean((outPerf$actual - outPerf$pred)^2, na.rm = T))
   rmdse = sqrt(median((outPerf$actual - outPerf$pred)^2, na.rm = T))
@@ -148,16 +116,20 @@ foldVec = foldVec[which(foldVec$Var1!=foldVec$Var2),]
 # run with ame full spec
 glmOutSamp_wFullSpec=glmOutSamp(
   glmForm=form_mod )# 5 mins
-glmOutSamp_wFullSpec
-
 
 # save
-
 # save(
 #   glmOutSamp_wFullSpec, glmOutSamp_wLagDV,
 #   glmOutSamp_wFullSpecLagDV,
 #   file=paste0(pathResults, 'glmCrossValResults.rda')
 # )
+
+# save, 4 folds
+glmOutSamp = glmOutSamp_wFullSpec[3:6]
+save(
+  glmOutSamp, 
+  file=paste0(pathResults, 'glmCrossValResults_4f_small.rda')
+)
 
 load(paste0(pathResults, 'glmCrossValResults.rda'))
 glmOutSamp_wFullSpec$rmseOUT # 3.226501

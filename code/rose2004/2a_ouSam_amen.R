@@ -1,16 +1,23 @@
 ################
 rm(list=ls())
 
-# workspace
-# if(Sys.info()['user']=='janus829' | Sys.info()['user']=='s7m'){ source('~/Research/conflictEvolution/R/setup.R')  }
-# if(Sys.info()['user']=='cassydorff' | Sys.info()['user']=='cassydorff'){ source('~/ProjectsGit/conflictEvolution/R/setup.R')  }
-# if(Sys.info()['user']=='maxgallop'){ source('~/Documents/conflictEvolution/R/setup.R')  }
-# loadPkg('devtools') ; devtools::install_github('s7minhas/amen') ; library(amen)
+if(Sys.info()['user']=='howardliu'){
+  source('~/netsMatter/code/rose2004/loadPkg.R')
+  pathResults = "/Users/howardliu/Dropbox/netsMatter/replications/rose2004/"
+}
+if(Sys.info()['user']=='s7m'){
+  source('~/Research/netsMatter/code/rose2004/loadPkg.R')
+  pathDrop = '~/Dropbox/Research/netsMatter/'
+  pathResults = paste0(pathDrop, 'replications/rose2004/')
+} 
 ################
 
 # load pkg
-source("clusteredSE.R")
-source("LoadPkg.R")
+loadPkg=function(toLoad){
+    for(lib in toLoad){
+      if(!(lib %in% installed.packages()[,1])){
+        install.packages(lib, repos='http://cran.rstudio.com/') }
+      suppressMessages( library(lib, character.only=TRUE) ) } }
 packs = c('foreign','dplyr', 'ggplot2', 'readr', 'lmtest','multiwayvcov', 'amen')
 loadPkg(packs)
 
@@ -21,18 +28,17 @@ trim = function (x) { gsub("^\\s+|\\s+$", "", x) }
 
 ################
 # load data
-pathResults = "/Users/howardliu/Dropbox/netsMatter/replications/rose2004/"
 load(paste0(pathResults, 'amenData_rose.rda'))
 
-resultsPath = "/Users/howardliu/Dropbox/netsMatter/replications/rose2004/outputData/"
-load(paste0(resultsPath, 'ameFit_k3_v1.rda')); ameFit_k3 = ameFit
+# load(paste0(resultsPath, 'ameFit_k3_v1.rda')); ameFit_k3 = ameFit
 
-load(paste0(resultsPath, 'ameFit_k2_v1.rda')); ameFit_k2 = ameFit
+# load(paste0(resultsPath, 'ameFit_k2_v1.rda')); ameFit_k2 = ameFit
 
-load(paste0(resultsPath, 'ameFit_k1_v1.rda')); ameFit_k1 = ameFit ##??
+# load(paste0(resultsPath, 'ameFit_k1_v1.rda')); ameFit_k1 = ameFit ##??
 
-load(paste0(resultsPath, 'ameFit_k0_v1.rda')); ameFit_k0 = ameFit
+# load(paste0(resultsPath, 'ameFit_k0_v1.rda')); ameFit_k0 = ameFit
 
+load(paste0(pathResults, 'outputData/ameFit_k2_v2_imps_50000_intercept.rda')); ameFit_k2 = ameFit
 ################
 
 ################
@@ -114,27 +120,38 @@ ameOutSamp = function(
 ################
 # run outsamp models
 
-# k = 3
-ameOutSamp_k3 = ameOutSamp(
-  yList=yList, xDyadL=xDyadList, xRowL=NULL, xColL=NULL,
-  startVals=ameFit_k3$'startVals', # k = 3
-  folds = 4,
-  burn=2000, nscan=4000, odens=10
-)
-# save
-save(ameOutSamp_k3,
-  file=paste0(pathResults, 'ameCrossValResults_k3.rda')
-)
-
-ameOutSamp_k3$rmseOUT #  1.967908
-
-# k = 2
+# k =2 
 ameOutSamp_k2 = ameOutSamp(
   yList=yList, xDyadL=xDyadList, xRowL=NULL, xColL=NULL,
   startVals=ameFit_k2$'startVals',
-  folds = 4,
+  folds = 30,
   burn=2000, nscan=4000, odens=10
 ) # take 3 hours
 
-ameOutSamp_k2$rmseOUT # 1.987901 
+ameOutSamp = ameOutSamp_k2
+save(ameOutSamp, file=paste(pathResults, 'outputData/ameCrossvalResults_k2_v2_imps_50000_intercept_30folds.rda'))
+
+# # k = 3
+# ameOutSamp_k3 = ameOutSamp(
+#   yList=yList, xDyadL=xDyadList, xRowL=NULL, xColL=NULL,
+#   startVals=ameFit_k3$'startVals', # k = 3
+#   folds = 4,
+#   burn=2000, nscan=4000, odens=10
+# )
+# # save
+# save(ameOutSamp_k3,
+#   file=paste0(pathResults, 'ameCrossValResults_k3.rda')
+# )
+
+# ameOutSamp_k3$rmseOUT #  1.967908
+
+# # k = 2
+# ameOutSamp_k2 = ameOutSamp(
+#   yList=yList, xDyadL=xDyadList, xRowL=NULL, xColL=NULL,
+#   startVals=ameFit_k2$'startVals',
+#   folds = 4,
+#   burn=2000, nscan=4000, odens=10
+# ) # take 3 hours
+
+# ameOutSamp_k2$rmseOUT # 1.987901 
 

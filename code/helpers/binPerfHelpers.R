@@ -78,14 +78,14 @@ ggSep = function(actual, proba, color, lty, fPath, save=TRUE){
   if(save){ ggsave(tmp, file=fPath, width=12, height=2) } else { return(tmp) }
 }
 
-ggSepBig = function(actual, proba, color, lty, fPath, save=TRUE){
+ggSepBig = function(actual, proba, color, lty, fPath, cutBy=0.001, save=TRUE){
   sepData = data.frame(actual, proba)
   sepData = sepData[order(sepData$proba),]
 
   #
-  sepData$cut = cut(sepData$proba, breaks=quantile(sepData$proba, seq(0, 1, 0.001)) )
-  sepDataSumm = sepData %>% group_by(cut) %>%
-    summarize(
+  sepData$cutVar = cut(sepData$proba, breaks=quantile(sepData$proba, seq(0, 1, cutBy)) )
+  sepDataSumm = sepData %>% group_by(cutVar) %>%
+    dplyr::summarize(
       actual=sum(actual), 
       proba=mean(proba) )
 
@@ -152,7 +152,7 @@ rocdf <- function(pred, obs, data=NULL, type=NULL) {
 
 ####################################################################
 #
-ggPerfCurves = function(predDfs, suffix){
+ggPerfCurves = function(predDfs, suffix, cutBy=0.001){
   # tabular data
   loadPkg('PRROC')
   aucSumm=do.call('rbind', lapply(predDfs,function(x){
@@ -186,7 +186,7 @@ ggPerfCurves = function(predDfs, suffix){
     fSepPath = paste0(plotPath,suffix,'_sep_',names(predDfs)[ii],'_outSample.png')
     # save as pngs for potential use outside of roc
     tmp = data.frame(act=predDfs[[ii]]$actual, proba=predDfs[[ii]]$'pred')
-    ggSepBig(actual=tmp$act, proba=tmp$proba, 
+    ggSepBig(actual=tmp$act, proba=tmp$proba, cutBy=cutBy,
       color=ggCols[ii], lty=ggLty[ii], fPath=fSepPath, save=TRUE )
     sepG = rasterGrob(readPNG(fSepPath), interpolate=TRUE)
     return(sepG)

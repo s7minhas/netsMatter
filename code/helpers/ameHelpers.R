@@ -18,7 +18,7 @@ plotVC = function(vcFit, fName, w=7, h=4){
 		select(.,-ncol(.)) %>%
 		gather(key='var',value='value') %>%
 		group_by(var) %>%
-		summarize(
+		dplyr::summarize(
 			median=median(value),
 			lo95=quantile(value,.025),
 			lo90=quantile(value,.05),

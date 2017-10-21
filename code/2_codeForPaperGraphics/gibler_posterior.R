@@ -7,6 +7,7 @@ if(Sys.info()['user'] %in% c('s7m', 'janus829')){
 
 source('~/Research/netsMatter/code/helpers/functions.R')
 source('~/Research/netsMatter/code/helpers/ameHelpers.R')
+source('~/Research/netsMatter/code/helpers/binPerfHelpers.R')
 ############################################
 
 # modData ###########################################
@@ -20,19 +21,34 @@ ameSumm = t(apply(ameFit$BETA, 2, function(x){ c(
 	quantile(x, probs=c(0.025,0.05,0.95,0.975))) }))
 ############################################
 
-# # plot srm var ###########################################
-# # for undirected just do dist of nodal var
-# vaViz = ggplot(data.frame(ameFit$VC), aes(x=va)) +
-# 	geom_density() +
-# 	geom_vline(aes(xintercept=0), linetype=2, color = "black") +
-# 	xlab(TeX('Within-Sender Variance ($\\\\sigma_{a]^{2}$)')) +
-# 	ylab('Density') +
-# 	theme(
-# 		axis.ticks=element_blank(), 
-# 		panel.border=element_blank()
-# 		)
-# ggsave(vaViz, file=paste0(plotPath, 'gibler_srmvc.pdf'), width=7, height=4)
-# ############################################
+# outPerf ###########################################
+load(paste0(resultsPath, 'ameCrossVal_k2.rda')) # ameOutSamp_k2
+ameOutSamp=ameOutSamp_k2 ; rm(ameOutSamp_k2)
+load(paste0(resultsPath,'glmCrossVal.rda')) # glmOutSamp_wFullSpec
+glmOutSamp=glmOutSamp_wFullSpec ; rm(glmOutSamp_wFullSpec)
+
+# org
+predDfs = list(
+	GLM = data.frame(actual=glmOutSamp$outPerf$actual, pred=glmOutSamp$outPerf$pred, model='GLM'),
+	AME = data.frame(actual=ameOutSamp$outPerf$actual, pred=ameOutSamp$outPerf$pred, model='AME') )
+
+# run
+ggPerfCurves(predDfs, 'gibler')
+############################################
+
+# plot srm var ###########################################
+# for undirected just do dist of nodal var
+vaViz = ggplot(data.frame(ameFit$VC), aes(x=va)) +
+	geom_density() +
+	geom_vline(aes(xintercept=0), linetype=2, color = "black") +
+	xlab(TeX('Within-Sender Variance ($\\\\sigma_{a]^{2}$)')) +
+	ylab('Density') +
+	theme(
+		axis.ticks=element_blank(), 
+		panel.border=element_blank()
+		)
+ggsave(vaViz, file=paste0(plotPath, 'gibler_srmvc.pdf'), width=7, height=4)
+############################################
 
 # plot of marg effs ###########################################
 # get data and add intercept val

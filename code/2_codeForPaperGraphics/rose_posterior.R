@@ -21,6 +21,20 @@ ameSumm = t(apply(ameFit$BETA, 2, function(x){ c(
 	quantile(x, probs=c(0.025,0.05,0.95,0.975))) }))
 ############################################
 
+# outPerf ###########################################
+load(paste0(resultsPath, 'outputData/ameCrossvalResults_k2_v2_imps_50000_intercept_30folds.rda')) # ameOutSamp
+load(paste0(resultsPath,'glmCrossValResults_small.rda')) # glmOutSamp
+
+# org
+predDfs = list(
+	LM = data.frame(actual=glmOutSamp$outPerf$actual, pred=glmOutSamp$outPerf$pred, model='LM'),
+	AME = data.frame(actual=ameOutSamp$outPerf$actual, pred=ameOutSamp$outPerf$pred, model='AME') )
+
+# run
+glmOutSamp$rmseByFold
+ameOutSamp$rmseByFold
+############################################
+
 # nodal effects ###########################################
 # get abdata and clean actor names
 abData = getAddEffData(ameFit)
