@@ -45,7 +45,7 @@ load(paste0(pathResults, 'outputData/ameFit_k2_v2_imps_50000_intercept.rda')); a
 # function to run k-fold cross validation analysis using ame
 ameOutSamp = function(
   yList, xDyadL=NULL, xRowL=NULL, xColL=NULL, startVals, ## startVal (to pick one portion)
-  seed=6886, folds=30,
+  seed=6886, folds=30, cores=8, 
   R=2, model='nrm', burn=10000, nscan=2000, odens=25, # burn=1000, nscan= 2000, odens=10, just save time starting from low
   intercept=TRUE, rvar=TRUE, cvar=TRUE, symmetric=FALSE
 ){
@@ -71,16 +71,29 @@ ameOutSamp = function(
     return(yListMiss) }) ; names(yCrossValTrain) = char(1:folds)
 
   # run ame by fold
-  fitCrossVal = lapply(yCrossValTrain, function(yCV){
+  # fitCrossVal = lapply(yCrossValTrain, function(yCV){
+  #   fit=ame_repL(
+  #     Y=yCV, Xdyad=xDyadL, Xrow=xRowL, Xcol=xColL, ## make sure start value low (seting huge Net model to NA)
+  #     symmetric=symmetric, rvar=rvar, cvar=cvar, R=R,
+  #     model=model, intercept=intercept, seed=seed,
+  #     burn=burn, nscan=nscan, odens=odens,
+  #     plot=FALSE, gof=TRUE, periodicSave=FALSE,
+  #     startVals=startVals
+  #   )
+  #   return(fit) })
+
+  loadPkg(c('doParallel', 'foreach'))
+  cl=makeCluster(cores) ; registerDoParallel(cl)
+  fitCrossVal <- foreach(ii=1:length(yCrossValTrain), 
+    .packages=c('amen')) %dopar%{
     fit=ame_repL(
-      Y=yCV, Xdyad=xDyadL, Xrow=xRowL, Xcol=xColL, ## make sure start value low (seting huge Net model to NA)
-      symmetric=symmetric, rvar=rvar, cvar=cvar, R=R,
+      Y=yCrossValTrain[[ii]], Xdyad=xDyadL, Xrow=xRowL, Xcol=xColL,
+      symmetric=symmetric, rvar=rvar, cvar=cvar, R=R, 
       model=model, intercept=intercept, seed=seed,
-      burn=burn, nscan=nscan, odens=odens,
-      plot=FALSE, gof=TRUE, periodicSave=FALSE,
-      startVals=startVals
-    )
-    return(fit) })
+      burn=burn, nscan=nscan, odens=odens, 
+      plot=FALSE, gof=TRUE, periodicSave=FALSE )
+      return(fit) }
+  stopCluster(cl) ; names(fitCrossVal) = char(1:folds)  
 
   # get preds (predictions)
   outPerf = do.call('rbind', lapply(1:folds, function(f){
