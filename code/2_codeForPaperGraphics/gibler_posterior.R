@@ -20,19 +20,19 @@ ameSumm = t(apply(ameFit$BETA, 2, function(x){ c(
 	quantile(x, probs=c(0.025,0.05,0.95,0.975))) }))
 ############################################
 
-# plot srm var ###########################################
-# for undirected just do dist of nodal var
-vaViz = ggplot(data.frame(ameFit$VC), aes(x=va)) +
-	geom_density() +
-	geom_vline(aes(xintercept=0), linetype=2, color = "black") +
-	xlab(TeX('Within-Sender Variance ($\\\\sigma_{a]^{2}$)')) +
-	ylab('Density') +
-	theme(
-		axis.ticks=element_blank(), 
-		panel.border=element_blank()
-		)
-ggsave(vaViz, file=paste0(plotPath, 'gibler_srmvc.pdf'), width=7, height=4)
-############################################
+# # plot srm var ###########################################
+# # for undirected just do dist of nodal var
+# vaViz = ggplot(data.frame(ameFit$VC), aes(x=va)) +
+# 	geom_density() +
+# 	geom_vline(aes(xintercept=0), linetype=2, color = "black") +
+# 	xlab(TeX('Within-Sender Variance ($\\\\sigma_{a]^{2}$)')) +
+# 	ylab('Density') +
+# 	theme(
+# 		axis.ticks=element_blank(), 
+# 		panel.border=element_blank()
+# 		)
+# ggsave(vaViz, file=paste0(plotPath, 'gibler_srmvc.pdf'), width=7, height=4)
+# ############################################
 
 # plot of marg effs ###########################################
 # get data and add intercept val
@@ -106,8 +106,18 @@ ameDraws = rmvnorm(1000, apply(ameFit$BETA, 2, median), cov(ameFit$BETA))
 scenDiffs = rbind(
 	getDiff(scen1, scen0, scens, glmDraws, 'GLM', type='density'),
 	# getDiff(scen1, scen0, scens, ameDraws, 'AME', type='density') 
-	getDiff(scen1, scen0, scens, ameFit$BETA, 'AME', type='density') 
-	)
+	getDiff(scen1, scen0, scens, ameFit$BETA, 'AME', type='density') )
+
+scenDiffs = scenDiffs[scenDiffs$scen %in% c('Rivalry'),]
+scenGG=ggplot(scenDiffs, aes(x=value, fill=mod)) +
+	# geom_point(aes(y=med), size=2.5) +
+	# geom_linerange(aes(ymin=lo95,ymax=hi95), linetype=1, size=.5) + 
+	# geom_linerange(aes(ymin=lo90,ymax=hi90), linetype=1, size=1.5) + 
+	geom_density() +
+	# coord_flip() + 
+	facet_wrap(~scen, ncol=1, scales='free_x')
+
+ggsave(scenGG, file=paste0(plotPath, 'gibler_margeff.pdf'), width=7, height=4)
 
 # org and plot
 # ggplot(scenDiffs, aes(x=mod)) +
@@ -116,14 +126,4 @@ scenDiffs = rbind(
 # 	geom_linerange(aes(ymin=lo90,ymax=hi90), linetype=1, size=1.5) + 
 # 	coord_flip() + 
 # 	facet_wrap(~scen, ncol=1, scales='free_x')
-
-scenDiffs = scenDiffs[scenDiffs$scen %in% c('Contiguity','Rivalry'),]
-scenGG=ggplot(scenDiffs, aes(x=value, fill=mod)) +
-	# geom_point(aes(y=med), size=2.5) +
-	# geom_linerange(aes(ymin=lo95,ymax=hi95), linetype=1, size=.5) + 
-	# geom_linerange(aes(ymin=lo90,ymax=hi90), linetype=1, size=1.5) + 
-	geom_density() +
-	# coord_flip() + 
-	facet_wrap(~scen, ncol=1, scales='free_x')
-ggsave(scenGG, file=paste0(plotPath, 'gibler_margeff.pdf'), width=7, height=4)
 ############################################

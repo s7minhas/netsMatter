@@ -11,7 +11,7 @@ loadPkg=function(toLoad){
 loadPkg(c(
 	'amen',
 	'reshape2', 'tidyr', 'dplyr', 'stringr',
-	'ggplot2', 'latex2exp', 'Cairo',	# plotting
+	'ggplot2', 'latex2exp', 'Cairo', 'RColorBrewer',	# plotting
 	'xtable', # tables
 	'countrycode'
 	))

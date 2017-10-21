@@ -26,6 +26,7 @@ ameSumm = t(apply(ameFit$BETA, 2, function(x){ c(
 abData = getAddEffData(ameFit)
 ifs = read.csv(paste0(resultsPath, 'ifs_countrycode.csv'))
 abData$actor = char(ifs$countryname[match(abData$actor, ifs$X.code)])
+abData$actor[abData$actor=="LAO PEOPLE'S DEM.REP"] = 'LAOS'
 
 # subset to top 10+ 10- 
 toKeep = c(
