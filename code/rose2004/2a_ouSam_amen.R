@@ -137,12 +137,11 @@ ameOutSamp = function(
 ameOutSamp_k2 = ameOutSamp(
   yList=yList, xDyadL=xDyadList, xRowL=NULL, xColL=NULL,
   startVals=ameFit_k2$'startVals',
-  folds = 30,
-  burn=2000, nscan=4000, odens=10
+  folds = 30, burn=2000, nscan=4000, odens=10
 ) # take 3 hours
 
 ameOutSamp = ameOutSamp_k2
-save(ameOutSamp, file=paste(pathResults, 'outputData/ameCrossvalResults_k2_v2_imps_50000_intercept_30folds.rda'))
+save(ameOutSamp, file=paste0(pathResults, 'outputData/ameCrossvalResults_k2_v2_imps_50000_intercept_30folds.rda'))
 
 # # k = 3
 # ameOutSamp_k3 = ameOutSamp(
