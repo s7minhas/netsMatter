@@ -46,6 +46,8 @@ varKey = data.frame(
 		'Parity at Entry Year', 'Rivalry' ),
 	stringsAsFactors = FALSE )
 
+
+
 #
 getCoefTable(varKey, modList, modNames, 'gibler', 'Gibler (2017)', plotPath, 3)
 ############################################
@@ -108,73 +110,32 @@ scen1 = scen[,seq(1,ncol(scen),2)] ; scen0 = scen[,seq(2,ncol(scen),2)]
 scens = c( 'Allied', 'Joint Democracy', 'Contiguity', 
 	'Rivalry', 'Parity at entry year', 'Parity')
 
-# calc diffs
-getDiff = function(
-	linkType='logit', # logit or probit
-	scenHi, scenLo, scenNames, 
-	beta, modName, type='summStats' # summStats or density
-	){
-	if(linkType=='logit'){
-		predHi = 1/(1+exp(-t(t(scenHi) %*% t(beta))))
-		predLo = 1/(1+exp(-t(t(scenLo) %*% t(beta)))) }
-	if(linkType=='probit'){
-		predHi = pnorm(t(t(scenHi) %*% t(beta)))
-		predLo = pnorm(t(t(scenLo) %*% t(beta))) }
-	predDiff = predHi-predLo
-	colnames(predDiff) = scenNames
-
-	if(type=='summStats'){
-		summPred = matrix(NA,nrow=5, ncol=ncol(predDiff),
-			dimnames=list(
-				c('med','hi95','hi90','lo95','lo90'), colnames(predDiff) ))
-		for(s in colnames(summPred)){
-			summPred['med',s]=median(predDiff[,s])
-			summPred['hi95',s]=quantile(predDiff[,s],.975)
-			summPred['hi90',s]=quantile(predDiff[,s],.95)
-			summPred['lo95',s]=quantile(predDiff[,s],.025)
-			summPred['lo90',s]=quantile(predDiff[,s],.05) }
-	
-		# org and spit
-		summPred = t(summPred) %>% data.frame() %>%
-			mutate(
-				mod=modName,
-				scen=colnames(summPred) )
-		}
-
-	if(type=='density'){
-		summPred = predDiff %>% data.frame() %>%
-			gather(key='scen',value='value') %>%
-			mutate(
-				mod=modName,
-				scenClean=gsub('.',' ', scen, fixed=TRUE)
-				)
-	}
-	return(summPred) }
-
 # for ame
 glmDraws = rmvnorm(1000, coef(mod), vcov(mod)) ; colnames(glmDraws)[1] = 'intercept'
 ameDraws = rmvnorm(1000, apply(ameFit$BETA, 2, median), cov(ameFit$BETA))
 scenDiffs = rbind(
-	getDiff(linkType='logit', scen1, scen0, scens, glmDraws, 'GLM', type='density'),
-	# getDiff(scen1, scen0, scens, ameDraws, 'AME', type='density') 
-	getDiff(linkType='probit', scen1, scen0, scens, ameFit$BETA, 'AME', type='density') )
+	getScenDiff(linkType='logit', scen1, scen0, scens, glmDraws, 'GLM', type='densityShade'),
+	getScenDiff(linkType='probit', scen1, scen0, scens, ameFit$BETA, 'AME', type='densityShade') )
 
+ggCols = c(GLM='#d6604d', AME='#4393c3')
+ggLty = c(GLM='dotted', AME='solid')
 scenDiffs = scenDiffs[scenDiffs$scen %in% c('Rivalry'),]
-scenGG=ggplot(scenDiffs, aes(x=value, fill=mod)) +
-	# geom_point(aes(y=med), size=2.5) +
-	# geom_linerange(aes(ymin=lo95,ymax=hi95), linetype=1, size=.5) + 
-	# geom_linerange(aes(ymin=lo90,ymax=hi90), linetype=1, size=1.5) + 
-	geom_density() +
-	# coord_flip() + 
-	facet_wrap(~scen, ncol=1, scales='free_x')
-scenGG
-ggsave(scenGG, file=paste0(plotPath, 'gibler_margeff.pdf'), width=7, height=4)
-
-# org and plot
-# ggplot(scenDiffs, aes(x=mod)) +
-# 	geom_point(aes(y=med), size=2.5) +
-# 	geom_linerange(aes(ymin=lo95,ymax=hi95), linetype=1, size=.5) + 
-# 	geom_linerange(aes(ymin=lo90,ymax=hi90), linetype=1, size=1.5) + 
-# 	coord_flip() + 
-# 	facet_wrap(~scen, ncol=1, scales='free_x')
+scenGG = ggplot(data=scenDiffs, aes(color=mod, fill=mod)) +
+	geom_line(data=scenDiffs, aes(x=x,y=y)) +
+	geom_vline(aes(xintercept=mean, color=mod,linetype=mod),size=1) +
+	geom_ribbon(data=subset(scenDiffs,q95), aes(x=x,ymax=y,fill=mod),ymin=0,alpha=0.5) +
+	geom_ribbon(data=subset(scenDiffs,q90), aes(x=x,ymax=y,fill=mod),ymin=0,alpha=0.9) +
+	scale_color_manual(values=ggCols) + scale_fill_manual(values=ggCols) +
+	scale_linetype_manual(values=ggLty) +
+	xlab('Pr(MID=1 | Rivalry=1) - Pr(MID=1 | Rivalry=0)') +
+	ylab('Density') +
+	facet_wrap(~scen, scales='free', ncol=1) +
+	theme(
+		legend.position = 'top', legend.title=element_blank(),
+		axis.ticks=element_blank(), axis.text.y=element_blank(),
+		panel.border=element_blank(),
+		strip.text.x = element_text(size = 9, color='white' ),
+		strip.background = element_rect(fill = "#525252", color='#525252')		
+		)
+ggsave(scenGG, file=paste0(plotPath, 'gibler_margeff.pdf'), width=7, height=3)
 ############################################
