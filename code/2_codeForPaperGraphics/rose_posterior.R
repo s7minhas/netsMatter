@@ -7,6 +7,7 @@ if(Sys.info()['user'] %in% c('s7m', 'janus829')){
 
 source('~/Research/netsMatter/code/helpers/functions.R')
 source('~/Research/netsMatter/code/helpers/ameHelpers.R')
+source('~/Research/netsMatter/code/helpers/stargazerHelpers.R')
 ############################################
 
 # modData ###########################################
@@ -14,11 +15,29 @@ load(paste0(resultsPath,'outputData/ameFit_k2_v2_imps_50000_intercept.rda'))
 load( paste0(resultsPath,'glmResults_rose.rda') )
 ############################################
 
-# coef summ ###########################################
-# get ame est
+# coefSumm ###########################################
 ameSumm = t(apply(ameFit$BETA, 2, function(x){ c(
-	mu=mean(x),
-	quantile(x, probs=c(0.025,0.05,0.95,0.975))) }))
+	'Estimate'=mean(x), 'Std. Error'=sd(x), 'z value'=mean(x)/sd(x),
+	'Pr(>|z|)'=2*(1-pnorm( abs(mean(x)/sd(x)))) )}))
+rownames(ameSumm) = gsub('.dyad','',rownames(ameSumm),fixed=TRUE)
+rownames(ameSumm) = gsub('_s','s',rownames(ameSumm),fixed=TRUE)
+rownames(ameSumm) = gsub('intercept','(Intercept)',rownames(ameSumm),fixed=TRUE)
+lmSumm = baseModelSumm[,]
+
+modList = list(lmSumm, ameSumm)
+modNames = c('LM', 'AME')
+
+varKey = data.frame(
+	dirty=rownames(ameSumm),
+	clean=c('Intercept', 'Both in GATT/WTO', 'One in GATT/WTO', 'GSP',
+		'Log Distance',  'Log Product Real GDP', 'Log Product Real GDPpc',
+		'Regional FTA', 'Currency Union', 'Common language', 'Land Border',
+		'Number Landlocked' ,'Number Islands', 'Log Product Land Area',
+		'Common Colonizer','Currently Colonized', 'Ever Colony','Common Country' ),
+	stringsAsFactors = FALSE )
+
+#
+getCoefTable(varKey, modList, modNames, 'rose', 'Rose (2004)', plotPath, 3)
 ############################################
 
 # outPerf ###########################################

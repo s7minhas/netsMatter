@@ -1,9 +1,13 @@
-
+rm(list=ls())
 ## Script to replicate the results in McDonald (2004)
 
 ## paths
 if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
  dataPath='~/Dropbox/netsMatter/replications/McDonald_2004/data/'
+}
+
+if(Sys.info()['user']=='s7m'){
+ dataPath='~/Dropbox/Research/netsMatter/replications/McDonald_2004/data/'
 }
 
 # load libraries
@@ -96,6 +100,16 @@ clVcov = vcov(mod) %*% ((clustN/(clustN-1)) * t(uClust) %*% uClust ) %*% vcov(mo
 ## results match with stata
 modSumm = lmtest::coeftest(mod, vcov=clVcov)
 
+proMod = glm(modForm, data=modData, family=binomial(link='probit'))
+clust = modData$dyadid
+clustN = length(unique(clust))
+params = length(coef(proMod))
+u = sandwich::estfun(proMod)
+uClust = matrix(NA, nrow=clustN, ncol=params)
+for(j in 1:params){ uClust[,j]=tapply(u[,j], clust, sum) }
+clVcov = vcov(proMod) %*% ((clustN/(clustN-1)) * t(uClust) %*% uClust ) %*% vcov(proMod)
+proSumm = lmtest::coeftest(proMod, vcov=clVcov)
+
 
 print("saving replicated results")
 
@@ -106,5 +120,6 @@ save(modSumm, file=paste0(dataPath, 'McDonald_baseModel.rda'))
 
 save(mod, file=paste0(dataPath, "McDonald_baseModelGLMObj.rda"))
 
+save(mod, modSumm, proMod, proSumm, file=paste0(dataPath, 'mcdonald_glmfit.rda'))
 
 print("completed!")

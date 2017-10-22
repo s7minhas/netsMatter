@@ -1,6 +1,8 @@
+rm(list=ls())
 # paths
 if(Sys.info()['user']=='janus829' | Sys.info()['user']=='s7m'){
     pathData='~/Dropbox/Research/netsMatter/replications/Weeks2012/replication/input/'
+    pathResults = '~/Dropbox/Research/netsMatter/replications/Weeks2012/replication/output/'
 }
 
 if(Sys.info()['user']=='algauros' | Sys.info()['user']=='Promachos'){
@@ -44,6 +46,7 @@ modForm = formula(
 		)
 	)
 mod = glm(modForm, data=modData, family=binomial(link='logit'))
+proMod = glm(modForm, data=modData, family=binomial(link='probit'))
 
 round(summary(mod)$coefficients, 3)
       
@@ -61,11 +64,23 @@ clVcov = vcov(mod) %*% ((clustN/(clustN-1)) * t(uClust) %*% uClust ) %*% vcov(mo
 # results match with stata
 modSumm = lmtest::coeftest(mod, vcov=clVcov)
 
+clust = modData$dirdyadid
+clustN = length(unique(clust))
+params = length(coef(proMod))
+u = sandwich::estfun(proMod)
+uClust = matrix(NA, nrow=clustN, ncol=params)
+for(j in 1:params){ uClust[,j]=tapply(u[,j], clust, sum) }
+clVcov = vcov(proMod) %*% ((clustN/(clustN-1)) * t(uClust) %*% uClust ) %*% vcov(proMod)
+
+# feed revised vcov in
+# results match with stata
+proSumm = lmtest::coeftest(proMod, vcov=clVcov)
+
 ## save replicated results
 ## 7/27/17 update: saving a list with the
 ## clustered SE in modSumm as well as the glm object
 ## glm object needed for model evaluation
 
 ##save(modSumm, file=paste0(pathData, 'weeks_baseModel.rda'))
-
+save(mod, modSumm, proMod, proSumm, file=paste0(pathResults, 'weeks_glmfit.rda'))
 save(mod, file=paste0(pathData, 'weeks_baseModelGLMObj.rda'))

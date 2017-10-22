@@ -8,6 +8,8 @@ if(Sys.info()['user'] %in% c('s7m', 'janus829')){
 source('~/Research/netsMatter/code/helpers/functions.R')
 source('~/Research/netsMatter/code/helpers/ameHelpers.R')
 source('~/Research/netsMatter/code/helpers/binPerfHelpers.R')
+source('~/Research/netsMatter/code/helpers/stargazerHelpers.R')
+source('~/Research/netsMatter/code/helpers/clusteredSE.R')
 ############################################
 
 # modData ###########################################
@@ -17,8 +19,35 @@ load( paste0(resultsPath,'glmFit.rda') )
 
 # coefSumm ###########################################
 ameSumm = t(apply(ameFit$BETA, 2, function(x){ c(
-	mu=mean(x),
-	quantile(x, probs=c(0.025,0.05,0.95,0.975))) }))
+	'Estimate'=mean(x), 'Std. Error'=sd(x), 'z value'=mean(x)/sd(x),
+	'Pr(>|z|)'=2*(1-pnorm( abs(mean(x)/sd(x)))) )}))
+rownames(ameSumm) = gsub('.row','',rownames(ameSumm),fixed=TRUE)
+rownames(ameSumm) = gsub('.col','',rownames(ameSumm),fixed=TRUE)
+rownames(ameSumm) = gsub('.dyad','',rownames(ameSumm),fixed=TRUE)
+rownames(ameSumm) = gsub('_s','s',rownames(ameSumm),fixed=TRUE)
+rownames(ameSumm) = gsub('intercept','(Intercept)',rownames(ameSumm),fixed=TRUE)
+
+glmSumm = modSumm[,]
+
+dat = cbind(y=mod$y, mod$data[,names(coef(mod)[-1])], dyad=mod$data$dyad)
+form = paste0('y~',paste(names(coef(mod)[-1]), collapse='+'))
+probMod = glm( form, data=dat, family=binomial(link='probit') )
+loadPkg('lmtest')
+probSumm = coeftest(probMod, vcov = vcovCluster(mod, cluster = dat$dyad))[,]
+
+modList = list(glmSumm, probSumm, ameSumm)
+modNames = c('GLM (Logit)','GLM (Probit)', 'AME')
+varKey = data.frame(
+	dirty=names(coef(mod)),
+	clean=c( '(Intercept)', 
+		'Allied', 'Joint Democracy',
+		'Peace Years', 'Spline 1', 'Spline 2', 
+		'Spline 3', 'Contiguity', 'Parity',
+		'Parity at Entry Year', 'Rivalry' ),
+	stringsAsFactors = FALSE )
+
+#
+getCoefTable(varKey, modList, modNames, 'gibler', 'Gibler (2017)', plotPath, 3)
 ############################################
 
 # outPerf ###########################################
@@ -80,11 +109,17 @@ scens = c( 'Allied', 'Joint Democracy', 'Contiguity',
 	'Rivalry', 'Parity at entry year', 'Parity')
 
 # calc diffs
-getDiff = function(scenHi, scenLo, scenNames, 
+getDiff = function(
+	linkType='logit', # logit or probit
+	scenHi, scenLo, scenNames, 
 	beta, modName, type='summStats' # summStats or density
 	){
-	predHi = 1/(1+exp(-t(t(scenHi) %*% t(beta))))
-	predLo = 1/(1+exp(-t(t(scenLo) %*% t(beta))))
+	if(linkType=='logit'){
+		predHi = 1/(1+exp(-t(t(scenHi) %*% t(beta))))
+		predLo = 1/(1+exp(-t(t(scenLo) %*% t(beta)))) }
+	if(linkType=='probit'){
+		predHi = pnorm(t(t(scenHi) %*% t(beta)))
+		predLo = pnorm(t(t(scenLo) %*% t(beta))) }
 	predDiff = predHi-predLo
 	colnames(predDiff) = scenNames
 
@@ -120,9 +155,9 @@ getDiff = function(scenHi, scenLo, scenNames,
 glmDraws = rmvnorm(1000, coef(mod), vcov(mod)) ; colnames(glmDraws)[1] = 'intercept'
 ameDraws = rmvnorm(1000, apply(ameFit$BETA, 2, median), cov(ameFit$BETA))
 scenDiffs = rbind(
-	getDiff(scen1, scen0, scens, glmDraws, 'GLM', type='density'),
+	getDiff(linkType='logit', scen1, scen0, scens, glmDraws, 'GLM', type='density'),
 	# getDiff(scen1, scen0, scens, ameDraws, 'AME', type='density') 
-	getDiff(scen1, scen0, scens, ameFit$BETA, 'AME', type='density') )
+	getDiff(linkType='probit', scen1, scen0, scens, ameFit$BETA, 'AME', type='density') )
 
 scenDiffs = scenDiffs[scenDiffs$scen %in% c('Rivalry'),]
 scenGG=ggplot(scenDiffs, aes(x=value, fill=mod)) +
@@ -132,7 +167,7 @@ scenGG=ggplot(scenDiffs, aes(x=value, fill=mod)) +
 	geom_density() +
 	# coord_flip() + 
 	facet_wrap(~scen, ncol=1, scales='free_x')
-
+scenGG
 ggsave(scenGG, file=paste0(plotPath, 'gibler_margeff.pdf'), width=7, height=4)
 
 # org and plot

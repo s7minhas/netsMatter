@@ -1,15 +1,29 @@
 ## replication Rose 2004 WTO --> trade
-
+rm(list=ls())
 # load pkg
-source("/Users/howardliu/Dropbox/netsMatter/replications/rose2004/clusteredSE.R")
-source("/Users/howardliu/Dropbox/netsMatter/replications/rose2004/LoadPkg.R")
+if(Sys.info()['user']=='howardliu'){
+    source("/Users/howardliu/Dropbox/netsMatter/replications/rose2004/clusteredSE.R")
+    source("/Users/howardliu/Dropbox/netsMatter/replications/rose2004/LoadPkg.R")
 
 packs = c('foreign','dplyr', 'ggplot2', 'readr', 'lmtest','multiwayvcov')
 loadPkg(packs)
 
 # data
 data = read.dta("/Users/howardliu/Dropbox/netsMatter/replications/rose2004/data4web.dta")
-#names(data)
+}
+
+
+if(Sys.info()['user']=='s7m'){
+    source("~/Research/netsMatter/code/helpers/clusteredSE.R")
+    source("~/Research/netsMatter/code/helpers/loadPkg.R")
+
+    packs = c('foreign','dplyr', 'ggplot2', 'readr', 'lmtest','multiwayvcov')
+    loadPkg(packs)
+
+    # data
+    dataPath='~/Dropbox/Research/netsMatter/replications/rose2004/'
+    data = read.dta(paste0(dataPath,'data4web.dta'))
+}
 
 # mod1
 # which var is currency union?

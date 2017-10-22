@@ -3,23 +3,54 @@ rm(list=ls())
 
 if(Sys.info()['user'] %in% c('s7m', 'janus829')){
 	resultsPath = '~/Dropbox/Research/netsMatter/replications/Weeks2012/replication/output/'
-	inputPath= '~/Dropbox/Research/netsMatter/replications/Weeks2012/replication/input/'
 	plotPath = '~/Research/netsMatter/paper/' }
 
 source('~/Research/netsMatter/code/helpers/functions.R')
 source('~/Research/netsMatter/code/helpers/ameHelpers.R')
 source('~/Research/netsMatter/code/helpers/binPerfHelpers.R')
+source('~/Research/netsMatter/code/helpers/stargazerHelpers.R')
 ############################################
 
 # modData ###########################################
 load( paste0(resultsPath,'model_k2.rda') )
-load(paste0(inputPath,'weeks_baseModel.rda'))
+load(paste0(resultsPath,'weeks_glmfit.rda'))
 ############################################
 
 # coefSumm ###########################################
 ameSumm = t(apply(ameFit$BETA, 2, function(x){ c(
-	mu=mean(x),
-	quantile(x, probs=c(0.025,0.05,0.95,0.975))) }))
+	'Estimate'=mean(x), 'Std. Error'=sd(x), 'z value'=mean(x)/sd(x),
+	'Pr(>|z|)'=2*(1-pnorm( abs(mean(x)/sd(x)))) )}))
+rownames(ameSumm) = gsub('.row','',rownames(ameSumm),fixed=TRUE)
+rownames(ameSumm) = gsub('.col','',rownames(ameSumm),fixed=TRUE)
+rownames(ameSumm) = gsub('.dyad','',rownames(ameSumm),fixed=TRUE)
+rownames(ameSumm) = gsub('_s','s',rownames(ameSumm),fixed=TRUE)
+rownames(ameSumm) = gsub('intercept','(Intercept)',rownames(ameSumm),fixed=TRUE)
+glmSumm = modSumm[,]
+probSumm = proSumm[,]
+
+modList = list(glmSumm, probSumm, ameSumm)
+modNames = c('GLM (Logit)','GLM (Probit)', 'AME')
+
+varKey = data.frame(
+	dirty=names(coef(mod)),
+	clean=c( '(Intercept)', 
+		"Machine", "Junta", "Boss", "Strongman",
+		"Other Type","New/Unstable Regime", "Democracy Target",
+		"Military Capabilities Initiator",
+		"Military Capabilities Target ",
+		"Initator Share of Capabilities ",## remember this has no AMEN equivalent
+		"Low Trade Dependence ",
+		"Both Major Powers", "Minor/Major",
+		"Major/Minor", "Contiguous", "Log Dist. Between Capitals",
+		"Alliance Similarity Dyad ",
+		"Alliance Similarity With System Leader Initiator",
+		"Alliance Similarity Leader Target",
+		"Time Since Last Conflict", "Spline1", "Spline2", "Spline3"),
+	stringsAsFactors = FALSE )
+varKey = varKey[-11,]
+
+#
+getCoefTable(varKey, modList, modNames, 'weeks', 'Weeks (2012)', plotPath, 3, 'scriptsize')
 ############################################
 
 # plot srm var ###########################################
