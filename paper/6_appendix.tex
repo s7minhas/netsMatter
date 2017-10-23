@@ -11,40 +11,14 @@
 
 \subsection*{Additional Replication Information}
 
-\subsubsection*{Gibler (2017)}
+For each of the replications involving a binary dependent variable we provide a table of coefficient estimates that includes the original GLM estimation with a logit link, a GLM estimation with a probit link, and the AME model. The GLM estimation with a probit link function is provided so as to ease comparison between the AME model, which is also based on the probit link. For Rose (2004) we just provide a table of coefficient estimates that includes the original OLS estimation and the AME model.
 
-%
-\input{gibler_coeftable}
-\FloatBarrier
-
-\begin{figure}
-	\centering   
-	\subfigure[AUC]{\label{fig:giblerroc}\includegraphics[width=.45\textwidth]{gibler_roc_outSample.pdf}}
-	\subfigure[Precision and Recall]{\label{fig:giblerpr}\includegraphics[width=.45\textwidth]{gibler_pr_outSample.pdf}}
-	\caption{Assessments of out-of-sample predictive performance for Gibler (2017) using ROC curves and PR curves.}
-\end{figure}
-\FloatBarrier
-
-\clearpage
-\subsubsection*{McDonald (2004)}
-
-%Coefficient plot and performance comparison.
-
-\input{mcdonald_coeftable}
-\FloatBarrier
-
-\begin{figure}
-	\centering   
-	\subfigure[AUC]{\label{fig:mcdonaldroc}\includegraphics[width=.45\textwidth]{mcdonald_roc_outSample.pdf}}
-	\subfigure[Precision and Recall]{\label{fig:mcdonaldpr}\includegraphics[width=.45\textwidth]{mcdonald_pr_outSample.pdf}}
-	\caption{Assessments of out-of-sample predictive performance for McDonald (2004) using ROC curves and PR curves.}
-\end{figure}
-\FloatBarrier
+Additionally, for each replication we provide a more detailed visualization illustrating the results of our out of sample performance analysis. For Weeks (2012) we already did so in the main body of the text so we eschew from doing so again here.
 
 \clearpage
 \subsubsection*{Reiter \& Stam (2003)}
 
-%Coefficient plot and performance comparison.
+Additional information for the Reiter \& Stam (2003) re-estimation.
 
 \input{reiter_stam_coeftable}
 \FloatBarrier
@@ -53,30 +27,45 @@
 	\centering   
 	\subfigure[AUC]{\label{fig:reiterstamroc}\includegraphics[width=.45\textwidth]{reiter_stam_roc_outSample.pdf}}
 	\subfigure[Precision and Recall]{\label{fig:reiterstampr}\includegraphics[width=.45\textwidth]{reiter_stam_pr_outSample.pdf}}
-	\caption{Assessments of out-of-sample predictive performance for Reiter \& Stam (2003) using ROC curves and PR curves.}
+	\caption{Assessments of out-of-sample predictive performance for Reiter \& Stam (2003) using ROC curves, PR curves, and separation plots.}
 \end{figure}
 \FloatBarrier
-
 \clearpage
+
+\subsubsection*{McDonald (2004)}
+
+Additional information for the McDonald (2004) re-estimation.
+
+\input{mcdonald_coeftable}
+\FloatBarrier
+
+\begin{figure}
+	\centering   
+	\subfigure[AUC]{\label{fig:mcdonaldroc}\includegraphics[width=.45\textwidth]{mcdonald_roc_outSample.pdf}}
+	\subfigure[Precision and Recall]{\label{fig:mcdonaldpr}\includegraphics[width=.45\textwidth]{mcdonald_pr_outSample.pdf}}
+	\caption{Assessments of out-of-sample predictive performance for McDonald (2004) using ROC curves, PR curves, and separation plots.}
+\end{figure}
+\FloatBarrier
+\clearpage
+
 \subsubsection*{Rose (2004)}
 
-%Coefficient plot and performance comparison.
+Additional information for the Rose (2004) re-estimation.
 
 \input{rose_coeftable}
 \FloatBarrier
 
-% \begin{figure}
-% 	\centering   
-% 	\subfigure[AUC]{\label{fig:reitaucpr}\includegraphics[width=.45\textwidth]{mcdonald_roc_outSample.pdf}}
-% 	\subfigure[Precision and Recall]{\label{fig:reitpr}\includegraphics[width=.45\textwidth]{mcdonald_pr_outSample.pdf}}
-% 	\caption{Assessments of out-of-sample predictive performance for McDonald (2004) using ROC curves and PR curves.}
-% \end{figure}
+\begin{figure}
+	\centering   
+	\includegraphics[width=1\textwidth]{rose_outSample.pdf}
+	\caption{Assessments of out-of-sample predictive performance for Rose (2004) using root mean squared error (RMSE), root median squared error (RMDSE), and $R^{2}$.}
+\end{figure}
 \FloatBarrier
-
 \clearpage
+
 \subsubsection*{Weeks (2012)}
 
-%Coefficient plot and performance comparison.
+Additional information for the Weeks (2012) re-estimation. 
 
 \input{weeks_coeftable}
 \FloatBarrier
@@ -86,6 +75,87 @@
 % 	\centering   
 % 	\subfigure[AUC]{\label{fig:weeksroc}\includegraphics[width=.45\textwidth]{weeks_roc_outSample.pdf}}
 % 	\subfigure[Precision and Recall]{\label{fig:weekspr}\includegraphics[width=.45\textwidth]{weeks_pr_outSample.pdf}}
-% 	\caption{Assessments of out-of-sample predictive performance for Weeks (2012) using ROC curves and PR curves.}
+% 	\caption{Assessments of out-of-sample predictive performance for Weeks (2012) using ROC curves, PR curves, and separation plots.}
 % \end{figure}
 % \FloatBarrier
+\clearpage
+
+\subsubsection*{Gibler (2017)}
+
+Additional information for the Gibler (2017) re-estimation. 
+
+\input{gibler_coeftable}
+\FloatBarrier
+
+\begin{figure}
+	\centering   
+	\subfigure[AUC]{\label{fig:giblerroc}\includegraphics[width=.45\textwidth]{gibler_roc_outSample.pdf}}
+	\subfigure[Precision and Recall]{\label{fig:giblerpr}\includegraphics[width=.45\textwidth]{gibler_pr_outSample.pdf}}
+	\caption{Assessments of out-of-sample predictive performance for Gibler (2017) using ROC curves, PR curves, and separation plots.}
+\end{figure}
+\FloatBarrier
+\clearpage
+
+\subsection*{AME Tutorial}
+
+Using the AMEN function requires formatting data into a particular structure. The primary distinction in data formatting is whether the outcome of interest represents a directed or undirected network. 
+
+If undirected, the AMEN function has three main inputs:
+
+\begin{itemize}[noitemsep,nolistsep]
+    \item Y: a $T$ length \textbf{list} of $n\times n$ adjacency matrices, where $T$ = number of years in the dataset and $n$ = number of nodes in the network.
+    \item Xdyad: a $T$ length \textbf{list} of $n\times n\times p$ arrays, where $p$ = number of dyadic covariates in dataset. 
+    \item Xrow: a $T$ length \textbf{list} of $n\times p$ matrices, where $p$ = number of monadic (nodal) covariates in dataset. 
+\end{itemize}
+
+If directed, AMEN further calls for: 
+
+\begin{itemize}[noitemsep,nolistsep]
+    \item Xrow: a $T$ length list of $n\times p$ matrices, where $p$ = number of sender (nodal) covariates in dataset. 
+    \item Xcol: a $T$ length list of $n\times p$ matrices, where $p$ = number of receiver (nodal) covariates in dataset. 
+\end{itemize}
+
+Beyond the data inputs, the AMEN function requires additional specification: 
+
+\begin{itemize}
+    \item model: how to model the outcome variable, e.g., `logit'
+    \item symmetric: whether the input network is symmetric
+    \item intercept: whether to estimate an intercept
+    \item nscan: number of iterations of the Markov chain
+    \item burn: burn-in period
+    \item odens: thinning interval
+    \item R: dimension of the multiplicative effect (referred to as $K$ in the paper)
+    \item gof: whether to calculate goodness of fit statistics
+\end{itemize}
+
+There is often little theoretical reason to choose a particular value of $R$ (above). One strategy is to estimate models at different values of $R$ and compare goodness of fit statistics across models. 
+
+Given the computational intensity needed for parameter estimates to converge, parallelization strategies are recommended to speed up analysis. In addition, providing AMEN function with starting values, either dictated by theory, previous research, or previous runs can also help speed up convergence time. 
+
+The code below presents an example of an AME model running in parallel across 4 different levels of $R$. Note also that the model is using starting values from a previous run, defined in \textit{startVals0}. 
+
+\begin{lstlisting}[language=R]
+# running in parallel varying k
+imps = 10000 ; brn = 25000 ; ods = 10 ; latDims = 0:3
+
+# Run amen in parallel
+library(doParallel) ; library(foreach) ; cl=makeCluster(4) ; registerDoParallel(cl)
+foreach(ii=1:length(latDims), .packages=c("amen")) %dopar% {
+  
+  # load previous model run
+  load(prevModelFiles[ii])
+  # extract start vals
+  startVals0 = ameFit$'startVals'
+  # dump rest
+  rm(ameFit)
+  
+  ameFit = ame_repL(
+    Y=yList,Xdyad=xDyadList,Xrow=NULL,Xcol=NULL, 
+    model="bin",symmetric=FALSE,intercept=TRUE,R=latDims[ii], 
+    nscan=imps, seed=1, burn=brn, odens=ods, 
+    plot=FALSE, print=FALSE, gof=TRUE, startVals=startVals0,
+    periodicSave=TRUE )     
+  save(ameFit, file=paste0('model_k', latDims[ii],'_v2.rda') )
+}
+stopCluster(cl)
+\end{lstlisting}
