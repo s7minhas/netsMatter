@@ -118,15 +118,19 @@ scenDiffs = rbind(
 	getScenDiff(linkType='probit', scen1, scen0, scens, ameFit$BETA, 'AME', type='densityShade') )
 
 ggCols = c(GLM='#d6604d', AME='#4393c3')
-ggLty = c(GLM='dotted', AME='solid')
-scenDiffs = scenDiffs[scenDiffs$scen %in% c('Rivalry'),]
-scenGG = ggplot(data=scenDiffs, aes(color=mod, fill=mod)) +
-	geom_line(data=scenDiffs, aes(x=x,y=y)) +
-	geom_vline(aes(xintercept=mean, color=mod,linetype=mod),size=1) +
-	geom_ribbon(data=subset(scenDiffs,q95), aes(x=x,ymax=y,fill=mod),ymin=0,alpha=0.5) +
-	geom_ribbon(data=subset(scenDiffs,q90), aes(x=x,ymax=y,fill=mod),ymin=0,alpha=0.9) +
+ggLty = c(GLM='dashed', AME='solid')
+scenDiffsSlice = scenDiffs[scenDiffs$scen %in% c('Rivalry'),]
+scenGG = ggplot(data=scenDiffsSlice, aes(color=mod, fill=mod)) +
+	geom_line(data=scenDiffsSlice, aes(x=x,y=y)) +
+	geom_ribbon(data=subset(scenDiffsSlice,q95), aes(x=x,ymax=y,fill=mod),ymin=0,alpha=0.2) +
+	geom_ribbon(data=subset(scenDiffsSlice,q90), aes(x=x,ymax=y,fill=mod),ymin=0,alpha=0.6) +
+	geom_vline(aes(xintercept=mean, color=mod,linetype=mod),size=1.2) +	
 	scale_color_manual(values=ggCols) + scale_fill_manual(values=ggCols) +
 	scale_linetype_manual(values=ggLty) +
+	guides(
+		linetype=guide_legend(override.aes = list(size=.5)),
+		fill=guide_legend(override.aes = list(fill='transparent'))
+		) +
 	xlab('Pr(MID=1 | Rivalry=1) - Pr(MID=1 | Rivalry=0)') +
 	ylab('Density') +
 	facet_wrap(~scen, scales='free', ncol=1) +
@@ -137,5 +141,6 @@ scenGG = ggplot(data=scenDiffs, aes(color=mod, fill=mod)) +
 		strip.text.x = element_text(size = 9, color='white' ),
 		strip.background = element_rect(fill = "#525252", color='#525252')		
 		)
+scenGG
 ggsave(scenGG, file=paste0(plotPath, 'gibler_margeff.pdf'), width=7, height=3)
 ############################################

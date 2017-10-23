@@ -23,10 +23,6 @@ NSIM = 1000 ; intEff=-2 ; x1Eff=1 ; x2Eff=1
 
 # load sim results
 for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,'.rda')) }
-
-#
-modKey = data.frame(dirty=names(ameSim50[[1]]$beta))
-modKey$clean = c('Naive', 'AME', 'Oracle')
 ##############################
 
 ##############################
@@ -63,8 +59,15 @@ ameSimCorDensity = ddply(ameSimCor, .(n), .fun=function(x){
 ##############################
 
 ##############################
-loadPkg('RColorBrewer')
-col = brewer.pal(3, 'Set1')[3]
+# color
+col = '#4393c3'
+
+# cleanup
+ameSimCorMeans$sMedianLab = paste0('Median Correlation: ', round(ameSimCorMeans$sMedian,3))
+ameSimCorMeans$y[ameSimCorMeans$n=='n = 100'] = 45
+ameSimCorMeans$y[ameSimCorMeans$n=='n = 50'] = 20
+
+# viz
 g = ggplot() +
 	geom_line(data=ameSimCorDensity, aes(x=x,y=y)) +
 	geom_ribbon(data=subset(ameSimCorDensity,q95),
@@ -73,6 +76,8 @@ g = ggplot() +
 		aes(x=x,ymax=y),ymin=0,alpha=0.9) + 
 	geom_vline(data=ameSimCorMeans, 
 		aes(xintercept=sMedian),linetype='solid',size=1, color=col) +	
+	geom_text(data=ameSimCorMeans,
+		aes(label=sMedianLab,x=sMedian,y=y), hjust=1.05, size=2.5, fontface='bold', color='black') +
 	facet_grid(n~.) + 	
 	xlab('') + ylab('') +
 	theme(

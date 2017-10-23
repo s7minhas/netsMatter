@@ -35,11 +35,11 @@ getBiasDF = function(ameSim){
 	biasDF = lapply(ameSim, function(x){
 		betaMod=lapply(x$beta, function(z){ apply(z, 2, median)[1:2] })
 		betaMod = betaMod %>% reshape2::melt() %>%
-			mutate(
+			dplyr::mutate(
 				var=rep(c('Intercept','X1'), length(x$beta)),
 				act = rep(c(intEff, x1Eff), length(x$beta)),
 				bias = value - act ) %>%
-			rename(model = L1)
+			dplyr::rename(model = L1)
 		return(betaMod) })
 	return( suppressMessages( reshape2::melt(biasDF,id=names(biasDF[[1]])) ) ) }
 
@@ -52,15 +52,26 @@ ameSimBias = rbind(
 ##############################
 # clean
 ameSimBias = ameSimBias %>% group_by(model, var, n) %>%
-	mutate( mse = mean(bias^2) ) %>% data.frame()
+	dplyr::mutate( mse = mean(bias^2) ) %>% data.frame()
+
+# fix mod labels
 ameSimBias$model = modKey$clean[match(ameSimBias$model, modKey$dirty)]
 ameSimBias$model = factor(ameSimBias$model, levels=modKey$clean)
+modCols = c(Naive='#d6604d', AME='#4393c3', Oracle='#4daf4a')
+
+# fix var labels
 ameSimBias$var[ameSimBias$var=='X1'] = '$\\beta$'
 ameSimBias$var[ameSimBias$var=='Intercept'] = '$\\mu$'
+ameSimBias$var = factor(ameSimBias$var, levels=c("$\\mu$", "$\\beta$"))
 
-ggBiasPlot = function(varName){
-	g=ggplot(filter(ameSimBias, var==paste0('$\\',varName,'$')),
-			aes(x=model, y=value, fill=model,color=model)) +
+# viz
+ggBiasPlot = function(varName, h=4, w=8){
+	if(varName!='all'){
+		g=ggplot(
+			filter(ameSimBias, var==paste0('$\\',varName,'$')),
+			aes(x=model, y=value, fill=model,color=model)) }
+	if(varName=='all'){ g=ggplot(ameSimBias, aes(x=model,y=value,fill=model,color=model)) }
+	g = g +
 		geom_hline(aes(yintercept=act), color='grey60', size=2) +	
 		geom_jitter(alpha=.1) +
 		geom_boxplot( color='black') + 	
@@ -70,14 +81,17 @@ ggBiasPlot = function(varName){
 		facet_grid(var ~ n, scales='free_y',
 			labeller=as_labeller(facet_labeller, default = label_parsed)) + 
 		xlab('') + ylab('') +
+		scale_color_manual(values=modCols) +
+		scale_fill_manual(values=modCols) +
 		theme(
-			legend.position='top',
+			legend.position='none',
 			legend.title=element_blank(),
 			axis.ticks=element_blank(),
 			panel.border=element_blank(),
-			axis.text=element_text(size=8
+			axis.text.y=element_text(size=8
 				# , family="Source Code Pro Light")
 			),
+			axis.text.x=element_text(size=10, face='bold'),
 			strip.text.x = element_text(size=9, color='white'
 				# ,family="Source Code Pro Semibold"
 				),
@@ -90,8 +104,11 @@ ggBiasPlot = function(varName){
 	ggsave(g, height=4, width=8,
 		file=paste0(graphicsPath, 'ameSimBias_',varName,'.pdf')
 		# , device=cairo_pdf
-		) }
+		)
+	return(g)
+}
 
 #
+ggBiasPlot('all', h=12, w=8)
 ggBiasPlot('beta') ; ggBiasPlot('mu')
 ##############################

@@ -61,36 +61,52 @@ rm(list=c(
 
 # summ by model
 coverSumm = ameSimCover %>% group_by(model,n, varName) %>%
-	summarise(coverage=mean(coverage)) %>% data.frame()
+	dplyr::summarise(coverage=mean(coverage)) %>% data.frame()
 ##############################
 
 ##############################
-#
+# clean mod labels
 coverSumm$model = modKey$clean[match(coverSumm$model, modKey$dirty)]
 coverSumm$model = factor(coverSumm$model, levels=modKey$clean)
+modCols = c(Naive='#d6604d', AME='#4393c3', Oracle='#4daf4a')
+
+# clean var labels
 coverSumm$varName[coverSumm$varName=='X1'] = '$\\beta$'
 coverSumm$varName[coverSumm$varName=='Intercept'] = '$\\mu$'
+coverSumm$varName = factor(coverSumm$varName, levels=c("$\\mu$", "$\\beta$"))
 
-#
-ggCoverPlot = function(var){
-	g = ggplot( filter(coverSumm, varName==paste0('$\\',var,'$')),
-			aes(x=model, y=coverage, fill=model,color=model)) +
-		geom_hline(aes(yintercept=.95), color='grey60', size=2, alpha=.5) +
+# coverage stat
+coverSumm$covLab = paste0(round(coverSumm$coverage,3)*100,'%')
+coverSumm$covLabY = ifelse(coverSumm$coverage>.9,.95,coverSumm$coverage+.03)
+
+# viz
+ggCoverPlot = function(var,h=3, w=8){
+	if(var!='all'){
+		g=ggplot(
+			filter(coverSumm, varName==paste0('$\\',var,'$')),
+			aes(x=model, y=coverage, fill=model,color=model)) }
+	if(var=='all'){ g=ggplot(coverSumm, aes(x=model, y=coverage, fill=model,color=model)) }
+	g = g +
+		geom_hline(aes(yintercept=.95), color='grey60', size=4, alpha=.5) +
 		geom_linerange(aes(ymin=0, ymax=coverage),size=1.25) + 
 		geom_point(size=2) + 
 		facet_grid(varName~n, scales='free_y',
 			labeller=as_labeller(facet_labeller, default = label_parsed)) + 			
 		xlab('') + 
+		scale_color_manual(values=modCols) +
+		scale_fill_manual(values=modCols) +		
 		scale_y_continuous('', breaks=seq(0,1.2,.2), labels=seq(0,1.2,.2), limits=c(0,1)) +
-		annotate('text', x=1, y=.9, label='95% CI', color='black', size=3, fontface='bold') +
+		annotate('text', x=1, y=.95, label='95% CI', color='black', size=2.5, fontface='bold') +
+		geom_text(aes(label=covLab, y=covLabY), hjust=-.3, size=2.5, fontface='bold', color='black') +
 		theme(
-			legend.position='top',
+			legend.position='none',
 			legend.title=element_blank(),
 			axis.ticks=element_blank(),
 			panel.border=element_blank(),
-			axis.text=element_text(size=8
+			axis.text.y=element_text(size=8
 				# , family="Source Code Pro Light")
 			),
+			axis.text.x=element_text(size=10, face='bold'),
 			strip.text.x = element_text(size=9, color='white'
 				# ,family="Source Code Pro Semibold"
 				),
@@ -103,7 +119,10 @@ ggCoverPlot = function(var){
 	ggsave(g, height=3, width=8,
 		file=paste0(graphicsPath, 'ameSimCover_',var,'.pdf')
 		# , device=cairo_pdf
-		) }	
+		)
+	return(g)
+}	
 
-ggCoverPlot('mu') ; ggCoverPlot('beta')
+ggCoverPlot('all', h=6, w=8)
+# ggCoverPlot('mu') ; ggCoverPlot('beta')
 ##############################	
