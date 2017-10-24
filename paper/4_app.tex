@@ -1,4 +1,4 @@
-\section{\textbf{Re-estimation with AME}|
+\section{\textbf{Re-estimation with AME}}
  
 \subsection{Design}
 
@@ -31,15 +31,17 @@ Given current practices, most scholars have a single variable in a complicated e
 		\multirow{2}{*}{Study} & \multirow{2}{*}{Central Finding} &  Replicates \\ 
 			& &  in a Network Model? \\ \toprule
 		Reiter \& Stam (2003) & Personalist Regimes Attack Democracies, Not Vice Versa & {Partially Replicates} \\ \midrule
-		\bf{McDonald (2004) & Lower Trade Barriers and Higher Trade Lead to Peace & {Does Not Replicate}}\\ \midrule
+		McDonald (2004) & Lower Trade Barriers and Higher Trade Lead to Peace & {Does Not Replicate}\\ \midrule
 		Rose (2004) & WTO Membership Does not Effect Trade & {Replicates}\\ \midrule
-		\bf{Weeks (2012) & Bosses, Juntas and Strongmen are more Aggressive, Machines are Not & {Does Not Replicate}} \\\midrule
-		\bf{Gibler (2017) & Power Parity at Time of Entry to International System Inceases Conflict & {Does Not Replicate} }\\ \bottomrule
+		Weeks (2012) & Bosses, Juntas and Strongmen are more Aggressive, Machines are Not & {Does Not Replicate} \\\midrule
+		Gibler (2017) & Power Parity at Time of Entry to International System Inceases Conflict & {Does Not Replicate}\\ \bottomrule
 	\end{tabular}
 	\label{tab:modelFindingSumm}
 \end{table}
 
-In addition, we also examine the predictions made with each approach using an out-of-sample cross validation strategy. By accounting for exogenous and network dependent patterns that give rise to conflict systems we are able to better account for the data generating process underlying relational data structures. To show that this is the case, we examine whether our approach achieves better predictive performance in an out-of-sample context than traditional dyadic models. To evaluate our model, we randomly divide the data  into $k=30$ sets, letting $s_{ij,t}$ be the set to which pair $ij,t$ is assigned.\textcolor{red}{This is inaccurate for directed dyads. I think. MG} Then for each $s \in \{1,\ldots,k\}$, we:
+In addition, we also examine the predictions made with each approach using an out-of-sample cross validation strategy. By accounting for exogenous and network dependent patterns that give rise to conflict systems we are able to better account for the data generating process underlying relational data structures. To show that this is the case, we examine whether our approach achieves better predictive performance in an out-of-sample context than traditional dyadic models. To evaluate our model, we randomly divide the data  into $k=30$ sets, letting $s_{ij,t}$ be the set to which pair $ij,t$ is assigned.
+%\textcolor{red}{This is inaccurate for directed dyads. I think. MG} 
+Then for each $s \in \{1,\ldots,k\}$, we:
 
 \begin{enumerate}
 	\item estimate model parameters with $\{y_{ij,t}: s_{ij,t} \neq s\}$, the data not in set $s$,
