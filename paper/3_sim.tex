@@ -6,8 +6,7 @@ We utilize a simulation study to highlight the utility of AME as an inferential 
 	y_{i,j} \sim  \mu + \beta x_{i,j} + \gamma w_{i,j} + \epsilon_{i,j}
 	\label{eqn:sim}
 \end{align}
-
-where $Y= \{y_{i,j}\}\in \mathbb R^{n\times n}$ is an observed sociomatrix, $X = \{x_{i,j} \} \in \mathbb R^{n \times n}$ is a matrix of observed dyad-specific characteristics, and $W = \{ w_{i,j}\} \in \mathbb R^{n \times n}$ is a matrix of unobserved dyad-specific characteristics. $Y$ can be thought of as a dyadic dependent variable, $X$ and $W$ are both dyadic covariates that are a part of the data-generating process for $Y$, but $W$ is a variable that we do not observe. We compare inference for $\mu$ and $\beta$ using three models --- the latter would be of primarily theoretical concern for applied scholars:
+where $Y= \{y_{i,j}\}\in \mathbb R^{n\times n}$ is an observed sociomatrix, $X = \{x_{i,j} \} \in \mathbb R^{n \times n}$ is a matrix of observed dyad-specific characteristics, and $W = \{ w_{i,j}\} \in \mathbb R^{n \times n}$ is a matrix of unobserved dyad-specific characteristics. $Y$ can be thought of as a dyadic dependent variable, $X$ and $W$ are both dyadic covariates that are a part of the data-generating process for $Y$, but $W$ is a variable that we do not observe. We compare inference for $\mu$ and $\beta$ -- the latter parameter would be of primarily theoretical concern for applied scholars -- using three models :
 
 \begin{itemize}
 	\item the standard IR approach assuming independent errors; 
@@ -28,7 +27,7 @@ We compare the performance of the models first in terms of how well they estimat
 	\includegraphics[width=1\textwidth]{ameSimBias_all.pdf} \\
 \end{figure}
 
-Next, we estimate the 95\% confidence interval for the three models in each of the simulations and estimate the proportion of times that the true value actually fell in those intervals. The results are summarized in Figure~\ref{fig:ameCalib}, and here again we see that the AME approach performs as well as the oracle while the naive approach performs poorly. 
+Next, we estimate the 95\% confidence interval for the three models in each of the simulations and estimate the proportion of times that the true value actually fell in those intervals. The results are summarized in Figure~\ref{fig:ameCalib}, and again we see that the AME approach performs as well as the oracle while the naive approach performs poorly. 
 
 \begin{figure}
 	\centering
