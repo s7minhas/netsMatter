@@ -16,61 +16,61 @@ load( paste0(resultsPath,'model_k2.rda') )
 load(paste0(resultsPath,'weeks_glmfit.rda'))
 ############################################
 
-# coefSumm ###########################################
-ameSumm = t(apply(ameFit$BETA, 2, function(x){ c(
-	'Estimate'=mean(x), 'Std. Error'=sd(x), 'z value'=mean(x)/sd(x),
-	'Pr(>|z|)'=2*(1-pnorm( abs(mean(x)/sd(x)))) )}))
-rownames(ameSumm) = gsub('.row','',rownames(ameSumm),fixed=TRUE)
-rownames(ameSumm) = gsub('.col','',rownames(ameSumm),fixed=TRUE)
-rownames(ameSumm) = gsub('.dyad','',rownames(ameSumm),fixed=TRUE)
-rownames(ameSumm) = gsub('_s','s',rownames(ameSumm),fixed=TRUE)
-rownames(ameSumm) = gsub('intercept','(Intercept)',rownames(ameSumm),fixed=TRUE)
-glmSumm = modSumm[,]
-probSumm = proSumm[,]
+# # coefSumm ###########################################
+# ameSumm = t(apply(ameFit$BETA, 2, function(x){ c(
+# 	'Estimate'=mean(x), 'Std. Error'=sd(x), 'z value'=mean(x)/sd(x),
+# 	'Pr(>|z|)'=2*(1-pnorm( abs(mean(x)/sd(x)))) )}))
+# rownames(ameSumm) = gsub('.row','',rownames(ameSumm),fixed=TRUE)
+# rownames(ameSumm) = gsub('.col','',rownames(ameSumm),fixed=TRUE)
+# rownames(ameSumm) = gsub('.dyad','',rownames(ameSumm),fixed=TRUE)
+# rownames(ameSumm) = gsub('_s','s',rownames(ameSumm),fixed=TRUE)
+# rownames(ameSumm) = gsub('intercept','(Intercept)',rownames(ameSumm),fixed=TRUE)
+# glmSumm = modSumm[,]
+# probSumm = proSumm[,]
 
-modList = list(glmSumm, probSumm, ameSumm)
-modNames = c('GLM (Logit)','GLM (Probit)', 'AME')
+# modList = list(glmSumm, probSumm, ameSumm)
+# modNames = c('GLM (Logit)','GLM (Probit)', 'AME')
 
-varKey = data.frame(
-	dirty=names(coef(mod)),
-	clean=c( '(Intercept)', 
-		"Machine", "Junta", "Boss", "Strongman",
-		"Other Type","New/Unstable Regime", "Democracy Target",
-		"Military Capabilities Initiator",
-		"Military Capabilities Target ",
-		"Initator Share of Capabilities ",## remember this has no AMEN equivalent
-		"Low Trade Dependence ",
-		"Both Major Powers", "Minor/Major",
-		"Major/Minor", "Contiguous", "Log Dist. Between Capitals",
-		"Alliance Similarity Dyad ",
-		"Alliance Similarity With System Leader Initiator",
-		"Alliance Similarity Leader Target",
-		"Time Since Last Conflict", "Spline1", "Spline2", "Spline3"),
-	stringsAsFactors = FALSE )
-varKey = varKey[-11,]
+# varKey = data.frame(
+# 	dirty=names(coef(mod)),
+# 	clean=c( '(Intercept)', 
+# 		"Machine", "Junta", "Boss", "Strongman",
+# 		"Other Type","New/Unstable Regime", "Democracy Target",
+# 		"Military Capabilities Initiator",
+# 		"Military Capabilities Target ",
+# 		"Initator Share of Capabilities ",## remember this has no AMEN equivalent
+# 		"Low Trade Dependence ",
+# 		"Both Major Powers", "Minor/Major",
+# 		"Major/Minor", "Contiguous", "Log Dist. Between Capitals",
+# 		"Alliance Similarity Dyad ",
+# 		"Alliance Similarity With System Leader Initiator",
+# 		"Alliance Similarity Leader Target",
+# 		"Time Since Last Conflict", "Spline1", "Spline2", "Spline3"),
+# 	stringsAsFactors = FALSE )
+# varKey = varKey[-11,]
 
-#
-getCoefTable(varKey, modList, modNames, 'weeks', 'Weeks (2012)', plotPath, 3, 'scriptsize')
-############################################
+# #
+# getCoefTable(varKey, modList, modNames, 'weeks', 'Weeks (2012)', plotPath, 3, 'scriptsize')
+# ############################################
 
-# plot srm var ###########################################
-plotVC(ameFit$VC, paste0(plotPath, 'weeks_srmvc.pdf'), w=7, h=4)
-############################################
+# # plot srm var ###########################################
+# plotVC(ameFit$VC, paste0(plotPath, 'weeks_srmvc.pdf'), w=7, h=4)
+# ############################################
 
-# outPerf ###########################################
-load(paste0(resultsPath, 'outsampResults2.rda')) # ameOutSamp_NULL
-ameOutSamp=ameOutSamp_NULL ; rm(ameOutSamp_NULL)
-ameOutSamp$outPerf$pred = 1/(1+exp(-ameOutSamp$outPerf$pred))
-load(paste0(resultsPath,'weeksOutPerf_small.rda')) # glmOutSamp
+# # outPerf ###########################################
+# load(paste0(resultsPath, 'outsampResults2.rda')) # ameOutSamp_NULL
+# ameOutSamp=ameOutSamp_NULL ; rm(ameOutSamp_NULL)
+# ameOutSamp$outPerf$pred = 1/(1+exp(-ameOutSamp$outPerf$pred))
+# load(paste0(resultsPath,'weeksOutPerf_small.rda')) # glmOutSamp
 
-# org
-predDfs = list(
-	GLM = data.frame(actual=glmOutSamp$outPerf$actual, pred=glmOutSamp$outPerf$pred, model='GLM'),
-	AME = data.frame(actual=ameOutSamp$outPerf$actual, pred=ameOutSamp$outPerf$pred, model='AME') )
+# # org
+# predDfs = list(
+# 	GLM = data.frame(actual=glmOutSamp$outPerf$actual, pred=glmOutSamp$outPerf$pred, model='GLM'),
+# 	AME = data.frame(actual=ameOutSamp$outPerf$actual, pred=ameOutSamp$outPerf$pred, model='AME') )
 
-# run
-ggPerfCurves(predDfs, 'weeks')
-############################################
+# # run
+# ggPerfCurves(predDfs, 'weeks')
+# ############################################
 
 # plot mult eff ###########################################
 # load AME model data
@@ -125,17 +125,22 @@ ggMap = ggplot() +
 		panel.border = element_blank(), panel.grid=element_blank(),
 		axis.ticks = element_blank(), axis.line=element_blank(),
 		axis.text = element_blank() )
-ggsave(ggMap, file=paste0(plotPath, 'weeks_mapLeg.png'))
+# ggsave(ggMap, file=paste0(plotPath, 'weeks_mapLeg.png'))
 
 # load back in so we can add to circ
 loadPkg(c('grid', 'png'))
 mapForCirc = rasterGrob(readPNG(paste0(plotPath, 'weeks_mapLeg.png')), interpolate=TRUE)
 
 # plot
-ggU = getDataForCirc(Y=yArrSumm, U=uData, V=vData, vscale=.7)$uG
+toLabel=c("IRN","IRQ","SYR","PRK",'LIB','CHN','RUS','USA','GMY','CAN','UKG','ISR')
+other=names(sort(rowSums(yArrSumm) + colSums(yArrSumm), decreasing=TRUE))[1:50]
+tots = c(toLabel,other)
+
+ggU = getDataForCirc(Y=yArrSumm[tots,tots], U=uData[tots,], V=vData[tots,], vscale=.65,removeIsolates=FALSE)$uG
+ggU = unique(ggU)
 ggU$ccols = cntryKey$ccols[match(ggU$actor,cntryKey$cowc)]
 ggU$lab = ggU$actor
-ggU$lab[!ggU$lab %in% c("IRN","IRQ","SYR","PRK",'LIB','CHN','RUS','USA','GMY','CAN')] = ''
+ggU$lab[!ggU$lab %in% toLabel] = ''
 ggU$lPch = ggU$tPch ; ggU$lPch[ggU$lab==''] = 0
 
 weeksCirc = ggplot(ggU, aes(x=X1, y=X2, size=tPch, color=actor)) +

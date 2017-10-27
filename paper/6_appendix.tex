@@ -13,7 +13,7 @@
 
 For each of the replications involving a binary dependent variable we provide a table of coefficient estimates that includes the original GLM estimation with a logit link, a GLM estimation with a probit link, and the AME model. The GLM estimation with a probit link function is provided so as to ease comparison between the AME model, which is also based on the probit link. For Rose (2004) we just provide a table of coefficient estimates that includes the original OLS estimation and the AME model.
 
-Additionally, for each replication we provide a more detailed visualization illustrating the results of our out-of-sample performance analysis. For Weeks (2012) we already did so in the main body of the text so we eschew from doing so again here.
+Additionally, for each replication we provide a more detailed visualization illustrating the results of our out-of-sample performance analysis. %For Weeks (2012) we already did so in the main body of the text so we eschew from doing so again here.
 
 \clearpage
 \subsubsection*{Reiter \& Stam (2003)}
@@ -71,13 +71,13 @@ Additional information for the Weeks (2012) re-estimation.
 \FloatBarrier
 
 % already show roc-pr in main text
-% \begin{figure}
-% 	\centering   
-% 	\subfigure[AUC]{\label{fig:weeksroc}\includegraphics[width=.45\textwidth]{weeks_roc_outSample.pdf}}
-% 	\subfigure[Precision and Recall]{\label{fig:weekspr}\includegraphics[width=.45\textwidth]{weeks_pr_outSample.pdf}}
-% 	\caption{Assessments of out-of-sample predictive performance for Weeks (2012) using ROC curves, PR curves, and separation plots.}
-% \end{figure}
-% \FloatBarrier
+\begin{figure}
+\centering   
+  \subfigure[AUC]{\label{fig:weeksauc}\includegraphics[width=.45\textwidth]{weeks_roc_outSample.pdf}}
+  \subfigure[Precision and Recall]{\label{fig:reitpr}\includegraphics[width=.45\textwidth]{weeks_pr_outSample.pdf}}
+  \caption{Assessments of out-of-sample predictive performance for Weeks (2012) using ROC curves and PR curves}
+\end{figure}
+\FloatBarrier
 \clearpage
 
 \subsubsection*{Gibler (2017)}
