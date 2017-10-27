@@ -116,36 +116,9 @@ When we compare the results of Rose's original OLS model to the AME model accoun
 
 The re-estimation of \citet{weeks:2012} has the sharpest divergence between the GLM results and those of the AME Model. In Weeks' initial models,  she finds that machines are less prone to initiate conflict than the reference category, whereas Juntas, Bosses and Strong-men are more conflict-prone. When we examine the AME results, we find that none of these values are distinguishable from zero. Similarly, we find less pronounced effects for military capabilities. One explanation for this divergence is the AME model's ability to account for third-order effects. Inspection of the multiplicative effects in Figure~\ref{fig:weekscirc} reveals a number of clusters of states which exhibit structural equivalence---in the top left corner we see the US, the UK, Germany, Canada and Israel. These states cluster together in the outer ring of this visualization because they tend to send conflicts to similar targets.\footnote{For details on how to interpret this type of visualization see \citet{minhas:etal:2016:arxiv}.} Conversely, in the bottom right of the outer ring, we see a cluster of authoritarian countries: Iraq, Russia, Syria, North Korea, and China. In the inner ring, the proximity of countries is determined by the degree to which they receive conflict from the same countries. In general, the clusters found on both the inner and outer rings have similar governmental types (Iraq, Syria, Libya, and North Korea all fell under the ``boss" category). In the GLM, which ignores these third-order dependencies, many of these results might have been attributed to regime type. Structural equivalence is present even when accounting for nodal characteristics like regime type.  The AME model, on the other hand, shows that this can be specified in terms of the interdependencies captured by the multiplicative effects. 
 
-% In terms of out-of-sample performance, shown in Figure~\ref{fig:weeksauc}, the AME model performs markedly better than the GLM out-of-sample, lending credence to the possibility that these third-order dependencies cause spurious effects for regime type.  In terms of performance, the original Weeks' model does slightly better than a coin-toss overall, and fails to predict more than a couple of events (incorrectly) in almost one million observations. 
-
 \subsection{Re-estimation of Gibler (2017)}
 
-The replications we have undertaken are all from articles over the past fifteen years.  A more recent example is \citet{gibler:2017} which examines the onset of militarized disputes using capabilities, joint democracy, alliances, and power parity in a undirected dyadic study using logistic regression and dyad clustered standard errors.   In addition to this, Gibler shows that the long-standing relationship between the relative parity of capabilities and initiation of international conflict is almost completely mediated by the initial conditions for the members of the dyad when they joined the international system as sovereign members. This finding calls into question many IR theories about the role of balance in terms of generating international conflict \citep{organski:1958}.
-
-% SM: we still adding a coefplot here?
-% Insert coefplot here, without splines...\label{fig:giberrepl}
-% %
-% %\begin{table}
-% %\begin{center}
-% %\caption{Comparison of Gibler (2017) Model 6 results with AME results. This was run over a chain of $10,000 \text{BAZILLION}$ iterations.  \label{tab:gibme}}
-% %\begin{tabular}{lrr} \toprule
-% %& \multicolumn{2}{c}{$\hat{\beta}$ Estimates}\\ \cmidrule{2-3}
-% %Variable & \texttt{logit} & \texttt{amen} \\ \midrule
-% %Allied & 0.142&  0.023 \\
-% %Joint Democracy &\bf -0.507&  0.045 \\
-% %Peace Years \bf &-0.260& \bf -0.060 \\
-% %Spline 1 &\bf -0.001& \bf 0.00 \\
-% %Spline 2&\bf -0.000& \bf 0.00\\
-% %Spline 3 &-0.000& \bf 0.00\\ 
-% %Contiguity &\bf 2.412& \bf 0.640 \\
-% %Parity &0.075&  -0.013 \\
-% %Parity at entry year&\bf 0.868&  0.002 \\ 
-% %Rivalry &\bf 2.031&\bf 0.721\\ 
-% %Constant &\bf -5.526 & \bf  -2.581\\ \bottomrule
-% %\end{tabular}\\
-% %\end{center}
-% %{\bf Note}: {\bf Bold} indicates conventional statistical significance at $p < 0.05$ or less in Gibler (2017). For comparative purposes, only, we have employed the same criterion to the results from the \texttt{amen} estimation. NEED TO BE FIXED if staying.
-% %\end{table}
+The replications we have undertaken are all from articles over the past fifteen years.  A more recent example is \citet{gibler:2017} which examines the onset of militarized disputes using capabilities, joint democracy, alliances, and power parity in a undirected dyadic study using logistic regression and dyad clustered standard errors. In addition, Gibler shows that the long-standing relationship between the relative parity of capabilities and initiation of international conflict is almost completely mediated by the initial conditions for the members of the dyad when they joined the international system as sovereign members. This finding calls into question many IR theories about the role of balance in terms of generating international conflict \citep{organski:1958}.
 
 We re-estimated model 6 from Table 6 (2017, 34). The results are presented in the Appendix. The results obtained with AME stand in stark contrast to those found with a logistic regression (with dyad clustered, robust standard errors).  Most importantly, the primary variable from the Gibler study, parity of the members of a dyad at the year in which they entered the international system, is shown to be unimportant in the AME results.  Not only is the value of this parameter small, but it has a very large relative standard error---over a magnitude larger than the parameter itself ($z= 0.038$). In addition, the variable indicating whether both members of the dyad were coded as democracies (joint democracy) follows the same pattern: important and strong in the logistic results, but this disappears once interdependencies are modeled.  As might be expected, the strong geographic clustering in the original study is about one-quarter as strong in the AME estimations. Similarly, rivalry coefficients are about one-third the size in the AME formulation, but a great deal more precisely measured ($z=18.116$). 
 
@@ -159,7 +132,7 @@ We utilized the original and the AME results from Gibler's model 6 in Table 6 to
 
 \subsection{Lessons Learned from Re-estimating Five Prominent Studies}
 
-First and foremost, many findings which emerge from models that do not take interdependencies into account lose their statistical significance when network effects are estimated via AME.\footnote{This should not be news---since the finding has long been in the theoretical literature, but given the state of current literature in international relations is still pertinent.} Not only are coefficients biased in the GLM approaches to the analysis of dyadic data, but they are often imprecisely measured, with poorly calibrated standard errors.  This means that significant testing (for better or worse) is compromised when network effects are ignored.
+First and foremost, many findings that emerge from models that do not take interdependencies into account lose their statistical significance when network effects are estimated via AME.\footnote{This should not be news---since the finding has long been in the theoretical literature, but given the state of current literature in international relations is still pertinent.} Not only are coefficients biased in the GLM approaches to the analysis of dyadic data, but they are often imprecisely measured, with poorly calibrated standard errors.  This means that significant testing (for better or worse) is compromised when network effects are ignored.
 
 Second, even when the results from the AME estimation conform with those found in an OLS or logistic regression, new insights emerge from the additional information derived. In particular, there is actual information about the dependencies so that clusters can be identified, and the extent of reciprocity at the dyad level, as well as among senders and receivers.  This kind of information is absent in standard approaches and adds to our ability to explain specific as well as general results.
 
@@ -167,4 +140,5 @@ Third, it is evident that the actual results---not the estimated coefficients an
 
 Fourth, it is clear that the AME approach dominates the GLM approaches in terms of performance. Not only it is better at correctly identifying cases in which the dependent variable takes a value of $0$ (via the ROC curves and associated statistics), but it also dominates at correctly identifying occurrences of the dependent variable in the data (seen via the PR curves and associated statistics).  In the case of studies with continuous dependent variables, the AME approach has average error statistics that are about one-half that found in the OLS model. It is rare for studies in this area to provide performance statistics, but at the same time at least one of the studies is unable to identify a single case in spite of having almost a million observations.
 
-Fifth, it is useful to suggest that a lot of what is \textit{known} about international relations based on studies of dyadic data should be taken with a grain of salt, awaiting a reassessment using methods that do not rely on an assumption that all the dyads are iid.
+% i thinks that's already pretty explicit
+% Fifth, it is useful to suggest that a lot of what is \textit{known} about international relations based on studies of dyadic data should be taken with a grain of salt, awaiting a reassessment using methods that do not rely on an assumption that all the dyads are iid.
