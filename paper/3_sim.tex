@@ -6,6 +6,7 @@ We utilize a simulation study to highlight the utility of AME as an inferential 
 	y_{i,j} \sim  \mu + \beta x_{i,j} + \gamma w_{i,j} + \epsilon_{i,j}
 	\label{eqn:sim}
 \end{align}
+
 where $Y= \{y_{i,j}\}\in \mathbb R^{n\times n}$ is an observed sociomatrix, $X = \{x_{i,j} \} \in \mathbb R^{n \times n}$ is a matrix of observed dyad-specific characteristics, and $W = \{ w_{i,j}\} \in \mathbb R^{n \times n}$ is a matrix of unobserved dyad-specific characteristics. $Y$ can be thought of as a dyadic dependent variable, $X$ and $W$ are both dyadic covariates that are a part of the data-generating process for $Y$, but $W$ is not observed. We compare inference for $\mu$ and $\beta$---the latter parameter would be of primarily theoretical concern for applied scholars---using three models :
 
 \begin{itemize}
@@ -22,7 +23,7 @@ We compare the performance of the models first in terms of how well they estimat
 
 \begin{figure}
 	\centering
-	\caption{Regression parameter estimates for the naive, AME, and oracle models from 1,000 simulations.}
+	\caption{Regression parameter estimates for the naive, AME, and oracle models from 1,000 simulations. Summary statistics are presented through a traditional box plot, and the estimates from each simulation are visualized as well as points.}
 	\label{fig:ameBias}
 	\includegraphics[width=1\textwidth]{ameSimBias_all.pdf} \\
 \end{figure}
@@ -36,7 +37,7 @@ Next, we estimate the 95\% confidence interval for the three models in each of t
 	\includegraphics[width=1\textwidth]{ameSimCover_all.pdf} \\
 \end{figure}
 
-Last, beyond obtaining less biased and better calibrated parameter estimates, a key benefit of the AME framework is that we can also estimate unobserved dependencies through the random effects structure of the model. In the case of the data generating process for $Y$, $W$ is set as an unobserved dyadic covariate that had a homophilous effect on $Y$. Homophilous because $W$ within this framework is simply an example of a dyadic attribute involving $i$ and $j$ that positively affects the degree to which they will interact with one another, i.e., $y_{ij}$. This type of unobserved dependency will be captured through the multiplicative effects portion of the model, $\mathbf{U}^{\top} \mathbf{D} \mathbf{V}$. To estimate how well the model performs in doing this we recover the multiplicative effects term for each simulation and calculate the correlation between it and the unobserved dependency, $W$.\footnote{Specifically, since both the multiplicative effects term and $W$ are continuous dyadic variables, we just calculate the Pearson correlation coefficient.} We visualize the distribution of the correlations from the 1,000 simulations in Figure~\ref{fig:ameCorr} for the case where the number of actors was set to 100 (top pair of panels) and 50. In both cases we find that the multiplicative effects perform very well in capturing the unobserved dependency, which indicates that the structure provided by this framework is not simply capturing noise but can be used as a tool to estimate unobserved structure. 
+Last, beyond obtaining less biased and better calibrated parameter estimates, a key benefit of the AME framework is that we can also estimate unobserved dependencies through the random effects structure of the model. In the case of the data generating process for $Y$, $W$ is set as an unobserved dyadic covariate that had a homophilous effect on $Y$. Homophilous because $W$ within this framework is simply an example of a dyadic attribute involving $i$ and $j$ that positively affects the degree to which they will interact with one another, i.e., $y_{ij}$. This type of unobserved dependency will be captured through the multiplicative effects portion of the model, $\mathbf{U}^{\top} \mathbf{D} \mathbf{V}$. To estimate how well the model performs in doing this we recover the multiplicative effects term for each simulation and calculate the correlation between it and the unobserved dependency, $W$.\footnote{Specifically, since both the multiplicative effects term and $W$ are continuous dyadic variables, we just calculate the Pearson correlation coefficient.} We visualize the distribution of the correlations from each of the 1,000 simulations in Figure~\ref{fig:ameCorr} for the case where the number of actors was set to 100 (top pair of panels) and 50. Additionally, we calculate the median across the correlations and display that result using a vertical line. For both $n=50$ and $n=100$, we find that the multiplicative effects perform very well in capturing the unobserved dependency, which indicates that the structure provided by this framework is not simply capturing noise but can be used as a tool to estimate unobserved structure. 
 
 \begin{figure}
 	\centering
