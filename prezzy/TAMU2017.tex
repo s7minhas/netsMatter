@@ -300,6 +300,34 @@ We use this model to form the additive effects portion of AME
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{The Latent Factor Model}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\frame{
+  \frametitle{What Exactly Is Third-Order Dependency?}
+  \framesubtitle{People Want to Know!}
+\begin{itemize}
+\item<1> If each node has individual characteristics, 
+say $x_i$ and $x_j$ for two nodes.  Then,
+$x_i \times x_j$ is the multiplicative product of their nodal characteristics and may be related to their relationship, 
+$y_{ij}$.  
+Let $x$ be an encoding of whether a node is democratic or not. 
+Then, $x_i \times x_j \equiv 1 \iff$ 
+\textit{both are democracies}.  This approach is often used in standard analyses as a variable often known as 
+\textit{joint democracy}.  In the context of networks, a positive effect from the interaction of $x_i$ and $x_j$ might affect some dyadic variable, such as not being in a militarized dispute against one another---often denoted the democratic peace.  This positive effect is known in network terminology as \textit{homophily}.
+Most studies just look at the correlation between aggregated variables, but the proposed approach can more directly estimate the degree of homophily.
+\end{itemize}
+}
+
+\frame{
+  \frametitle{What Exactly Is Third-Order Dependency?}
+  \framesubtitle{People Want to Know!}
+\begin{itemize}
+\item<1> Homophily which stems from nodal characteristics results in certain types of network structures: 1) transitivity, 2) balance, and 3) clustering.  For example, homophily tends to induce a large number of \textit{triads}, since if $i$ is similar to $j$ and as a result has a link with $j$, for the same reason it will share a link with $k$ if $j$ and $k$ are similar, thus creating a triad.  Groups of triads tend to result in \textit{clusters}. This can result in clusters in which many elements in the cluster are not only related to one another but share similar characteristics.  This is known as \textit{stochastic equivalence}.
+
+\item To capture this kind of stochastic equivalence---and other types of triadic dependence---we include a latent representation of nodal characteristics in the regression model.  This allows the network representation in a matrix to be dependent upon how similar these latent characteristics are. These latent nodal characteristics are represented by a type of multiplicative effects that are expressed as $\mathbf{u}_i^\intercal \mathbf{v}_i$.  This captures the third-order dependencies, i.e., the dependencies among triads.
+\end{itemize}
+}
+
 \frame{
   \frametitle{Latent Factor Model: The ``M'' in AME}
 
@@ -322,8 +350,29 @@ The probability of a tie from $i$ to $j$ depends on their latent factors
 \end{aligned}
 \end{align*}
 
-Can account for both stochastic equivalence and homophily
+This can account for both stochastic equivalence and homophily, as well as clustering and balance.
 
+}
+
+
+\frame{
+  \frametitle{How Does Estimation Work?}
+  \framesubtitle{It Is NOT All in the Error Term!}
+ \begin{itemize}
+  \item sample $\bm\theta \; | \;  \bm\beta, \mathbf{X}, \bm\theta, \mathbf{a}, \mathbf{b}, \mathbf{U}, \mathbf{V}, \Sigma_{ab}, \rho, \text{ and } \sigma_{\epsilon}^{2}$ (Normal)
+  \item sample $\bm\beta \; | \;  \mathbf{X}, \bm\theta, \mathbf{a}, \mathbf{b}, \mathbf{U}, \mathbf{V}, \Sigma_{ab}, \rho, \text{ and } \sigma_{\epsilon}^{2}$ (Normal)
+  \item sample $\mathbf{a}, \mathbf{b} \; | \; \bm\beta, \mathbf{X}, \bm\theta, \mathbf{U}, \mathbf{V}, \Sigma_{ab}, \rho, \text{ and } \sigma_{\epsilon}^{2}$ (Normal)
+  \item sample $\Sigma_{ab} \; | \; \bm\beta, \mathbf{X}, \bm\theta, \mathbf{a}, \mathbf{b}, \mathbf{U}, \mathbf{V}, \rho, \text{ and } \sigma_{\epsilon}^{2}$ (Inverse-Wishart)
+  \item update $\rho$ using a Metropolis-Hastings step with proposal $p^{*} | p  \sim$ truncated normal$_{[-1,1]}(\rho, \sigma_{\epsilon}^{2})$
+  \item sample $\sigma_{\epsilon}^{2} \; | \; \bm\beta, \mathbf{X}, \bm\theta, \mathbf{a}, \mathbf{b}, \mathbf{U}, \mathbf{V}, \Sigma_{ab}, \text{ and } \rho$ (Inverse-Gamma)
+  \item For each $k \in K$:
+  \begin{itemize}
+    \item Sample $\mathbf{U}_{[,k]} \; | \; \bm\beta, \mathbf{X}, \bm\theta, \mathbf{a}, \mathbf{b}, \mathbf{U}_{[,-k]}, \mathbf{V}, \Sigma_{ab}, \rho, \text{ and } \sigma_{\epsilon}^{2}$ (Normal)
+    \item Sample $\mathbf{V}_{[,k]} \; | \; \bm\beta, \mathbf{X}, \bm\theta, \mathbf{a}, \mathbf{b}, \mathbf{U}, \mathbf{V}_{[,-k]}, \Sigma_{ab}, \rho, \text{ and } \sigma_{\epsilon}^{2}$ (Normal)
+    \item Sample $\mathbf{D}_{[k,k]}  \; | \; \bm\beta, \mathbf{X}, \bm\theta,\mathbf{a}, \mathbf{b}, \mathbf{U}, \mathbf{V}, \Sigma_{ab}, \rho, \text{ and } \sigma_{\epsilon}^{2}$ (Normal)\footnote{Subsequent to estimation, $\mathbf{D}$ matrix is absorbed into the calculation for $\mathbf{V}$ as we iterate through $K$. }
+  \end{itemize}
+ \end{itemize}
+  
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Simulation of AME}
