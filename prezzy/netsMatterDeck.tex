@@ -5,10 +5,14 @@
 % \usetheme[height=11mm]{Rochester}
 
 \documentclass[10pt, compress]{beamer}
-
-\usetheme[usetitleprogressbar]{m}
+\usepackage{beamerthemesplit}
+\usecolortheme[cmyk={1.0,.69,0.0,.115}]{structure}
+%\usetheme[usetitleprogressbar]{m}
 \usepackage{booktabs}
 \usepackage[scale=2]{ccicons}
+\usepackage{xeCJK}
+%\setCJKmainfont{MingLiU}
+%\setCJKsansfont{Microsoft JhengHei}
 
 \setbeamertemplate{items}[ball] 
 \setbeamerfont{tablefont}{size=\tiny}
@@ -92,6 +96,22 @@ Michigan State University}
 \item Our approach dominates in terms of out-of-sample cross-validations, rendering it more useful in forecasting applications and in modeling the data generating process behind outcomes of interest.
 \end{itemize}
 \end{frame}
+
+\begin{frame}
+\frametitle{Abstract}
+\framesubtitle{An Abstract for a Talk?}
+\begin{itemize}
+\item 大多数的国际关系研究关注于两两二元关系，而二元关系数据经常无法满足统计意义上对于数据之间条件独立的假设。因此，在忽略数据互赖性之下所建立的统计模型往往估计出有偏差的变数系数与标准误，而这些偏差对于衡量统计参数模型有深远的影响。 
+
+\item 在本文中，我们提出另一种立基于回归模型的统计方法，来考查这类数据之间复杂的互赖关系，并将其应用在五篇政治学重要的研究论文中来重置他们的研究结果，进而比较传统的方法与我们的模型之间所呈现的差异。 
+
+\item 我们的研究结果发现，传统的方法过度强调主要变数在统计模型中的影响，低估了不确定性，且往往在变数解读上给予研究者有偏差的结论。
+
+\item 我们的模型在样本外的交叉验证上有较佳的表现，赋予研究者更有用的预测应用，以及更有效地模拟应变量数据的生成过程。
+\end{itemize}
+\end{frame}
+
+
 
 \frame{\frametitle{Overview of Seminar}
 \framesubtitle{Please, ask questions when you have them.}\tableofcontents}
