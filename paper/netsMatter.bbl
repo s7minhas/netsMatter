@@ -1,4 +1,4 @@
-\begin{thebibliography}{32}
+\begin{thebibliography}{35}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \expandafter\ifx\csname selectlanguage\endcsname\relax
   \def\selectlanguage#1{\relax}\fi
@@ -51,6 +51,12 @@ Bennett, D.~Scott, and Stam, Allan~C. 2000.
   Interstate Dyads: {W}hen Decisions Matter.}
 \newblock {\em Journal of Conflict Resolution}, {\bf 44}(5), 653--685.
 
+\bibitem[\protect\citename{Bennett {et~al.}, }2007]{bennett:etal:2007}
+Bennett, James, Lanning, Stan, {et~al.} 2007.
+\newblock  \titlecap{The {Netflix} Prize.}
+\newblock {Page ~35 of:} {\em Proceedings of {KDD} cup and workshop},  vol.
+  2007.
+
 \bibitem[\protect\citename{Dorff and Minhas, }2017]{dorff:minhas:2017}
 Dorff, Cassy, and Minhas, Shahryar. 2017.
 \newblock  \titlecap{When Do States Say Uncle? Network Dependence and Sanction
@@ -63,10 +69,22 @@ Erikson, Robert~S., Pinto, Pablo~M., and Rader, Kelly~T. 2014.
   tale.}
 \newblock {\em Political Analysis}, {\bf 22}(4), 457--463.
 
+\bibitem[\protect\citename{Franzese and Hayes, }2007]{franzese:hayes:2007}
+Franzese, Robert, and Hayes, Jude~C. 2007.
+\newblock  \titlecap{Spatial Econometric Models for the Analysis of {TSCS} Data
+  in Political Science.}
+\newblock {\em Political Analysis}, {\bf 15}(15), 2.
+
 \bibitem[\protect\citename{Gibler, }2017]{gibler:2017}
 Gibler, Douglas~M. 2017.
 \newblock  \titlecap{State Development, Parity, and International Conflict.}
 \newblock {\em American Political Science Review}, {\bf 111}(1), 21--38.
+
+\bibitem[\protect\citename{Hoff, }2005]{hoff:2005}
+Hoff, Peter~D. 2005.
+\newblock  \titlecap{Bilinear Mixed-Effects Models for Dyadic Data.}
+\newblock {\em Journal of the American Statistical Association}, {\bf
+  100}(4690), 286--295.
 
 \bibitem[\protect\citename{Hoff, }2008]{hoff:2008}
 Hoff, Peter~D. 2008.
@@ -77,11 +95,6 @@ Hoff, Peter~D. 2008.
   Systems 20}.
 \newblock Processing Systems 21.
 \newblock Cambridge, MA, USA: MIT Press.
-
-\bibitem[\protect\citename{Hoff, }2015]{hoff:2015:arxiv}
-Hoff, Peter~D. 2015.
-\newblock  \titlecap{Dyadic Data Analysis with \texttt{amen}.}
-\newblock {\em arxiv}, {\bf arxiv:1506.08237}, 1--48.
 
 \bibitem[\protect\citename{Hoff and Ward, }2004]{hoff:ward:2004}
 Hoff, Peter~D., and Ward, Michael~D. 2004.
@@ -133,6 +146,11 @@ Reiter, Dan, and Stam, Allan~C. 2003.
 \newblock  \titlecap{Identifying the Culprit: {D}emocracy, Dictatorship, and
   Dispute Initiation.}
 \newblock {\em American Political Science Review}, {\bf 97}(2), 333--337.
+
+\bibitem[\protect\citename{Resnick and Varian, }1997]{resnick:varian:1997}
+Resnick, Paul, and Varian, Hal~R. 1997.
+\newblock  \titlecap{Recommender Systems.}
+\newblock {\em Communications of the {ACM}}, {\bf 40}(3), 56--58.
 
 \bibitem[\protect\citename{Richardson, }1960]{richardson:1960}
 Richardson, Lewis~F. 1960.
