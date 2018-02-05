@@ -26,7 +26,7 @@ for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,'.rda')) }
 
 #
 modKey = data.frame(dirty=names(ameSim50[[1]]$beta))
-modKey$clean = c('Naive', 'AME', 'Oracle')
+modKey$clean = c('Standard', 'AME', 'Oracle')
 ##############################
 
 ##############################
@@ -57,7 +57,7 @@ ameSimBias = ameSimBias %>% group_by(model, var, n) %>%
 # fix mod labels
 ameSimBias$model = modKey$clean[match(ameSimBias$model, modKey$dirty)]
 ameSimBias$model = factor(ameSimBias$model, levels=modKey$clean)
-modCols = c(Naive='#d6604d', AME='#4393c3', Oracle='#4daf4a')
+modCols = c(Standard='#d6604d', AME='#4393c3', Oracle='#4daf4a')
 
 # fix var labels
 ameSimBias$var[ameSimBias$var=='X1'] = '$\\beta$'
