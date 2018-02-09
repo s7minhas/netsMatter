@@ -1,3 +1,21 @@
+\documentclass{article}[12pt]
+\usepackage{setspace}
+\usepackage{listings}
+\doublespacing
+\usepackage[letterpaper, portrait, margin=1in]{geometry}
+\setlength{\parskip}{.5em}
+\setlength{\parindent}{0cm}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{framed}
+\usepackage[sort,round]{natbib}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{hyperref}
+
+\begin{document}
+
 \section{\textbf{Re-estimation with AME}}
  
 %% What is the point: 
@@ -5,25 +23,26 @@
 \subsection{Design}
 
 In order to showcase the insights the AME approach permits scholars to
-bring into their analysis, we illustrate the application of AME on
-five recent studies from the broad field of international relations
-and international political economy that utilize relational data
-\citep{reiter:stam:2003, mcdonald:2004,  rose:2004, weeks:2012,
-  gibler:2017}.  These articles demonstrate the broad range of
-application for the AME framework, which include testing the effect of
-both dyadic and monadic variables on varied conflict behaviors and
-trade.  We chose to demonstrate the capabilities of AME with reference
+bring into their analysis, we apply AME to five recent studies from the broad field of international relations
+and international political economy~\citep{reiter:stam:2003, mcdonald:2004,  rose:2004, weeks:2012,
+  gibler:2017}. Each of these studies are representative of broader trends in the field in that they use
+relational data of state interactions and propose both dyadic,
+monadic, and structural explanations for behavior of actors in the system. 
+
+We chose to demonstrate the capabilities of AME with reference
 to existing studies in order to highlight several features of the
-method. Firstly, the results of AME estimation are interpretable
-alongside GLM results. Secondly, although the data requirements of AME
-are, admittedly, more intensive than needed for GLMs, this rich data
-is increasingly coming online in both new and existing data. Thirdly,
+AME approach. Firstly, the results of AME estimation are interpretable
+alongside GLM results but have the additional benefit of being able to
+quantify higher-order features of interest to scsholars, such as
+``sender'' and ``receiver'' effects. Secondly, although the data
+requirements of AME are, admittedly, more intensive than needed for GLMs, ever richer data
+is increasingly prevalent in both new and existing data. Thirdly,
 through AME, we can examine the extent to which interdependencies
 within typical dyadic data alter previous conclusions about
 international relations from recent empirical studies using a
 framework that a priori assumes conditional independence.
 
-These studies were also selected based on how recent they were and
+The five studies replicated below were selected based on how recent they were and
 whether they had more then 100 citations.\footnote{Note that we chose
   papers with at least 100 citations as an indicator of influence
   within the discipline. Of course, by the criteria of influence many
@@ -38,21 +57,18 @@ hypothesis by employing some form of a general linearized
 regression. 
  
 In the following section, we present two sets of results for each
-study, one that follows the original study in our re-estimation of the
-original models and another that tests the central hypothesis within
-an AME implementation. We demonstrate that AME allows scholars the
-ability to test their hypotheses of interest, while directly
-accounting for both theorized and observed interdependencies in the
-data. Directly accounting for interdependences can change the outcome
-of regression models, both in substance and in estimates. In part, this outcome
-follows from AME's ability to precisely capture higher-order
-interdependencies, whereas GLM approaches implicitly ignore dyadic
-interdependencies. As this is a widely-known limitation of GLM
-approaches, scholars often attempt to account for clustering of
-observations by including additional variables and adjusting the
-standard errors of the resulting estimates. At best, this method
-introduces noise and imprecision into results, and at worst can
-produce misleading outcomes.
+study, one that replicates the original study and another that tests
+the central hypothesis within an AME implementation. We demonstrate
+that AME allows scholars the ability to test their hypotheses of
+interest, while directly accounting for both theorized and observed interdependencies in the
+data. As accounting for interdependences can change the outcome
+of regression models, both in substance and in estimate, we also summarize the
+predictive performance of the GLM and AME implementations. This
+predictive view allows us to better compare the models across
+specifications. Finally, for several of the studies, we report the
+AME-derived sender and receiver effects in order to highlight
+additional value of the AME framework.
+
 
 \begin{table}
 \caption{Features of the Studies Re-estimated.}
@@ -114,9 +130,17 @@ An important takeaway here is that as a result of the incompatibility
 between GLM models and the underlying processes that shape
 international events, many scholars are forced to make knowledge claims
 based on the statistical significance of a small set of covariates, or
-the differences between these covariates. These differences may change
-dramatically when interdependencies are taken into account directly,
-as they do in the case of this study. Beyond just comparing parameter
+the differences between these covariates.  These differences may
+change dramatically when interdependencies are taken into account
+directly, as they do in the case of this study. %MJF: Keeping this here for now, but it reads more like a conclusion
+This outcome follows from AME's ability to precisely capture higher-order
+interdependencies, whereas GLM approaches implicitly ignore dyadic
+interdependencies. As this is a widely-known limitation of GLM
+approaches, scholars often attempt to account for clustering of
+observations by including additional variables and adjusting the
+standard errors of the resulting estimates. At best, this method
+introduces noise and imprecision into results, and at worst can
+produce misleading outcomes.   Beyond just comparing parameter
 estimates, we examine how well each approach can represent the data
 generating process using an out-of-sample cross validation
 strategy. Specifically, for each study, we randomly divide the data
@@ -164,7 +188,34 @@ In the original model, the variable ``Pers/Democ Directed Dyad" (which represent
 
 \subsection{Re-estimation of McDonald (2004)}
 
-\citet{mcdonald:2004} studies whether trade promotes peace between nations. The link between conflict and trade is perplexing, with many persistent, yet competing explanations. \citet[p. 547]{mcdonald:2004} includes the argument that interdependence between states ``makes conflict less likely because of its efficiency over conquest in acquiring resources\ldots''. Accordingly, his primary contribution is to provide evidence challenging the generalized linkage between peace and trade and to offer a new measurement of the key independent variable, trade. \citet{mcdonald:2004} refines the trade variable, arguing that \textit{free} trade, rather than trade alone, reduces the likelihood of conflict between states. His key hypothesis is that greater levels of protection increase the probability of interstate conflict, an argument that builds on the work of classic liberalism and connects free trade to the power of domestic audiences. \citet{mcdonald:2004} measures free trade in two ways. The first measurement reflects the notion that larger protected sectors generate greater societal pressures resulting in pockets of support for war. This protection variable measures the proportion of customs revenue divided by total imports in the state that possesses the greater such ratio in each dyad. This measure thus captures the score of the state in the dyad that possesses higher barriers to trade. \citet[p. 560]{mcdonald:2004} also includes a measure of economic integration  calculated as ``the lower proportion of total dyadic trade (imports plus exports) divided by state $i$'s GDP or total dyadic trade divided by state $j$'s GDP''. The binary, dependent variable is the onset of a new militarized interstate dispute within a given dyad. \citet{mcdonald:2004} employs logistic regression to examine the putative statistical significance of these variables. The models include splines to correct for temporal dependence, and robust standard errors clustered on each dyad.
+\citet{mcdonald:2004} studied whether trade promotes peace between
+nations.  \citet[p. 547]{mcdonald:2004} introduced the argument that
+free trade between states ``makes conflict less likely
+because of its efficiency over conquest in acquiring
+resources\ldots''. Accordingly, he provided evidence challenging the
+generalized linkage between peace and trade and refined the
+measurement of the standard ``trade'' variable, arguing that
+\textit{free} trade, rather than trade alone, reduces the likelihood
+of conflict between states. His key hypothesis is that greater levels
+of protection increase the probability of interstate conflict, an
+argument that builds on the work of classic liberalism and connects
+free trade to the power of domestic audiences. \citet{mcdonald:2004}
+measured free trade in two ways. The first, the ``protection''
+variable measures the proportion of customs revenue divided by total
+imports in the state that possesses the greater such ratio in each
+dyad. reflects the notion that larger protected sectors generate
+greater societal pressures resulting in pockets of support for war.
+This measure thus captures the score of the state in the dyad that
+possesses higher barriers to trade. \citet[p. 560]{mcdonald:2004} also
+includes a measure of economic integration  calculated as ``the lower
+proportion of total dyadic trade (imports plus exports) divided by
+state $i$'s GDP or total dyadic trade divided by state $j$'s
+GDP''. The (binary) dependent variable is the onset of a new
+militarized interstate dispute within a given dyad.
+ \citet{mcdonald:2004} employs logistic regression to examine the
+ putative statistical significance of these variables. The models
+ include splines to correct for temporal dependence, and robust
+ standard errors clustered on each dyad.
 
 Our re-estimation with AME reveals that trade relations are highly interdependent and exhibit important patterns of transitivity.  Or, in other words, if countries $i$ and $j$ are highly dependent and countries $j$ and $k$ are also highly dependent, then we are likely to observe high dependency between countries $i$ and $k$. This indicates that conflict is less likely among members of a trade community. Once we control for these dependencies, we can more clearly interpret the positive link between trade and conflict.  The most striking thing is that AME finds a positive conditional association between trade dependence and conflict ($\hat{\beta}= 18.4, \quad \sigma_{\hat{\beta}} = 28.6$), while the comparable numbers for the logistic regression found in the original articles are negative ($\hat{\beta}= -22.2, \quad \sigma_{\hat{\beta}} = 15.2$). At the same time, the AME has ROC and PR curves (shown in the Appendix) that dominate the results found in McDonald (2004).
 
@@ -183,7 +234,38 @@ When we compare the results of Rose's original OLS model to the AME model accoun
 
 \subsection{Re-estimation of Weeks (2012)}
 
-\citet{weeks:2012} examines the influence of domestic institutions on the initiation of military conflicts by autocratic leaders.  She argues that in some circumstances autocrats are held accountable for their foreign policy decisions. She adds the nuance that autocratic audiences are not homogeneous. When the autocratic regime is nonmilitary, domestic audiences do not favor military actions, but in military autocracies this is not the case. Further she argues that in personalistic regimes without a military or civilian domestic audience, the leaders tend to be more likely to employ military force in their foreign policy.  To study this question, she uses a dyadic design in which the dependent variable is ``whether country A in a directed dyad initiated military conflict against country B during year t'' (page 337).  One major innovation in her study resides in the nuanced way in which she conceptualizes and codes regime type into four types: a) Machine, b) Junta, c) Boss, and d) Strongmen. She also includes a variety of putative control variables focusing on capabilities for both sides of the dyad, alliances, geography, trade dependence, regime instability, and the regime type of ``side B.''  She uses a logistic regression, but follows \citet{beck:etal:1998} and includes splines to capture temporal covariation in the dependent variable along with fixed, unit effects. The analysis is done for dyads, but is considered to be from the perspective of the actor that initiated the dispute. The basic finding is that a) juntas, bosses, and strongmen are more likely to initiate conflict than machines (and maybe democracies) and that b) machines are no more belligerent than democracies.  These insights are mainly emphasized in the paper by the parameter estimates depicted in Tables 1 and 2 (pages 339--340) from the paper. She makes the argument that ignoring important nuances between different types of autocracies hinders our understanding of the initiation of military conflict by autocracies. 
+\citet{weeks:2012} examines the influence of domestic institutions on
+the initiation of military conflicts by autocratic leaders.  She
+argues that in some circumstances autocrats are held accountable for
+their foreign policy decisions. She adds the nuance that autocratic
+audiences are not homogeneous. When the autocratic regime is
+nonmilitary, domestic audiences do not favor military actions, but in
+military autocracies this is not the case. Further she argues that in
+personalistic regimes without a military or civilian domestic
+audience, the leaders tend to be more likely to employ military force
+in their foreign policy.  To study this question, she uses a dyadic
+design in which the dependent variable is ``whether country A in a
+directed dyad initiated military conflict against country B during
+year t'' (page 337).  One major innovation in her study resides in the
+nuanced way in which she conceptualizes and codes regime type into
+four types: a) Machine, b) Junta, c) Boss, and d) Strongmen. She also
+includes a variety of putative control variables focusing on
+capabilities for both sides of the dyad, alliances, geography, trade
+dependence, regime instability, and the regime type of ``side B.''
+She uses a logistic regression, but follows \citet{beck:etal:1998} and
+includes splines to capture temporal covariation in the dependent
+variable along with fixed, unit effects. The analysis is done for
+dyads, but is considered to be from the perspective of the actor that
+initiated the dispute. The basic finding is that a) juntas, boss type,
+and strongmen type regimes are more likely to initiate conflict than
+machine-type regimes (and maybe democracies) and that b) machine-type
+regimes are no more belligerent than democracies.  
+These insights are mainly emphasized in the paper by the parameter
+estimates depicted in Tables 1 and 2 (pages 339--340) from the
+paper. She argued that ignoring important nuances between
+different types of autocracies hinders our understanding of the
+initiation of military conflict by autocracies. 
+
 
 \begin{figure}[!h]
 	\includegraphics[width=\textwidth]{weeks_circPlot.png}
@@ -197,7 +279,7 @@ The re-estimation of \citet{weeks:2012} has the sharpest divergence between the 
 
 \subsection{Re-estimation of Gibler (2017)}
 
-The replications we have undertaken are all from articles over the past fifteen years.  A more recent example is \citet{gibler:2017} which examines the onset of militarized disputes using capabilities, joint democracy, alliances, and power parity in a undirected dyadic study using logistic regression and dyad clustered standard errors. In addition, Gibler shows that the long-standing relationship between the relative parity of capabilities and initiation of international conflict is almost completely mediated by the initial conditions for the members of the dyad when they joined the international system as sovereign members. This finding calls into question many IR theories about the role of balance in terms of generating international conflict \citep{organski:1958}.
+A more recent example is \citet{gibler:2017} which examines the onset of militarized disputes using capabilities, joint democracy, alliances, and power parity in a undirected dyadic study using logistic regression and dyad clustered standard errors. In addition, Gibler shows that the long-standing relationship between the relative parity of capabilities and initiation of international conflict is almost completely mediated by the initial conditions for the members of the dyad when they joined the international system as sovereign members. This finding calls into question many IR theories about the role of balance in terms of generating international conflict \citep{organski:1958}.
 
 We re-estimated model 6 from Table 6 (2017, 34). The results are presented in the Appendix. The results obtained with AME stand in stark contrast to those found with a logistic regression (with dyad clustered, robust standard errors).  Most importantly, the primary variable from the Gibler study, parity of the members of a dyad at the year in which they entered the international system, is shown to be unimportant in the AME results.  Not only is the value of this parameter small, but it has a very large relative standard error---over a magnitude larger than the parameter itself ($z= 0.038$). In addition, the variable indicating whether both members of the dyad were coded as democracies (joint democracy) follows the same pattern: important and strong in the logistic results, but this disappears once interdependencies are modeled.  As might be expected, the strong geographic clustering in the original study is about one-quarter as strong in the AME estimations. Similarly, rivalry coefficients are about one-third the size in the AME formulation, but a great deal more precisely measured ($z=18.116$). 
 
@@ -218,3 +300,6 @@ Second, even when the results from the AME estimation conform with those found i
 Third, it is evident that the actual results---not the estimated coefficients and their covariances---which are generated by the models differ greatly in expectations.  This implies that policy experimentations with the models, as well as scenario-based simulations and forecasting of GLM models are likely to often give misleading results compared to the AME approach.
 
 Fourth, it is clear that the AME approach dominates the GLM approaches in terms of performance. Not only it is better at correctly identifying cases in which the dependent variable takes a value of $0$ (via the ROC curves and associated statistics), but it also dominates at correctly identifying occurrences of the dependent variable in the data (seen via the PR curves and associated statistics).  In the case of studies with continuous dependent variables, the AME approach has average error statistics that are about one-half that found in the OLS model. It is rare for studies in this area to provide performance statistics, but at the same time at least one of the studies is unable to identify a single case in spite of having almost a million observations.
+
+
+\end{document}
