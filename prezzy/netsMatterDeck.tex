@@ -68,14 +68,14 @@
 \def\input@path{{/Users/janus829/Dropbox/Research/netModels/summResults/}, {/Users/s7m/Dropbox/Research/netModels/summResults/}, {/Users/mdw/Dropbox/Research/Ongoing/netModels/summResults/}}
 \graphicspath{{/Users/janus829/Dropbox/Research/netModels/summResults/}, {/Users/s7m/Dropbox/Research/netModels/summResults/},{/Users/mdw/Dropbox/Research/Ongoing/netModels/summResults/}}
 
-\title[AMEN]{Taking Dyads Seriously\thanks{Based upon joint works with Michael Ward (Duke University), Cassy L. Dorff (University of New Mexico), Max Gallop (University of Strathclyde), Juan Tellez (Duke University), Howard Liu (Duke University), \& Margaret Foster (Duke University). This is also part of a broader project involving Peter Hoff (Duke University) and Michael Ward.}
-}
+\title[AMEN]{Taking Dyads Seriously\thanks{Based upon joint works with Michael Ward (Duke University), Cassy L. Dorff (University of New Mexico), Max Gallop (University of Strathclyde), Juan Tellez (Duke University), Howard Liu (Duke University), \& Margaret Foster (Duke University). 
+}}
 
-\author{Shahryar Minhas\\Cassy L. Dorff\\Margaret Foster\\Max Blau Gallop\\Juan Tellez\\ Michael D. Ward}
+\author{Michael D. Ward}
 %{Shahryar Minhas\\ minhassh@msu.edu \\ s7minhas.com \\
 %Michigan State University} 
 
-\date{\today}
+\date{\today\\ 2018 Asian Political Methodology Meeting\\Asia Center\\Seoul National University\\Seoul, Korea}
 
 \begin{document}
 \frame{\titlepage}
@@ -638,7 +638,7 @@ More work; copies available upon request:
 \item Shahryar Minhas, Cassy L. Dorff, Margaret Foster, Max Gallop, Howard Liu, Juan Tellez, and Michael D. Ward. 2017. \textit{Taking Dyads Seriously}.
 \end{itemize}
 
-Thank you!
+Thank you!  Thanks especially to Jong Hee Park and the Organizing Committee.
 
 }
 \section{Appendix: Code Example}
@@ -684,9 +684,9 @@ Beyond the data inputs, the AMEN function requires additional specification:
 
 \frame{
   \frametitle{Actual Code}
+  {\footnotesize
 \# running in parallel varying k\\
 imps = 10000 ; brn = 25000 ; ods = 10 ; latDims = 0:3\\
-\# Run amen in parallel
 library(doParallel) ; library(foreach) ; cl=makeCluster(4) \\ registerDoParallel(cl)\\
 foreach(ii=1:length(latDims), .packages=c("amen")) \%dopar\% {\\
   \# load previous model run\\
@@ -704,6 +704,7 @@ foreach(ii=1:length(latDims), .packages=c("amen")) \%dopar\% {\\
   save(ameFit, file=paste0('model\_k', latDims[ii],'\_v2.rda') )\\
 }
 stopCluster(cl)
+}
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\section{Backup Slides}
