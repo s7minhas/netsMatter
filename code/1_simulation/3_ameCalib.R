@@ -26,7 +26,7 @@ for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,'.rda')) }
 
 #
 modKey = data.frame(dirty=names(ameSim50[[1]]$beta))
-modKey$clean = c('Naive', 'AME', 'Oracle')
+modKey$clean = c('Standard', 'AME', 'Oracle')
 ##############################
 
 ##############################
@@ -68,7 +68,7 @@ coverSumm = ameSimCover %>% group_by(model,n, varName) %>%
 # clean mod labels
 coverSumm$model = modKey$clean[match(coverSumm$model, modKey$dirty)]
 coverSumm$model = factor(coverSumm$model, levels=modKey$clean)
-modCols = c(Naive='#d6604d', AME='#4393c3', Oracle='#4daf4a')
+modCols = c(Standard='#d6604d', AME='#4393c3', Oracle='#4daf4a')
 
 # clean var labels
 coverSumm$varName[coverSumm$varName=='X1'] = '$\\beta$'
