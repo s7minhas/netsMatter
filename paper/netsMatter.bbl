@@ -1,4 +1,4 @@
-\begin{thebibliography}{36}
+\begin{thebibliography}{39}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \expandafter\ifx\csname selectlanguage\endcsname\relax
   \def\selectlanguage#1{\relax}\fi
@@ -63,6 +63,12 @@ Block, Per, Stadtfeld, Christoph, and Snijders, Tom~A.B. 2017.
   Basic Principles.}
 \newblock {\em Sociological Methods \& Research}.
 
+\bibitem[\protect\citename{Chyzh, }2016]{chyzh:2016}
+Chyzh, Olga. 2016.
+\newblock  \titlecap{Dangerous liaisons: {A}n endogenous model of international
+  trade and human rights.}
+\newblock {\em Journal of Peace Research}, {\bf 53}, tbd.
+
 \bibitem[\protect\citename{Dorff and Minhas, }2017]{dorff:minhas:2017}
 Dorff, Cassy, and Minhas, Shahryar. 2017.
 \newblock  \titlecap{When Do States Say Uncle? Network Dependence and Sanction
@@ -119,11 +125,23 @@ King, Gary, and Roberts, Margaret~E. 2014.
   They Do Not Fix, and What to Do about It.}
 \newblock {\em Political Analysis}, {\bf 23}(2), 159--179.
 
+\bibitem[\protect\citename{Kinne, }2013]{kinne:2013}
+Kinne, Brandon~J. 2013.
+\newblock  \titlecap{Network dynamics and the evolution of international
+  cooperation.}
+\newblock {\em American Political Science Review}, {\bf 107}(04), 766--785.
+
 \bibitem[\protect\citename{Li and Loken, }2002]{li:loken:2002}
 Li, Heng, and Loken, Eric. 2002.
 \newblock  \titlecap{A Unified Theory of Statistical Analysis and Inference for
   Variance Component Models For Dyadic Data.}
 \newblock {\em Statistica Sinica}, {\bf 12}(2), 519--535.
+
+\bibitem[\protect\citename{Manger {et~al.}, }2012]{manger:etal:2012}
+Manger, Mark~S., Pickup, Mark~A., and Snijders, Tom~A.B. 2012.
+\newblock  \titlecap{A Hierarchy of Preferences: {A} Longitudinal Network
+  Analysis Approach to {PTA} Formation.}
+\newblock {\em Journal of Conflict Resolution}, {\bf 56}(5), 852--877.
 
 \bibitem[\protect\citename{McDonald, }2004]{mcdonald:2004}
 McDonald, Patrick~J. 2004.
