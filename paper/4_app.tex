@@ -1,14 +1,12 @@
-\section{\textbf{Re-estimation with AME}}
+\section{\textbf{Applications with AME}}
 
 \subsection{Design}
 
-In order to showcase the insights the AME approach permits scholars to bring into their analysis, we apply AME to five recent studies from the broad field of international relations and international political economy~\citep{reiter:stam:2003, mcdonald:2004,  rose:2004, weeks:2012, gibler:2017}. Each of these studies are representative of broader trends in the field in that they use relational data of state interactions and propose both dyadic, monadic, and structural explanations for behavior of actors in the system. 
+In order to showcase the insights the AME approach permits scholars to bring into their analysis, we apply AME to five recent studies from international relations and international political economy: \citet{reiter:stam:2003, mcdonald:2004,  rose:2004, weeks:2012, gibler:2017}. Each of these studies are representative of broader trends in the field in that they use relational data of state interactions and propose both dyadic, monadic, and structural explanations for behavior of actors in the system. We chose to demonstrate the capabilities of AME with reference to existing studies in order to highlight several features of the AME approach. First, the results of AME estimation are interpretable alongside GLM results but have the additional benefit of being able to quantify higher-order features of interest to scholars, such as ``sender'' and ``receiver'' effects. Second, through AME, we can examine the extent to which interdependencies within typical dyadic data alter previous conclusions about international relations from recent empirical studies using a framework that a priori assumes conditional independence. Third, we will show that by using the AME framework scholars can better model the data generating process behind their events of interest.
 
-We chose to demonstrate the capabilities of AME with reference to existing studies in order to highlight several features of the AME approach. Firstly, the results of AME estimation are interpretable alongside GLM results but have the additional benefit of being able to quantify higher-order features of interest to scholars, such as ``sender'' and ``receiver'' effects. Secondly, although the data requirements of AME are, admittedly, more intensive than needed for GLMs, ever richer data is increasingly prevalent in both new and existing data. Thirdly, through AME, we can examine the extent to which interdependencies within typical dyadic data alter previous conclusions about international relations from recent empirical studies using a framework that a priori assumes conditional independence.
-
-The five studies replicated below were selected based on how recent they were and whether they had more then 100 citations.\footnote{Note that we chose papers with at least 100 citations as an indicator of influence within the discipline. Of course, by the criteria of influence many other papers could have been considered for the replication. However, as described in the following sections, the AME model has specific data requirements, which limited the scope of potential papers.}  Each of these pieces, published in prominent journals well-known in their respective literatures, posited a theory in which interdependencies are consequential. Reflecting the dominant approach in the literature, each of the authors tested their hypothesis by employing some form of a general linearized regression. 
+The five studies used below were selected based on how recent they were and whether they had more then 100 citations.\footnote{Note that we chose papers with at least 100 citations as an indicator of influence within the discipline. Of course, by the criteria of influence many other papers could have been considered for the replication. However, as described in the following sections, the AME model has specific data requirements, which limited the scope of potential papers.}  Each of these pieces, published in prominent journals well-known in their respective literatures, posited a theory in which interdependencies are consequential. Reflecting the dominant approach in the literature, each of the authors tested their hypothesis by employing some form of a general linearized model. 
  
-In the following section, we present two sets of results for each study, one that replicates the original study and another that tests the central hypothesis within an AME implementation. We demonstrate that AME allows scholars the ability to test their hypotheses of interest, while directly accounting for both theorized and observed interdependencies in the data. As accounting for interdependences can change the outcome of regression models, both in substance and in estimate, we also summarize the predictive performance of the GLM and AME implementations. This predictive view allows us to better compare the models across specifications (and where they differ in their coefficients, see which specification does better at modeling the underlying data-generating process). Finally, for several of the studies, we report the AME-derived sender and receiver effects in order to highlight additional value of the AME framework.
+% In the following section, we present two sets of results for each study, one that replicates the original study and another that tests the central hypothesis within an AME implementation. We demonstrate that AME allows scholars the ability to test their hypotheses of interest, while directly accounting for both theorized and observed interdependencies in the data. As accounting for interdependences can change the outcome of regression models, both in substance and in estimate, we also summarize the predictive performance of the GLM and AME implementations. This predictive view allows us to better compare the models across specifications (and where they differ in their coefficients, see which specification does better at modeling the underlying data-generating process). Finally, for several of the studies, we report the AME-derived sender and receiver effects in order to highlight additional value of the AME framework.
 
 \begin{table}
 \caption{Features of the Studies Re-estimated.}
@@ -24,23 +22,14 @@ In the following section, we present two sets of results for each study, one tha
 
 We obtained the data for each of these studies from their replication archives and replicated the main results of each article.\footnote{Without exception this was straightforward to accomplish, thanks to the authors' transparency  and an increasing norm in the social sciences of open data sharing.}  It is worth noting that the AME is applicable only where a full set of dyads for an outcome of interest is observable---for example it is unsuitable for studying onsets, where dyad-years representing conflict continuations are removed from the sample. The AME is also not applicable to analyses of case-level data, for example, studies that examine the decision to go to war by particular states.
 
-% SM: maybe too on the nose (Whether putative control variables, for
-% example, are precisely estimated is less important.) 
-%% MJF: 2/9-- took this part out, because I don't think that it's necessar.
-% Typically, scholars are concerned with conducting hypothesis testing on a small set of independent variables that they have assembled in a complicated empirical model. For example, in the study by Reiter and Stam (2003) the goal is to determine whether in mixed dyads---consisting of a democratic country and country ruled by a personalist dictatorship---it is the democratic country or the personalist country that is associated with a greater likelihood of a dispute dyad being in a dispute.  In a regression including fourteen covariates, they focus on whether the democratic nature of the initiating country is a statistically significant covariate.\footnote{In particular, the variables \texttt{Pers/Democ} and \texttt{Democ/Pers} in Model 3, in Table 1, page 335.} In our re-examination of Reiter and Stam, we focus on whether the model replicates when re-estimated within the AME framewo
-%rk.
-
 Each of the five studies has a crucial finding that we hone in on to further draw into focus the analytical power of the AME estimation procedure.  In Table~\ref{tab:modelFindingSumm}, we present the overall results; the term \textit{Remains after accounting for dependencies?} indicates only that the sign and/or significance of the putatively crucial finding in the original study is not found to hold in the AME estimation.\footnote{Full tabular results for each of the original and reestimated models are presented in the Appendix.}
 
 \begin{table}[ht]
 \centering
-\caption{Here we provide a brief summary of the key variable in each
-  of the five replications and a note about whether or not the
-  highlighted finding remains when using our network-based approach.}
+\caption{Here we provide a brief summary of the key variable in each of the five replications and a note about whether or not the highlighted finding remains when using our network-based approach.}
 	\begin{tabular}{l p{7cm} l} \toprule
-		\multirow{2}{*}{Study} & \multirow{2}{*}{Central
-                  Finding} &  Confirmed \\ 
-			& &  accounting for dependencies? \\ \toprule
+		\multirow{2}{*}{Study} & \multirow{2}{*}{Central Finding} &  Confirmed \\
+		& &  accounting for dependencies? \\ \toprule
 		Reiter \& Stam (2003) & Personalist Regimes Attack Democracies, Not Vice Versa & {Partially Confirmed} \\ \midrule
 		McDonald (2004) & Lower Trade Barriers and Higher Trade Lead to Peace & {Unconfirmed}\\ \midrule
 		Rose (2004) & WTO Membership Does not Affect Trade & {Partially Confirmed}\\ \midrule
@@ -49,9 +38,6 @@ Each of the five studies has a crucial finding that we hone in on to further dra
 	\end{tabular}
 	\label{tab:modelFindingSumm}
 \end{table}
-
-% as a result of the incompatibility between GLM models and the underlying processes that shape international events, 
-%MJF: Keeping this here for now, but it reads more like a conclusion
 
 An important takeaway here is that many scholars are forced to make knowledge claims based on the statistical significance of a small set of covariates, or the differences between these covariates.  These differences may change dramatically when interdependencies are taken into account directly, as they do in the case of this study. This outcome follows from AME's ability to precisely capture higher-order interdependencies, whereas GLM approaches implicitly ignore dyadic interdependencies. As this is a widely-known limitation of GLM approaches, scholars often attempt to account for clustering of observations by including additional variables and adjusting the standard errors of the resulting estimates. At best, this method introduces noise and imprecision into results, and at worst can produce misleading outcomes.   Beyond just comparing parameter estimates, we examine how well each approach can represent the data generating process using an out-of-sample cross validation strategy. Specifically, for each study, we randomly divide the data into $k=30$ sets, letting $s_{ij,t}$ be the set to which pair $ij,t$ is assigned.
 
@@ -69,16 +55,16 @@ Then for each $s \in \{1,\ldots,k\}$, we:
 	\begin{tabular}{l|l cc}
 	~ & ~ & GLM & AME \\
 	\toprule
-\multirow{2}{*}{Reiter \& Stam (2003)} & Area Under ROC Curve, AUC-ROC & 0.92 & {0.96} \\
-		~ & Area Under PR Curve, AUC-PR & 0.08 &  {0.15} \\		\midrule
-\multirow{2}{*}{McDonald (2004)} & AUC-ROC & 0.92 &  {0.99} \\
-		~ & AUC-PR & 0.13 &  {0.28} \\		\midrule
-\multirow{2}{*}{Rose (2004)} & RMSE & 3.23 &  {1.99} \\
-		~ & RMDSE & 2.01 &  {1.06} \\	\midrule
-\multirow{2}{*}{Weeks (2012)} & AUC-ROC & 0.64 &  {0.97} \\
-		~ & AUC-PR & 0.00 &  {0.15} \\		\midrule
-\multirow{2}{*}{Gibler (2017)} & AUC-ROC & 0.52 &  {0.91} \\
-		~ & AUC-PR & 0.00 &  {0.08} \\			\bottomrule
+		\multirow{2}{*}{Reiter \& Stam (2003)} & Area Under ROC Curve, AUC-ROC & 0.92 & {0.96} \\
+				~ & Area Under PR Curve, AUC-PR & 0.08 &  {0.15} \\		\midrule
+		\multirow{2}{*}{McDonald (2004)} & AUC-ROC & 0.92 &  {0.99} \\
+				~ & AUC-PR & 0.13 &  {0.28} \\		\midrule
+		\multirow{2}{*}{Rose (2004)} & RMSE & 3.23 &  {1.99} \\
+				~ & RMDSE & 2.01 &  {1.06} \\	\midrule
+		\multirow{2}{*}{Weeks (2012)} & AUC-ROC & 0.64 &  {0.97} \\
+				~ & AUC-PR & 0.00 &  {0.15} \\		\midrule
+		\multirow{2}{*}{Gibler (2017)} & AUC-ROC & 0.52 &  {0.91} \\
+				~ & AUC-PR & 0.00 &  {0.08} \\			\bottomrule
 	\end{tabular}
 	\caption{Here we provide a summary of the out-of-sample performance based on our cross-validation strategy for each of the five replications when using the standard dyadic approach and our network-based approach. Four of the five studies involved a binary dependent variable; for those measures, area under the curve (AUC) statistics are reported. The Rose study involved a Gaussian dependent variable and for that we use the root mean squared error (RMSE) and root median squared error (RMDSE). 
 	}
@@ -90,7 +76,7 @@ Next we discuss each of the replications in more detail and highlight the substa
 
 \subsection{Re-estimation of Reiter \& Stam (2003)}
 
-\citet{reiter:stam:2003} examine the relationship between democracy, dictatorship and the initiation of militarized disputes. Their work contests prior scholarship that had claimed interstate dyads containing democracies and personalist dictatorships were particularly prone to conflict because of aggression on the part of the democratic state. Using directed dyads, they find evidence against this hypothesis: dictators are in fact more likely to challenge democracies, but not the other way around.  In addition, military regimes and single-party regimes are more prone to initiate disputes with democracies, but the opposite is not true. Independent variables are largely taken from an earlier study and focus on various encodings of regime types, contiguity, alliance, and capability measures. As is prevalent in this literature, Reiter \& Stam employ a logistic regression that includes an indicator of the time since the last dispute as well as three cubic splines. The database for this study is constructed using \texttt{EUGene} \citep{bennett:stam:2000} and comprises approximately three-quarters of a million stacked dyads. Based on their statistical analysis, they conclude that institutional constraints affect the propensity of democratic and non-democratic leaders to engage in military conflict. 
+\citet{reiter:stam:2003} examine the relationship between democracy, dictatorship and the initiation of militarized disputes. Their work contests prior scholarship that had claimed interstate dyads containing democracies and personalist dictatorships were particularly prone to conflict because of aggression on the part of the democratic state. Using directed dyads, they find evidence against this hypothesis: dictators are in fact more likely to challenge democracies, but not the other way around.  In addition, military regimes and single-party regimes are more prone to initiate disputes with democracies, but the opposite is not true. Independent variables focus on various encodings of regime types, contiguity, alliance, and capability measures. As is prevalent in this literature, Reiter \& Stam employ a logistic regression that includes an indicator of the time since the last dispute as well as three cubic splines. The database for this study is constructed using \texttt{EUGene} \citep{bennett:stam:2000} and comprises approximately three-quarters of a million stacked dyads. Based on their statistical analysis, they conclude that institutional constraints affect the propensity of democratic and non-democratic leaders to engage in military conflict. 
 
 In the original model, the variable ``Pers/Democ Directed Dyad" (which represents a Personalist $\rightarrow$ Democractic directed dyad) is positive while the variable ``Democ/Personalist Directed Dyad'' is zero and the difference between the two coefficients is clearly distinct from zero. In our re-estimation using the AME framework, we also find that Pers-Democ directed dyad has a positive effect with zero excluded from the 95\% confidence interval while Democ-Pers directed dyad is indistinguishable from zero. Using this model, however, we can no longer conclusively say that the Pers/Democratic coefficient is larger than the Democ/Personalist one. Our re-estimation using the AME approach therefore cast some doubt on Reiter \& Stam's key claim that MIDs initiated by personalist dictatorships against democracies are more likely than MIDS initiated by democracies, though many of the major effects  uncovered by the authors remains robust when accounting for dyadic interdependencies. Further, the effect of most of the covariates in the literature thought to predict interstate MIDs are much closer to zero when using the AME framework suggesting that some of their effects were actually the products of interdependencies. 
 
