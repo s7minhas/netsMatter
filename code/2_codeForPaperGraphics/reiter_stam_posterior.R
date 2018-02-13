@@ -8,7 +8,7 @@ if(Sys.info()['user'] %in% c('s7m', 'janus829')){
 
 if(Sys.info()['user'] == 'juanftellez'){
   resultsPath = '/Users/juanftellez/Dropbox/netsMatter/replications/Reiter_Stam_2003/output/'
-  plotPath = '/Users/juanftellez/Dropbox/netsMatter/replications/0_finalRepFigs/'
+  plotPath = '~/OneDrive/netsMatter/paper/'
   source('~/OneDrive/netsMatter/code/helpers/ameHelpers.R')
   source('helperEx.R')
   #
