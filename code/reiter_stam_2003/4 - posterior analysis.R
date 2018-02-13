@@ -1,5 +1,6 @@
 devtools::install_github('s7minhas/amen') ; library(amen)
 resultsPath = '/Users/juanftellez/Dropbox/netsMatter/replications/Reiter_Stam_2003/output/'
+resultsPath = '~/s7m/Research/Dropbox/netsMatter/replications/Reiter_Stam_2003/output/'
 #
 library(magrittr)
 
