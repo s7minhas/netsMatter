@@ -46,8 +46,6 @@ varKey = data.frame(
 		'Parity at Entry Year', 'Rivalry' ),
 	stringsAsFactors = FALSE )
 
-
-
 #
 getCoefTable(varKey, modList, modNames, 'gibler', 'Gibler (2017)', plotPath, 3)
 ############################################
