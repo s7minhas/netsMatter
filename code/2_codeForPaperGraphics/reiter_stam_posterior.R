@@ -52,13 +52,32 @@ load( paste0(resultsPath,'model_k2_v12.rda') )
 # getCoefTable(varKey, modList, modNames, 'reiter_stam', 'Reiter \\& Stam (2003)', plotPath, 3)
 # ############################################
 
-# addeffdata ###########################################
+# addEffdata ###########################################
+# sender effects
 effdat = getAddEffData(fit = ameFit) ##This function is in helperEx.R
+effdat = effdat[which(
+  effdat$addEff>=quantile(effdat$addEff,.9) |
+  effdat$addEff<=quantile(effdat$addEff,.1)
+  ),]
 effdat$actor = countrycode::countrycode(effdat$actor, 'cown', 'country.name')
+effdat = na.omit(effdat)
 effdat$actor = factor(effdat$actor,  levels=effdat[order(effdat$addEff),'actor'])
 
-## All countries
-addEffPlot(fit = effdat, addEffData = effdat, row = T)
+## subset of countries
+addEffPlot(fit = effdat, addEffData = effdat, row = T) + coord_flip()
+
+# receiver effects
+effdat = getAddEffData(fit = ameFit, row=FALSE) ##This function is in helperEx.R
+effdat = effdat[which(
+  effdat$addEff>=quantile(effdat$addEff,.9) |
+  effdat$addEff<=quantile(effdat$addEff,.1)
+  ),]
+effdat$actor = countrycode::countrycode(effdat$actor, 'cown', 'country.name')
+effdat = na.omit(effdat)
+effdat$actor = factor(effdat$actor,  levels=effdat[order(effdat$addEff),'actor'])
+
+## subset of countries
+addEffPlot(fit = effdat, addEffData = effdat, row = FALSE) + coord_flip()
 ############################################
 
 # # outPerf ###########################################
