@@ -25,61 +25,61 @@ load( paste0(resultsPath,'reiter_stam_glmfit.rda') )
 load( paste0(resultsPath,'model_k2_v12.rda') )
 ############################################
 
-# # coefSumm ###########################################
-# ameSumm = t(apply(ameFit$BETA, 2, function(x){ c(
-# 	'Estimate'=mean(x), 'Std. Error'=sd(x), 'z value'=mean(x)/sd(x),
-# 	'Pr(>|z|)'=2*(1-pnorm( abs(mean(x)/sd(x)))) )}))
-# rownames(ameSumm) = gsub('.row','',rownames(ameSumm),fixed=TRUE)
-# rownames(ameSumm) = gsub('.col','',rownames(ameSumm),fixed=TRUE)
-# rownames(ameSumm) = gsub('.dyad','',rownames(ameSumm),fixed=TRUE)
-# rownames(ameSumm) = gsub('_s','s',rownames(ameSumm),fixed=TRUE)
-# rownames(ameSumm) = gsub('intercept','(Intercept)',rownames(ameSumm),fixed=TRUE)
-# glmSumm = modSumm[,]
-# probSumm = proSumm[,]
-# 
-# modList = list(glmSumm, probSumm, ameSumm)
-# modNames = c('GLM (Logit)','GLM (Probit)', 'AME')
-# 
-# varKey = data.frame(
-# 	dirty=names(coef(mod)),
-# 	clean=c('Intercept', 'Pers/Democ Directed Dyad',
-# 		'Democ/Pers Directed Dyad',
-#         'Personal', 'Military', 'Single', 'Democracy', 
-#         'Contiguous', 'Major Power', 'Ally', 'Higher/Lower Power Ratio', 
-#         'Economically Advanced', 'Years Since Last Dispute', 'Cubic Spline 1', 
-#         'Cubic Spline 2', 'Cubic Spline 3'),
-# 	stringsAsFactors = FALSE )
-# 
-# #
-# getCoefTable(varKey, modList, modNames, 'reiter_stam', 'Reiter \\& Stam (2003)', plotPath, 3)
-# ############################################
-# 
-# # addeffdata ###########################################
-# effdat = getAddEffData(fit = ameFit) ##This function is in helperEx.R
-# effdat$actor = countrycode::countrycode(effdat$actor, 'cown', 'country.name')
-# effdat$actor = factor(effdat$actor,  levels=effdat[order(effdat$addEff),'actor'])
-# 
-# ## All countries
-# addEffPlot(fit = effdat, addEffData = effdat, row = T)
-# ############################################
-# 
-# # outPerf ###########################################
-# load(paste0(resultsPath, 'ameCrossValResults_k2.rda')) # ameOutSamp_k2
-# ameOutSamp=ameOutSamp_k2 ; rm(ameOutSamp_k2)
-# load(paste0(resultsPath,'glmCrossValResults.rda')) # glmOutSamp
-# glmOutSamp=glmOutSamp_wFullSpec ; rm(glmOutSamp_wFullSpec)
-# toKeep = which(!is.na(glmOutSamp$outPerf$pred))
-# 
-# # org
-# predDfs = list(
-# 	GLM = data.frame(actual=glmOutSamp$outPerf$actual[toKeep], pred=glmOutSamp$outPerf$pred[toKeep], model='GLM'),
-# 	AME = data.frame(actual=ameOutSamp$outPerf$actual, pred=ameOutSamp$outPerf$pred, model='AME') )
-# 
-# # run
-# ggPerfCurves(predDfs, 'reiter_stam')
-# ############################################
+# coefSumm ###########################################
+ameSumm = t(apply(ameFit$BETA, 2, function(x){ c(
+	'Estimate'=mean(x), 'Std. Error'=sd(x), 'z value'=mean(x)/sd(x),
+	'Pr(>|z|)'=2*(1-pnorm( abs(mean(x)/sd(x)))) )}))
+rownames(ameSumm) = gsub('.row','',rownames(ameSumm),fixed=TRUE)
+rownames(ameSumm) = gsub('.col','',rownames(ameSumm),fixed=TRUE)
+rownames(ameSumm) = gsub('.dyad','',rownames(ameSumm),fixed=TRUE)
+rownames(ameSumm) = gsub('_s','s',rownames(ameSumm),fixed=TRUE)
+rownames(ameSumm) = gsub('intercept','(Intercept)',rownames(ameSumm),fixed=TRUE)
+glmSumm = modSumm[,]
+probSumm = proSumm[,]
 
-# mareffplot
+modList = list(glmSumm, probSumm, ameSumm)
+modNames = c('GLM (Logit)','GLM (Probit)', 'AME')
+
+varKey = data.frame(
+	dirty=names(coef(mod)),
+	clean=c('Intercept', 'Pers/Democ Directed Dyad',
+		'Democ/Pers Directed Dyad',
+        'Personal', 'Military', 'Single', 'Democracy', 
+        'Contiguous', 'Major Power', 'Ally', 'Higher/Lower Power Ratio', 
+        'Economically Advanced', 'Years Since Last Dispute', 'Cubic Spline 1', 
+        'Cubic Spline 2', 'Cubic Spline 3'),
+	stringsAsFactors = FALSE )
+
+#
+getCoefTable(varKey, modList, modNames, 'reiter_stam', 'Reiter \\& Stam (2003)', plotPath, 3)
+############################################
+
+# addeffdata ###########################################
+effdat = getAddEffData(fit = ameFit) ##This function is in helperEx.R
+effdat$actor = countrycode::countrycode(effdat$actor, 'cown', 'country.name')
+effdat$actor = factor(effdat$actor,  levels=effdat[order(effdat$addEff),'actor'])
+
+## All countries
+addEffPlot(fit = effdat, addEffData = effdat, row = T)
+############################################
+
+# outPerf ###########################################
+load(paste0(resultsPath, 'ameCrossValResults_k2.rda')) # ameOutSamp_k2
+ameOutSamp=ameOutSamp_k2 ; rm(ameOutSamp_k2)
+load(paste0(resultsPath,'glmCrossValResults.rda')) # glmOutSamp
+glmOutSamp=glmOutSamp_wFullSpec ; rm(glmOutSamp_wFullSpec)
+toKeep = which(!is.na(glmOutSamp$outPerf$pred))
+
+# org
+predDfs = list(
+	GLM = data.frame(actual=glmOutSamp$outPerf$actual[toKeep], pred=glmOutSamp$outPerf$pred[toKeep], model='GLM'),
+	AME = data.frame(actual=ameOutSamp$outPerf$actual, pred=ameOutSamp$outPerf$pred, model='AME') )
+
+# run
+ggPerfCurves(predDfs, 'reiter_stam')
+############################################
+
+# mareffplot ###########################################
 # create scenario matrix
 modData = mod$model ; modData$intercept = 1
 
@@ -99,11 +99,9 @@ scen1 = scen[,seq(1,ncol(scen),2)] ; scen0 = scen[,seq(2,ncol(scen),2)]
 scens = c( 'Pers/Democ Directed Dyad', 'Democ/Pers Directed Dyad')
 
 # for ame
-ameDraws = rmvnorm(1000, apply(ameFit$BETA, 2, median), cov(ameFit$BETA))
 scenDiffs =
-  getScenDiff(linkType='probit', scen1, scen0, scens, ameFit$BETA, 'AME', type='densityShade')
+  getScenDiff(linkType='logit', scen1, scen0, scens, ameFit$BETA, 'AME', type='densityShade')
 scenDiffs$title = 'Regime Directed Dyad'
-# replace var names
 scenDiffs$scen = gsub('.', ' ',scenDiffs$scen, fixed = TRUE)
 
 ggCols = c(`Democ Pers Directed Dyad`='#d6604d', `Pers Democ Directed Dyad`='#4393c3')
@@ -132,6 +130,5 @@ scenGG = ggplot(data=scenDiffs, aes(color=scen, fill=scen)) +
     strip.text.x = element_text(size = 9, color='white' ),
     strip.background = element_rect(fill = "#525252", color='#525252')		
   )
-scenGG
 ggsave(scenGG, file=paste0(plotPath, 'reiterstam_margeff.pdf'), width=7, height=3)
 ############################################

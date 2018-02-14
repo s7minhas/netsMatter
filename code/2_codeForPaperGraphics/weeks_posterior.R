@@ -72,11 +72,11 @@ load(paste0(resultsPath,'weeks_glmfit.rda'))
 # ggPerfCurves(predDfs, 'weeks')
 # ############################################
 
-# plot mult eff ###########################################
-# load AME model data
+# # mult eff analysis ###########################################
+# # load AME model data
 load(paste0(resultsPath, 'WeeksamenData.rda')) ## xDyadList, xNodeList.R, xNodeList.s, Ylist
 
-# subset data
+# # subset data
 yArr = listToArray(
 	actors=sort(unique(unlist(lapply(yList,rownames)))),
 	Y=yList[42:47], Xdyad=NULL, Xrow=NULL, Xcol=NULL)$Y
@@ -94,66 +94,152 @@ rownames(yArrSumm)=colnames(yArrSumm)=cntryKey$cowc
 uData = ameFit$U[cntryKey$code,] ; rownames(uData) = cntryKey$cowc
 vData = ameFit$V[cntryKey$code,] ; rownames(vData) = cntryKey$cowc
 
-# geo colors for nodes
-loadPkg('cshapes')
-cmap = wmap = cshp(date=as.Date('2016-1-1'))
-wmap@data$cowc = countrycode(wmap@data$COWCODE, 'cown', 'cowc')
-wmap@data$cowc[wmap@data$COWCODE==731]='PRK'
-wmap = wmap[which(as.character(wmap$cowc) %in% cntryKey$cowc),]
-coords=coordinates(wmap) ; rownames(coords)=wmap$cowc
-coords=coords[cntryKey$cowc,]
+# # geo colors for nodes
+# loadPkg('cshapes')
+# cmap = wmap = cshp(date=as.Date('2016-1-1'))
+# wmap@data$cowc = countrycode(wmap@data$COWCODE, 'cown', 'cowc')
+# wmap@data$cowc[wmap@data$COWCODE==731]='PRK'
+# wmap = wmap[which(as.character(wmap$cowc) %in% cntryKey$cowc),]
+# coords=coordinates(wmap) ; rownames(coords)=wmap$cowc
+# coords=coords[cntryKey$cowc,]
 
-# Create colors
-rlon = pi*coords[,1]/180 ; rlat = pi*coords[,2]/180
-slon =  (rlon-min(rlon))/(max(rlon)-min(rlon))
-slat =  (rlat-min(rlat))/(max(rlat)-min(rlat))
-ccols = rgb( slon^2,slat^2,(1-sqrt(slon*slat))^2)
-names(ccols) = cntryKey$cowc ; cntryKey$ccols = ccols
+# # Create colors
+# rlon = pi*coords[,1]/180 ; rlat = pi*coords[,2]/180
+# slon =  (rlon-min(rlon))/(max(rlon)-min(rlon))
+# slat =  (rlat-min(rlat))/(max(rlat)-min(rlat))
+# ccols = rgb( slon^2,slat^2,(1-sqrt(slon*slat))^2)
+# names(ccols) = cntryKey$cowc ; cntryKey$ccols = ccols
 
-# Generate legend map
-cmap@data$cowc = countrycode(cmap@data$COWCODE, 'cown', 'cowc')
-cmap@data$cowc[cmap@data$COWCODE==731]='PRK'
-mapCol = ccols[match(cmap$cowc, cntryKey$cowc)]
-mapCol[is.na(mapCol)] = 'grey' ; names(mapCol) = cmap@data$cowc
-cmapDF=fortify(cmap,region='FEATUREID') ; names(cmapDF)[6]='FEATUREID' ; cmapDF=join(cmapDF, cmap@data)
-ggMap = ggplot() +
-	geom_polygon(data=cmapDF, aes(x=long, y=lat,group=group,fill=cowc),color='grey30',size=.05) +
-	scale_fill_manual(values=mapCol) +
-	coord_equal() + xlab('') + ylab('') +
-	theme(
-		legend.position = 'none',
-		panel.border = element_blank(), panel.grid=element_blank(),
-		axis.ticks = element_blank(), axis.line=element_blank(),
-		axis.text = element_blank() )
-# ggsave(ggMap, file=paste0(plotPath, 'weeks_mapLeg.png'))
+# # Generate legend map
+# cmap@data$cowc = countrycode(cmap@data$COWCODE, 'cown', 'cowc')
+# cmap@data$cowc[cmap@data$COWCODE==731]='PRK'
+# mapCol = ccols[match(cmap$cowc, cntryKey$cowc)]
+# mapCol[is.na(mapCol)] = 'grey' ; names(mapCol) = cmap@data$cowc
+# cmapDF=fortify(cmap,region='FEATUREID') ; names(cmapDF)[6]='FEATUREID' ; cmapDF=join(cmapDF, cmap@data)
+# ggMap = ggplot() +
+# 	geom_polygon(data=cmapDF, aes(x=long, y=lat,group=group,fill=cowc),color='grey30',size=.05) +
+# 	scale_fill_manual(values=mapCol) +
+# 	coord_equal() + xlab('') + ylab('') +
+# 	theme(
+# 		legend.position = 'none',
+# 		panel.border = element_blank(), panel.grid=element_blank(),
+# 		axis.ticks = element_blank(), axis.line=element_blank(),
+# 		axis.text = element_blank() )
+# # ggsave(ggMap, file=paste0(plotPath, 'weeks_mapLeg.png'))
 
-# load back in so we can add to circ
-loadPkg(c('grid', 'png'))
-mapForCirc = rasterGrob(readPNG(paste0(plotPath, 'weeks_mapLeg.png')), interpolate=TRUE)
+# # load back in so we can add to circ
+# loadPkg(c('grid', 'png'))
+# mapForCirc = rasterGrob(readPNG(paste0(plotPath, 'weeks_mapLeg.png')), interpolate=TRUE)
 
-# plot
-toLabel=c("IRN","IRQ","SYR","PRK",'LIB','CHN','RUS','USA','GMY','CAN','UKG','ISR')
-other=names(sort(rowSums(yArrSumm) + colSums(yArrSumm), decreasing=TRUE))[1:50]
-tots = c(toLabel,other)
+# # plot
+# toLabel=c("IRN","IRQ","SYR","PRK",'LIB','CHN','RUS','USA','GMY','CAN','UKG','ISR')
+# other=names(sort(rowSums(yArrSumm) + colSums(yArrSumm), decreasing=TRUE))[1:50]
+# tots = c(toLabel,other)
+
+# ggU = getDataForCirc(Y=yArrSumm[tots,tots], U=uData[tots,], V=vData[tots,], vscale=.65,removeIsolates=FALSE)$uG
+# ggU = unique(ggU)
+# ggU$ccols = cntryKey$ccols[match(ggU$actor,cntryKey$cowc)]
+# ggU$lab = ggU$actor
+# ggU$lab[!ggU$lab %in% toLabel] = ''
+# ggU$lPch = ggU$tPch ; ggU$lPch[ggU$lab==''] = 0
+
+# weeksCirc = ggplot(ggU, aes(x=X1, y=X2, size=tPch, color=actor)) +
+# 	annotation_custom(mapForCirc, xmin=-.75, xmax=.75, ymin=-.75, ymax=.75) +	
+# 	geom_point(alpha=.9) + scale_size(range=c(4,8)) +
+# 	ylab("") + xlab("") +
+# 	geom_label_repel(aes(label=lab, size=lPch)) +
+# 	scale_color_manual(values=ccols) +
+# 	theme(
+# 		legend.position = 'none',
+# 		panel.border = element_blank(), panel.grid=element_blank(),
+# 		axis.ticks = element_blank(), axis.line=element_blank(),
+# 		axis.text = element_blank()
+# 		) + theme(panel.grid = element_line())
+# ggsave(weeksCirc, file=paste0(plotPath, 'weeks_circPlot.pdf'), width=8, height=8)
+
+# inference on mult eff
+csim <- function(x,y){
+  c <- x %*% y / (sqrt( x%*%x * y%*%y  ))
+  return(c) }
+
+csimMat <- function(x) {
+  cos <- matrix(NA, nrow=ncol(x),ncol=ncol(x),dimnames=list(colnames(x),colnames(x)))
+  for(i in 1:ncol(x)) {
+  	for(j in i:ncol(x)) {
+      vec1 <- x[which(x[,i] & x[,j]),i]
+      vec2 <- x[which(x[,i] & x[,j]),j]  
+      cos[i,j]= csim(vec1,vec2)
+      cos[j,i]=cos[i,j]
+    } }
+  return(cos) }
+
+tots = countrycode(c('United states','Germany','China','Russia','Iran','Syria','Iraq','North Korea'), 'country.name', 'cowc')
 
 ggU = getDataForCirc(Y=yArrSumm[tots,tots], U=uData[tots,], V=vData[tots,], vscale=.65,removeIsolates=FALSE)$uG
 ggU = unique(ggU)
 ggU$ccols = cntryKey$ccols[match(ggU$actor,cntryKey$cowc)]
 ggU$lab = ggU$actor
-ggU$lab[!ggU$lab %in% toLabel] = ''
+# ggU$lab[!ggU$lab %in% toLabel] = ''
 ggU$lPch = ggU$tPch ; ggU$lPch[ggU$lab==''] = 0
 
 weeksCirc = ggplot(ggU, aes(x=X1, y=X2, size=tPch, color=actor)) +
-	annotation_custom(mapForCirc, xmin=-.75, xmax=.75, ymin=-.75, ymax=.75) +	
 	geom_point(alpha=.9) + scale_size(range=c(4,8)) +
 	ylab("") + xlab("") +
 	geom_label_repel(aes(label=lab, size=lPch)) +
-	scale_color_manual(values=ccols) +
 	theme(
 		legend.position = 'none',
 		panel.border = element_blank(), panel.grid=element_blank(),
 		axis.ticks = element_blank(), axis.line=element_blank(),
 		axis.text = element_blank()
 		) + theme(panel.grid = element_line())
-ggsave(weeksCirc, file=paste0(plotPath, 'weeks_circPlot.pdf'), width=8, height=8)
+weeksCirc
+
+tst = melt(csimMat(t(ameFit$U)))
+tst = tst[which(tst$Var1 != tst$Var2),]
+
+tmp=mod$data
+tmp$dyad = paste0(tmp$ccode1, '_', tmp$ccode2)
+tmp$cyear1 = paste0(tmp$ccode1, '_', tmp$year)
+tmp$cyear2 = paste0(tmp$ccode2, '_', tmp$year)
+
+tmp$machinejlw_2 = tmp$machinejlw_1[match(tmp$cyear2, tmp$cyear1)]
+tmp$juntajlw_2 = tmp$juntajlw_1[match(tmp$cyear2, tmp$cyear1)]
+tmp$bossjlw_2 = tmp$bossjlw_1[match(tmp$cyear2, tmp$cyear1)]
+tmp$strongmanjlw_2 = tmp$strongmanjlw_1[match(tmp$cyear2, tmp$cyear1)]
+tmp$allotherauts_2 = tmp$allotherauts_1[match(tmp$cyear2, tmp$cyear1)]
+tmp$democracy_1 = tmp$democracy_2[match(tmp$cyear1, tmp$cyear2)]
+
+tmp$machinejlw_dyad = tmp$machinejlw_1 * tmp$machinejlw_2
+tmp$juntajlw_dyad = tmp$juntajlw_1 * tmp$juntajlw_2
+tmp$bossjlw_dyad = tmp$bossjlw_1 * tmp$bossjlw_2
+tmp$strongmanjlw_dyad = tmp$strongmanjlw_1 * tmp$strongmanjlw_2
+tmp$allotherauts_dyad = tmp$allotherauts_1 * tmp$allotherauts_2
+tmp$democ_dyad = tmp$democracy_1 * tmp$democracy_2
+
+tmp$same = 0
+tmp$same[which(tmp$machinejlw_1 == 1 & tmp$machinejlw_2 ==1)] = 1
+tmp$same[which(tmp$juntajlw_1 == 1 & tmp$juntajlw_2 ==1)] = 1
+tmp$same[which(tmp$bossjlw_1 == 1 & tmp$bossjlw_2==1)] = 1
+tmp$same[which(tmp$strongmanjlw_1 ==1 & tmp$strongmanjlw_2==1)] = 1
+tmp$same[which(tmp$allotherauts_1 ==1 & tmp$allotherauts_2==1)] = 1
+
+loadPkg('dplyr')
+tmpAgg = tmp %>%
+	group_by(dyad) %>% 
+	summarize(
+		machinejlw = mean(machinejlw_dyad, na.rm=TRUE),
+		juntajlw = mean(juntajlw_dyad, na.rm=TRUE),
+		bossjlw = mean(bossjlw_dyad, na.rm=TRUE),
+		strongmanjlw = mean(strongmanjlw_dyad, na.rm=TRUE),
+		allotherauts = mean(allotherauts_dyad, na.rm=TRUE),
+		same = mean(same, na.rm=TRUE),
+		democ = mean(democ_dyad, na.rm=TRUE)
+		) %>%
+	data.frame()
+
+
+tst$dyad = paste0(tst$Var1, '_', tst$Var2)
+for(v in names(tmpAgg)[2:ncol(tmpAgg)]){
+	tst$tmp = tmpAgg[,v][match(tst$dyad, tmpAgg$dyad)]
+	names(tst)[ncol(tst)] = v }
 ############################################

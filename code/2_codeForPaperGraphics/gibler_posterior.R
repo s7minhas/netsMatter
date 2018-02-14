@@ -141,6 +141,5 @@ scenGG = ggplot(data=scenDiffsSlice, aes(color=mod, fill=mod)) +
 		strip.text.x = element_text(size = 9, color='white' ),
 		strip.background = element_rect(fill = "#525252", color='#525252')		
 		)
-scenGG
 ggsave(scenGG, file=paste0(plotPath, 'gibler_margeff.pdf'), width=7, height=3)
 ############################################

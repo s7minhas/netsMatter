@@ -1,4 +1,4 @@
-\begin{thebibliography}{39}
+\begin{thebibliography}{37}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \expandafter\ifx\csname selectlanguage\endcsname\relax
   \def\selectlanguage#1{\relax}\fi
@@ -206,13 +206,6 @@ Tomz, Michael, Goldstein, Judith, and Rivers, Douglas. 2007.
 \newblock  \titlecap{Do We Really Know That the WTO Increases Trade?}
 \newblock {\em American Economic Review}, {\bf 97}(5), 2005--2018.
 
-\bibitem[\protect\citename{Ward {et~al.}, }2013]{ward:etal:2013}
-Ward, Michael~D., Metternich, Nils~W., Dorff, Cassy~L., Gallop, Max,
-  Hollenbach, Florian~M., Schultz, Anna, and Weschle, Simon. 2013.
-\newblock  \titlecap{Learning from the Past and Stepping into the Future:
-  {T}oward a New Generation of Conflict Prediction.}
-\newblock {\em International Studies Review}, {\bf 16}(4), 473--644.
-
 \bibitem[\protect\citename{Wasserman and Faust, }1994]{wasserman:faust:1994}
 Wasserman, Stanley, and Faust, Katherine. 1994.
 \newblock {\em Social Network Analysis: {M}ethods and Applications}.
@@ -228,11 +221,5 @@ Weeks, Jessica~L. 2012.
 Zinnes, Dina~A. 1967.
 \newblock  \titlecap{An Analytical Study of the Balance of Power Theories.}
 \newblock {\em Journal of Peace Research}, {\bf 3}, 270--288.
-
-\bibitem[\protect\citename{Zinnes, }1980]{zinnes:1980}
-Zinnes, Dina~A. 1980.
-\newblock  \titlecap{Three Puzzles in Search of a Researcher: {P}residential
-  Address.}
-\newblock {\em International Studies Quarterly}, {\bf 24}(3), 315--342.
 
 \end{thebibliography}
