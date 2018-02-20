@@ -2,33 +2,31 @@
 
 \subsection{Design}
 
-We apply AME to four recent IR studies: \citet{reiter:stam:2003, mcdonald:2004,  weeks:2012, gibler:2017}. Each of these studies are representative of broader trends in the field in that they use relational data of state interactions and propose both dyadic, monadic, and structural explanations for behavior of actors in the system. We choose to demonstrate the capabilities of AME with reference to existing studies in order to highlight several features of the AME approach. First, the results of AME estimation are interpretable alongside results using standard approaches, but, as shown in the simulation section, have the additional benefit of being able to take into account dependencies that may complicate inference. Second, through using this approach, we can also quantify the degree to which first, second, and third order dependencies are present in events of interest. Third, we show that by using the AME framework scholars can better model the data generating process behind their events of interest.
+We apply AME to three recent IR studies: \citet{reiter:stam:2003, mcdonald:2004,  weeks:2012, gibler:2017}. Each of these studies are representative of broader trends in the field in that they use relational data of state interactions and propose both dyadic, monadic, and structural explanations for behavior of actors in the system. We choose to demonstrate the capabilities of AME with reference to existing studies in order to highlight several features of the AME approach. First, the results of AME estimation are interpretable alongside results using standard approaches, but, as shown in the simulation section, have the additional benefit of being able to take into account dependencies that may complicate inference. Second, through using this approach, we can also quantify the degree to which first, second, and third order dependencies are present in events of interest. Third, we show that by using the AME framework scholars can better model the data generating process behind their events of interest.
 
-We obtained the data for each of these studies from their replication archives and replicated the main results of each article.\footnote{Without exception this was straightforward to accomplish, thanks to the authors' transparency and an increasing norm in the social sciences of open data sharing.} The four studies used below were selected based on how recent they were and whether they had more then 100 citations.\footnote{Note that we chose papers with at least 100 citations as an indicator of influence within the discipline. Of course, by the criteria of influence many other papers could have been considered for the replication. However, as described in the following sections, the AME model has specific data requirements, which limited the scope of potential papers.} Each of these pieces, published in prominent journals well-known in their respective literatures, posited a theory in which interdependencies are consequential. Reflecting the dominant approach in the literature, each of the authors tested their hypothesis by employing some form of a general linearized model.\footnote{It is important to note that the AME framework is applicable only where a full set of dyads for an outcome of interest is observable---for example it is unsuitable for studying onsets, where dyad-years representing conflict continuations are removed from the sample. The AME is also not applicable to analyses of case-level data, for example, studies that examine the decision to go to war by particular states.}
+We obtained the data for each of these studies from their replication archives and replicated the main results of each article.\footnote{Without exception this was straightforward to accomplish, thanks to the authors' transparency and an increasing norm in the social sciences of open data sharing.} The studies used below were selected based on how recent they were and whether they had more then 100 citations.\footnote{Note that we chose papers with at least 100 citations as an indicator of influence within the discipline. Of course, by the criteria of influence many other papers could have been considered for the replication. However, as described in the following sections, the AME model has specific data requirements, which limited the scope of potential papers.} Each of these pieces, published in prominent journals well-known in their respective literatures, posited a theory in which interdependencies are consequential. Reflecting the dominant approach in the literature, each of the authors tested their hypothesis by employing some form of a general linearized model.\footnote{It is important to note that the AME framework is not well suited for studies where the focus may be on studying onsets and dyad-years representing conflict continuations are removed from the sample. In studies with this type of focus, network models are of limited utility since any interdependencies underlying how events may spread from one actor to another are explicitly masked from the estimation process.}
 
 \begin{table}
 \caption{Features of the Studies Re-estimated.}
-	\begin{tabular}{lcccccc}
-		& Model &  Date Range & N. Actors  & N. Dyads & Dyads Type & Clustering $\sigma_{\hat{\beta}}$ \\ \toprule
-		Reiter \& Stam (2003) &Logit &1945--1995 &  193 & $753,456$ & Directed & Robust \\	
-		McDonald (2004) & Logit &1959--2002 & 198 & $92,354$ & Undirected & Robust\\
-		% Rose (2004) & OLS & 1948--1999 & 177 & $234,597$ & Directed & Robust \\	 
-		Weeks (2012) & Logit & 1946--1999 &197 &  $901,540$ & Directed & Robust \\
-		Gibler (2017) & Logit & 1816--2008 &193 &   $650,557$ & Undirected & None \\ \bottomrule
+	\begin{tabular}{lccccc}
+		& Model &  Date Range & N. Actors  & Dyads Type & Clustering $\sigma_{\hat{\beta}}$ \\ \toprule
+		Reiter \& Stam (2003) &Logit &1945--1995 &  193 & Directed & Robust \\	
+		McDonald (2004) & Logit &1959--2002 & 198 & Undirected & Robust\\
+		Weeks (2012) & Logit & 1946--1999 &197 & Directed & Robust \\
+		Gibler (2017) & Logit & 1816--2008 &193 & Undirected & None \\ \bottomrule
 	\end{tabular}
 \end{table}
 
-Each of the four studies has a crucial finding that we hone in on to further draw into focus the analytical power of the AME estimation procedure.  In Table~\ref{tab:modelFindingSumm}, we present the overall results; the term \textit{Unconfirmed} indicates only that the sign and/or significance of the putatively crucial finding in the original study is not found to hold in the AME estimation.\footnote{Full tabular results for each of the original and reestimated models are presented in the Appendix.}
+Each of the studies has a crucial finding that we hone in on to further draw into focus the analytical power of the AME estimation procedure.  In Table~\ref{tab:modelFindingSumm}, we present the overall results; the term \textit{Unconfirmed} indicates only that the sign and/or significance of the putatively crucial finding in the original study is not found to hold in the AME estimation.\footnote{Full tabular results for each of the original and reestimated models are presented in the Appendix.}
 
 \begin{table}[ht]
 \centering
-\caption{Here we provide a brief summary of the key variable in each of the four replications and a note about whether or not the highlighted finding remains when using our network-based approach.}
+\caption{Here we provide a brief summary of the key variable in each of the replications and a note about whether or not the highlighted finding remains when using our network-based approach.}
 	\begin{tabular}{l p{7cm} l} \toprule
 		\multirow{2}{*}{Study} & \multirow{2}{*}{Central Finding} &  Confirmed after \\
 		& &  accounting for dependencies? \\ \toprule
-		Reiter \& Stam (2003) & Personalist Regimes Attack Democracies, Not Vice Versa & {Partially Confirmed} \\ \midrule
+		Reiter \& Stam (2003) & Personalist Regimes Attack Democracies, Not Vice Versa & {Confirmed} \\ \midrule
 		McDonald (2004) & Lower Trade Barriers and Higher Trade Lead to Peace & {Confirmed}\\ \midrule
-		% Rose (2004) & WTO Membership Does not Affect Trade & {Partially Confirmed}\\ \midrule
 		Weeks (2012) & Bosses, Juntas, and Strongmen are more Aggressive, Machines are Not & {Unconfirmed} \\\midrule
 		Gibler (2017) & Power Parity at Time of Entry to International System Increases Conflict & {Unconfirmed}\\ \bottomrule
 	\end{tabular}
@@ -46,7 +44,7 @@ Then for each $s \in \{1,\ldots,k\}$, we:
 	\item and predict $\{\hat{y}_{ij,t}: s_{ij,t} = s\}$ from these estimated parameters. 
 \end{enumerate}
 
-The result of this procedure is a set of sociomatrices $\bm \hat Y$, in which each entry $\hat y_{ij,t}$ is a predicted value obtained from using a subset of the data that does not include $y_{ij,t}$. We summarize the performance of the various models in Table~\ref{tab:modelPerfSumm} below. For the binary models we provide the area under the Receiver Operator Characteristic (ROC) and Precision Recall (PR) curves. Only one of the studies here had a continuous dependent variable and for this we provide the root mean squared error (RMSE) and root median squared error (RMDSE).\footnote{More details on the performance of each of these models can be found in the Appendix.} For each of the replications, we find that the AME approach substantially outperforms the original models in terms of out-of-sample predictive performance. This is important as it indicates that switching to the AME framework---even when using the exact same specification as the original studies---enables scholars to better represent the data generating process of their events of interest. The fact that this analysis is done in an out-of-sample context ensures that the AME framework is not simply overfitting with more parameters, rather the dependence parameters we include are capturing underlying structure previously missed by the exogenous covariates in the models.
+The result of this procedure is a set of sociomatrices $\bm \hat Y$, in which each entry $\hat y_{ij,t}$ is a predicted value obtained from using a subset of the data that does not include $y_{ij,t}$. We summarize the performance of the various models in Table~\ref{tab:modelPerfSumm} below. For the binary models we provide the area under the Receiver Operator Characteristic (ROC) and Precision Recall (PR) curves.\footnote{More details on the performance of each of these models can be found in the Appendix.} For each of the replications, we find that the AME approach substantially outperforms the original models in terms of out-of-sample predictive performance. This is important as it indicates that switching to the AME framework---even when using the exact same specification as the original studies---enables scholars to better represent the data generating process of their events of interest. The fact that this analysis is done in an out-of-sample context ensures that the AME framework is not simply overfitting with more parameters, rather the additive and multiplicative effects we include are capturing underlying structure previously missed by the exogenous covariates in the models.
 
 \begin{table}[ht]
 \centering
@@ -55,19 +53,28 @@ The result of this procedure is a set of sociomatrices $\bm \hat Y$, in which ea
 	\toprule
 		\multirow{2}{*}{Reiter \& Stam (2003)} & Area Under ROC Curve, AUC-ROC & 0.92 & {0.96} \\
 				~ & Area Under PR Curve, AUC-PR & 0.08 &  {0.15} \\		\midrule
-		\multirow{2}{*}{McDonald (2004)} & AUC-ROC & 0.92 &  {0.99} \\
-				~ & AUC-PR & 0.13 &  {0.28} \\		\midrule
-		% \multirow{2}{*}{Rose (2004)} & RMSE & 3.23 &  {1.99} \\
-		% 		~ & RMDSE & 2.01 &  {1.06} \\	\midrule
 		\multirow{2}{*}{Weeks (2012)} & AUC-ROC & 0.64 &  {0.97} \\
 				~ & AUC-PR & 0.00 &  {0.15} \\		\midrule
 		\multirow{2}{*}{Gibler (2017)} & AUC-ROC & 0.52 &  {0.91} \\
 				~ & AUC-PR & 0.00 &  {0.08} \\			\bottomrule
 	\end{tabular}
-	\caption{Here we provide a summary of the out-of-sample performance based on our cross-validation strategy for each of the four replications when using the standard dyadic approach and our network-based approach. Each of the studies involved a binary dependent variable and area under the curve (AUC) statistics are reported.\tabularnewline
+	\caption{Here we provide a summary of the out-of-sample performance based on our cross-validation strategy for each of the replications when using the standard dyadic approach and our network-based approach. Each of the studies involved a binary dependent variable and area under the curve (AUC) statistics are reported.\tabularnewline
 	%The Rose study involved a Gaussian dependent variable and for that we use the root mean squared error (RMSE) and root median squared error (RMDSE). 
 	}
 	\label{tab:modelPerfSumm}
 \end{table}
 \FloatBarrier
+
+\subsection{....}
+
+Apart from providing stronger inferential guarantees and predictive performance than conventional approaches, the AME framework 
+
+
+reiter and stam take a look at the srm effeccts to understand where the model is still falling short
+
+mcdonald we recover support fro trade dependenicence and also find eveidence for their highest barrier to trade variable
+
+for weeks even though we dont find support for her hypothesis we do se esomething interesting in the multiplicative effects
+
+for gibler 
 

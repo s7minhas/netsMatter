@@ -55,29 +55,65 @@ load( paste0(resultsPath,'model_k2_v12.rda') )
 # addEffdata ###########################################
 # sender effects
 effdat = getAddEffData(fit = ameFit) ##This function is in helperEx.R
-effdat = effdat[which(
-  effdat$addEff>=quantile(effdat$addEff,.9) |
-  effdat$addEff<=quantile(effdat$addEff,.1)
-  ),]
+# effdat = effdat[which(
+#   effdat$addEff>=quantile(effdat$addEff,.9) |
+#   effdat$addEff<=quantile(effdat$addEff,.1)
+#   ),]
+effdat$cown = effdat$actor
 effdat$actor = countrycode::countrycode(effdat$actor, 'cown', 'country.name')
-effdat = na.omit(effdat)
+# effdat = na.omit(effdat)
 effdat$actor = factor(effdat$actor,  levels=effdat[order(effdat$addEff),'actor'])
 
-## subset of countries
-addEffPlot(fit = effdat, addEffData = effdat, row = T) + coord_flip()
+# ## subset of countries
+# addEffPlot(fit = effdat, addEffData = effdat, row = T) +
+#   coord_flip() + 
+#   theme(
+#     axis.text.x=element_text(angle=0)
+#     )
+
+## spatial visualization
+# fix actor names
+cntryKey = data.frame(code=effdat$cown, cname=char(effdat$actor),stringsAsFactors = FALSE)
+cntryKey$cname[cntryKey$code==731]='North Korea'
+cntryKey$cowc = countrycode(cntryKey$cname, 'country.name', 'cowc')
+
+# geo colors for nodes
+loadPkg('cshapes')
+cmap = cshp(date=as.Date('2016-1-1'))
+cmapDF=fortify(cmap,region='FEATUREID') ; names(cmapDF)[6]='FEATUREID' ; cmapDF=join(cmapDF, cmap@data)
+cmapDF$addEff = effdat$addEff[match(cmapDF$COWCODE, effdat$cown)]
+
+ggMap = ggplot() +
+  geom_polygon(data=cmapDF, aes(x=long, y=lat,group=group,fill=addEff),color='grey30',size=.05) +
+  scale_fill_gradient2() +
+  coord_equal() + xlab('') + ylab('') +
+  labs(
+    x='', y='', fill='Sender Effects'
+    ) +
+  theme(
+    legend.position = 'top',
+    panel.border = element_blank(), panel.grid=element_blank(),
+    axis.ticks = element_blank(), axis.line=element_blank(),
+    axis.text = element_blank() )
+ggMap
 
 # receiver effects
 effdat = getAddEffData(fit = ameFit, row=FALSE) ##This function is in helperEx.R
-effdat = effdat[which(
-  effdat$addEff>=quantile(effdat$addEff,.9) |
-  effdat$addEff<=quantile(effdat$addEff,.1)
-  ),]
+# effdat = effdat[which(
+#   effdat$addEff>=quantile(effdat$addEff,.9) |
+#   effdat$addEff<=quantile(effdat$addEff,.1)
+#   ),]
+effdat$cown = effdat$actor
 effdat$actor = countrycode::countrycode(effdat$actor, 'cown', 'country.name')
 effdat = na.omit(effdat)
 effdat$actor = factor(effdat$actor,  levels=effdat[order(effdat$addEff),'actor'])
 
 ## subset of countries
-addEffPlot(fit = effdat, addEffData = effdat, row = FALSE) + coord_flip()
+addEffPlot(fit = effdat, addEffData = effdat, row = FALSE) +
+  coord_flip() + 
+  theme(
+    axis.text.x=element_text(angle=0)
+    )
 ############################################
 
 # # outPerf ###########################################

@@ -1,4 +1,4 @@
-\begin{thebibliography}{37}
+\begin{thebibliography}{33}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \expandafter\ifx\csname selectlanguage\endcsname\relax
   \def\selectlanguage#1{\relax}\fi
@@ -44,12 +44,6 @@ Beck, Nathaniel, Katz, Jonathan~N., and Tucker, Richard. 1998.
 \newblock  \titlecap{Taking Time Seriously: {T}ime-series-cross-section
   Analysis with a Binary Dependent Variable.}
 \newblock {\em American Journal of Political Science}, {\bf 42}(2), 1260--1288.
-
-\bibitem[\protect\citename{Bennett and Stam, }2000]{bennett:stam:2000}
-Bennett, D.~Scott, and Stam, Allan~C. 2000.
-\newblock  \titlecap{Research Design and Estimator Choices in the Analysis of
-  Interstate Dyads: {W}hen Decisions Matter.}
-\newblock {\em Journal of Conflict Resolution}, {\bf 44}(5), 653--685.
 
 \bibitem[\protect\citename{Bennett {et~al.}, }2007]{bennett:etal:2007}
 Bennett, James, Lanning, Stan, {et~al.} 2007.
@@ -160,11 +154,6 @@ Mucha, Peter~J., Richardson, Thomas, Macon, K., Porter, Mason~A., and Onnela,
   Multiplex Networks.}
 \newblock {\em Science}, {\bf 328}(5980), 876ff.
 
-\bibitem[\protect\citename{Organski, }1958]{organski:1958}
-Organski, A.F.K. 1958.
-\newblock {\em World Politics: {T}he Stages of Political Development}.
-\newblock New York: Alfred A. Knopf.
-
 \bibitem[\protect\citename{Reiter and Stam, }2003]{reiter:stam:2003}
 Reiter, Dan, and Stam, Allan~C. 2003.
 \newblock  \titlecap{Identifying the Culprit: {D}emocracy, Dictatorship, and
@@ -181,11 +170,6 @@ Richardson, Lewis~F. 1960.
 \newblock {\em Arms and Insecurity}.
 \newblock Chicago and Pittsburgh, PA: Quadrangle/Boxwood.
 
-\bibitem[\protect\citename{Rose, }2004]{rose:2004}
-Rose, Andrew~K. 2004.
-\newblock  \titlecap{Do We Really Know That the {WTO} Increases Trade?}
-\newblock {\em American Economic Review}, {\bf 94}(1), 98--114.
-
 \bibitem[\protect\citename{Signorino, }1999]{signorino:1999}
 Signorino, Curtis. 1999.
 \newblock  \titlecap{Strategic Interaction and the Statistical Analysis of
@@ -200,11 +184,6 @@ Singer, J.~David. 1972.
   Politics: {A}n Appraisal}.
 \newblock Special Studies in International Politics and Government, vol. VI.
 \newblock Praeger.
-
-\bibitem[\protect\citename{Tomz {et~al.}, }2007]{tomz:etal:2007}
-Tomz, Michael, Goldstein, Judith, and Rivers, Douglas. 2007.
-\newblock  \titlecap{Do We Really Know That the WTO Increases Trade?}
-\newblock {\em American Economic Review}, {\bf 97}(5), 2005--2018.
 
 \bibitem[\protect\citename{Wasserman and Faust, }1994]{wasserman:faust:1994}
 Wasserman, Stanley, and Faust, Katherine. 1994.
