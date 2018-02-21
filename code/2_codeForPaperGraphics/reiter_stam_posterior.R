@@ -52,6 +52,22 @@ load( paste0(resultsPath,'model_k2_v12.rda') )
 # getCoefTable(varKey, modList, modNames, 'reiter_stam', 'Reiter \\& Stam (2003)', plotPath, 3)
 # ############################################
 
+# outPerf ###########################################
+load(paste0(resultsPath, 'ameCrossValResults_k2.rda')) # ameOutSamp_k2
+ameOutSamp=ameOutSamp_k2 ; rm(ameOutSamp_k2)
+load(paste0(resultsPath,'glmCrossValResults.rda')) # glmOutSamp
+glmOutSamp=glmOutSamp_wFullSpec ; rm(glmOutSamp_wFullSpec)
+toKeep = which(!is.na(glmOutSamp$outPerf$pred))
+
+# org
+predDfs = list(
+  GLM = data.frame(actual=glmOutSamp$outPerf$actual[toKeep], pred=glmOutSamp$outPerf$pred[toKeep], model='GLM'),
+  AME = data.frame(actual=ameOutSamp$outPerf$actual, pred=ameOutSamp$outPerf$pred, model='AME') )
+
+# run
+ggPerfCurves(predDfs, 'reiter_stam')
+############################################
+
 # addEffdata ###########################################
 # sender effects
 effdat = getAddEffData(fit = ameFit) ##This function is in helperEx.R
@@ -115,22 +131,6 @@ addEffPlot(fit = effdat, addEffData = effdat, row = FALSE) +
     axis.text.x=element_text(angle=0)
     )
 ############################################
-
-# # outPerf ###########################################
-# load(paste0(resultsPath, 'ameCrossValResults_k2.rda')) # ameOutSamp_k2
-# ameOutSamp=ameOutSamp_k2 ; rm(ameOutSamp_k2)
-# load(paste0(resultsPath,'glmCrossValResults.rda')) # glmOutSamp
-# glmOutSamp=glmOutSamp_wFullSpec ; rm(glmOutSamp_wFullSpec)
-# toKeep = which(!is.na(glmOutSamp$outPerf$pred))
-
-# # org
-# predDfs = list(
-# 	GLM = data.frame(actual=glmOutSamp$outPerf$actual[toKeep], pred=glmOutSamp$outPerf$pred[toKeep], model='GLM'),
-# 	AME = data.frame(actual=ameOutSamp$outPerf$actual, pred=ameOutSamp$outPerf$pred, model='AME') )
-
-# # run
-# ggPerfCurves(predDfs, 'reiter_stam')
-# ############################################
 
 # marg eff plots ###########################################
 # create scenario matrix

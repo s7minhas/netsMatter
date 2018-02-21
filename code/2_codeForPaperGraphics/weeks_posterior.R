@@ -16,46 +16,46 @@ load( paste0(resultsPath,'model_k2.rda') )
 load(paste0(resultsPath,'weeks_glmfit.rda'))
 ############################################
 
-# coefSumm ###########################################
-ameSumm = t(apply(ameFit$BETA, 2, function(x){ c(
-	'Estimate'=mean(x), 'Std. Error'=sd(x), 'z value'=mean(x)/sd(x),
-	'Pr(>|z|)'=2*(1-pnorm( abs(mean(x)/sd(x)))) )}))
-rownames(ameSumm) = gsub('.row','',rownames(ameSumm),fixed=TRUE)
-rownames(ameSumm) = gsub('.col','',rownames(ameSumm),fixed=TRUE)
-rownames(ameSumm) = gsub('.dyad','',rownames(ameSumm),fixed=TRUE)
-rownames(ameSumm) = gsub('_s','s',rownames(ameSumm),fixed=TRUE)
-rownames(ameSumm) = gsub('intercept','(Intercept)',rownames(ameSumm),fixed=TRUE)
-glmSumm = modSumm[,]
-probSumm = proSumm[,]
+# # coefSumm ###########################################
+# ameSumm = t(apply(ameFit$BETA, 2, function(x){ c(
+# 	'Estimate'=mean(x), 'Std. Error'=sd(x), 'z value'=mean(x)/sd(x),
+# 	'Pr(>|z|)'=2*(1-pnorm( abs(mean(x)/sd(x)))) )}))
+# rownames(ameSumm) = gsub('.row','',rownames(ameSumm),fixed=TRUE)
+# rownames(ameSumm) = gsub('.col','',rownames(ameSumm),fixed=TRUE)
+# rownames(ameSumm) = gsub('.dyad','',rownames(ameSumm),fixed=TRUE)
+# rownames(ameSumm) = gsub('_s','s',rownames(ameSumm),fixed=TRUE)
+# rownames(ameSumm) = gsub('intercept','(Intercept)',rownames(ameSumm),fixed=TRUE)
+# glmSumm = modSumm[,]
+# probSumm = proSumm[,]
 
-modList = list(glmSumm, probSumm, ameSumm)
-modNames = c('GLM (Logit)','GLM (Probit)', 'AME')
+# modList = list(glmSumm, probSumm, ameSumm)
+# modNames = c('GLM (Logit)','GLM (Probit)', 'AME')
 
-varKey = data.frame(
-	dirty=names(coef(mod)),
-	clean=c( '(Intercept)', 
-		"Machine", "Junta", "Boss", "Strongman",
-		"Other Type","New/Unstable Regime", "Democracy Target",
-		"Military Capabilities Initiator",
-		"Military Capabilities Target ",
-		"Initator Share of Capabilities ",## remember this has no AMEN equivalent
-		"Low Trade Dependence ",
-		"Both Major Powers", "Minor/Major",
-		"Major/Minor", "Contiguous", "Log Dist. Between Capitals",
-		"Alliance Similarity Dyad ",
-		"Alliance Similarity With System Leader Initiator",
-		"Alliance Similarity Leader Target",
-		"Time Since Last Conflict", "Spline1", "Spline2", "Spline3"),
-	stringsAsFactors = FALSE )
-varKey = varKey[-11,]
+# varKey = data.frame(
+# 	dirty=names(coef(mod)),
+# 	clean=c( '(Intercept)', 
+# 		"Machine", "Junta", "Boss", "Strongman",
+# 		"Other Type","New/Unstable Regime", "Democracy Target",
+# 		"Military Capabilities Initiator",
+# 		"Military Capabilities Target ",
+# 		"Initator Share of Capabilities ",## remember this has no AMEN equivalent
+# 		"Low Trade Dependence ",
+# 		"Both Major Powers", "Minor/Major",
+# 		"Major/Minor", "Contiguous", "Log Dist. Between Capitals",
+# 		"Alliance Similarity Dyad ",
+# 		"Alliance Similarity With System Leader Initiator",
+# 		"Alliance Similarity Leader Target",
+# 		"Time Since Last Conflict", "Spline1", "Spline2", "Spline3"),
+# 	stringsAsFactors = FALSE )
+# varKey = varKey[-11,]
 
-#
-getCoefTable(varKey, modList, modNames, 'weeks', 'Weeks (2012)', plotPath, 3, 'scriptsize')
-############################################
+# #
+# getCoefTable(varKey, modList, modNames, 'weeks', 'Weeks (2012)', plotPath, 3, 'scriptsize')
+# ############################################
 
-# plot srm var ###########################################
-plotVC(ameFit$VC, paste0(plotPath, 'weeks_srmvc.pdf'), w=7, h=4)
-############################################
+# # plot srm var ###########################################
+# plotVC(ameFit$VC, paste0(plotPath, 'weeks_srmvc.pdf'), w=7, h=4)
+# ############################################
 
 # outPerf ###########################################
 load(paste0(resultsPath, 'outsampResults2.rda')) # ameOutSamp_NULL

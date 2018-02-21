@@ -17,7 +17,9 @@ getAUC = function(prediction, actual){
 
 # Plot roc curves, depends RColorBrewer
 # plot_type is "roc" or "pr"
-rocPlot = function(rocData, type='roc', legPos=c(.56,.25), colorPal = 'Set1', colorManual=NULL, linetypes, legText=6, legSpace=3){
+rocPlot = function(
+  rocData, type='roc', legPos=c(.56,.25), colorPal = 'Set1', 
+  colorManual=NULL, linetypes, legText=6, legSpace=3){
 
 	if(type=='roc'){ 
     tmp=ggplot(rocData, aes(x=FPR, y=TPR, color=model, linetype=model)) + 
@@ -62,8 +64,12 @@ ggSep = function(actual, proba, color, lty, fPath, save=TRUE){
   sepData = data.frame(actual, proba)
   sepData = sepData[order(sepData$proba),]
   tmp=ggplot(sepData) + 
-    geom_rect(aes(xmin = 0, xmax = seq(length.out = length(actual)), ymin = 0, ymax = 1), fill = "transparent") +
-    geom_linerange(aes(color = factor(actual), ymin = 0, ymax = 1, x = seq(length.out = length(actual))), alpha = 0.5) +
+    geom_rect(
+      aes(xmin = 0, xmax = seq(length.out = length(actual)), 
+        ymin = 0, ymax = 1), fill = "transparent") +
+    geom_linerange(
+      aes(color = factor(actual), 
+        ymin = 0, ymax = 1, x = seq(length.out = length(actual))), alpha = 0.5) +
     geom_line(aes(y = proba, x = seq(length.out = length(actual)), linetype=lty), lwd = 4) + 
     scale_linetype_manual(values=lty) +
     scale_color_manual(values=color) + 
@@ -95,7 +101,9 @@ ggSepBig = function(actual, proba, color, lty, fPath, cutBy=0.001, save=TRUE){
   sepDataSumm = sepDataSumm[order(sepDataSumm$proba),]
 
   tmp=ggplot(sepDataSumm) + 
-    geom_rect(aes(xmin = 0, xmax = seq(length.out = length(actual)), ymin = 0, ymax = 1), fill = "transparent") +
+    geom_rect(
+      aes(xmin = 0, xmax = seq(length.out = length(actual)), 
+        ymin = 0, ymax = 1), fill = "transparent") +
     geom_linerange(
       aes(
         size=factor(actual), color=factor(actual), ymin=0, ymax=1, x=seq(length.out=length(actual))
@@ -214,7 +222,7 @@ ggPerfCurves = function(predDfs, suffix, cutBy=0.001){
     annotate('text', hjust=0, x=.6, y=c(0.65,.75), 
       label=rev(rownames(aucSumm))) + 
     annotate('text', hjust=0, x=.78, y=c(0.65,.75), 
-      label=rev(apply(aucSumm, 1, function(x){paste(x, collapse='     ')})) )
+      label=rev(apply(aucSumm, 1, function(x){paste(x, collapse='     ')})), size=5 )
   ggsave(tmp, file=paste0(plotPath, suffix, '_pr_outSample.pdf'), width=5, height=5)  
 }  
 ####################################################################
