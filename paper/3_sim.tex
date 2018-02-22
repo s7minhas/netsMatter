@@ -25,7 +25,7 @@ We compare the performance of the models first in terms of how well they estimat
 	\centering
 	\caption{Regression parameter estimates for the standard, AME, and oracle models from 1,000 simulations. Summary statistics are presented through a traditional box plot, and the estimates from each simulation are visualized as well as points.}
 	\label{fig:ameBias}
-	\includegraphics[width=1\textwidth]{ameSimBias_all.pdf} \\
+	\includegraphics[width=1\textwidth]{graphics/ameSimBias_all.pdf} \\
 \end{figure}
 
 Next, we estimate the 95\% confidence interval for the three models in each of the simulations and estimate the proportion of times that the true value fell within those intervals. The results are summarized in Figure~\ref{fig:ameCalib}, and again we see that the AME approach performs as well as the oracle, while the standard approach performs poorly by comparison. The implication of the results presented in Figures~\ref{fig:ameBias} and ~\ref{fig:ameCalib} is that standard approaches can often fail at estimating parameter values and conducting inferential tasks in the presence of unobserved dependencies. The AME approach by comparison can be used as a tool for scholars working with dyadic data to still estimate the true effects of their main variables of interest, while accounting for dependencies that do often emerge in dyadic data. 
@@ -34,7 +34,7 @@ Next, we estimate the 95\% confidence interval for the three models in each of t
 	\centering
 	\caption{Proportion of times the true value fell within the estimated 95\% confidence interval for the standard, AME, and oracle models from 1,000 simulations.}
 	\label{fig:ameCalib}
-	\includegraphics[width=1\textwidth]{ameSimCover_all.pdf} \\
+	\includegraphics[width=1\textwidth]{graphics/ameSimCover_all.pdf} \\
 \end{figure}
 
 Moreover, the AME approach allows scholars to better understand what parameters their model may be missing. In the case of the simulation here, $W$ is set as an unobserved dyadic covariate that had a homophilous effect on $Y$. Homophilous because $W$ within this framework is simply an example of a dyadic attribute involving $i$ and $j$ that positively affects the degree to which they will interact with one another, i.e., $y_{ij}$. This type of unobserved dependency will be captured through the multiplicative effects portion of the model, $\mathbf{U}^{\top} \mathbf{D} \mathbf{V}$. To estimate how well the model performs, we recover the multiplicative effects term for each simulation and calculate the correlation between it and the unobserved dependency, $W$.\footnote{Specifically, since both the multiplicative effects term and $W$ are continuous dyadic variables, we calculate the Pearson correlation coefficient.} We visualize the distribution of the correlations from each of the 1,000 simulations in Figure~\ref{fig:ameCorr} for the case where the number of actors is set to 100 (top pair of panels) and 50. Additionally, we calculate the median across the correlations and display the result using a vertical line. For both $n=50$ and $n=100$, we find that the multiplicative effects perform very well in capturing the unobserved dependency, which indicates that this framework is not simply capturing noise but can be used as a tool to estimate unobserved structure. 
@@ -43,7 +43,7 @@ Moreover, the AME approach allows scholars to better understand what parameters 
 	\centering
 	\caption{Distribution of correlation between missing variable and multiplicative random effect in AME across the 1,000 simulations. Vertical line through the distribution represents the median value across the simulations.}
 	\label{fig:ameCorr}
-	\includegraphics[width=1\textwidth]{ameSimCorr.pdf} \\
+	\includegraphics[width=1\textwidth]{graphics/ameSimCorr.pdf} \\
 \end{figure}
 
 What this simulation has shown is that beyond obtaining less biased and better-calibrated parameter estimates, a key benefit of the AME framework is to directly estimate unobserved dependencies through the random effects structure of the model. Scholars can use this framework in an iterative fashion: beginning with an estimated a model, they can then empirically study the structure of the random effects to assess whether there are unobserved covariates that they want to include in their models. At the very least, what this simulation section shows is that the AME model can help in estimating the true effect and conducting inference on the independent variables that scholars have operationalized to test their theoretical propositions.

@@ -9,9 +9,11 @@ Using the structure of an adjacency matrix, Figure~\ref{fig:adjMatDeps} visualiz
 \begin{figure}
 	\begin{tabular}{cc}
 		\textsc{Sender Heterogeneity} & \textsc{Receiver Heterogeneity} \\
-		\includegraphics[width=.4\textwidth]{adjRowDep.png} & \includegraphics[width=.4\textwidth]{adjColDep.png} \\
+		\includegraphics[width=.4\textwidth]{graphics/adjRowDep.png} & 
+		\includegraphics[width=.4\textwidth]{graphics/adjColDep.png} \\
 		\textsc{Sender-Receiver Covariance} & \textsc{Reciprocity} \\
-		\includegraphics[width=.4\textwidth]{adjRowColCovar.png} & \includegraphics[width=.4\textwidth]{adjRecip.png} \\
+		\includegraphics[width=.4\textwidth]{graphics/adjRowColCovar.png} & 
+		\includegraphics[width=.4\textwidth]{graphics/adjRecip.png} \\
 	\end{tabular}
 	\caption{Nodal and dyadic dependencies in relational data.}
 	\label{fig:adjMatDeps}
@@ -22,7 +24,7 @@ For similar reasons one also needs to take into account the dependence between o
 For most relational data, however, dependencies do not simply manifest at the nodal or dyadic level. More often we find significant evidence of higher-order structures that result from dependencies between multiple groups of actors. These dependencies arise because there may be a set of latent attributes between actors that affects their probability of interacting with one another \citep{zinnes:1967,wasserman:faust:1994}. In Figure~\ref{fig:thirdDeps} we provide a visualization of a simulated relational dataset wherein the nodes designate actors and edges between the nodes indicate that an interaction between the two took place. To highlight third-order dependence patterns, nodes with similar latent attributes are colored similarly.
 
 \begin{figure}[ht]
-	\includegraphics[width=.6\textwidth]{stochEquiv_v2.pdf}
+	\includegraphics[width=.6\textwidth]{graphics/stochEquiv_v2.pdf}
 	\caption{Higher-order dependence patterns in a network.}
 	% need a simpler caption here
 	\label{fig:thirdDeps}
