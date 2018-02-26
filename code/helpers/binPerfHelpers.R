@@ -222,7 +222,7 @@ ggPerfCurves = function(predDfs, suffix, cutBy=0.001){
     annotate('text', hjust=0, x=.6, y=c(0.65,.75), 
       label=rev(rownames(aucSumm))) + 
     annotate('text', hjust=0, x=.78, y=c(0.65,.75), 
-      label=rev(apply(aucSumm, 1, function(x){paste(x, collapse='     ')})), size=5 )
+      label=rev(apply(aucSumm, 1, function(x){paste(x, collapse='    ')})), size=4 )
   ggsave(tmp, file=paste0(plotPath, suffix, '_pr_outSample.pdf'), width=5, height=5)  
 }  
 ####################################################################

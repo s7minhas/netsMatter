@@ -3,7 +3,7 @@ rm(list=ls())
 
 if(Sys.info()['user'] %in% c('s7m', 'janus829')){
 	resultsPath = '~/Dropbox/Research/netsMatter/replications/Weeks2012/replication/output/'
-	plotPath = '~/Research/netsMatter/paper/' }
+	plotPath = '~/Research/netsMatter/paper/graphics/' }
 
 source('~/Research/netsMatter/code/helpers/functions.R')
 source('~/Research/netsMatter/code/helpers/ameHelpers.R')

@@ -4,7 +4,7 @@ rm(list=ls())
 if(Sys.info()['user'] %in% c('s7m', 'janus829')){
 	resultsPath = '~/Dropbox/Research/netsMatter/replications/Reiter_Stam_2003/output/'
 	inputPath= '~/Dropbox/Research/netsMatter/replications/Reiter_Stam_2003/input/'
-	plotPath = '~/Research/netsMatter/paper/'
+	plotPath = '~/Research/netsMatter/paper/graphics/'
   source('~/Research/netsMatter/code/helpers/functions.R')
   source('~/Research/netsMatter/code/helpers/ameHelpers.R')
   source('~/Research/netsMatter/code/helpers/binPerfHelpers.R')
@@ -71,21 +71,9 @@ ggPerfCurves(predDfs, 'reiter_stam')
 # addEffdata ###########################################
 # sender effects
 effdat = getAddEffData(fit = ameFit) ##This function is in helperEx.R
-# effdat = effdat[which(
-#   effdat$addEff>=quantile(effdat$addEff,.9) |
-#   effdat$addEff<=quantile(effdat$addEff,.1)
-#   ),]
 effdat$cown = effdat$actor
 effdat$actor = countrycode::countrycode(effdat$actor, 'cown', 'country.name')
-# effdat = na.omit(effdat)
 effdat$actor = factor(effdat$actor,  levels=effdat[order(effdat$addEff),'actor'])
-
-# ## subset of countries
-# addEffPlot(fit = effdat, addEffData = effdat, row = T) +
-#   coord_flip() + 
-#   theme(
-#     axis.text.x=element_text(angle=0)
-#     )
 
 ## spatial visualization
 # fix actor names
@@ -107,11 +95,37 @@ ggMap = ggplot() +
     x='', y='', fill='Sender Effects'
     ) +
   theme(
-    legend.position = 'top',
+    legend.position = 'bottom',
+    legend.key.width = unit(1.25,"cm"),
     panel.border = element_blank(), panel.grid=element_blank(),
     axis.ticks = element_blank(), axis.line=element_blank(),
     axis.text = element_blank() )
 ggMap
+ggsave(ggMap, file=paste0(plotPath, 'reiter_stam_aEff_map.pdf'), width=6, height=3)
+system(paste('pdfcrop', 
+  paste0(plotPath, 'reiter_stam_aEff_map.pdf'), 
+  paste0(plotPath, 'reiter_stam_aEff_map.pdf')))
+
+# pick out top countries
+effdatSub = rbind(
+  effdat[order(effdat$addEff, decreasing=TRUE),][1:10,],
+  effdat[order(effdat$addEff),][1:10,]
+  ) %>% na.omit()
+
+# clean up names
+effdatSub$actor = char(effdatSub$actor) 
+effdatSub$actor = cntryKey$cowc[match(effdatSub$actor, cntryKey$cname)]
+effdatSub$actor = factor(effdatSub$actor,  levels=effdatSub[order(effdatSub$addEff),'actor'])
+
+# subset of countries
+rsaeff = addEffPlot(fit = effdatSub, addEffData = effdatSub, row = T) +
+  coord_flip() + 
+  ylab('') + xlab('') +
+  theme(
+    axis.text.x=element_text(angle=0, size=12),
+    axis.text.y=element_text(size=12)
+    )
+ggsave(rsaeff, file=paste0(plotPath, 'reiter_stam_aEff_line.pdf'), height=6, width=4)
 
 # receiver effects
 effdat = getAddEffData(fit = ameFit, row=FALSE) ##This function is in helperEx.R

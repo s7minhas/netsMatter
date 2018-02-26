@@ -13,12 +13,12 @@
 
 For each of the replications involving a binary dependent variable we provide a table of coefficient estimates that includes the original GLM estimation with a logit link, a GLM estimation with a probit link, and the AME model. The GLM estimation with a probit link function is provided so as to ease comparison between the AME model, which is also based on the probit link. %For Rose (2004) we just provide a table of coefficient estimates that includes the original OLS estimation and the AME model.
 
-Additionally, for each replication we provide a more detailed visualization illustrating the results of our out-of-sample performance analysis. %For Weeks (2012) we already did so in the main body of the text so we eschew from doing so again here.
+% Additionally, for each replication we provide a more detailed visualization illustrating the results of our out-of-sample performance analysis. %For Weeks (2012) we already did so in the main body of the text so we eschew from doing so again here.
 
 \clearpage
 \subsubsection*{Reiter \& Stam (2003)}
 
-Additional information for the Reiter \& Stam (2003) re-estimation.
+Additional information for the Reiter \& Stam (2003) re-estimation. 
 
 \input{reiter_stam_coeftable}
 \FloatBarrier
@@ -96,11 +96,11 @@ Beyond the data inputs, the AMEN function requires additional specification:
     \item gof: whether to calculate goodness of fit statistics
 \end{itemize}
 
-There is often little theoretical reason to choose a particular value of $R$ (above). One strategy is to estimate models at different values of $R$ and compare goodness of fit statistics across models. 
+There is often little theoretical reason to choose a particular value of $\sf{R}$ (above). One strategy is to estimate models at different values of $\sf{R}$ and compare goodness of fit statistics across models. 
 
 Given the computational intensity needed for parameter estimates to converge, parallelization strategies are recommended to speed up analysis. In addition, providing AMEN function with starting values, either dictated by theory, previous research, or previous runs can also help speed up convergence time. 
 
-The code below presents an example of an AME model running in parallel across 4 different levels of $R$. Note also that the model is using starting values from a previous run, defined in \textit{startVals0}. 
+The code below presents an example of an AME model running in parallel across 4 different levels of $\sf{R}$. Note also that the model is using starting values from a previous run, defined in \textit{startVals0}. 
 
 \begin{lstlisting}[language=R]
 # running in parallel varying k

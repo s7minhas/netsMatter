@@ -1,4 +1,4 @@
-\begin{thebibliography}{33}
+\begin{thebibliography}{35}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \expandafter\ifx\csname selectlanguage\endcsname\relax
   \def\selectlanguage#1{\relax}\fi
@@ -62,6 +62,14 @@ Chyzh, Olga. 2016.
 \newblock  \titlecap{Dangerous liaisons: {A}n endogenous model of international
   trade and human rights.}
 \newblock {\em Journal of Peace Research}, {\bf 53}, tbd.
+
+\bibitem[\protect\citename{Davis and Goadrich, }2006]{davis:goadrich:2006}
+Davis, Jesse, and Goadrich, Mark. 2006.
+\newblock  \titlecap{The relationship between {Precision-Recall and ROC}
+  curves.}
+\newblock {Pages  233--240 of:} {\em Proceedings of the 23rd {International
+  Conference on Machine Learning}}.
+\newblock ACM.
 
 \bibitem[\protect\citename{Dorff and Minhas, }2017]{dorff:minhas:2017}
 Dorff, Cassy, and Minhas, Shahryar. 2017.
@@ -137,11 +145,6 @@ Manger, Mark~S., Pickup, Mark~A., and Snijders, Tom~A.B. 2012.
   Analysis Approach to {PTA} Formation.}
 \newblock {\em Journal of Conflict Resolution}, {\bf 56}(5), 852--877.
 
-\bibitem[\protect\citename{McDonald, }2004]{mcdonald:2004}
-McDonald, Patrick~J. 2004.
-\newblock  \titlecap{Peace through Trade or Free Trade?}
-\newblock {\em Journal of Conflict Resolution}, {\bf 48}(4), 547--572.
-
 \bibitem[\protect\citename{Minhas {et~al.}, }2016]{minhas:etal:2016:arxiv}
 Minhas, Shahryar, Hoff, Peter~D., and Ward, Michael~D. 2016 (October).
 \newblock {\em Let's Say Amen for Latent Factor Models}.
@@ -153,6 +156,17 @@ Mucha, Peter~J., Richardson, Thomas, Macon, K., Porter, Mason~A., and Onnela,
 \newblock  \titlecap{Community Structure in Time-Dependent, Multiscale, and
   Multiplex Networks.}
 \newblock {\em Science}, {\bf 328}(5980), 876ff.
+
+\bibitem[\protect\citename{Organski, }1958]{organski:1958}
+Organski, A.F.K. 1958.
+\newblock {\em World Politics: {T}he Stages of Political Development}.
+\newblock New York: Alfred A. Knopf.
+
+\bibitem[\protect\citename{Peceny {et~al.}, }2002]{peceny:etal:2002}
+Peceny, Mark, Beer, Caroline~C., and Sanchez-Terry, Shannon. 2002.
+\newblock  \titlecap{Identifying the Culprit: {D}emocracy, Dictatorship, and
+  Dispute Initiation.}
+\newblock {\em American Political Science Review}, {\bf 96}(1), 15--26.
 
 \bibitem[\protect\citename{Reiter and Stam, }2003]{reiter:stam:2003}
 Reiter, Dan, and Stam, Allan~C. 2003.
