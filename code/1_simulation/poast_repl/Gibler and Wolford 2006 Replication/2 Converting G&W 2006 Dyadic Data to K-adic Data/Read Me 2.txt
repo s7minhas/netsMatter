@@ -1,0 +1,5 @@
+This folder contains the files that show how I created the k-adic dataset used to produce the results in tables 5 through 7.
+
+The do file that creates the k-adic observations takes approximately 10 to 15 minutes.
+
+The do file that converts the dyadic covariates to k-adic covariates takes approximately 30 to 45 minutes. 

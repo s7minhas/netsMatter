@@ -1,0 +1,14 @@
+This packet contains files to supplement the paper "(Mis)Using Dyadic Data to Analyze Multilateral Events" by Paul Poast.  The materials in this packet are divided into four categories:
+
+1) A folder (Simulation Do Files) with files that reproduce the Monte Carlo simulation results.
+
+2) A folder (Gibler and Wolford 2006) with files that produce results using the Gibler and Wolford 2006 data (results presented in the paper and not presented in the paper).
+
+3) A folder (Supplemental Documents) with a few supplemental documents.
+
+4) A folder (Software) with information on accessing the STATA and R software for creating K-adic data.
+
+
+Please feel free to contact me (Paul Poast) if you have any questions regarding these materials or the paper itself.  My current e-mail address is: poastpd@umich.edu
+
+

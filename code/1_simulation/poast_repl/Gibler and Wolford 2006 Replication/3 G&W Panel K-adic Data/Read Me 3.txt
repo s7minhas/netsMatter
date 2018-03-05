@@ -1,0 +1,5 @@
+This folder conducts analysis that supplements those presented in the paper.  Specifically, the results presented in the paper treat the Gibler & Wolford (2006) data as pooled cross-sectional data.  In other words, it makes no distinction between dyads and over time. 
+
+In contrast, the dataset "kad" is a panel k-adic dataset.  In other words, it contains all yearly observations for each k-ad that formed an alliance (including those years in which the k-ad did not form an alliance).  It also contains all yearly observations for the stratified sample of k-ads that did not form an alliance.
+
+The end of the do file estimates the dataset using a rare events logit model.  As one will see, even though the results are not the same as those found in columns 3 and 4 of Table 7, they are also very different from those found in columns 1 and 2 of Table 7.  Thus, this illustrates once again the main point of the replication - using k-adic data produces dramatically different results from dyadic data.

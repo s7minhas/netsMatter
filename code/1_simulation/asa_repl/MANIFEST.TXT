@@ -1,0 +1,9 @@
+1-dyad-sims-2015-02-23.R (type/x-r-syntax) 4772 bytes.
+2-dyad-sims-misspec-shocks-2015-02-23.R (type/x-r-syntax) 2540 bytes.
+3-dyad-sims-graphs-2015-02-24.R (text/plain; charset=US-ASCII) 17157 bytes.
+4-russett-oneal-replication.do (application/x-stata-syntax) 1005 bytes.
+5-russett-oneal-reanalysis.R (type/x-r-syntax) 1573 bytes.
+6-fisman-reanalysis.R (type/x-r-syntax) 1841 bytes.
+README.txt (text/plain) 1396 bytes.
+Speed-Dating-Data.csv (text/plain; charset=US-ASCII) 5192296 bytes.
+TRIANGLE.tab (text/tab-separated-values) 3749875 bytes.
