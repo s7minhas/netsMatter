@@ -1,4 +1,4 @@
-\begin{thebibliography}{35}
+\begin{thebibliography}{36}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \expandafter\ifx\csname selectlanguage\endcsname\relax
   \def\selectlanguage#1{\relax}\fi
@@ -93,6 +93,12 @@ Franzese, Robert, and Hayes, Jude~C. 2007.
 Gibler, Douglas~M. 2017.
 \newblock  \titlecap{State Development, Parity, and International Conflict.}
 \newblock {\em American Political Science Review}, {\bf 111}(1), 21--38.
+
+\bibitem[\protect\citename{Greenhill {et~al.}, }2011]{greenhill:etal:2011}
+Greenhill, Brian, Ward, Michael~D., and Sacks, Audrey. 2011.
+\newblock  \titlecap{The Separation Plot: {A} New Visual Method for Evaluating
+  the Fit of Binary Data.}
+\newblock {\em American Journal of Political Science}, {\bf 55}(4), 991--1002.
 
 \bibitem[\protect\citename{Hoff, }2005]{hoff:2005}
 Hoff, Peter~D. 2005.

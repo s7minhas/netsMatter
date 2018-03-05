@@ -1,6 +1,6 @@
 \section{\textbf{Simulation study}}
 
-Through a simulation study, we highlight the utility of AME as an inferential tool for dyadic analysis.\footnote{Alternative network based approaches for dyadic data are exponential random graph models (ERGMs) and the related stochastic actor oriented model (SAOM). While both these models have led to numerous contributions to a variety of literatures, the applicability of these approaches may be limited to certain types of networks and individual level characteristics. Specifically, \citet{block:etal:2017} note that these types of  models may not be appropriate in situations where network and behavioral data depend on unobserved latent variables, which is explicitly the focus of our analysis here.} Most scholars working with dyadic data are primarily concerned with understanding the effect of a particular independent variable on a dyadic dependent variable. The goal of our simulation is to assess how well AME can provide unbiased and well-calibrated estimates of coefficient parameters in the presence of unobserved dependencies. Assume that the true data-generating process for a particular $Y$ is given by:
+Through a simulation study, we highlight the utility of AME as an inferential tool for dyadic analysis.\footnote{Alternative network based approaches for dyadic data are exponential random graph models (ERGMs) and the related stochastic actor oriented model (SAOM). While both these models have led to numerous contributions to a variety of literatures, the applicability of these approaches may be limited to certain types of networks and individual level characteristics. Specifically, \citet{block:etal:2017} note that these types of  models may not be appropriate in situations where network and behavioral data depend on unobserved latent variables, which is explicitly the focus of our analysis here.} Most scholars working with dyadic data are primarily concerned with understanding the effect of a particular independent variable on a dyadic dependent variable. The goal of our simulation is to assess how well AME can provide unbiased and well-calibrated estimates of coefficient parameters in the presence of unobserved dependencies. Assume that the true data-generating process for a particular $Y$ is given by: \textbf{Shahryar: What distribution does y follow here?  Needs to be specified.}
 
 \begin{align}
 	y_{i,j} \sim  \mu + \beta x_{i,j} + \gamma w_{i,j} + \epsilon_{i,j}
@@ -30,6 +30,8 @@ We first compare the performance of the models in terms of how well they estimat
 
 Next, we estimate the 95\% confidence interval for the three models in each of the simulations and estimate the proportion of times that the true value fell within those intervals. The results are summarized in Figure~\ref{fig:ameCalib}, and again we see that the AME approach performs as well as the oracle, while the standard approach performs poorly by comparison. The implication of the results presented in Figures~\ref{fig:ameBias} and ~\ref{fig:ameCalib} is that standard approaches can often fail at estimating parameter values and conducting inferential tasks in the presence of unobserved dependencies. The AME approach by comparison can be used as a tool for scholars working with dyadic data to still estimate the true effects of their main variables of interest, while accounting for dependencies that do often emerge in dyadic data. 
 
+\textbf{SM: Color is not needed for this graphic.}
+
 \begin{figure}
 	\centering
 	\caption{Proportion of times the true value fell within the estimated 95\% confidence interval for the standard, AME, and oracle models from 1,000 simulations.}
@@ -38,6 +40,9 @@ Next, we estimate the 95\% confidence interval for the three models in each of t
 \end{figure}
 
 Moreover, the AME approach allows scholars to better understand what parameters their model may be missing. In the case of the simulation here, $W$ is set as an unobserved dyadic covariate that has a homophilous effect on $Y$. The effect of $W$ is homophilous within this framework because it is a dyadic attribute involving $i$ and $j$ that positively affects the degree to which actors interact with one another, i.e., $y_{ij}$. This type of unobserved dependency will be captured through the multiplicative effects portion of the model, $\mathbf{U}^{\top} \mathbf{D} \mathbf{V}$. To estimate how well the model performs, we recover the multiplicative effects term for each simulation and calculate the correlation between it and the unobserved dependency, $W$.\footnote{Specifically, since both the multiplicative effects term and $W$ are continuous dyadic variables, we calculate the Pearson correlation coefficient.} We visualize the distribution of the correlations from each of the 1,000 simulations in Figure~\ref{fig:ameCorr} for the case where the number of actors is set to 100 (top pair of panels) and 50. Additionally, we calculate the median across the correlations and display the result using a vertical line. For both $n=50$ and $n=100$, we find that the multiplicative effects perform very well in capturing the unobserved dependency, which indicates that the AME does not simply capture noise but also works as a tool to estimate unobserved structure. 
+
+
+\textbf{SM: Color is not needed for this graphic. Make the vertical line a shade of gray that is visible.}
 
 \begin{figure}
 	\centering
