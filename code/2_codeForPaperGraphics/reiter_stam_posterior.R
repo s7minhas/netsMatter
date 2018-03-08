@@ -23,34 +23,34 @@ load( paste0(resultsPath,'reiter_stam_glmfit.rda') )
 load( paste0(resultsPath,'model_k2_v12.rda') )
 ############################################
 
-# # coefSumm ###########################################
-# ameSumm = t(apply(ameFit$BETA, 2, function(x){ c(
-# 	'Estimate'=mean(x), 'Std. Error'=sd(x), 'z value'=mean(x)/sd(x),
-# 	'Pr(>|z|)'=2*(1-pnorm( abs(mean(x)/sd(x)))) )}))
-# rownames(ameSumm) = gsub('.row','',rownames(ameSumm),fixed=TRUE)
-# rownames(ameSumm) = gsub('.col','',rownames(ameSumm),fixed=TRUE)
-# rownames(ameSumm) = gsub('.dyad','',rownames(ameSumm),fixed=TRUE)
-# rownames(ameSumm) = gsub('_s','s',rownames(ameSumm),fixed=TRUE)
-# rownames(ameSumm) = gsub('intercept','(Intercept)',rownames(ameSumm),fixed=TRUE)
-# glmSumm = modSumm[,]
-# probSumm = proSumm[,]
+# coefSumm ###########################################
+ameSumm = t(apply(ameFit$BETA, 2, function(x){ c(
+	'Estimate'=mean(x), 'Std. Error'=sd(x), 'z value'=mean(x)/sd(x),
+	'Pr(>|z|)'=2*(1-pnorm( abs(mean(x)/sd(x)))) )}))
+rownames(ameSumm) = gsub('.row','',rownames(ameSumm),fixed=TRUE)
+rownames(ameSumm) = gsub('.col','',rownames(ameSumm),fixed=TRUE)
+rownames(ameSumm) = gsub('.dyad','',rownames(ameSumm),fixed=TRUE)
+rownames(ameSumm) = gsub('_s','s',rownames(ameSumm),fixed=TRUE)
+rownames(ameSumm) = gsub('intercept','(Intercept)',rownames(ameSumm),fixed=TRUE)
+glmSumm = modSumm[,]
+probSumm = proSumm[,]
 
-# modList = list(glmSumm, probSumm, ameSumm)
-# modNames = c('GLM (Logit)','GLM (Probit)', 'AME')
+modList = list(glmSumm, ameSumm)
+modNames = c('GLM (Logit)', 'AME')
 
-# varKey = data.frame(
-# 	dirty=names(coef(mod)),
-# 	clean=c('Intercept', 'Pers/Democ Directed Dyad',
-# 		'Democ/Pers Directed Dyad',
-#         'Personal', 'Military', 'Single', 'Democracy', 
-#         'Contiguous', 'Major Power', 'Ally', 'Higher/Lower Power Ratio', 
-#         'Economically Advanced', 'Years Since Last Dispute', 'Cubic Spline 1', 
-#         'Cubic Spline 2', 'Cubic Spline 3'),
-# 	stringsAsFactors = FALSE )
+varKey = data.frame(
+	dirty=names(coef(mod)),
+	clean=c('Intercept', 'Pers/Democ Directed Dyad',
+		'Democ/Pers Directed Dyad',
+        'Personal', 'Military', 'Single', 'Democracy', 
+        'Contiguous', 'Major Power', 'Ally', 'Higher/Lower Power Ratio', 
+        'Economically Advanced', 'Years Since Last Dispute', 'Cubic Spline 1', 
+        'Cubic Spline 2', 'Cubic Spline 3'),
+	stringsAsFactors = FALSE )
 
-# #
-# getCoefTable(varKey, modList, modNames, 'reiter_stam', 'Reiter \\& Stam (2003)', plotPath, 3)
-# ############################################
+#
+getCoefTable(varKey, modList, modNames, 'reiter_stam', 'Reiter \\& Stam (2003)', plotPath, 3)
+############################################
 
 # outPerf ###########################################
 load(paste0(resultsPath, 'ameCrossValResults_k2.rda')) # ameOutSamp_k2
