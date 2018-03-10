@@ -1,4 +1,4 @@
-\begin{thebibliography}{36}
+\begin{thebibliography}{40}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \expandafter\ifx\csname selectlanguage\endcsname\relax
   \def\selectlanguage#1{\relax}\fi
@@ -174,6 +174,17 @@ Peceny, Mark, Beer, Caroline~C., and Sanchez-Terry, Shannon. 2002.
   Dispute Initiation.}
 \newblock {\em American Political Science Review}, {\bf 96}(1), 15--26.
 
+\bibitem[\protect\citename{Poast, }2010]{poast:2010}
+Poast, Paul. 2010.
+\newblock  \titlecap{(Mis)Using Dyadic Data to Analyze Multilateral Events.}
+\newblock {\em Political Analysis}, {\bf 18}(4), 403--425.
+
+\bibitem[\protect\citename{Poast, }2016 in press]{poast:2016}
+Poast, Paul. 2016 in press.
+\newblock  \titlecap{Dyads are Dead, Long Live Dyads! The Limits of Dyadic
+  Designs in International Relations Research.}
+\newblock {\em International Studies Quarterly}, {\bf tba}(tba), tba.
+
 \bibitem[\protect\citename{Reiter and Stam, }2003]{reiter:stam:2003}
 Reiter, Dan, and Stam, Allan~C. 2003.
 \newblock  \titlecap{Identifying the Culprit: {D}emocracy, Dictatorship, and
@@ -204,6 +215,18 @@ Singer, J.~David. 1972.
   Politics: {A}n Appraisal}.
 \newblock Special Studies in International Politics and Government, vol. VI.
 \newblock Praeger.
+
+\bibitem[\protect\citename{Stewart, }2014]{stewart:2014}
+Stewart, Brandon. 2014 (November).
+\newblock {\em Latent Factor Regression for the Social Sciences}.
+\newblock available at
+  \url{https://scholar.princeton.edu/sites/default/files/bstewart/files/tensorreg.pdf}.
+
+\bibitem[\protect\citename{Ward and Gleditsch, }2008]{ward:gleditsch:2008}
+Ward, Michael~D., and Gleditsch, Kristian~Skrede. 2008.
+\newblock {\em Spatial Regression Models}.
+\newblock  Vol. 155.
+\newblock Sage.
 
 \bibitem[\protect\citename{Wasserman and Faust, }1994]{wasserman:faust:1994}
 Wasserman, Stanley, and Faust, Katherine. 1994.
