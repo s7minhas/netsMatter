@@ -3,7 +3,7 @@
 \subsection*{Are There Other Alternatives?}
 
 Three basic approaches have appeared as alternatives in the literature.\footnote{A good overview may be found in \cite{stewart:2014}, which proposes a variational estimation approach to latent network models.}
-None of these approaches has as yet been widely employed nor even cited in the substantive literature, and each is mainly known inside of the network methodology community.  We discuss each of these approaches and briefly compare them to the AME approach. 
+None of these approaches has as yet been widely employed nor even cited in the substantive literature, and each is mainly known inside of the network methodology community.  We discuss each of these approaches and briefly compare them to the AME approach. The takeaway is that the AME approach enables users to more accurately conduct inference on dependent data than these other approaches which have been proposed.
 
 
 \subsubsection*{Cluster-Robust Variance Estimation}
@@ -17,9 +17,10 @@ and the important parameter is $\beta$, defined in the standard way, via an appr
 The variance calculations used by Aronow et al basically decompose the variance into three parts, the cluster robust variance (all dyads with unit $i$, assuming all others to be 
 $\simiid$), the separate cluster robust variance of the repeated dyads, and clustered robust variance of all dyads, assuming they are all independent.  Using simulation, they demonstrate that as sample size increases, this formula for calculating the variance-covariance matrix will decline as the number of nodes in the network increase and approach its true value.  
 
-This approach focuses on the standard errors, needed for significance testing, but ignores the bias introduced into the regression coefficients, as discussed above.  Nor does it provide any way to access the higher-order network effects. It simply provides a fix to the estimated standard errors.  One of the main problems with dependent data, is that it takes more data to calculate basic quantities accurately. This is true even for a simple t-test \citep{ward:gleditsch:2008}. 
+This approach focuses on the standard errors, needed for significance testing, but ignores the bias introduced into the regression coefficients, as discussed above.  Nor does it provide any way to access the higher-order network effects, a point that Aronow et alia make in their article, noting that it is only targeted at dyadic (not higher level) dependencies. This approach simply provides a fix to the estimated standard errors.  
+%One of the main problems with dependent data is that it takes more data to calculate basic quantities accurately. This is true even for a simple t-test \citep{ward:gleditsch:2008}. 
 
-However, more generally how does cluster-robust vriance estimation perform compared for example to AME?  XYZ.
+Thus, cluster-robust vriance estimation is not designed to answer the same questions as AME.  As shown in the original article, it does provide a way to  estimate standard errors (in a sitution with only dyadic dependence) that substantially improves over the standard logistic regression approach.  However, it ignores the higher-order dependencies which are the focus of the AME model.  
 
 
 %Isn't brandon stewart overview a better place to start?
@@ -33,25 +34,14 @@ or monadic interdependencies in the data.'' Instead, he argues that multilateral
 
 Poast's solution to this is called choice-based sampling, ``[t]he sampling method entails constructing a data set containing all observations for which the dependent variable is coded with a positive value, along with a random sample of observations for which the dependent variable is coded 0'' (page 410). This new sample is then estimated with a rare-events logit regression. His results (page 412) show that their is a small bias (about $1\%$) using the dyadic approach compared to the alternatives he proposes.  As one moves from triadic to \textit{5-adic}, the divergence from the analysis of the dyadic data becomes substantially larger. But Poast doesn't address the underlying issue of how to properly estimate dependent data, but raises the question whether dyadic data are capable of representing multi-adic data generating processes.  Unfortunately, adjudicating this with an approach (logit regression) that it itself known to not be capable of capturing the higher-order aspects of the data generating process is, itself, problematic on first principles.  
 
-However, how does Poast's approach compare to AME?  XX, YY, ZZ.
-
-
-%see also Poast, Paul. ``Dyads are Dead, Long Live Dyads: The Limits (but not Rejection) of Dyadic Designs in International #Relations Research.'' International Studies Quarterly. June 2016: 369-374
-%and
-%Fordham, Benjamin and Poast, Paul. ``All Alliances are Multilateral: Rethinking Alliance Formation in the International #System.'' Journal of Conflict Resolution. August 2016: 840-865.
-%but note: Below are files for replicating or extending results in the paper ``All Alliances are Multilateral'' (w/ Benjamin #Fordham). We thank Daina Chiba (Essex), whose effort to replicate our work uncovered the difficulties scholars face (myself #included!) when creating k-adic data and, therefore, led to this webpage as a help to future scholarship.
-% also used by Brandon Kinne
-
-%maybe used by Peaceful Uncertainty: When Power Shocks Do Not Create Commitment Problems
-%Muhammet A Bas  Robert Schub ISQ 2017
+However, how does Poast's approach compare to AME? We found in simulations structured like those reported herein run with the k-adic model that the k-adic model was not able to improve over AME, and in fact were dramatically worse at recovering the real data generating process than AME models. 
 
 
 \subsubsection*{Multiple Regression Quadratic Assignment Procedure}
 
 \citet{erikson:etal:2014} base their approach on MRQAP developed by Krackhardt (1988), \nocite{krackhart:1988} an approach from network studies that draws upon the fact that networks have repeated observations, which induces some correlation of observations that in turn lead to bias in standard errors of general linear models of these data. MRQAP randomly permutes the rows and columns of the data, creating multiple datasets which are then each analyzed in the standard way to generate a sampling distribution of all possible (but not observed) networks from the observed data. Herein, the data are randomly permuted on the assumption that the errors are exchangeable.  Many permutations are created and models are run on all of them, then the distributions of tests statistics (not parameters) are examined. They find in their reanalysis that ``the randomization results show that conventional t-tests are inappropriate for
-testing hypotheses on dyad-year data because they rely on highly overconfident standard errors'' (page 462).  This shows that in dyadic data analysis with general linear models, especially with hundreds of thousands of observations, the standard t-test is polyannaish in finding significant relations.  One simple fix is MRQAP, which address---again---the standard errors. But this approach doesn't really get at the underlying data generating process, and is based on an approach to modeling dependent data that is known to produce bias and ignore dependencies.  It is a fix of a leaky window, when the roof is collapsed. (okay, too much, but hey.)
+testing hypotheses on dyad-year data because they rely on highly overconfident standard errors'' (page 462).  This shows that in dyadic data analysis with general linear models, especially with hundreds of thousands of observations, the standard t-test is polyannaish in finding significant relations.  One simple fix is MRQAP, which addresses---again---the standard errors. But this approach doesn't really get at the underlying data generating process, and is based on an approach to modeling dependent data that is known to produce bias and ignore dependencies.  In our simulations when applied to a MRQAP model, we find that it does not recover the data generating process as well as AME. This is quite due in part to the fact that it treats the dependencies as nuisance to be eliminated rather than focused on explicitly as with AME. 
 
-How does MRQAP compare to AME?  XXX, YYY, ZZZ
 
 
 \subsection*{Summary}
