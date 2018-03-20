@@ -1,15 +1,14 @@
 \clearpage
 
-\renewcommand{\thefigure}{A\arabic{figure}}
+\renewcommand{\thefigure}{\arabic{figure}}
 \setcounter{figure}{0}
-\renewcommand{\thetable}{A.\arabic{table}}
+\renewcommand{\thetable}{\thesection \arabic{table}}
 \setcounter{table}{0}
-\renewcommand{\thesection}{A.\arabic{section}}
+%\renewcommand{\thesection}{A.\arabic{section}}
 \setcounter{section}{0}
 
-\section*{\textbf{Appendix}}
-
-\subsection*{AME Monte Carlo Markov Chain Algorithm}
+\appendix
+\section{AME Monte Carlo Markov Chain Algorithm}
 
 Given initial values of $\{\bm\beta, \mathbf{a}, \mathbf{b}, \mathbf{U}, \mathbf{V}, \Sigma_{ab}, \rho, \text{ and } \sigma_{\epsilon}^{2}\}$, the algorithm proceeds as follows until convergence:
 
@@ -27,15 +26,15 @@ Given initial values of $\{\bm\beta, \mathbf{a}, \mathbf{b}, \mathbf{U}, \mathbf
     \item Sample $\mathbf{D}_{[k,k]}  \; | \; \bm\beta, \mathbf{X}, \bm\theta,\mathbf{a}, \mathbf{b}, \mathbf{U}, \mathbf{V}, \Sigma_{ab}, \rho, \text{ and } \sigma_{\epsilon}^{2}$ (Normal)\footnote{Subsequent to estimation, $\mathbf{D}$ matrix is absorbed into the calculation for $\mathbf{V}$ as we iterate through $K$. }
   \end{itemize}
  \end{itemize}
+\newpage
+\section{Additional Replication Information}
 
-\subsection*{Additional Replication Information}
-
-For each of the replications involving a binary dependent variable we provide a table of coefficient estimates that includes the original GLM estimation and the results from the AME model. 
+For each of the replications involving a binary dependent variable we provide a table of coefficient estimates that includes the original GLM estimation and the results from the AME model.  We have adopted for presentation purposes only the use of significance testing on these observational data for facile comparison with the replicated studies.  However, note that we do provide predictive heuristics for these models as well.
 
 % Additionally, for each replication we provide a more detailed visualization illustrating the results of our out-of-sample performance analysis. %For Weeks (2012) we already did so in the main body of the text so we eschew from doing so again here.
 
 \clearpage
-\subsubsection*{Reiter \& Stam (2003)}
+\subsection*{Reiter \& Stam (2003)}
 
 Additional information for the Reiter \& Stam (2003) re-estimation. 
 
@@ -51,7 +50,7 @@ Additional information for the Reiter \& Stam (2003) re-estimation.
 \FloatBarrier
 \clearpage
 
-\subsubsection*{Weeks (2012)}
+\subsection*{Weeks (2012)}
 
 Additional information for the Weeks (2012) re-estimation. 
 
@@ -67,7 +66,7 @@ Additional information for the Weeks (2012) re-estimation.
 \FloatBarrier
 \clearpage
 
-\subsubsection*{Gibler (2017)}
+\subsection*{Gibler (2017)}
 
 Additional information for the Gibler (2017) re-estimation. 
 
@@ -83,7 +82,7 @@ Additional information for the Gibler (2017) re-estimation.
 \FloatBarrier
 \clearpage
 
-\subsection*{AME Tutorial}
+\section{AME Tutorial}
 
 Using the AMEN function requires formatting data into a particular structure. The primary distinction in data formatting is whether the outcome of interest represents a directed or undirected network. 
 
