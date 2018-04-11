@@ -1,4 +1,4 @@
-\begin{thebibliography}{41}
+\begin{thebibliography}{36}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \expandafter\ifx\csname selectlanguage\endcsname\relax
   \def\selectlanguage#1{\relax}\fi
@@ -100,19 +100,6 @@ Greenhill, Brian, Ward, Michael~D., and Sacks, Audrey. 2011.
   the Fit of Binary Data.}
 \newblock {\em American Journal of Political Science}, {\bf 55}(4), 991--1002.
 
-\bibitem[\protect\citename{Heagerty {et~al.}, }2002]{heagerty:etal:2002}
-Heagerty, Patrick, Ward, Michael~D., and Gleditsch, Kristian~Skrede. 2002.
-\newblock  \titlecap{Windows of Opportunity: {W}indow Subseries Empirical
-  Variance Estimators in International Relations.}
-\newblock {\em Political Analysis}, {\bf 10}(3), 304--317.
-
-\bibitem[\protect\citename{Heagerty and Lumley, }2000]{heagerty:lumley:2000}
-Heagerty, Patrick~J., and Lumley, Thomas. 2000.
-\newblock  \titlecap{Window Subsampling of Estimating Functions with
-  Application to Regression Models.}
-\newblock {\em Journal of the American Statistical Association}, {\bf 95},
-  197--211.
-
 \bibitem[\protect\citename{Hoff, }2005]{hoff:2005}
 Hoff, Peter~D. 2005.
 \newblock  \titlecap{Bilinear Mixed-Effects Models for Dyadic Data.}
@@ -187,17 +174,6 @@ Peceny, Mark, Beer, Caroline~C., and Sanchez-Terry, Shannon. 2002.
   Dispute Initiation.}
 \newblock {\em American Political Science Review}, {\bf 96}(1), 15--26.
 
-\bibitem[\protect\citename{Poast, }2010]{poast:2010}
-Poast, Paul. 2010.
-\newblock  \titlecap{(Mis)Using Dyadic Data to Analyze Multilateral Events.}
-\newblock {\em Political Analysis}, {\bf 18}(4), 403--425.
-
-\bibitem[\protect\citename{Poast, }2016 in press]{poast:2016}
-Poast, Paul. 2016 in press.
-\newblock  \titlecap{Dyads are Dead, Long Live Dyads! The Limits of Dyadic
-  Designs in International Relations Research.}
-\newblock {\em International Studies Quarterly}, {\bf tba}(tba), tba.
-
 \bibitem[\protect\citename{Reiter and Stam, }2003]{reiter:stam:2003}
 Reiter, Dan, and Stam, Allan~C. 2003.
 \newblock  \titlecap{Identifying the Culprit: {D}emocracy, Dictatorship, and
@@ -228,12 +204,6 @@ Singer, J.~David. 1972.
   Politics: {A}n Appraisal}.
 \newblock Special Studies in International Politics and Government, vol. VI.
 \newblock Praeger.
-
-\bibitem[\protect\citename{Stewart, }2014]{stewart:2014}
-Stewart, Brandon. 2014 (November).
-\newblock {\em Latent Factor Regression for the Social Sciences}.
-\newblock available at
-  \url{https://scholar.princeton.edu/sites/default/files/bstewart/files/tensorreg.pdf}.
 
 \bibitem[\protect\citename{Wasserman and Faust, }1994]{wasserman:faust:1994}
 Wasserman, Stanley, and Faust, Katherine. 1994.
