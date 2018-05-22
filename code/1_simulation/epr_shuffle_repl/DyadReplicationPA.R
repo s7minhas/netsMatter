@@ -2,7 +2,7 @@
 ### Robert S. Erikson, Pablo M. Pinto, Kelly T. Rader
 
 ### Set working directory
-#setwd( )
+setwd('~/Research/netsMatter/code/1_simulation/epr_shuffle_repl/')
 
 library(foreign)
 library(plm)
