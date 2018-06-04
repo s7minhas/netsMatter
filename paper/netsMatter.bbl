@@ -45,11 +45,11 @@ Beck, Nathaniel, Katz, Jonathan~N., and Tucker, Richard. 1998.
   Analysis with a Binary Dependent Variable.}
 \newblock {\em American Journal of Political Science}, {\bf 42}(2), 1260--1288.
 
-\bibitem[\protect\citename{Bennett {et~al.}, }2007]{bennett:etal:2007}
-Bennett, James, Lanning, Stan, {et~al.} 2007.
+\bibitem[\protect\citename{Bennett and Lanning, }2007]{bennett:lanning:2007}
+Bennett, James, and Lanning, Stan. 2007.
 \newblock  \titlecap{The {Netflix} Prize.}
-\newblock {Page ~35 of:} {\em Proceedings of {KDD} cup and workshop},  vol.
-  2007.
+\newblock {In:} {\em Proceedings of {KDD} cup and workshop},  vol. 2007.
+  \url{https://www.cs.uic.edu/~liub/KDD-cup-2007/NetflixPrize-description.pdf}.
 
 \bibitem[\protect\citename{Block {et~al.}, }2017]{block:etal:2017}
 Block, Per, Stadtfeld, Christoph, and Snijders, Tom~A.B. 2017.
@@ -65,11 +65,11 @@ Chyzh, Olga. 2016.
 
 \bibitem[\protect\citename{Davis and Goadrich, }2006]{davis:goadrich:2006}
 Davis, Jesse, and Goadrich, Mark. 2006.
-\newblock  \titlecap{The relationship between {Precision-Recall and ROC}
+\newblock  \titlecap{The relationship between {Precision-Recall} and {ROC}
   curves.}
 \newblock {Pages  233--240 of:} {\em Proceedings of the 23rd {International
   Conference on Machine Learning}}.
-\newblock ACM.
+\newblock ACM. \url{https://dl.acm.org/citation.cfm?id=1143874}.
 
 \bibitem[\protect\citename{Dorff and Minhas, }2017]{dorff:minhas:2017}
 Dorff, Cassy, and Minhas, Shahryar. 2017.
@@ -154,7 +154,7 @@ Manger, Mark~S., Pickup, Mark~A., and Snijders, Tom~A.B. 2012.
 \bibitem[\protect\citename{Minhas {et~al.}, }2016]{minhas:etal:2016:arxiv}
 Minhas, Shahryar, Hoff, Peter~D., and Ward, Michael~D. 2016 (October).
 \newblock {\em Let's Say Amen for Latent Factor Models}.
-\newblock Working paper.
+\newblock Working paper available at \url{https://arxiv.org/abs/1611.00460}.
 
 \bibitem[\protect\citename{Mucha {et~al.}, }2010]{mucha:etal:2010}
 Mucha, Peter~J., Richardson, Thomas, Macon, K., Porter, Mason~A., and Onnela,
