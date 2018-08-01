@@ -1,4 +1,4 @@
-\begin{thebibliography}{36}
+\begin{thebibliography}{35}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \expandafter\ifx\csname selectlanguage\endcsname\relax
   \def\selectlanguage#1{\relax}\fi
@@ -150,11 +150,6 @@ Manger, Mark~S., Pickup, Mark~A., and Snijders, Tom~A.B. 2012.
 \newblock  \titlecap{A Hierarchy of Preferences: {A} Longitudinal Network
   Analysis Approach to {PTA} Formation.}
 \newblock {\em Journal of Conflict Resolution}, {\bf 56}(5), 852--877.
-
-\bibitem[\protect\citename{Minhas {et~al.}, }2016]{minhas:etal:2016:arxiv}
-Minhas, Shahryar, Hoff, Peter~D., and Ward, Michael~D. 2016 (October).
-\newblock {\em Let's Say Amen for Latent Factor Models}.
-\newblock Working paper available at \url{https://arxiv.org/abs/1611.00460}.
 
 \bibitem[\protect\citename{Mucha {et~al.}, }2010]{mucha:etal:2010}
 Mucha, Peter~J., Richardson, Thomas, Macon, K., Porter, Mason~A., and Onnela,
