@@ -1,4 +1,4 @@
-\begin{thebibliography}{35}
+\begin{thebibliography}{36}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \expandafter\ifx\csname selectlanguage\endcsname\relax
   \def\selectlanguage#1{\relax}\fi
@@ -150,6 +150,13 @@ Manger, Mark~S., Pickup, Mark~A., and Snijders, Tom~A.B. 2012.
 \newblock  \titlecap{A Hierarchy of Preferences: {A} Longitudinal Network
   Analysis Approach to {PTA} Formation.}
 \newblock {\em Journal of Conflict Resolution}, {\bf 56}(5), 852--877.
+
+\bibitem[\protect\citename{Minhas {et~al.}, }2018]{minhas:etal:2018}
+Minhas, Shahryar, Hoff, Peter~D., and Ward, Michael~D. 2018.
+\newblock  \titlecap{Inferential Approaches for Network Analysis: {AMEN} for
+  Latent Factor Models.}
+\newblock {\em Political Analysis}, October.
+\newblock Working paper available at \url{https://arxiv.org/abs/1611.00460}.
 
 \bibitem[\protect\citename{Mucha {et~al.}, }2010]{mucha:etal:2010}
 Mucha, Peter~J., Richardson, Thomas, Macon, K., Porter, Mason~A., and Onnela,
