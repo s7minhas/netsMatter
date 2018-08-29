@@ -25,6 +25,7 @@
 \usepackage{booktabs}
 \usepackage{multicol}
 \usepackage{multirow}
+\usepackage{colortbl}
 
 % graphics stuff
 \usepackage{subfig}
@@ -75,11 +76,11 @@
 
 % references to graphics
 \makeatletter
-\def\input@path{{/Users/janus829/Dropbox/Research/netModels/summResults/}, {/Users/s7m/Dropbox/Research/netModels/summResults/}, {/Users/mdw/Dropbox/Research/netModels/summResults/}}
-\graphicspath{{/Users/janus829/Dropbox/Research/netModels/summResults/}, {/Users/s7m/Dropbox/Research/netModels/summResults/},{/Users/mdw/Dropbox/Research/netModels/summResults/}}
+\def\input@path{{/Users/janus829/Research/netsMatter/prezzy/graphics/}, {/Users/s7m/Research/netsMatter/prezzy/graphics/}}
+\graphicspath{{/Users/janus829/Research/netsMatter/prezzy/graphics/}, {/Users/s7m/Research/netsMatter/prezzy/graphics/}}
 
 \title[AMEN]{\textsc{Taking Dyads Seriously}}
-\author[Minhas et al.]{Shahryar Minhas$^\dag$, and all the others \\ Duke University \\ $^\dag$ Department of Political Science \\ $^\ddag$ Department of Statistical Science} 
+\author[Minhas et al.]{Shahryar Minhas, Cassy Dorff, Max Gallop, Margaret Foster, Juan Tellez, Howard Liu, Michael Ward} 
 
 \date{\today}
 
@@ -113,10 +114,10 @@ Networks typically show evidence against independence of {$e_{ij} : i \neq j$}
 Not accounting for dependence can lead to:
 
 \begin{itemize}
-\item - biased effects estimation
-\item - uncalibrated confidence intervals
-\item - poor predictive performance
-\item - inaccurate description of network phenomena
+\item biased effects estimation
+\item uncalibrated confidence intervals
+\item poor predictive performance
+\item inaccurate description of network phenomena
 \end{itemize}
 
 We've been hearing this concern for decades now:
@@ -125,7 +126,6 @@ We've been hearing this concern for decades now:
 Thompson \& Walker (1982) & Beck et al. (1998) & Snijders (2011) \\
 Frank \& Strauss (1986) & Signorino (1999) & Erikson et al. (2014) \\
 Kenny (1996) & Li \& Loken (2002) & Aronow et al. (2015) \\
-Krackhardt (1998) & Hoﬀ \& Ward (2004) & Athey et al. (2016) \\
 \end{tabular}
 
 }
@@ -136,11 +136,16 @@ Krackhardt (1998) & Hoﬀ \& Ward (2004) & Athey et al. (2016) \\
   \frametitle{Outline}
 
 \begin{itemize}
-  \item - Nodal and dyadic dependencies in networks
-  \item \qquad -  Can model using the ``A'' in AME 
-  \item - Third order dependencies
-  \item \qquad - Can model using the ``M'' in AME
-  \item - Application
+  \item Nodal and dyadic dependencies in networks
+  \begin{itemize}
+	  \item Can model using the ``A'' in AME 
+  \end{itemize}
+  \item Third order dependencies
+  \begin{itemize}
+	  \item Can model using the ``M'' in AME
+  \end{itemize}	  
+  \item Simulation	  
+  \item Empirical Application
 \end{itemize}
 
 }
@@ -198,7 +203,7 @@ Krackhardt (1998) & Hoﬀ \& Ward (2004) & Athey et al. (2016) \\
 \frame{
   \frametitle{Social Relations Model (The ``A'' in AME)}
 
-We use this model to form the additive effects portion of AME
+We use this model to form the additive effects portion of AME (Warner et al. 1979, Li \& Loken 2002, Hoff 2005):
 
 \begin{align*}
 \begin{aligned}
@@ -313,7 +318,7 @@ We use this model to form the additive effects portion of AME
 \frame{
   \frametitle{Latent Factor Model: The ``M'' in AME}
 
-Each node $i$ has an unknown latent factor
+Each node $i$ has an unknown latent factor:
 
 \vspace{-5mm}
 \begin{align*}
@@ -321,7 +326,7 @@ Each node $i$ has an unknown latent factor
 \end{align*}
 
 \vspace{-5mm}
-The probability of a tie from $i$ to $j$ depends on their latent factors
+The probability of a tie from $i$ to $j$ depends on their latent factors (Hoff 2008, Hoff 2015, Minhas, Hoff \& Ward 2018):
 
 \vspace{-5mm}
 \begin{align*}
@@ -339,93 +344,113 @@ Can account for both stochastic equivalence and homophily
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \frame{
-  \frametitle{Swiss Climate Change Application}
+  \frametitle{AME}
 
-Cross-sectional network measuring whether an actor indicated that they collaborated with another during the policy design of the Swiss CO$_{2}$ act (Ingold 2008)
+The full AME framework enables us to not only account for the types of dependencies that often arise in dyadic data but also estimate them: 
 
-\begin{figure}[ht]
-  \centering
-  \begin{tabular}{cc}
-  \includegraphics[width=.47\textwidth]{dvNet_outDegree} & 
-  \includegraphics[width=.44\textwidth]{dvNet_inDegree}
-  \end{tabular}
-\end{figure}
-
-}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\frame{
-  \frametitle{Parameter Estimates}
-
-% latex table generated in R 3.3.1 by xtable 1.8-2 package
-% Sun Aug 21 03:32:43 2016
-\vspace{-15mm}
-\begin{table}[ht]
-\centering
-\begingroup\scriptsize
-\begin{tabular}{lcccccc}
-   & Expected & \multirow{2}{*}{Logit} & \multirow{2}{*}{MRQAP} & \multirow{2}{*}{LSM} & \multirow{2}{*}{ERGM} & \multirow{2}{*}{AME} \\ 
-   & Effect & & & & & \\
-  \hline
-  \textbf{Conflicting policy preferences} &  &  &  &  &  &  \\ 
-  $\;\;\;\;$ Business vs. NGO & \color{red}{$-$} & -0.86 & \color{red}{-0.87$^{\ast}$} & \color{red}{-1.37$^{\ast}$} & \color{red}{-1.11$^{\ast}$} & \color{red}{-1.37$^{\ast}$} \\ 
-  $\;\;\;\;$ Opposition/alliance & \color{blue}{$+$} &  \color{blue}{1.21$^{\ast}$} & \color{blue}{1.14$^{\ast}$} & 0.00 & \color{blue}{1.22$^{\ast}$} & \color{blue}{1.08$^{\ast}$} \\ 
-  $\;\;\;\;$ Preference dissimilarity & \color{red}{$-$} & -0.07 & -0.60 & \color{red}{-1.76$^{\ast}$} & -0.44 & \color{red}{-0.79$^{\ast}$} \\ 
-  \textbf{Transaction costs} &  &  &  &  &  &  \\ 
-  $\;\;\;\;$ Joint forum participation & \color{blue}{$+$} & \color{blue}{0.88$^{\ast}$} & \color{blue}{0.75$^{\ast}$} & \color{blue}{1.51$^{\ast}$} & \color{blue}{0.90$^{\ast}$} & \color{blue}{0.92$^{\ast}$} \\ 
-  \textbf{Influence} & &  &  &  &  &  \\ 
-  $\;\;\;\;$ Influence attribution & \color{blue}{$+$} & \color{blue}{1.20$^{\ast}$} & \color{blue}{1.29$^{\ast}$} & 0.08 & \color{blue}{1.00$^{\ast}$} & \color{blue}{1.09$^{\ast}$} \\ 
-  $\;\;\;\;$ Alter's influence indegree & \color{blue}{$+$} & \color{blue}{0.10$^{\ast}$} & \color{blue}{0.11$^{\ast}$} & 0.01 & \color{blue}{0.21$^{\ast}$} & \color{blue}{0.11$^{\ast}$} \\ 
-  $\;\;\;\;$ Influence absolute diff. & \color{red}{$-$} & \color{red}{-0.03$^{\ast}$} & \color{red}{-0.06$^{\ast}$} & 0.04 & \color{red}{-0.05$^{\ast}$} & \color{red}{-0.07$^{\ast}$} \\ 
-  $\;\;\;\;$ Alter = Government actor & \color{blue}{$+$} & \color{blue}{0.63$^{\ast}$} & 0.68 & -0.46 & \color{blue}{1.04$^{\ast}$} & 0.55 \\ 
-  \textbf{Functional requirements} &  &  &  &  &  & \\ 
-  $\;\;\;\;$ Ego = Environmental NGO & \color{blue}{$+$} & \color{blue}{0.88$^{\ast}$} & 0.99 & -0.60 & \color{blue}{0.79$^{\ast}$} & 0.67 \\ 
-  $\;\;\;\;$ Same actor type & \color{blue}{$+$} & \color{blue}{0.74$^{\ast}$} & \color{blue}{1.12$^{\ast}$} & \color{blue}{1.17$^{\ast}$} & \color{blue}{0.99$^{\ast}$} & \color{blue}{1.04$^{\ast}$} \\ 
-   \hline
-\end{tabular}
-\endgroup
-\end{table}
+\begin{align}
+  \begin{aligned}
+    y_{ij} \;=\; f(\theta_{ij}) &\text{, where } \\
+    \theta_{ij} \;=\;& \bm\beta_{d}^{\top} \mathbf{X}_{ij} + \bm\beta_{s}^{\top} \mathbf{X}_{i} + \bm\beta_{r}^{\top} \mathbf{X}_{j} \text{\qquad(Exogenous parameters)} \\
+    & + a_{i} + b_{j} + \epsilon_{ij} \text{\qquad\qquad\qquad\quad(SRRM parameters)} \\
+    & + \mathbf{u}_{i}^{\top} \mathbf{D} \mathbf{v}_{j}  \text{\qquad\qquad\qquad\qquad\qquad\;(LFM parameters)} \\ 
+  \label{eqn:ame}
+  \end{aligned}
+\end{align}
 
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \frame{
-  \frametitle{Latent Factor Visualization}
+  \frametitle{Simulation}
 
-  \centering
-  \vspace{-10mm}
-  \includegraphics[width=.7\textwidth]{ameFitSR_2_UV}
+Assume that the true data-generating process for a particular $Y$ is given by:
 
-}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{-8mm}
+\begin{align}
+  y_{i,j} \sim  \mu + \beta x_{i,j} + \gamma w_{i,j} + \epsilon_{i,j}
+  \label{eqn:sim}
+\end{align}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\frame{
-  \frametitle{Out of Sample Performance Assessment}
+We compare inference for $\mu$ and $\beta$---the latter parameter would be of primary concern for applied scholars---using three models:
 
 \begin{itemize}
-  \item - Randomly divide the $n \times (n-1)$ data points into $S$ sets of roughly equal size, letting $s_{ij}$ be the set to which pair $\{ij\}$ is assigned.
-  \item - For each $s \in \{1, \ldots, S\}$:
-  \begin{itemize}
-    \item - Obtain estimates of the model parameters conditional on $\{y_{ij} : s_{ij} \neq s\}$, the data on pairs not in set $s$.
-    \item - For pairs $\{kl\}$ in set $s$, let $\hat y_{kl} = E[y_{kl} | \{y_{ij} : s_{ij} \neq s\}]$, the predicted value of $y_{kl}$ obtained using data not in set $s$.
-  \end{itemize}
+  \item the ``standard'' international relations approach estimated through a typical generalized linear model; 
+  \item the AME approach outlined in the previous section with a unidimensional latent factor space ($K=1$);
+  \item and an ``oracle'' regression model that assumes we have measured all sources of dependencies and thus includes both $x_{i,j}$ and $w_{i,j}$. 
 \end{itemize}
-
-This procedure generates a sociomatrix of out-of-sample predictions of the observed data
 
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \frame{
-  \frametitle{Performance Comparison}
+  \frametitle{Bias Comparison}
 
-\begin{tabular}{cc}
-\includegraphics[width=.5\textwidth]{roc_outSample} & 
-\includegraphics[width=.5\textwidth]{rocPr_outSample} 
+We first compare the performance of the models in terms of how well they estimate the true values of $\mu$ and $\beta$:
+
+\centering
+\includegraphics[width=1\textwidth]{ameSimBias_all.pdf}
+
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame{
+  \frametitle{Coverage Comparison}
+
+Next, we estimate the 95\% confidence interval for the three models in each of the simulations and estimate the proportion of times that the true value fell within those intervals:
+
+\centering
+\includegraphics[width=1\textwidth]{ameSimCover_all.pdf}
+
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame{
+  \frametitle{What about the missing variable?}
+
+Unobserved dependencies should be captured through the multiplicative effects portion of the model, $\mathbf{U}^{\top} \mathbf{D} \mathbf{V}$:
+
+\centering
+\includegraphics[width=1\textwidth]{ameSimCorr.pdf}
+
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame{
+  \frametitle{Empirical Applications}
+
+Descriptive information about the replicated studies: 
+
+\footnotesize{
+\begin{tabular}{lccccc}
+	& Model &  Date Range & N. Actors  & Dyads Type & Clustering $\sigma_{\hat{\beta}}$ \\ \toprule
+	Reiter \& Stam (2003) & Logit &1945--1995 &  193 & Directed & Robust \\ 
+	Weeks (2012) & Logit & 1946--1999 & 197 & Directed & Robust \\
+	Gibler (2017) & Logit & 1816--2008 & 193 & Undirected & Robust \\ \bottomrule
+\end{tabular}
+}
+
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame{
+  \frametitle{Predictive Comparison}
+
+\centering   
+\begin{tabular}{lccc}
+~ &  Model & AUC (ROC) & AUC (PR) \\ \toprule
+\multirow{2}{*}{Reiter \& Stam (2003)} & \cellcolor{blue!10}AME & \cellcolor{blue!10}0.96 & \cellcolor{blue!10}0.15 \\
+~ & GLM & 0.92 & 0.08 \\
+\multirow{2}{*}{Weeks (2012)} & \cellcolor{blue!10}AME & \cellcolor{blue!10}0.97 & \cellcolor{blue!10}0.15 \\
+~ & GLM & 0.64 & 0.00 \\
+\multirow{2}{*}{Gibler (2017)} & \cellcolor{blue!10}AME & \cellcolor{blue!10}0.91 & \cellcolor{blue!10}0.08 \\
+~ & GLM & 0.52 & 0.00 \\ \bottomrule
 \end{tabular}
 
 }
@@ -433,26 +458,66 @@ This procedure generates a sociomatrix of out-of-sample predictions of the obser
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \frame{
-  \frametitle{Network Dependencies}
+  \frametitle{Results robust?}
 
-
-  \centering
-  \includegraphics[width=1\textwidth]{netPerfCoef}
+\footnotesize{
+\begin{table}[ht]
+\centering
+  \begin{tabular}{l p{4cm} l} \toprule
+    \multirow{2}{*}{Study} & \multirow{2}{*}{Central Finding} &  Confirmed after \\
+    & &  accounting for dependencies? \\ \toprule
+    Reiter \& Stam (2003) & Personalist Regimes Attack Democracies, Not Vice Versa & {Confirmed} \\ \midrule
+    Weeks (2012) & Bosses, Juntas, and Strongmen are more Aggressive, Machines are Not & {Unconfirmed} \\\midrule
+    Gibler (2017) & Power Parity at Time of Entry to International System Increases Conflict & {Unconfirmed}\\ \bottomrule
+  \end{tabular}
+\end{table}
+}
 
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \frame{
-  \frametitle{What's Next?}
+  \frametitle{What else did we learn? Reiter \& Stam (2003)}
 
-  \begin{itemize}
-    \item - Extending AMEN to handle changing actor compositions
-    \item - Generalize multiplicative effects estimation over tensors
-  \end{itemize}
+\begin{tabular}{cc}
+  \includegraphics[width=.7\textwidth]{reiter_stam_aEff_map.pdf} &
+  \includegraphics[width=.3\textwidth]{reiter_stam_aEff_line.pdf} \\
+\end{tabular}
 
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame{
+  \frametitle{What else did we learn? Weeks (2012)}
+
+\centering
+\includegraphics[width=.7\textwidth]{weeks_circPlot.png}
+
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame{
+  \frametitle{What else did we learn? Gibler (2017)}
+
+\centering
+\includegraphics[width=\textwidth]{gibler_margeff.pdf}
+
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \frame{
+%   \frametitle{What's Next?}
+%
+%   \begin{itemize}
+%     \item
+%   \end{itemize}
+%
+% }
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \plain{Thanks.}
@@ -460,58 +525,40 @@ This procedure generates a sociomatrix of out-of-sample predictions of the obser
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \frame{
-  \frametitle{Standard Network Dependence Measures}
-\vspace{-5mm}
-\includegraphics[width=1\textwidth]{ggGofAll_preeze}
-}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \frametitle{Predictive Comparison: Reiter \& Stam (2003)}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\frame{
-  \frametitle{Simulation Comparison}
-
-\includegraphics[width=1\textwidth]{ameVergmSim.png}
+\centering
+\begin{tabular}{lr}
+  \includegraphics[width=.45\textwidth]{reiter_stam_roc_outSample.pdf} & 
+  \includegraphics[width=.45\textwidth]{reiter_stam_pr_outSample.pdf} \\
+\end{tabular}
 
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \frame{
-  \frametitle{AMEN v LSM Performance}
+  \frametitle{Predictive Comparison: Weeks (2012)}
 
-  \begin{tabular}{cc}
-  \includegraphics[width=.5\textwidth]{roc_latSpace_outSample} & 
-  \includegraphics[width=.5\textwidth]{rocPr_latSpace_outSample}
-  \end{tabular}
-
-}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\frame{
-  \frametitle{AMEN versus LSM Net Dependence}
-
-  \includegraphics[width=1\textwidth]{netPerfCoef_latSpace}
-}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\frame{
-  \frametitle{AMEN varying $K$ Performance}
-
-  \begin{tabular}{cc}
-  \includegraphics[width=.5\textwidth]{roc_ameSR_outSample} & 
-  \includegraphics[width=.5\textwidth]{rocPr_ameSR_outSample}
-  \end{tabular}
+\centering
+\begin{tabular}{lr}
+  \includegraphics[width=.45\textwidth]{weeks_roc_outSample.pdf} & 
+  \includegraphics[width=.45\textwidth]{weeks_pr_outSample.pdf} \\
+\end{tabular}
 
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \frame{
-  \frametitle{AMEN varying $K$ Net Dependence}
+  \frametitle{Predictive Comparison: Gibler (2017)}
 
-  \includegraphics[width=1\textwidth]{netPerfCoef_ameSR}
+\centering
+\begin{tabular}{lr}
+  \includegraphics[width=.45\textwidth]{gibler_roc_outSample.pdf} & 
+  \includegraphics[width=.45\textwidth]{gibler_pr_outSample.pdf} \\
+\end{tabular}
+
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
