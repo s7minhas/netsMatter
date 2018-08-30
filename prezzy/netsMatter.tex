@@ -99,7 +99,7 @@
   \end{itemize}
 
   \centering
-  \includegraphics[width=1.05\textwidth]{df_adj_net3}
+  \includegraphics[width=.5\textwidth]{dyadDF}
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -135,19 +135,34 @@ Kenny (1996) & Li \& Loken (2002) & Aronow et al. (2015) \\
 \frame{
   \frametitle{Outline}
 
+The approach that we will discuss here to deal with dependencies is the Additive and Multiplicative Effects (AME) model (Hoff 2015; Minhas, Hoff \& Ward 2018)
+
 \begin{itemize}
   \item Nodal and dyadic dependencies in networks
   \begin{itemize}
-	  \item Can model using the ``A'' in AME 
+	  \item Can model using the ``A'' in AME
   \end{itemize}
   \item Third order dependencies
   \begin{itemize}
 	  \item Can model using the ``M'' in AME
-  \end{itemize}	  
-  \item Simulation	  
+  \end{itemize}
+  \item Simulation
   \item Empirical Application
 \end{itemize}
 
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame{
+  \frametitle{Dependencies in relational data}
+
+  \vspace{-10mm}
+  To start to think about dependencies that arise in relational data ...
+  \vspace{5mm}
+
+  \centering
+  \includegraphics[width=1.05\textwidth]{df_adj_net3}
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -346,7 +361,7 @@ Can account for both stochastic equivalence and homophily
 \frame{
   \frametitle{AME}
 
-The full AME framework enables us to not only account for the types of dependencies that often arise in dyadic data but also estimate them: 
+The full AME framework enables us to not only account for the types of dependencies that often arise in dyadic data but also estimate them in a fully Bayesian framework: 
 
 \begin{align}
   \begin{aligned}
@@ -390,6 +405,7 @@ We compare inference for $\mu$ and $\beta$---the latter parameter would be of pr
 
 We first compare the performance of the models in terms of how well they estimate the true values of $\mu$ and $\beta$:
 
+\vspace{8mm}
 \centering
 \includegraphics[width=1\textwidth]{ameSimBias_all.pdf}
 
@@ -402,6 +418,7 @@ We first compare the performance of the models in terms of how well they estimat
 
 Next, we estimate the 95\% confidence interval for the three models in each of the simulations and estimate the proportion of times that the true value fell within those intervals:
 
+\vspace{8mm}
 \centering
 \includegraphics[width=1\textwidth]{ameSimCover_all.pdf}
 
@@ -414,6 +431,7 @@ Next, we estimate the 95\% confidence interval for the three models in each of t
 
 Unobserved dependencies should be captured through the multiplicative effects portion of the model, $\mathbf{U}^{\top} \mathbf{D} \mathbf{V}$:
 
+\vspace{8mm}
 \centering
 \includegraphics[width=1\textwidth]{ameSimCorr.pdf}
 
@@ -426,14 +444,21 @@ Unobserved dependencies should be captured through the multiplicative effects po
 
 Descriptive information about the replicated studies: 
 
-\footnotesize{
-\begin{tabular}{lccccc}
-	& Model &  Date Range & N. Actors  & Dyads Type & Clustering $\sigma_{\hat{\beta}}$ \\ \toprule
-	Reiter \& Stam (2003) & Logit &1945--1995 &  193 & Directed & Robust \\ 
-	Weeks (2012) & Logit & 1946--1999 & 197 & Directed & Robust \\
-	Gibler (2017) & Logit & 1816--2008 & 193 & Undirected & Robust \\ \bottomrule
+\vspace{5mm}
+% \footnotesize{
+% \begin{tabular}{lccccc}
+% 	& Model &  Date Range & N. Actors  & Dyads Type & Clustering $\sigma_{\hat{\beta}}$ \\ \toprule
+% 	Reiter \& Stam (2003) & Logit &1945--1995 &  193 & Directed & Robust \\
+% 	Weeks (2012) & Logit & 1946--1999 & 197 & Directed & Robust \\
+% 	Gibler (2017) & Logit & 1816--2008 & 193 & Undirected & Robust \\ \bottomrule
+% \end{tabular}
+% }
+\begin{tabular}{lcccc}
+	& Model &  Date Range & N. Actors  & Dyads Type \\ \toprule
+	Reiter \& Stam (2003) & Logit &1945--1995 &  193 & Directed \\ 
+	Weeks (2012) & Logit & 1946--1999 & 197 & Directed \\
+	Gibler (2017) & Logit & 1816--2008 & 193 & Undirected \\ \bottomrule
 \end{tabular}
-}
 
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -505,6 +530,19 @@ Descriptive information about the replicated studies:
 \centering
 \includegraphics[width=\textwidth]{gibler_margeff.pdf}
 
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frame{
+\frametitle{Next steps}
+
+\begin{itemize}
+	\item Dealing with time varying dependence structure
+	\item Parsing out formation, persistence and dissolution
+	\item Many other extensions (bipartite, endogenous multilayer networks, ...)
+	\item Computational issues ... Bayesian models take time to converge 
+\end{itemize}
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
