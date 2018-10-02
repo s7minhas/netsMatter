@@ -43,7 +43,8 @@ nsim <- 500  # To fix the number of simuluation runs
 # Cross-sectional
 #################
 
-for(N in c(20,50,100,150)){
+# for(N in c(20,50,100,150)){
+N = 50
 
 index <- 1:N
 P <- choose(N,2)
@@ -60,7 +61,8 @@ dyad.mat <- t(apply(dyads, 1, function(x)unlist(strsplit(x,"-"))))
 
 seRE <- bRE <- seHC <- sehat <- bhat <- matrix(NA, ncol=2, nrow=nsim)
 
-for(sim in 1:nsim){
+# for(sim in 1:nsim){
+sim=1
 cat(paste("Sim #",sim,":",sep="")); flush.console()
 # Generate the data
 
