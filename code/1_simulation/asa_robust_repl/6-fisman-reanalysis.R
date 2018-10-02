@@ -18,9 +18,9 @@ robust.se.nodfc <- function(model, cluster){
 }
 
 
-setwd("~/Dropbox/dyadic-variance/pa-submission/replication-files")
+setwd("~/Research/netsMatter/code/1_simulation/asa_robust_repl/")
 
-sdat.sc <- read.csv("Speed Dating Data.csv")
+sdat.sc <- read.csv("Speed-Dating-Data.csv")
 sdat.sc <- subset(sdat.sc, !is.na(iid))
 sdat.sc <- subset(sdat.sc, gender==0) # include only data on females, 
 									  # since replicating Col 1, Table III
