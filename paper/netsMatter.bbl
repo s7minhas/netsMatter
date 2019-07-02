@@ -48,8 +48,7 @@ Beck, Nathaniel, Katz, Jonathan~N., and Tucker, Richard. 1998.
 \bibitem[\protect\citename{Bennett and Lanning, }2007]{bennett:lanning:2007}
 Bennett, James, and Lanning, Stan. 2007.
 \newblock  \titlecap{The {Netflix} Prize.}
-\newblock {In:} {\em Proceedings of {KDD} cup and workshop},  vol. 2007.
-  \url{https://www.cs.uic.edu/~liub/KDD-cup-2007/NetflixPrize-description.pdf}.
+\newblock {In:} {\em Proceedings of {KDD} cup and workshop}.
 
 \bibitem[\protect\citename{Block {et~al.}, }2017]{block:etal:2017}
 Block, Per, Stadtfeld, Christoph, and Snijders, Tom~A.B. 2017.
@@ -59,22 +58,23 @@ Block, Per, Stadtfeld, Christoph, and Snijders, Tom~A.B. 2017.
 
 \bibitem[\protect\citename{Chyzh, }2016]{chyzh:2016}
 Chyzh, Olga. 2016.
-\newblock  \titlecap{Dangerous liaisons: {A}n endogenous model of international
-  trade and human rights.}
-\newblock {\em Journal of Peace Research}, {\bf 53}, tbd.
+\newblock  \titlecap{Keeping up with which {J}oneses: {S}patial diffusion of
+  rule of law through economic international organizations.}
+\newblock {\em Foreign Policy Analysis}, {\bf 13}(1), 28--49.
 
 \bibitem[\protect\citename{Davis and Goadrich, }2006]{davis:goadrich:2006}
 Davis, Jesse, and Goadrich, Mark. 2006.
-\newblock  \titlecap{The relationship between {Precision-Recall} and {ROC}
-  curves.}
-\newblock {Pages  233--240 of:} {\em Proceedings of the 23rd {International
-  Conference on Machine Learning}}.
-\newblock ACM. \url{https://dl.acm.org/citation.cfm?id=1143874}.
+\newblock  \titlecap{The Relationship Between {P}recision-{R}ecall and {ROC}
+  Curves.}
+\newblock {Pages  233--240 of:} {\em Proceedings of the 23rd International
+  Conference on Machine Learning}.
+\newblock ICML 2006.
+\newblock New York, NY, USA: ACM.
 
 \bibitem[\protect\citename{Dorff and Minhas, }2017]{dorff:minhas:2017}
 Dorff, Cassy, and Minhas, Shahryar. 2017.
-\newblock  \titlecap{When Do States Say Uncle? Network Dependence and Sanction
-  Compliance.}
+\newblock  \titlecap{When Do States Say Uncle? {N}etwork Dependence and
+  Sanction Compliance.}
 \newblock {\em International Interactions}, {\bf 43}(4), 563--588.
 
 \bibitem[\protect\citename{Erikson {et~al.}, }2014]{erikson:pinto:2014}
