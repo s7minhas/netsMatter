@@ -1,0 +1,62 @@
+\section*{Reviewer 1}
+
+\begin{enumerate}
+	\item P1: ``Most standard approaches assume that the problems raised by non-iid relational data can be addressed by recalculating the standard errors of estimated parameters to reflect the potential clustering of cases. In practice, such strategies rarely work because they do not directly address the fundamental data generating process''.
+	\begin{itemize}
+		\item The term “rarely work” is too casual.  What problem exactly is motivating this paper?  E.g., the Aronow et al. paper cited at the start of the same paragraph looks at consistent variance estimators for semiparametric regression estimators on dyadic data. By the standards set out by those authors in that paper, the strategies “work” just fine.  I suppose then that the current paper has a different sense of what it means for something “to work.” For example, I am supposing that the current paper is talking about people misconstruing the structural interpretation of a reduced form parameter estimated in a GLM fit to dyadic data.  That would be wholly orthogonal to what Aronow et al. were considering, but then this needs explication.
+	\end{itemize}
+	\begin{itemize}
+		\item \textcolor{blue}{ \emph{
+		Insert great response.
+		}}
+	\end{itemize}
+	\item P2: “Scholars working with dyadic data typically begin by stacking observations associated with each dyad on top of one another. This makes sense if each observation is independent of the others.”
+	\begin{itemize}
+		\item Revise this opening, since it is perfectly fine to stack observations and then incorporate auxiliary information (such as adjacency matrix) to characterize dependencies between rows.
+	\end{itemize}
+	\begin{itemize}
+		\item \textcolor{blue}{ \emph{
+		Insert great response.
+		}}
+	\end{itemize}
+	\item P3: “Unless one is able to develop a model that can account for the variety of explanations that may play a role in determining why a particular actor is more active than others, parameter estimates from standard statistical models will be biased.”
+	\begin{itemize}
+		\item This is another example of language that is too causal and imprecise, like the opening paragraph. What are “parameter estimates from standard statistical models”?  And “biased” with respect to what target of inference? Again, I think the authors have in mind “bias” with respect to parameters that are meant to have a particular structural interpretation, but this needs to be clarified.
+		\item Generally, section 2 should be clearer in motivating the problem.  Provide us with a toy example that illustrates the kind of “bias” that the paper has in mind from “standard models”.  For me at least, after reading section 2 I still wasn’t sure what problem the paper is actually trying to address.
+	\end{itemize}
+	\begin{itemize}
+		\item \textcolor{blue}{ \emph{
+		Insert great response.
+		}}
+	\end{itemize}
+	\item P7: Regarding the specification, this augments a dyadic random effects model, which is quite common, with  the LFM component, which resembles an interactive fixed effects specification (cf. Bai 2009, Ecta) and is based on an SVD factorization of the observed network.
+	\begin{itemize}
+		\item It is useful to think of the infeasible estimator and the implications for interpreting the LFM component.  The infeasible estimator takes the transformation f(.), fixed effects parameters, and SRRM random effects as know, in which case the LFM amounts to predictions from a factor model fit to the adjacency matrix of residuals on the scale of the latent outcome.  Would this be a reasonable interpretation? If so it would be useful to draw the connection to factor models commonly in use these days (such as the interactive fixed effects model of Bai, which is the basis of, e.g., generalized synthetic control methods).
+	\end{itemize}
+	\begin{itemize}
+		\item \textcolor{blue}{ \emph{
+		Insert great response.
+		}}
+	\end{itemize}
+	\item P8: “accounting for this structure is necessary if we are to adequately represent the data generating process.” Continuing with the problems I have with the language above, what does “adequately represent” mean?. P9: “a) biased estimates of the effect of independent variables, b) uncalibrated confidence intervals, and c) poor predictive performance.”
+	\begin{itemize}
+		\item Okay here is where the paper are starting to clarify goals.  So a) is about causal identification.  But as I understand, the solution here is parametric identification of causal effects.  This means that the issue of misspecification and robustness ought to be taken up.  Similarly, b) is addressed in this paper under a fairly simple parametric data generating process. But again, how robust is the proposed model to situations where the real DGP does not abide by the parametric assumptions (linearity, normally distributed random effects, and a factor model for the residuals of dimension K)? For c), I think most would agree that the “proof” is simply in comparison to whatever other good models are available.  Not however, that in social science applications, forecasting and therefor c) are rarely of interest (at least not in the types of research that appear in political science journals).  As such, from the perspective of what the researchers in discipline mostly cares about, a) and b) are of primary importance.
+	\end{itemize}
+	\begin{itemize}
+		\item \textcolor{blue}{ \emph{
+		Insert great response.
+		}}
+	\end{itemize}
+	\item P9-10: we need to know exactly how and from what distributions X and W are being drawn to interpret the results here.  Are they independent/orthogonal or no?
+	\begin{itemize}
+		\item \textcolor{blue}{ \emph{
+		SM will deal with this.
+		}}
+	\end{itemize}
+	\item Section 4 needs to incorporate an assessment of robustness to misspecification.  See the Aronow et al. paper for an example of how to do this, where they study the performance of a dyadic random effects model.
+	\begin{itemize}
+		\item \textcolor{blue}{ \emph{
+		SM will deal with this.
+		}}
+	\end{itemize}
+\end{enumerate}

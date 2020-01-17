@@ -16,6 +16,19 @@ if(Sys.info()['user'] == 'juanftellez'){
   source('~/OneDrive/netsMatter/code/helpers/ameHelpers.R')
   source('helperEx.R')
 }
+
+if(Sys.info()['user']=='herme' | 'Owner'){
+	user=Sys.info()['user']
+	base = paste0('C:/Users/',user,'/')
+	fPath = paste0(base, 'Research/netsMatter/code/helpers/')
+	dPath = paste0(base, 'Dropbox/Research/netsMatter/')
+	simResPath = paste0(dPath, 'simulation/')
+	source(paste0(fPath, 'functions.R'))
+	source(paste0(fPath, 'ameHelpers.R'))
+	source(paste0(fPath, 'binPerfHelpers.R'))
+	source(paste0(fPath, 'stargazerHelpers.R'))
+	source(paste0(fPath, 'clusteredSE.R'))
+}
 ############################################
 
 # modData ###########################################
@@ -42,9 +55,9 @@ varKey = data.frame(
 	dirty=names(coef(mod)),
 	clean=c('Intercept', 'Pers/Democ Directed Dyad',
 		'Democ/Pers Directed Dyad',
-        'Personal', 'Military', 'Single', 'Democracy', 
-        'Contiguous', 'Major Power', 'Ally', 'Higher/Lower Power Ratio', 
-        'Economically Advanced', 'Years Since Last Dispute', 'Cubic Spline 1', 
+        'Personal', 'Military', 'Single', 'Democracy',
+        'Contiguous', 'Major Power', 'Ally', 'Higher/Lower Power Ratio',
+        'Economically Advanced', 'Years Since Last Dispute', 'Cubic Spline 1',
         'Cubic Spline 2', 'Cubic Spline 3'),
 	stringsAsFactors = FALSE )
 
@@ -102,8 +115,8 @@ ggMap = ggplot() +
     axis.text = element_blank() )
 ggMap
 ggsave(ggMap, file=paste0(plotPath, 'reiter_stam_aEff_map.pdf'), width=6, height=3)
-system(paste('pdfcrop', 
-  paste0(plotPath, 'reiter_stam_aEff_map.pdf'), 
+system(paste('pdfcrop',
+  paste0(plotPath, 'reiter_stam_aEff_map.pdf'),
   paste0(plotPath, 'reiter_stam_aEff_map.pdf')))
 
 # pick out top countries
@@ -113,13 +126,13 @@ effdatSub = rbind(
   ) %>% na.omit()
 
 # clean up names
-effdatSub$actor = char(effdatSub$actor) 
+effdatSub$actor = char(effdatSub$actor)
 effdatSub$actor = cntryKey$cowc[match(effdatSub$actor, cntryKey$cname)]
 effdatSub$actor = factor(effdatSub$actor,  levels=effdatSub[order(effdatSub$addEff),'actor'])
 
 # subset of countries
 rsaeff = addEffPlot(fit = effdatSub, addEffData = effdatSub, row = T) +
-  coord_flip() + 
+  coord_flip() +
   ylab('') + xlab('') +
   theme(
     axis.text.x=element_text(angle=0, size=12),
@@ -140,7 +153,7 @@ effdat$actor = factor(effdat$actor,  levels=effdat[order(effdat$addEff),'actor']
 
 ## subset of countries
 addEffPlot(fit = effdat, addEffData = effdat, row = FALSE) +
-  coord_flip() + 
+  coord_flip() +
   theme(
     axis.text.x=element_text(angle=0)
     )
@@ -157,9 +170,9 @@ replaceVal = function(var, newVal, oVals=medVals){
   oVals[var] = newVal ; return(oVals)  }
 getQ = function(x,p,data=modData){ quantile(data[,x], probs=p, na.rm=TRUE) }
 scen = cbind(
-  pdemtar_1=replaceVal('pdemdtar', 1), 
+  pdemtar_1=replaceVal('pdemdtar', 1),
   pdemtar_0=replaceVal('pdemdtar', 0),
-  pdemin_1=replaceVal('pdemdin', 1), 
+  pdemin_1=replaceVal('pdemdin', 1),
   pdemin_0=replaceVal('pdemdin', 0))
 # split into hi and lo
 scen1 = scen[,seq(1,ncol(scen),2)] ; scen0 = scen[,seq(2,ncol(scen),2)]
@@ -174,9 +187,9 @@ scens = c( 'Pers/Democ Directed Dyad', 'Democ/Pers Directed Dyad')
 glmDraws = rmvnorm(1000, coef(mod), vcov(mod)) ; colnames(glmDraws)[1] = 'intercept'
 ameDraws = rmvnorm(1000, apply(ameFit$BETA, 2, median), cov(ameFit$BETA))
 scenDiffs = rbind(
-  getScenDiff(linkType='logit', scen1, scen0, scens, 
+  getScenDiff(linkType='logit', scen1, scen0, scens,
     glmDraws[,rownames(scen1)], 'GLM', type='densityShade'),
-  getScenDiff(linkType='probit', scen1, scen0, scens, 
+  getScenDiff(linkType='probit', scen1, scen0, scens,
     ameFit$BETA, 'AME', type='densityShade') )
 
 
@@ -188,7 +201,7 @@ scenGG = ggplot(data=scenDiffsSlice, aes(color=mod, fill=mod)) +
   geom_line(data=scenDiffsSlice, aes(x=x,y=y)) +
   geom_ribbon(data=subset(scenDiffsSlice,q95), aes(x=x,ymax=y,fill=mod),ymin=0,alpha=0.2) +
   geom_ribbon(data=subset(scenDiffsSlice,q90), aes(x=x,ymax=y,fill=mod),ymin=0,alpha=0.6) +
-  geom_vline(aes(xintercept=mean, color=mod,linetype=mod),size=1.2) + 
+  geom_vline(aes(xintercept=mean, color=mod,linetype=mod),size=1.2) +
   scale_color_manual(values=ggCols) + scale_fill_manual(values=ggCols) +
   scale_linetype_manual(values=ggLty) +
   guides(
@@ -203,7 +216,7 @@ scenGG = ggplot(data=scenDiffsSlice, aes(color=mod, fill=mod)) +
     axis.ticks=element_blank(), axis.text.y=element_blank(),
     panel.border=element_blank(),
     strip.text.x = element_text(size = 9, color='white' ),
-    strip.background = element_rect(fill = "#525252", color='#525252')    
+    strip.background = element_rect(fill = "#525252", color='#525252')
     )
 scenGG
 
@@ -215,7 +228,7 @@ scenGG = ggplot(data=scenDiffs, aes(color=scen, fill=scen)) +
   geom_line(data=scenDiffs, aes(x=x,y=y)) +
   geom_ribbon(data=subset(scenDiffs,q95), aes(x=x,ymax=y,fill=scen),ymin=0,alpha=0.2) +
   geom_ribbon(data=subset(scenDiffs,q90), aes(x=x,ymax=y,fill=scen),ymin=0,alpha=0.6) +
-  geom_vline(aes(xintercept=mean, color=scen,linetype=scen),size=1.2) +	
+  geom_vline(aes(xintercept=mean, color=scen,linetype=scen),size=1.2) +
   scale_color_manual(values=ggCols) + scale_fill_manual(values=ggCols) +
   scale_linetype_manual(values=ggLty) +
   guides(
@@ -225,13 +238,13 @@ scenGG = ggplot(data=scenDiffs, aes(color=scen, fill=scen)) +
   xlab('Pr(MID=1 | Regime Directed Dyad=1) - Pr(MID=1 | Regime Directed Dyad=0)') +
   ylab('Density') +
   facet_wrap(~title, scales='free', ncol=1) +
-  theme_bw() + 
+  theme_bw() +
   theme(
     legend.position = 'top', legend.title=element_blank(),
     axis.ticks=element_blank(), axis.text.y=element_blank(),
     panel.border=element_blank(),
     strip.text.x = element_text(size = 9, color='white' ),
-    strip.background = element_rect(fill = "#525252", color='#525252')		
+    strip.background = element_rect(fill = "#525252", color='#525252')
   )
 ggsave(scenGG, file=paste0(plotPath, 'reiterstam_margeff.pdf'), width=7, height=3)
 ############################################

@@ -3,12 +3,25 @@ rm(list=ls())
 
 if(Sys.info()['user'] %in% c('s7m', 'janus829')){
 	resultsPath = '~/Dropbox/Research/netsMatter/replications/Weeks2012/replication/output/'
-	plotPath = '~/Research/netsMatter/paper/graphics/' }
+	plotPath = '~/Research/netsMatter/paper/graphics/'
+	source('~/Research/netsMatter/code/helpers/functions.R')
+	source('~/Research/netsMatter/code/helpers/ameHelpers.R')
+	source('~/Research/netsMatter/code/helpers/binPerfHelpers.R')
+	source('~/Research/netsMatter/code/helpers/stargazerHelpers.R')
+}
 
-source('~/Research/netsMatter/code/helpers/functions.R')
-source('~/Research/netsMatter/code/helpers/ameHelpers.R')
-source('~/Research/netsMatter/code/helpers/binPerfHelpers.R')
-source('~/Research/netsMatter/code/helpers/stargazerHelpers.R')
+if(Sys.info()['user']=='herme' | 'Owner'){
+	user=Sys.info()['user']
+	base = paste0('C:/Users/',user,'/')
+	fPath = paste0(base, 'Research/netsMatter/code/helpers/')
+	dPath = paste0(base, 'Dropbox/Research/netsMatter/')
+	simResPath = paste0(dPath, 'simulation/')
+	source(paste0(fPath, 'functions.R'))
+	source(paste0(fPath, 'ameHelpers.R'))
+	source(paste0(fPath, 'binPerfHelpers.R'))
+	source(paste0(fPath, 'stargazerHelpers.R'))
+	source(paste0(fPath, 'clusteredSE.R'))
+}
 ############################################
 
 # modData ###########################################
@@ -33,7 +46,7 @@ modNames = c('GLM (Logit)', 'AME')
 
 varKey = data.frame(
 	dirty=names(coef(mod)),
-	clean=c( '(Intercept)', 
+	clean=c( '(Intercept)',
 		"Machine", "Junta", "Boss", "Strongman",
 		"Other Type","New/Unstable Regime", "Democracy Target",
 		"Military Capabilities Initiator",
@@ -140,7 +153,7 @@ ggU$lab[!ggU$lab %in% toLabel] = ''
 ggU$lPch = ggU$tPch ; ggU$lPch[ggU$lab==''] = 0
 
 weeksCirc = ggplot(ggU, aes(x=X1, y=X2, size=tPch, color=actor)) +
-	annotation_custom(mapForCirc, xmin=-.75, xmax=.75, ymin=-.75, ymax=.75) +	
+	annotation_custom(mapForCirc, xmin=-.75, xmax=.75, ymin=-.75, ymax=.75) +
 	geom_point(alpha=.9) + scale_size(range=c(4,8)) +
 	ylab("") + xlab("") +
 	geom_label_repel(aes(label=lab, size=lPch)) +
@@ -163,7 +176,7 @@ csimMat <- function(x) {
   for(i in 1:ncol(x)) {
   	for(j in i:ncol(x)) {
       vec1 <- x[which(x[,i] & x[,j]),i]
-      vec2 <- x[which(x[,i] & x[,j]),j]  
+      vec2 <- x[which(x[,i] & x[,j]),j]
       cos[i,j]= csim(vec1,vec2)
       cos[j,i]=cos[i,j]
     } }
