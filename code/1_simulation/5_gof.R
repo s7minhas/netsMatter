@@ -7,8 +7,16 @@ if(Sys.info()['user']=='s7m'){
 	graphicsPath = paste('~/Research/netsMatter/paper/')
 	source(paste0(fPath, 'functions.R')) }
 
+if(Sys.info()['user']=='herme' | 'Owner'){
+	user=Sys.info()['user']
+	base = paste0('C:/Users/',user,'/')
+	fPath = paste0(base, 'Research/netsMatter/code/helpers/')
+	dPath = paste0(base, 'Dropbox/Research/netsMatter/')
+	simResPath = paste0(dPath, 'simulation/')
+	source(paste0(fPath, 'functions.R')) }
+
 toLoad = c(
-	'devtools', 
+	'devtools',
 	'foreach', 'doParallel',
 	'magrittr', 'dplyr', 'ggplot2',
 	'latex2exp', 'Cairo'

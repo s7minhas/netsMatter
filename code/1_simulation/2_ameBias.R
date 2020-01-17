@@ -7,8 +7,16 @@ if(Sys.info()['user']=='s7m'){
 	graphicsPath = paste('~/Research/netsMatter/paper/')
 	source(paste0(fPath, 'functions.R')) }
 
+if(Sys.info()['user']=='herme' | 'Owner'){
+	user=Sys.info()['user']
+	base = paste0('C:/Users/',user,'/')
+	fPath = paste0(base, 'Research/netsMatter/code/helpers/')
+	dPath = paste0(base, 'Dropbox/Research/netsMatter/')
+	simResPath = paste0(dPath, 'simulation/')
+	source(paste0(fPath, 'functions.R')) }
+
 toLoad = c(
-	'devtools', 
+	'devtools',
 	'foreach', 'doParallel',
 	'magrittr', 'dplyr', 'ggplot2',
 	'latex2exp', 'Cairo'
@@ -72,14 +80,14 @@ ggBiasPlot = function(varName, h=4, w=8){
 			aes(x=model, y=value, fill=model,color=model)) }
 	if(varName=='all'){ g=ggplot(ameSimBias, aes(x=model,y=value,fill=model,color=model)) }
 	g = g +
-		geom_hline(aes(yintercept=act), color='grey60', size=2) +	
+		geom_hline(aes(yintercept=act), color='grey60', size=2) +
 		geom_jitter(alpha=.1) +
-		geom_boxplot( color='black') + 	
+		geom_boxplot( color='black') +
 		# geom_violin(
 		# 	draw_quantiles=c(0.025,0.5,0.975),
-		# 	trim=TRUE, color='black', alpha=.4) +	
+		# 	trim=TRUE, color='black', alpha=.4) +
 		facet_grid(var ~ n, scales='free_y',
-			labeller=as_labeller(facet_labeller, default = label_parsed)) + 
+			labeller=as_labeller(facet_labeller, default = label_parsed)) +
 		xlab('') + ylab('') +
 		scale_color_manual(values=modCols) +
 		scale_fill_manual(values=modCols) +
@@ -95,11 +103,11 @@ ggBiasPlot = function(varName, h=4, w=8){
 			strip.text.x = element_text(size=9, color='white'
 				# ,family="Source Code Pro Semibold"
 				),
-			strip.text.y = element_text(size=9, color='white' 
+			strip.text.y = element_text(size=9, color='white'
 				# ,family="Source Code Pro Semibold",
 				,angle=0
-				),		
-			strip.background = element_rect(fill = "#525252", color='#525252')	
+				),
+			strip.background = element_rect(fill = "#525252", color='#525252')
 			)
 	ggsave(g, height=4, width=8,
 		file=paste0(graphicsPath, 'ameSimBias_',varName,'.pdf')

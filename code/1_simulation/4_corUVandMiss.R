@@ -7,8 +7,16 @@ if(Sys.info()['user']=='s7m'){
 	graphicsPath = paste('~/Research/netsMatter/paper/')
 	source(paste0(fPath, 'functions.R')) }
 
+if(Sys.info()['user']=='herme' | 'Owner'){
+	user=Sys.info()['user']
+	base = paste0('C:/Users/',user,'/')
+	fPath = paste0(base, 'Research/netsMatter/code/helpers/')
+	dPath = paste0(base, 'Dropbox/Research/netsMatter/')
+	simResPath = paste0(dPath, 'simulation/')
+	source(paste0(fPath, 'functions.R')) }
+
 toLoad = c(
-	'devtools', 
+	'devtools',
 	'foreach', 'doParallel',
 	'magrittr', 'dplyr', 'ggplot2',
 	'latex2exp', 'Cairo'
@@ -29,7 +37,7 @@ for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,'.rda')) }
 # check that uv covers missvar
 # missing var
 genMissVar = function(n, imps=NSIM){
-	lapply(1:imps, function(seed){ n=n ; 
+	lapply(1:imps, function(seed){ n=n ;
 		set.seed(seed) ; xw = matrix(rnorm(n*2),n,2)
 		W = tcrossprod(xw[,2]) ; return(W) }) }
 
@@ -38,7 +46,7 @@ getCor = function(ameSim, W){
 	cor = lapply(1:length(ameSim), function(i){
 		uv = c(ameSim[[i]]$uv$ame)
 		w = c(W[[i]])
-		cor(uv, w, use='pairwise.complete.obs') })	
+		cor(uv, w, use='pairwise.complete.obs') })
 	return(unlist(cor)) }
 
 #
@@ -73,12 +81,12 @@ g = ggplot() +
 	geom_ribbon(data=subset(ameSimCorDensity,q95),
 		aes(x=x,ymax=y),ymin=0,alpha=0.5) +
 	geom_ribbon(data=subset(ameSimCorDensity,q90),
-		aes(x=x,ymax=y),ymin=0,alpha=0.9) + 
-	geom_vline(data=ameSimCorMeans, 
-		aes(xintercept=sMedian),linetype='solid',size=1, color=col) +	
+		aes(x=x,ymax=y),ymin=0,alpha=0.9) +
+	geom_vline(data=ameSimCorMeans,
+		aes(xintercept=sMedian),linetype='solid',size=1, color=col) +
 	geom_text(data=ameSimCorMeans,
 		aes(label=sMedianLab,x=sMedian,y=y), hjust=1.05, size=2.5, fontface='bold', color='black') +
-	facet_grid(n~.) + 	
+	facet_grid(n~.) +
 	xlab('') + ylab('') +
 	theme(
 		axis.ticks=element_blank(),
