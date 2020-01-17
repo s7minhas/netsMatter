@@ -7,8 +7,16 @@ if(Sys.info()['user']=='s7m'){
 	graphicsPath = paste('~/Research/netsMatter/paper/')
 	source(paste0(fPath, 'functions.R')) }
 
+if(Sys.info()['user']=='herme' | 'Owner'){
+	user=Sys.info()['user']
+	base = paste0('C:/Users/',user,'/')
+	fPath = paste0(base, 'Research/netsMatter/code/helpers/')
+	dPath = paste0(base, 'Dropbox/Research/netsMatter/')
+	simResPath = paste0(dPath, 'simulation/')
+	source(paste0(fPath, 'functions.R')) }
+
 toLoad = c(
-	'devtools', 
+	'devtools',
 	'foreach', 'doParallel',
 	'magrittr', 'dplyr', 'ggplot2',
 	'latex2exp', 'Cairo'
@@ -39,7 +47,7 @@ getCoverage = function(ameSim, model, n, varName, varNum, actual){
 	intSumm$n = n
 	intSumm$varName = varName
 	intSumm$actual = actual
-	return(intSumm)	
+	return(intSumm)
 }
 
 #
@@ -88,13 +96,13 @@ ggCoverPlot = function(var,h=3, w=8){
 	if(var=='all'){ g=ggplot(coverSumm, aes(x=model, y=coverage, fill=model,color=model)) }
 	g = g +
 		geom_hline(aes(yintercept=.95), color='grey60', size=4, alpha=.5) +
-		geom_linerange(aes(ymin=0, ymax=coverage),size=1.25) + 
-		geom_point(size=2) + 
+		geom_linerange(aes(ymin=0, ymax=coverage),size=1.25) +
+		geom_point(size=2) +
 		facet_grid(varName~n, scales='free_y',
-			labeller=as_labeller(facet_labeller, default = label_parsed)) + 			
-		xlab('') + 
+			labeller=as_labeller(facet_labeller, default = label_parsed)) +
+		xlab('') +
 		scale_color_manual(values=modCols) +
-		scale_fill_manual(values=modCols) +		
+		scale_fill_manual(values=modCols) +
 		scale_y_continuous('', breaks=seq(0,1.2,.2), labels=seq(0,1.2,.2), limits=c(0,1)) +
 		annotate('text', x=1, y=.95, label='95% CI', color='black', size=2.5, fontface='bold') +
 		geom_text(aes(label=covLab, y=covLabY), hjust=-.3, size=2.5, fontface='bold', color='black') +
@@ -110,19 +118,19 @@ ggCoverPlot = function(var,h=3, w=8){
 			strip.text.x = element_text(size=9, color='white'
 				# ,family="Source Code Pro Semibold"
 				),
-			strip.text.y = element_text(size=9, color='white' 
+			strip.text.y = element_text(size=9, color='white'
 				# ,family="Source Code Pro Semibold",
 				,angle=0
-				),		
+				),
 			strip.background = element_rect(fill = "#525252", color='#525252')
-			)	
+			)
 	ggsave(g, height=3, width=8,
 		file=paste0(graphicsPath, 'ameSimCover_',var,'.pdf')
 		# , device=cairo_pdf
 		)
 	return(g)
-}	
+}
 
 ggCoverPlot('all', h=6, w=8)
 # ggCoverPlot('mu') ; ggCoverPlot('beta')
-##############################	
+##############################

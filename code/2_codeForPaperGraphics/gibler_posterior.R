@@ -3,13 +3,26 @@ rm(list=ls())
 
 if(Sys.info()['user'] %in% c('s7m', 'janus829')){
 	resultsPath = '~/Dropbox/Research/netsMatter/replications/gibler_2017/outputData/'
-	plotPath = '~/Research/netsMatter/paper/graphics/' }
+	plotPath = '~/Research/netsMatter/paper/graphics/'
+	source('~/Research/netsMatter/code/helpers/functions.R')
+	source('~/Research/netsMatter/code/helpers/ameHelpers.R')
+	source('~/Research/netsMatter/code/helpers/binPerfHelpers.R')
+	source('~/Research/netsMatter/code/helpers/stargazerHelpers.R')
+	source('~/Research/netsMatter/code/helpers/clusteredSE.R')
+}
 
-source('~/Research/netsMatter/code/helpers/functions.R')
-source('~/Research/netsMatter/code/helpers/ameHelpers.R')
-source('~/Research/netsMatter/code/helpers/binPerfHelpers.R')
-source('~/Research/netsMatter/code/helpers/stargazerHelpers.R')
-source('~/Research/netsMatter/code/helpers/clusteredSE.R')
+if(Sys.info()['user']=='herme' | 'Owner'){
+	user=Sys.info()['user']
+	base = paste0('C:/Users/',user,'/')
+	fPath = paste0(base, 'Research/netsMatter/code/helpers/')
+	dPath = paste0(base, 'Dropbox/Research/netsMatter/')
+	simResPath = paste0(dPath, 'simulation/')
+	source(paste0(fPath, 'functions.R'))
+	source(paste0(fPath, 'ameHelpers.R'))
+	source(paste0(fPath, 'binPerfHelpers.R'))
+	source(paste0(fPath, 'stargazerHelpers.R'))
+	source(paste0(fPath, 'clusteredSE.R'))
+}
 ############################################
 
 # modData ###########################################
@@ -39,9 +52,9 @@ modList = list(glmSumm, ameSumm)
 modNames = c('GLM (Logit)', 'AME')
 varKey = data.frame(
 	dirty=names(coef(mod)),
-	clean=c( '(Intercept)', 
+	clean=c( '(Intercept)',
 		'Allied', 'Joint Democracy',
-		'Peace Years', 'Spline 1', 'Spline 2', 
+		'Peace Years', 'Spline 1', 'Spline 2',
 		'Spline 3', 'Contiguity', 'Parity',
 		'Parity at Entry Year', 'Rivalry' ),
 	stringsAsFactors = FALSE )
@@ -73,7 +86,7 @@ vaViz = ggplot(data.frame(ameFit$VC), aes(x=va)) +
 	xlab(TeX('Within-Sender Variance ($\\\\sigma_{a]^{2}$)')) +
 	ylab('Density') +
 	theme(
-		axis.ticks=element_blank(), 
+		axis.ticks=element_blank(),
 		panel.border=element_blank()
 		)
 ggsave(vaViz, file=paste0(plotPath, 'gibler_srmvc.pdf'), width=7, height=4)
@@ -91,21 +104,21 @@ replaceVal = function(var, newVal, oVals=medVals){
 	oVals[var] = newVal ; return(oVals)  }
 getQ = function(x,p,data=modData){ quantile(data[,x], probs=p, na.rm=TRUE) }
 scen = cbind(
-	ally_1=replaceVal('allied', 1), 
+	ally_1=replaceVal('allied', 1),
 	ally_0=replaceVal('allied', 0),
-	jdem_1=replaceVal('jointdem', 1), 
+	jdem_1=replaceVal('jointdem', 1),
 	jdem_0=replaceVal('jointdem', 0),
-	contig_1=replaceVal('contig', 1), 
+	contig_1=replaceVal('contig', 1),
 	contig_0=replaceVal('contig', 0),
-	riv_1=replaceVal('riv1', 1), 
+	riv_1=replaceVal('riv1', 1),
 	riv_0=replaceVal('riv1', 0),
 	fpar_hi=replaceVal('firstparity', getQ('firstparity',.75)),
 	fpar_lo=replaceVal('firstparity', getQ('firstparity',.25)),
-	par_hi=replaceVal('parity4', getQ('parity4',.75)),	
+	par_hi=replaceVal('parity4', getQ('parity4',.75)),
 	par_lo=replaceVal('parity4', getQ('parity4',.25)) )
 # split into hi and lo
 scen1 = scen[,seq(1,ncol(scen),2)] ; scen0 = scen[,seq(2,ncol(scen),2)]
-scens = c( 'Allied', 'Joint Democracy', 'Contiguity', 
+scens = c( 'Allied', 'Joint Democracy', 'Contiguity',
 	'Rivalry', 'Parity at entry year', 'Parity')
 
 # for ame
@@ -122,7 +135,7 @@ scenGG = ggplot(data=scenDiffsSlice, aes(color=mod, fill=mod)) +
 	geom_line(data=scenDiffsSlice, aes(x=x,y=y)) +
 	geom_ribbon(data=subset(scenDiffsSlice,q95), aes(x=x,ymax=y,fill=mod),ymin=0,alpha=0.2) +
 	geom_ribbon(data=subset(scenDiffsSlice,q90), aes(x=x,ymax=y,fill=mod),ymin=0,alpha=0.6) +
-	geom_vline(aes(xintercept=mean, color=mod,linetype=mod),size=1.2) +	
+	geom_vline(aes(xintercept=mean, color=mod,linetype=mod),size=1.2) +
 	scale_color_manual(values=ggCols) + scale_fill_manual(values=ggCols) +
 	scale_linetype_manual(values=ggLty) +
 	guides(
@@ -137,7 +150,7 @@ scenGG = ggplot(data=scenDiffsSlice, aes(color=mod, fill=mod)) +
 		axis.ticks=element_blank(), axis.text.y=element_blank(),
 		panel.border=element_blank(),
 		strip.text.x = element_text(size = 9, color='white' ),
-		strip.background = element_rect(fill = "#525252", color='#525252')		
+		strip.background = element_rect(fill = "#525252", color='#525252')
 		)
 ggsave(scenGG, file=paste0(plotPath, 'gibler_margeff.pdf'), width=7, height=3)
 ############################################
