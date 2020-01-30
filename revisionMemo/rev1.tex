@@ -7,7 +7,7 @@
 	\end{itemize}
 	\begin{itemize}
 		\item \textcolor{blue}{ \emph{
-		TO DO/CD: The reviewer is correct in that our paper addresses the majority of IR scholarship that misuses GLM approaches for dyadic data. We have rewritten these sentences in the following way: In practice, such strategies remain problematic because they do not directly address the fundamental data generating process but instead seek to correct for dependence while using a baseline model that makes strong assumptions about the independence of observations in the DGP. While corrections such as X and Y are beneficial at times for A and B, these approaches remain only partially useful, and do not sufficiently capture third-order dependencies that organically arise from dyadic data. 
+		TO DO in paper: Strategies like those employed by Aronow et al do not directly model all relevant dependencies in the data \footnote{As Aronow et al explain, “Of course, accounting for dynamic dyadic clustering may fail to fully account for all relevant dependencies in the data." p. 16.} but instead adjust the variance estimator.  While such an approach decreases the risk of a type 1 error, it increases risk of type 2 error (if the mean estimate is biased downwards, increasing the variance estimate will cause us to falsely accept the null). The main aim of our research is to directly account for the relevant dependency structures in the data, thus providing an accurate estimate and addressing both types of possible errors.
 		}}
 	\end{itemize}
 	\item P2: “Scholars working with dyadic data typically begin by stacking observations associated with each dyad on top of one another. This makes sense if each observation is independent of the others.”
@@ -16,19 +16,20 @@
 	\end{itemize}
 	\begin{itemize}
 		\item \textcolor{blue}{ \emph{
-		TO DO/CD: We have revised this opening statement to clarify that the problem is treating dyads as independent, not stacking them.
+		 The point is well taken, we have clarified this section (on page 2) to point to the assumption of independence as the primary problem, not the stacking of observations in and of itself.
 		}}
 	\end{itemize}
 	\item P3: “Unless one is able to develop a model that can account for the variety of explanations that may play a role in determining why a particular actor is more active than others, parameter estimates from standard statistical models will be biased.”
 	\begin{itemize}
 		\item This is another example of language that is too causal and imprecise, like the opening paragraph. What are “parameter estimates from standard statistical models”?  And “biased” with respect to what target of inference? Again, I think the authors have in mind “bias” with respect to parameters that are meant to have a particular structural interpretation, but this needs to be clarified.
 		\item Generally, section 2 should be clearer in motivating the problem.  Provide us with a toy example that illustrates the kind of “bias” that the paper has in mind from “standard models”.  For me at least, after reading section 2 I still wasn’t sure what problem the paper is actually trying to address.
-	\end{itemize}
+		\item \textcolor{blue}{ \emph{ MG/CD: We think the reviewer makes a good suggestion here to clarify, mathematically or in some other illustrative way, exactly how we think that dependencies bias the estimator. For example we can say that our target of inference is the estimation of beta (with some variance). If a coefficient is correlated with a dependency, then we could obtain an estimate for beta that is artificially high (and the same is true for the reverse).}}
 	\begin{itemize}
-		\item \textcolor{blue}{ \emph{
-		Insert great response.
-		}}
+	\item  \textcolor{blue}{ \emph{ What we think: True DGP: $Y = B0 + XB1 + a + b +$ 3rd order stuff + e
+	\item What most do: $Y = \hat{B0} + X\hat{B1} + e$
+	\item Something like if we have dependencies then $E(\hat{B1}) = E(B1) + cov(B1,$ other stuff)}}
 	\end{itemize}
+\end{itemize}
 	\item P7: Regarding the specification, this augments a dyadic random effects model, which is quite common, with  the LFM component, which resembles an interactive fixed effects specification (cf. Bai 2009, Ecta) and is based on an SVD factorization of the observed network.
 	\begin{itemize}
 		\item It is useful to think of the infeasible estimator and the implications for interpreting the LFM component.  The infeasible estimator takes the transformation f(.), fixed effects parameters, and SRRM random effects as know, in which case the LFM amounts to predictions from a factor model fit to the adjacency matrix of residuals on the scale of the latent outcome.  Would this be a reasonable interpretation? If so it would be useful to draw the connection to factor models commonly in use these days (such as the interactive fixed effects model of Bai, which is the basis of, e.g., generalized synthetic control methods).
