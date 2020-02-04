@@ -9,6 +9,12 @@
 		\item \textcolor{blue}{ \emph{
 		TO DO in paper: Strategies like those employed by Aronow et al do not directly model all relevant dependencies in the data \footnote{As Aronow et al explain, “Of course, accounting for dynamic dyadic clustering may fail to fully account for all relevant dependencies in the data." p. 16.} but instead adjust the variance estimator.  While such an approach decreases the risk of a type 1 error, it increases risk of type 2 error (if the mean estimate is biased downwards, increasing the variance estimate will cause us to falsely accept the null). The main aim of our research is to directly account for the relevant dependency structures in the data, thus providing an accurate estimate and addressing both types of possible errors.
 		}}
+		\item \textcolor{blue}{ \emph{
+		Aronow et al. also explicitly note that their approach does not deal with issues of third order dependence.
+		}}
+		\item \textcolor{blue}{ \emph{
+		Aronow et al. approach does not deal with bias in parameter estimates.
+		}}
 	\end{itemize}
 	\item P2: “Scholars working with dyadic data typically begin by stacking observations associated with each dyad on top of one another. This makes sense if each observation is independent of the others.”
 	\begin{itemize}
@@ -27,7 +33,9 @@
 	\begin{itemize}
 	\item  \textcolor{blue}{ \emph{ What we think: True DGP: $Y = B0 + XB1 + a + b +$ 3rd order stuff + e
 	\item What most do: $Y = \hat{B0} + X\hat{B1} + e$
-	\item Something like if we have dependencies then $E(\hat{B1}) = E(B1) + cov(B1,$ other stuff)}}
+	\item Something like if we have dependencies then $E(\hat{B1}) = E(B1) + cov(B1,$ other stuff)
+	\item SM: needs to add more here to indicate how the existing simulation section is meant to deal with this issue ... onus is on SM to bring in the problems that we highlight in the simulation section to section 2, so readers are clearer on the problem that we are trying to address
+	}}
 	\end{itemize}
 \end{itemize}
 	\item P7: Regarding the specification, this augments a dyadic random effects model, which is quite common, with  the LFM component, which resembles an interactive fixed effects specification (cf. Bai 2009, Ecta) and is based on an SVD factorization of the observed network.
@@ -36,7 +44,9 @@
 	\end{itemize}
 	\begin{itemize}
 		\item \textcolor{blue}{ \emph{
-		SM insert great response. 
+		SM insert great response.
+		paper by Bai: https://sci-hub.tw/https://onlinelibrary.wiley.com/doi/10.3982/ECTA6135
+		connection between LFM and interactive fixed effects?
 		}}
 	\end{itemize}
 	\item P8: “accounting for this structure is necessary if we are to adequately represent the data generating process.” Continuing with the problems I have with the language above, what does “adequately represent” mean?. P9: “a) biased estimates of the effect of independent variables, b) uncalibrated confidence intervals, and c) poor predictive performance.”
@@ -45,10 +55,10 @@
 	\end{itemize}
 	\begin{itemize}
 		\item \textcolor{blue}{ \emph{
-		We have edited P8 to read: Non-iid observations in relational data result from the fact that there is a complex structure underlying the dyadic events or processes we observe. We have also clarified the goals of the paper in the earlier sections. 
-		\item Here we have clarified that our study does not address causal identification but instead focuses on providing unbiased estimates of covariates, calibrated confidence intervals that reduce inferential error, and improved predictive performance.  Though we understand these goals are not always central to every political scientists aim, we do believe they relate closely to the field of IR (as demonstrated by the studies we replicate) and a growing interest in forecasting and machine learning in Political Science. (CITE?)
-		\item For part (a), we have clarified that our study does not address causal identification. We instead focuses on providing unbiased estimates of covariates, which improves inference for observational data.  
-		\item As for (b), the reviewer raises an important point. How well does AME work out when the DGP does not abide by parametric assumptions...relates to SM's to-do below.  
+		We have edited P8 to read: Non-iid observations in relational data result from the fact that there is a complex structure underlying the dyadic events or processes we observe. We have also clarified the goals of the paper in the earlier sections.
+		\item Here we have clarified that our study does not address causal identification but instead focuses on providing unbiased estimates of covariates, calibrated confidence intervals that reduce inferential error, and improved predictive performance.  Though we understand these goals are not always central to every political scientists aim, we do believe they relate closely to the field of IR (as demonstrated by the studies we replicate) and a growing interest in forecasting and machine learning in Political Science. (CITE?) [add reference to DGM JOP in which AME beat random forest]
+		\item For part (a), we have clarified that our study does not address causal identification. We instead focuses on providing unbiased estimates of covariates, which improves inference for observational data.
+		\item As for (b), the reviewer raises an important point. How well does AME work out when the DGP does not abide by parametric assumptions...relates to SM's to-do below.
 		\item Finally, we understand these goals are not always central political science research, but we believe that prediction is both a valuable metric to evaluate model performance as well as a goal for scholars in and of itself, as in \citet{people}.
 		}}
 	\end{itemize}
