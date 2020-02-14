@@ -9,15 +9,16 @@
 	\end{itemize}
 	\item The paper shows that the AME model performs well in comparison to the “oracle” model where all sources of dependencies in the data are accounted for, which is reassuring. Yet this comparison feels incomplete. First, the naive model is clearly misspecified given the underlying data generating process. A large number of dependencies in international relations are linked to geography. What would happen if the dependencies were modeled using spatial econometric techniques?
 	\begin{itemize}
-		\item \textcolor{blue}{ \emph{
+\item \textcolor{blue}{ \emph{
+The reviewer raises an important connection to the spatial literature. The types of geographic dependencies in international relations are generally monadic in nature -- civil war spreads from Rwanda to Uganda, or protest from Lebanon to Syria. With dyadic data, however, we cannot use the common geographic adjacency matrices used for normal spatial econometrics, because in dyadic data a W matrix would need to specify how dyad i,j relates to dyad k,l (for every i,j,k,l). In an effort to speak to other known approaches in the literature, we compare our model via simulations to a number of other methods of dealing with dependencies, notably LIST THEM. In the simulation, we do not include a spatial lag model because this would require specifying a spatial dependence pattern (see \citet{plumper:neumayer:2010} for a more in-depth discuss on spatial lags). 
+}}
+
 %		CDMG: Flag for discussion. We brainstormed how to fit this into the simulation, but wouldn't simulating a W matrix be a bit arbitrary here?
 %		Reference papers that have thought about what happens when we get the wrong W
 %		general gist .. spatial models of dyadic dvs are great if we know how to characterize the diffusion amtrices, but the point of our approach is that we may not know how to actually characterize the ways in which actors are related to one another on some diffusion space.
 %		reference franzesse et al mstar framework as a way to operationalize multiple pathways of diffusion in a spatial econometric approach
-In the appendix, we compare our models approach in simulations to a number of other methods of dealing with dependencies, notably LIST THEM. In the simulation, we do not include a spatial lag model because this would require specifying a spatial dependence pattern. Further, spatial lags are likely to be particularly complex in the cases of dyadic data because we would need an appropriate measure of dyadic similarity (see \citet{plumper:neumayer:2010}). 
 
-NOTE TO US: Reading this Q again, do they want us to redo the simulation such that the variance is coming from spatial stuff?
-		}}
+		
 	\end{itemize}
 	\item It would help if the author discussed in more depth the properties of the AME estimator in the presence of unobserved dependencies. One would imagine that the oracle model, where all the unobserved factors and dependencies are accounted for should always outperform a parametric or semi-parametric estimator. Relatedly, it also would help to have a more technical discussion of the properties of AME models, particularly in terms of the bias-variance trade off.
 	\begin{itemize}
