@@ -1,4 +1,4 @@
-\begin{thebibliography}{37}
+\begin{thebibliography}{38}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \expandafter\ifx\csname selectlanguage\endcsname\relax
   \def\selectlanguage#1{\relax}\fi
@@ -58,9 +58,9 @@ Block, Per, Stadtfeld, Christoph, and Snijders, Tom~A.B. 2017.
 
 \bibitem[\protect\citename{Chyzh, }2016]{chyzh:2016}
 Chyzh, Olga. 2016.
-\newblock  \titlecap{Keeping up with which {J}oneses: {S}patial diffusion of
-  rule of law through economic international organizations.}
-\newblock {\em Foreign Policy Analysis}, {\bf 13}(1), 28--49.
+\newblock  \titlecap{Dangerous liaisons: {A}n endogenous model of international
+  trade and human rights.}
+\newblock {\em Journal of Peace Research}, {\bf 53}, tbd.
 
 \bibitem[\protect\citename{Davis and Goadrich, }2006]{davis:goadrich:2006}
 Davis, Jesse, and Goadrich, Mark. 2006.
@@ -77,10 +77,10 @@ Dorff, Cassy, and Minhas, Shahryar. 2017.
   Sanction Compliance.}
 \newblock {\em International Interactions}, {\bf 43}(4), 563--588.
 
-\bibitem[\protect\citename{Dorff {et~al.}, }2020]{dorff:etal:2020}
-Dorff, Cassy, Gallop, Max, and Minhas, Shahryar. 2020.
-\newblock  \titlecap{Networks of Violence: Predicting Conflict in Nigeria.}
-\newblock {\em The Journal of Politics}, {\bf 82}(2).
+\bibitem[\protect\citename{Dorff {et~al.}, }Forthcoming]{dorff:etal:2020}
+Dorff, Cassy, Gallop, Max, and Minhas, Shahryar. Forthcoming.
+\newblock  \titlecap{Networks of violence: Predicting Conflict in Nigeria.}
+\newblock {\em Journal of Politics}.
 
 \bibitem[\protect\citename{Erikson {et~al.}, }2014]{erikson:pinto:2014}
 Erikson, Robert~S., Pinto, Pablo~M., and Rader, Kelly~T. 2014.
@@ -161,6 +161,12 @@ Maoz, Zeev. 2009.
 \newblock  \titlecap{The Effects of Strategic and Economic Interdependence on
   International Conflict Across Levels of Analysis.}
 \newblock {\em American Journal of Political Science}, {\bf 53}(1), 223--240.
+
+\bibitem[\protect\citename{Minhas {et~al.}, }2019]{minhas:etal:2019}
+Minhas, Shahryar, Hoff, Peter~D., and Ward, Michael~D. 2019.
+\newblock  \titlecap{Inferential Approaches for Network Analysis: AMEN for
+  Latent Factor Models.}
+\newblock {\em Political Analysis}, {\bf 27}(2), 208--222.
 
 \bibitem[\protect\citename{Mucha {et~al.}, }2010]{mucha:etal:2010}
 Mucha, Peter~J., Richardson, Thomas, Macon, K., Porter, Mason~A., and Onnela,
