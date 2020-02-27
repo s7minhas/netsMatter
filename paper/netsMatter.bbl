@@ -1,4 +1,4 @@
-\begin{thebibliography}{38}
+\begin{thebibliography}{39}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 \expandafter\ifx\csname selectlanguage\endcsname\relax
   \def\selectlanguage#1{\relax}\fi
@@ -185,6 +185,13 @@ Peceny, Mark, Beer, Caroline~C., and Sanchez-Terry, Shannon. 2002.
 \newblock  \titlecap{Identifying the Culprit: {D}emocracy, Dictatorship, and
   Dispute Initiation.}
 \newblock {\em American Political Science Review}, {\bf 96}(1), 15--26.
+
+\bibitem[\protect\citename{Pl\"umper and Neumayer,
+  }2010]{plumper:neumayer:2010}
+Pl\"umper, Thomas, and Neumayer, Eric. 2010.
+\newblock  \titlecap{{Model specification in the analysis of spatial
+  dependence}.}
+\newblock {\em European Journal of Political Research}, {\bf 49}(3), 418--442.
 
 \bibitem[\protect\citename{Reiter and Stam, }2003]{reiter:stam:2003}
 Reiter, Dan, and Stam, Allan~C. 2003.
