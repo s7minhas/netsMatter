@@ -74,10 +74,10 @@ devtools::install_github('s7minhas/amen') ; library(amen)
 resultsPath = 'resultsPath'
 
 ## running in parallel varying k
-imps = 10000  # number of interations in MCMC
+imps = 10000  # number of interations in the MCMC chain
 brn =  2500   # number of burn-in
-ods = 10   
-latDims = 0:3 # dimension of latent space (search up to 3 dimension  is suggested)
+ods = 1       # number of thinning in the MCMC chain 
+latDims = 0:3 # dimension of latent space (search up to 3 dimension is suggested)
 seed=6886 # set your model seed
 
 ## load resuls from previous model run if needed
