@@ -9,7 +9,7 @@
 rm(list=ls())
 
 ## setup working directory
-setwd('yourPath')
+setwd('code/reiter_stam_2003')
 
 ## load libraries
 packs = c('dplyr', 'ggplot2', 'foreign', 'readr', 'lmtest','magrittr')
