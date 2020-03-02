@@ -6,6 +6,11 @@ if(Sys.info()['user']=='s7m'){
 	simResPath = paste0(dPath, 'simulation/')
 	graphicsPath = paste('~/Research/netsMatter/paper/')
 	source(paste0(fPath, 'functions.R')) }
+if(Sys.info()['user']=='maxgallop'){
+  fPath = '~/Documents/netsMatter/code/helpers/'
+  dPath = '~/Dropbox/netsMatter/'
+  simResPath = paste0(dPath, 'simulation/')
+  source(paste0(fPath, 'functions.R')) }
 
 if(Sys.info()['user']=='herme' | 'Owner'){
 	user=Sys.info()['user']

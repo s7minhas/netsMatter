@@ -7,6 +7,12 @@ if(Sys.info()['user']=='s7m'){
 	simResPath = paste0(dPath, 'simulation/')
 	source(paste0(fPath, 'functions.R')) }
 
+if(Sys.info()['user']=='maxgallop'){
+  fPath = '~/Documents/netsMatter/code/helpers/'
+  dPath = '~/Dropbox/netsMatter/'
+  simResPath = paste0(dPath, 'simulation/')
+  source(paste0(fPath, 'functions.R')) }
+
 if(Sys.info()['user']=='herme' | 'Owner'){
 	user=Sys.info()['user']
 	base = paste0('C:/Users/',user,'/')
@@ -44,7 +50,7 @@ imp=1
 	XW = array(dim=c(n,n,2)) ; XW[,,1] = X ; XW[,,2] = W
 
 	# create DV
-	Y<- 1*(mu + beta*X + gamma*W + matrix(rnorm(n*n),n,n) >0)
+	Y<- 1*(mu + beta*X  + matrix(rnorm(n*n),n,n) >0)
 
 	# run AME models
 	fit0 = ame(Y,X,R=0,rvar=FALSE,cvar=FALSE,dcor=FALSE,model='bin',
@@ -145,5 +151,6 @@ ameSim100 = foreach(imp = 1:imps,
 save( ameSim100, file=paste0(simResPath, 'ameSim100.rda') )
 
 
-save(ameSim50, ameSim100, file=paste0(simResPath, 'ameSim.rda'))
+save(ameSim50, ameSim100, file=paste0(simResPath, 'ameSimNoW.rda'))
 ##############################
+save(fit0, fit1, file = "noWsim.rda")
