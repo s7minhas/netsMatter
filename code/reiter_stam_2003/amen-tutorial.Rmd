@@ -234,7 +234,8 @@ foreach(ii=1:length(latDims), .packages=c("amen")) %dopar% {
     plot=FALSE, print=FALSE, gof=TRUE,
     periodicSave=TRUE) 	
   
-  save(ameFit, file=paste0(resultsPath, 'model_k', latDims[ii],'_v1.rda') ) # save the output of your data
+  save(ameFit, file=paste0(resultsPath, 'model_k', latDims[ii],'_v1.rda') ) 
+  # save the output of your data
 }
 
 ## terminate parallel sockets
