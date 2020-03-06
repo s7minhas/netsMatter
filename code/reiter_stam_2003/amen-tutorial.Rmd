@@ -30,7 +30,7 @@ Let's load the data below and look at it.
 ```{r load-data, cache=TRUE}
 ## read data and add variables
 data = read_dta('/Users/dorffc/Dropbox/Research/nothingbutnet/netsMatter/replications/Reiter_Stam_2003/input/doublereduce.dta')
-head(data)
+#data = read_dta('/Users/JuamnTellez/Dropbox/papers/netsMatter/replications/Reiter_Stam_2003/input/doublereduce.dta')
 ```
 
 For this tutorial, we only want the subset of the variables that were in the original analysis, and then we want to drop missing observations. 
@@ -196,7 +196,8 @@ devtools::install_github('s7minhas/amen') ; library(amen)
 library(doParallel) ; library(foreach)
 
 ## setup result output directory
-resultsPath = '/Users/JuamnTellez/Dropbox/papers/netsMatter/replications/Reiter_Stam_2003/output/'
+#resultsPath = '/Users/JuamnTellez/Dropbox/papers/netsMatter/replications/Reiter_Stam_2003/output/'
+resultsPath = '/Users/dorffc/Dropbox/Research/nothingbutnet/netsMatter/replications/Reiter_Stam_2003/output/'
 ```
 
 
@@ -221,7 +222,7 @@ The key function here is `ame_repL` which fits the model. We wrap the whole func
 
 ```{r run-amen, eval=FALSE}
 ## select number of cores to locate
-cl=makeCluster(4) ; registerDoParallel(cl) # number of clusters depends 
+cl=makeCluster(6) ; registerDoParallel(cl) # number of clusters depends 
 ## on how many cores your computer or cluster has
 
 foreach(ii=1:length(latDims), .packages=c("amen")) %dopar% {
