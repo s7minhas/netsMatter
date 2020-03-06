@@ -3,8 +3,8 @@ title: "AMEN tutorial"
 author: "Juan Tellez"
 date: "2/27/2020"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -188,7 +188,7 @@ Given the computational intensity needed for parameter estimates to converge, pa
 
 Below, we load the library, and in `resultsPath` we set a path to store results. 
 
-```{r load-amen, eval=FALSE}
+```{r load-amen, eval=TRUE}
 ## load most updated amen package
 devtools::install_github('s7minhas/amen') ; library(amen)
 
@@ -291,18 +291,18 @@ stopCluster(cl)
 Once we are satisfied that the model has converged, we can do posterior analysis to examine our parameter estimates. Below we load the results from the `AMEN` run. Simplicity, we only load results from $R = 0$. 
 
 
-```{r load-posterior, eval=FALSE}
+```{r load-posterior, eval=TRUE}
 ## load model fits from 0 to 3 dimensions
-load( paste0(resultsPath,'ameFit_k0.rda') ) ; ameFit_k0=ameFit
-# load( paste0(resultsPath,'ameFit_k1.rda') ) ; ameFit_k1=ameFit
-# load( paste0(resultsPath,'ameFit_k2.rda') ) ; ameFit_k2=ameFit
-# load( paste0(resultsPath,'ameFit_k3.rda') ) ; ameFit_k3=ameFit
+load( paste0(resultsPath,'model_k0_v12.rda') ) ; ameFit_k0=ameFit
+# load( paste0(resultsPath,'model_k1_v12.rda') ) ; ameFit_k1=ameFit
+# load( paste0(resultsPath,'model_k2_v12.rda') ) ; ameFit_k2=ameFit
+# load( paste0(resultsPath,'model_k3_v12.rda') ) ; ameFit_k3=ameFit
 ```
 
 
 We can look at goodness of fit (GOF) statistics with the following: 
 
-```{r amen-gof, eval=FALSE}
+```{r amen-gof, eval=TRUE}
 ## check out goodness of fit stats in posterior estimate for each dimension
 amen::gofPlot(ameFit_k0$GOF, symmetric = TRUE)
 ```
@@ -310,7 +310,7 @@ amen::gofPlot(ameFit_k0$GOF, symmetric = TRUE)
 
 We can also summarize the distribution of our beta parameters, below, using the `summStats` function which returns the mean, median, standard deviation, 95\%, and 99\% credible intervals: 
 
-```{r beta-params, eval=FALSE}
+```{r beta-params, eval=TRUE}
 ## check out beta parameters (posterior estimates for coefficients) 
 ## and convergence for each dimension
 summStats = function(x){
@@ -318,19 +318,18 @@ summStats = function(x){
   res=c(mu=mean(x),med=median(x),sd=sd(x),quantile(x,probs=c(0.025,0.05,0.95,0.975))) 
   round(res, 3)
 }
-apply(ameFit_k0$BETA, 2, summStats) %>% t() %>% nrow()
+apply(ameFit_k0$BETA, 2, summStats) %>% t() 
 ```
-
 
 We can also verify that parameters have converged for sender and receiver effects with the code below: 
 
-```{r beta-converge, eval=FALSE}
+```{r beta-converge, eval=TRUE}
 betaIndices<-split(1:ncol(ameFit_k0$BETA), ceiling(seq_along(1:ncol(ameFit_k0$BETA))/5))
 ```
 
 And finally make plots to assess the converge of parameters:
 
-```{r plot-converge, eval=FALSE}
+```{r plot-converge, eval=TRUE}
 ## plot the parameters convergence using dimension k=0
 for(bIndex in betaIndices){ amen::paramPlot( ameFit_k0$BETA[,bIndex,drop=FALSE] ) }
 amen::paramPlot(ameFit_k0$VC)
