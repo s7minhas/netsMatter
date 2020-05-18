@@ -29,18 +29,15 @@
 	\begin{itemize}
 		\item This is another example of language that is too causal and imprecise, like the opening paragraph. What are “parameter estimates from standard statistical models”?  And “biased” with respect to what target of inference? Again, I think the authors have in mind “bias” with respect to parameters that are meant to have a particular structural interpretation, but this needs to be clarified.
 		\item Generally, section 2 should be clearer in motivating the problem.  Provide us with a toy example that illustrates the kind of “bias” that the paper has in mind from “standard models”.  For me at least, after reading section 2 I still wasn’t sure what problem the paper is actually trying to address.
-		\item \textcolor{blue}{ \emph{ MG/CD: We think the reviewer makes a good suggestion here to clarify, mathematically or in some other illustrative way, exactly how we think that dependencies bias the estimator. For example we can say that our target of inference is the estimation of beta (with some variance). If a coefficient is correlated with a dependency, then we could obtain an estimate for beta that is artificially high (and the same is true for the reverse).}}
-	\begin{itemize}
-	\item  \textcolor{blue}{ \emph{ What we think: True DGP: $Y = B0 + XB1 + a + b +$ 3rd order stuff + e
-	\item What most do: $Y = \hat{B0} + X\hat{B1} + e$
-	\item Something like if we have dependencies then $E(\hat{B1}) = E(B1) + cov(B1,$ other stuff)
-	\item SM: needs to add more here to indicate how the existing simulation section is meant to deal with this issue ... onus is on SM to bring in the problems that we highlight in the simulation section to section 2, so readers are clearer on the problem that we are trying to address
+		\item \textcolor{blue}{ \emph{ We think the reviewer makes a good suggestion here to clarify, mathematically or in some other illustrative way, exactly how we think that dependencies bias the estimator. For example we can say that our target of inference is the estimation of beta (with some variance). If a coefficient is correlated with a dependency, then we could obtain an estimate for beta that is artificially high (and the same is true for the reverse).
+		}}
+	\item \textcolor{blue}{ \emph{ Additionally, we have SM: needs to add more here to indicate how the existing simulation section is meant to deal with this issue ... onus is on SM to bring in the problems that we highlight in the simulation section to section 2, so readers are clearer on the problem that we are trying to address
 	}}
 	\end{itemize}
 \end{itemize}
 	\item P7: Regarding the specification, this augments a dyadic random effects model, which is quite common, with  the LFM component, which resembles an interactive fixed effects specification (cf. Bai 2009, Ecta) and is based on an SVD factorization of the observed network.
 	\begin{itemize}
-		\item It is useful to think of the infeasible estimator and the implications for interpreting the LFM component.  The infeasible estimator takes the transformation f(.), fixed effects parameters, and SRRM random effects as know, in which case the LFM amounts to predictions from a factor model fit to the adjacency matrix of residuals on the scale of the latent outcome.  Would this be a reasonable interpretation? If so it would be useful to draw the connection to factor models commonly in use these days (such as the interactive fixed effects model of Bai, which is the basis of, e.g., generalized synthetic control methods).
+		\item It is useful to think of the infeasible estimator and the implications for interpreting the LFM component.  The infeasible estimator takes the transformation f(.), fixed effects parameters, and SRRM random effects as known, in which case the LFM amounts to predictions from a factor model fit to the adjacency matrix of residuals on the scale of the latent outcome.  Would this be a reasonable interpretation? If so it would be useful to draw the connection to factor models commonly in use these days (such as the interactive fixed effects model of Bai, which is the basis of, e.g., generalized synthetic control methods).
 	\end{itemize}
 	\begin{itemize}
 		\item \textcolor{blue}{ \emph{
@@ -55,8 +52,9 @@
 	\end{itemize}
 	\begin{itemize}
 		\item  \emph{\textcolor{blue}{
-For part (a), we have clarified that our study does not address causal identification. We instead focus on providing unbiased estimates of covariates, which improve inference for observational data. We have clarified the goals of the paper in the earlier sections (such as the opening paragraph of page 1) and have also edited P8 to read: ``Non-iid observations in relational data result from the fact that there is a complex structure underlying the dyadic events or processes that we observe." }}
-		\item \emph{\textcolor{blue}{As for (b), the reviewer raises an important point. How well does AME work out when the DGP does not abide by parametric assumptions? We address this in the section concerning the simulation and Aronow's approach. \textbf{SM we need to add more here}}} 
+			For part (a), we have clarified that our study does not address causal identification. We instead focus on providing unbiased estimates of covariates, which improve inference for observational data. We have clarified the goals of the paper in the earlier sections (such as the opening paragraph of page 1) and have also edited P8 to read: ``Non-iid observations in relational data result from the fact that there is a complex structure underlying the dyadic events or processes that we observe." }}
+		\item \emph{\textcolor{blue}{
+			As for (b), the reviewer raises an important point. How well does AME work out when the DGP does not abide by parametric assumptions? We address this in the section concerning the simulation and Aronow's approach. }}
 		\item \emph{\textcolor{blue}{Finally, we understand these goals are not always central to political science research, but we believe that prediction is both a valuable metric to evaluate model performance as well as a goal for scholars in and of itself, as in Gleditsch and Ward 2013; Grimmer 2015; Neunhoeffer and Sternberg 2019; Colaresi and Mahmood 2017; and Mueller and Rauh 2018 among others.}
 		}
 	\end{itemize}
