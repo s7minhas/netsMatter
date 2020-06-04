@@ -7,7 +7,7 @@
 	\end{itemize}
 	\begin{itemize}
 		\item  \emph{ \textcolor{blue}{
-		We have clarified our language in the paper (on page 1) to address this question.  Strategies like those employed by Aronow et al. do not directly model all relevant dependencies in the data but instead adjust the variance estimator.\footnote{As Aronow et al. explain, “Of course, accounting for dynamic dyadic clustering may fail to fully account for all relevant dependencies in the data." p. 16.}   While such an approach decreases the risk of a type 1 error, it increases risk of type 2 error (if the mean estimate is biased downwards, increasing the variance estimate will lead us to falsely accept the null). The main aim of our research is to directly account for the relevant dependency structures in the data, thus providing an accurate estimate and addressing both types of possible errors.
+		We thank the reviewer for taking the time to provide these valuable comments. We have clarified our language in the paper (on page 1) to address this question.  Strategies like those employed by Aronow et al. do not directly model all relevant dependencies in the data but instead adjust the variance estimator. As Aronow et al. explain, "Of course, accounting for dynamic dyadic clustering may fail to fully account for all relevant dependencies in the data" (p. 16).   While such an approach decreases the risk of a type 1 error, it increases risk of type 2 error (if the mean estimate is biased downwards, increasing the variance estimate will lead us to falsely accept the null). The main aim of our research is to directly account for the relevant dependency structures in the data, thus providing an accurate estimate and addressing both types of possible errors.
 		}}
 		%\item \textcolor{blue}{ \emph{
 		%Aronow et al. also explicitly note that their approach does not deal with issues of third order dependence.
@@ -31,7 +31,7 @@
 		\item Generally, section 2 should be clearer in motivating the problem.  Provide us with a toy example that illustrates the kind of “bias” that the paper has in mind from “standard models”.  For me at least, after reading section 2 I still wasn’t sure what problem the paper is actually trying to address.
 		\item \textcolor{blue}{ \emph{ We think the reviewer makes a good suggestion here to clarify, mathematically or in some other illustrative way, exactly how we think that dependencies bias the estimator. For example we can say that our target of inference is the estimation of beta (with some variance). If a coefficient is correlated with a dependency, then we could obtain an estimate for beta that is artificially high (and the same is true for the reverse).
 		}}
-	\item \textcolor{blue}{ \emph{ Additionally, we have SM: needs to add more here to indicate how the existing simulation section is meant to deal with this issue ... onus is on SM to bring in the problems that we highlight in the simulation section to section 2, so readers are clearer on the problem that we are trying to address
+		\item \textcolor{blue}{ \emph{ Additionally, we have added language motivating whatn is to come in the simulation section.
 	}}
 	\end{itemize}
 \end{itemize}
@@ -41,6 +41,7 @@
 	\end{itemize}
 	\begin{itemize}
 		\item \textcolor{blue}{ \emph{
+		We thank the reviewer for providing this reference and have added discussion of this alternative to the manuscript.
 		SM insert great response.
 		paper by Bai: https://sci-hub.tw/https://onlinelibrary.wiley.com/doi/10.3982/ECTA6135
 		connection between LFM and interactive fixed effects?
