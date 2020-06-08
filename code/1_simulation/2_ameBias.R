@@ -7,12 +7,6 @@ if(Sys.info()['user']=='s7m'){
 	graphicsPath = paste('~/Research/netsMatter/paper/')
 	source(paste0(fPath, 'functions.R')) }
 
-if(Sys.info()['user']=='maxgallop'){
-  fPath = '~/Documents/netsMatter/code/helpers/'
-  dPath = '~/Dropbox/netsMatter/'
-  simResPath = paste0(dPath, 'simulation/')
-  source(paste0(fPath, 'functions.R')) }
-
 if(Sys.info()['user'] %in% c('herme','Owner','S7M')){
 	base=paste0('C:/Users/',Sys.info()['user'],'/')
 	gPath = paste0(base, 'Research/netsMatter/')
