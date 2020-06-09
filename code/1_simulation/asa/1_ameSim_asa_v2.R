@@ -21,12 +21,11 @@ toLoad = c(
 	'foreach', 'doParallel',
 	'magrittr', 'dplyr', 'ggplot2' )
 loadPkg(toLoad)
-devtools::install_github('s7minhas/amen')
 library(amen)
 ##############################
 
 n= 50
-seed=1
+seed=6886
 mu=1
 beta=1
 gamma=.25
@@ -63,7 +62,7 @@ gamma=.25
 
 	# specify Y
 	dX2 = dX^2
-	dY <- mu*da + beta*dX + gamma*dX2 + rnorm(P)
+	dY <- 1 + mu*da + beta*dX + gamma*dX2 + rnorm(P)
 
 	# create df
 	dataUp <- data.frame(
@@ -74,7 +73,7 @@ gamma=.25
 	)
 	##############
 
-	##############
+	##############s
 	### build data for ame
 	## create adj mat representation of y and x
 	actors = unique(c(dataUp$dyad1, dataUp$dyad2))
@@ -83,8 +82,9 @@ gamma=.25
 		nrow=n, ncol=n,
 		dimnames=list(actors, actors) )
 	xMatrix = array(NA,
-		dim=c(n,n,3),
-		dimnames=list(actors, actors, c('da','dX','dX2')) )
+		dim=c(n,n, 3),
+		dimnames=list(actors, actors, c(
+			'da', 'dX','dX2')) )
 
 	# iterate through data and fill in adjMats
 	for(iii in 1:nrow(dataUp)){
@@ -108,36 +108,37 @@ gamma=.25
 
 	##############
 	# run AME models
-	fit0 = ame(
-		yMatrix,xMatrix[,,'dX',drop=FALSE],
-		R=0,rvar=FALSE,cvar=FALSE,symmetric=TRUE,model='nrm',
-		print=FALSE,plot=FALSE)
-	fit1 = ame(
-		yMatrix,xMatrix[,,'dX',drop=FALSE],
-		R=1,rvar=TRUE,cvar=TRUE,symmetric=TRUE,model='nrm',
-		print=FALSE,plot=FALSE)
-	fit2 = ame(
-		yMatrix,xMatrix[,,'dX',drop=FALSE],
-		R=2,rvar=TRUE,cvar=TRUE,symmetric=TRUE,model='nrm',
-		print=FALSE,plot=FALSE)
-	fit4 = ame(
-		yMatrix,xMatrix[,,'dX',drop=FALSE],
-		R=4,rvar=TRUE,cvar=TRUE,symmetric=TRUE,model='nrm',
-		print=FALSE,plot=FALSE)
-	fit8 = ame(
-		yMatrix,xMatrix[,,'dX',drop=FALSE],
-		R=8,rvar=TRUE,cvar=TRUE,symmetric=TRUE,model='nrm',
-		print=FALSE,plot=FALSE)
-	fitO = ame(
-		yMatrix,xMatrix,
-		R=0,rvar=TRUE,cvar=TRUE,symmetric=TRUE,model='nrm',
-		print=FALSE,plot=FALSE)
+	params = list(
+		list(0, 1, 0),
+		list(
+			xMatrix[,,'dX',drop=FALSE],
+			xMatrix[,,'dX',drop=FALSE],
+			xMatrix
+		),
+		list(FALSE, TRUE, FALSE)
+	)
+
+cores = length(params[[1]])
+cl=makeCluster(cores)  ; registerDoParallel(cl)
+ameSim50 = foreach(par = 1:cores, .packages=c('amen')) %dopar% {
+
+	k=params[[1]][[par]]
+	X=params[[2]][[par]]
+	nVar=params[[3]][[par]]
+
+	fit = ame(
+		yMatrix,X,
+		R=k,rvar=nVar,cvar=nVar,nvar=nVar,symmetric=TRUE,model='nrm',
+		print=FALSE,plot=FALSE)$BETA
+	return(fit)
+	}
+	stopCluster(cl)
+	lapply(ameSim50, function(x){apply(x, 2, mean)})
 	##############
 
 	# gather together results
 	beta = list(naive=fit0$BETA,
-		ame1=fit1$BETA, ame2=fit2$BETA,
-		ame4=fit4$BETA, ame8=fit8$BETA,
+		ame1=fit1$BETA,
 		oracle=fitO$BETA)
 	lapply(beta, function(x){apply(x,2,mean)})
 	uv = list(naive=fit0$UVPM, ame=fit1$UVPM, oracle=fitO$UVPM)
