@@ -116,17 +116,17 @@ simRun = function(seed, n, mu, beta, gamma){
 	fit0 = ame(
 		yMatrix,xMatrix[,,'dX',drop=FALSE],
 		R=0,rvar=FALSE,cvar=FALSE,nvar=FALSE,symmetric=TRUE,model='bin',
-		print=FALSE,plot=FALSE)$BETA
+		print=FALSE,plot=FALSE)
 
 	fit1 = ame(
 		yMatrix,xMatrix[,,'dX',drop=FALSE],
 		R=1,rvar=TRUE,cvar=TRUE,nvar=TRUE,symmetric=TRUE,model='bin',
-		print=FALSE,plot=FALSE)$BETA
+		print=FALSE,plot=FALSE)
 
 	fitO = ame(
 		yMatrix,xMatrix,
 		R=0,rvar=FALSE,cvar=FALSE,nvar=FALSE,symmetric=TRUE,model='bin',
-		print=FALSE,plot=FALSE)$BETA
+		print=FALSE,plot=FALSE)
 	##############
 
 	# gather together results
