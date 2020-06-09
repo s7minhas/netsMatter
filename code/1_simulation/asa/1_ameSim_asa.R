@@ -102,16 +102,6 @@ simRun = function(seed, n, gMu, mu, beta, gamma){
 
 	##############
 	# run AME models
-	params = list(
-		list(0, 1, 0),
-		list(
-			xMatrix[,,'dX',drop=FALSE],
-			xMatrix[,,'dX',drop=FALSE],
-			xMatrix
-		),
-		list(FALSE, TRUE, FALSE)
-	)
-
 	fit0 = ame(
 		yMatrix,xMatrix[,,'dX',drop=FALSE],
 		R=0,rvar=FALSE,cvar=FALSE,nvar=FALSE,symmetric=TRUE,model='nrm',
@@ -134,13 +124,13 @@ simRun = function(seed, n, gMu, mu, beta, gamma){
 	u = list(naive=fit0$U, ame=fit1$U, oracle=fitO$U)
 	v = list(naive=fit0$V, ame=fit1$V, oracle=fitO$V)
 	gof = list(naive=fit0$GOF, ame=fit1$GOF, oracle=fitO$GOF)
-	out = list(beta=beta, uv=uv, u=u, v=v, W=W, gof=gof)
+	out = list(beta=beta, uv=uv, u=u, v=v, W=X2, gof=gof)
 	return(out) }
 ##############################
 
 ##############################
 # params
-imps = 1000 ; cores = 30
+imps = 100 ; cores = 10
 
 #
 cl=makeCluster(cores) ; registerDoParallel(cl)
