@@ -24,15 +24,9 @@ loadPkg(toLoad)
 library(amen)
 ##############################
 
-n= 50
-seed=6886
-mu=1
-beta=1
-gamma=.25
-
 ##############################
 ### Homophily
-# simRun = function(seed, n, mu, beta, gamma){
+simRun = function(seed, n, mu, beta, gamma){
 
 	##############
 	# pull data gen code directly from asa
@@ -63,6 +57,7 @@ gamma=.25
 	# specify Y
 	dX2 = dX^2
 	dY <- 1 + mu*da + beta*dX + gamma*dX2 + rnorm(P)
+	dY = 1*(dY>0)
 
 	# create df
 	dataUp <- data.frame(
@@ -118,29 +113,24 @@ gamma=.25
 		list(FALSE, TRUE, FALSE)
 	)
 
-cores = length(params[[1]])
-cl=makeCluster(cores)  ; registerDoParallel(cl)
-ameSim50 = foreach(par = 1:cores, .packages=c('amen')) %dopar% {
-
-	k=params[[1]][[par]]
-	X=params[[2]][[par]]
-	nVar=params[[3]][[par]]
-
-	fit = ame(
-		yMatrix,X,
-		R=k,rvar=nVar,cvar=nVar,nvar=nVar,symmetric=TRUE,model='nrm',
+	fit0 = ame(
+		yMatrix,xMatrix[,,'dX',drop=FALSE],
+		R=0,rvar=FALSE,cvar=FALSE,nvar=FALSE,symmetric=TRUE,model='bin',
 		print=FALSE,plot=FALSE)$BETA
-	return(fit)
-	}
-	stopCluster(cl)
-	lapply(ameSim50, function(x){apply(x, 2, mean)})
+
+	fit1 = ame(
+		yMatrix,xMatrix[,,'dX',drop=FALSE],
+		R=1,rvar=TRUE,cvar=TRUE,nvar=TRUE,symmetric=TRUE,model='bin',
+		print=FALSE,plot=FALSE)$BETA
+
+	fitO = ame(
+		yMatrix,xMatrix,
+		R=0,rvar=FALSE,cvar=FALSE,nvar=FALSE,symmetric=TRUE,model='bin',
+		print=FALSE,plot=FALSE)$BETA
 	##############
 
 	# gather together results
-	beta = list(naive=fit0$BETA,
-		ame1=fit1$BETA,
-		oracle=fitO$BETA)
-	lapply(beta, function(x){apply(x,2,mean)})
+	beta = list(naive=fit0$BETA, ame1=fit1$BETA, oracle=fitO$BETA)
 	uv = list(naive=fit0$UVPM, ame=fit1$UVPM, oracle=fitO$UVPM)
 	u = list(naive=fit0$U, ame=fit1$U, oracle=fitO$U)
 	v = list(naive=fit0$V, ame=fit1$V, oracle=fitO$V)
@@ -151,35 +141,19 @@ ameSim50 = foreach(par = 1:cores, .packages=c('amen')) %dopar% {
 
 ##############################
 # params
-imps = 1000 ; cores = 21
-intEff=-2 ; x1Eff=1 ; x2Eff=1
-n= 50
-seed=1
-mu=1
-beta=1
-gamma=.25
-
-#
-cl=makeCluster(cores) ; registerDoParallel(cl)
-ameSim30 = foreach(imp = 1:imps, .packages=c('amen')) %dopar% {
-	out=simRun(seed=imp, n=30, mu=intEff, beta=x1Eff, gamma=x2Eff)
-	return(out) }  ; stopCluster(cl)
-save( ameSim30, file=paste0(simResPath, 'ameSim30_asa.rda') )
+imps = 1000 ; cores = 30
 
 #
 cl=makeCluster(cores) ; registerDoParallel(cl)
 ameSim50 = foreach(imp = 1:imps, .packages=c('amen')) %dopar% {
-	out=simRun(seed=imp, n=50, mu=intEff, beta=x1Eff, gamma=x2Eff)
+	out=simRun(seed=imp, n=50, gMu=1, mu=1, beta=1, gamma=.25)
 	return(out) } ; stopCluster(cl)
-save( ameSim50, file=paste0(simResPath, 'ameSim50_asa.rda') )
+save( ameSim50, file=paste0(simResPath, 'ameSim50_asa_probit.rda') )
 
 #
 cl=makeCluster(cores) ; registerDoParallel(cl)
 ameSim100 = foreach(imp = 1:imps, .packages=c('amen')) %dopar% {
-	out=simRun(seed=imp, n=100, mu=intEff, beta=x1Eff, gamma=x2Eff)
+	out=simRun(seed=imp, n=100, gMu=1, mu=1, beta=1, gamma=.25)
 	return(out) } ; stopCluster(cl)
-save( ameSim100, file=paste0(simResPath, 'ameSim100_asa.rda') )
-
-
-save(ameSim30, ameSim50, ameSim100, file=paste0(simResPath, 'ameSim_asa.rda'))
+save( ameSim100, file=paste0(simResPath, 'ameSim100_asa_probit.rda') )
 ##############################
