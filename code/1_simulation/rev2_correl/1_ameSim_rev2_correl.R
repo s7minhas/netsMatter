@@ -74,43 +74,9 @@ intEff=-2 ; x1Eff=1 ; x2Eff=1
 ###############
 #
 cl=makeCluster(cores)  ; registerDoParallel(cl)
-ameSim30 = foreach(imp = 1:imps, .packages=c('amen')) %dopar% {
-	out=simRun(
-    seed=imp, n=30, mu=intEff, beta=x1Eff, gamma=x2Eff, rho=.01)
-	return(out) }  ; stopCluster(cl)
-save( ameSim30, file=paste0(simResPath, 'ameSim30_corrLo.rda') )
-
-#
-cl=makeCluster(cores)  ; registerDoParallel(cl)
 ameSim50 = foreach(imp = 1:imps, .packages=c('amen')) %dopar% {
 	out=simRun(
-    seed=imp, n=50, mu=intEff, beta=x1Eff, gamma=x2Eff, rho=.01)
-	return(out) } ; stopCluster(cl)
-save( ameSim50, file=paste0(simResPath, 'ameSim50_corrLo.rda') )
-
-#
-cl=makeCluster(cores)  ; registerDoParallel(cl)
-ameSim100 = foreach(imp = 1:imps, .packages=c('amen')) %dopar% {
-	out=simRun(
-    seed=imp, n=100, mu=intEff, beta=x1Eff, gamma=x2Eff, rho=.01)
-	return(out) } ; stopCluster(cl)
-save( ameSim100, file=paste0(simResPath, 'ameSim100_corrLo.rda') )
-###############
-
-###############
-#
-cl=makeCluster(cores)  ; registerDoParallel(cl)
-ameSim30 = foreach(imp = 1:imps, .packages=c('amen')) %dopar% {
-	out=simRun(
-    seed=imp, n=30, mu=intEff, beta=x1Eff, gamma=x2Eff, rho=.2)
-	return(out) }  ; stopCluster(cl)
-save( ameSim30, file=paste0(simResPath, 'ameSim30_corrMed.rda') )
-
-#
-cl=makeCluster(cores)  ; registerDoParallel(cl)
-ameSim50 = foreach(imp = 1:imps, .packages=c('amen')) %dopar% {
-	out=simRun(
-    seed=imp, n=50, mu=intEff, beta=x1Eff, gamma=x2Eff, rho=.2)
+    seed=imp, n=50, mu=intEff, beta=x1Eff, gamma=x2Eff, rho=.4)
 	return(out) } ; stopCluster(cl)
 save( ameSim50, file=paste0(simResPath, 'ameSim50_corrMed.rda') )
 
@@ -118,7 +84,7 @@ save( ameSim50, file=paste0(simResPath, 'ameSim50_corrMed.rda') )
 cl=makeCluster(cores)  ; registerDoParallel(cl)
 ameSim100 = foreach(imp = 1:imps, .packages=c('amen')) %dopar% {
 	out=simRun(
-    seed=imp, n=100, mu=intEff, beta=x1Eff, gamma=x2Eff, rho=.2)
+    seed=imp, n=100, mu=intEff, beta=x1Eff, gamma=x2Eff, rho=.4)
 	return(out) } ; stopCluster(cl)
 save( ameSim100, file=paste0(simResPath, 'ameSim100_corrMed.rda') )
 ###############
@@ -126,17 +92,9 @@ save( ameSim100, file=paste0(simResPath, 'ameSim100_corrMed.rda') )
 ###############
 #
 cl=makeCluster(cores)  ; registerDoParallel(cl)
-ameSim30 = foreach(imp = 1:imps, .packages=c('amen')) %dopar% {
-	out=simRun(
-    seed=imp, n=30, mu=intEff, beta=x1Eff, gamma=x2Eff, rho=.4)
-	return(out) }  ; stopCluster(cl)
-save( ameSim30, file=paste0(simResPath, 'ameSim30_corrHi.rda') )
-
-#
-cl=makeCluster(cores)  ; registerDoParallel(cl)
 ameSim50 = foreach(imp = 1:imps, .packages=c('amen')) %dopar% {
 	out=simRun(
-    seed=imp, n=50, mu=intEff, beta=x1Eff, gamma=x2Eff, rho=.4)
+    seed=imp, n=50, mu=intEff, beta=x1Eff, gamma=x2Eff, rho=.7)
 	return(out) } ; stopCluster(cl)
 save( ameSim50, file=paste0(simResPath, 'ameSim50_corrHi.rda') )
 
@@ -144,7 +102,7 @@ save( ameSim50, file=paste0(simResPath, 'ameSim50_corrHi.rda') )
 cl=makeCluster(cores)  ; registerDoParallel(cl)
 ameSim100 = foreach(imp = 1:imps, .packages=c('amen')) %dopar% {
 	out=simRun(
-    seed=imp, n=100, mu=intEff, beta=x1Eff, gamma=x2Eff, rho=.4)
+    seed=imp, n=100, mu=intEff, beta=x1Eff, gamma=x2Eff, rho=.7)
 	return(out) } ; stopCluster(cl)
 save( ameSim100, file=paste0(simResPath, 'ameSim100_corrHi.rda') )
 ###############
