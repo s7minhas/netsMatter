@@ -21,7 +21,6 @@ toLoad = c(
 	'foreach', 'doParallel',
 	'magrittr', 'dplyr', 'ggplot2' )
 loadPkg(toLoad)
-devtools::install_github('s7minhas/amen')
 library(amen)
 ##############################
 
