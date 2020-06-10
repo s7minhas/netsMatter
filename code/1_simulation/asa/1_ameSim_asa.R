@@ -119,7 +119,7 @@ simRun = function(seed, n, gMu, mu, beta, gamma){
 	##############
 
 	# gather together results
-	beta = list(naive=fit0$BETA, ame1=fit1$BETA, oracle=fitO$BETA)
+	beta = list(naive=fit0$BETA, ame=fit1$BETA, oracle=fitO$BETA)
 	uv = list(naive=fit0$UVPM, ame=fit1$UVPM, oracle=fitO$UVPM)
 	u = list(naive=fit0$U, ame=fit1$U, oracle=fitO$U)
 	v = list(naive=fit0$V, ame=fit1$V, oracle=fitO$V)
@@ -130,7 +130,7 @@ simRun = function(seed, n, gMu, mu, beta, gamma){
 
 ##############################
 # params
-imps = 1000 ; cores = 30
+imps = 1000 ; cores = 22
 
 #
 cl=makeCluster(cores) ; registerDoParallel(cl)

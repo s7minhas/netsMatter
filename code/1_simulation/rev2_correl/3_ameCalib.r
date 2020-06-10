@@ -30,9 +30,15 @@ facet_labeller = function(string){ TeX(string) }
 # params
 NSIM = 1000 ; intEff=-2 ; x1Eff=1 ; x2Eff=1
 
-# load sim results
-# for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,'.rda')) }
-for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,'_asa.rda')) }
+# iterate over correlation levels
+types = c('_corr', '_corrProbit')
+levs = c('Med', 'Hi')
+corrLevs = expand.grid(types, levs) %>% apply(.,1,paste,collapse='')
+
+for(corrLev in corrLevs){
+
+# load sim data
+for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,corrLev,'.rda')) }
 
 #
 modKey = data.frame(dirty=names(ameSim50[[1]]$beta))
@@ -114,26 +120,26 @@ ggCoverPlot = function(var,h=3, w=8){
 			axis.ticks=element_blank(),
 			panel.border=element_blank(),
 			axis.text.y=element_text(size=8
-				# , family="Source Code Pro Light")
+				, family="Source Code Pro Light"
 			),
 			axis.text.x=element_text(size=10, face='bold'),
 			strip.text.x = element_text(size=9, color='white'
-				# ,family="Source Code Pro Semibold"
+				,family="Source Code Pro Semibold"
 				),
 			strip.text.y = element_text(size=9, color='white'
-				# ,family="Source Code Pro Semibold",
+				,family="Source Code Pro Semibold",
 				,angle=0
 				),
 			strip.background = element_rect(fill = "#525252", color='#525252')
 			)
 	ggsave(g, height=3, width=8,
-		# file=paste0(graphicsPath, 'ameSimCover_',var,'.pdf')
-		file=paste0(graphicsPath, 'ameSimCover_',var,'_asa.pdf')
-		# , device=cairo_pdf
+		file=paste0(graphicsPath, 'ameSimCover_',var,corrLev,'.pdf')
+		, device=cairo_pdf
 		)
 	return(g)
 }
 
 ggCoverPlot('all', h=6, w=8)
-# ggCoverPlot('mu') ; ggCoverPlot('beta')
+ggCoverPlot('mu') ; ggCoverPlot('beta')
+}
 ##############################
