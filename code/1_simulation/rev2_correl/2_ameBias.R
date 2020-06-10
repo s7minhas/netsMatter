@@ -31,7 +31,11 @@ facet_labeller = function(string){ TeX(string) }
 NSIM = 1000 ; intEff=-2 ; x1Eff=1 ; x2Eff=1
 
 # iterate over correlation levels
-corrLev = '_corrHi'
+types = c('_corr', '_corrProbit')
+levs = c('Med', 'Hi')
+corrLevs = expand.grid(types, levs) %>% apply(.,1,paste,collapse='')
+
+for(corrLev in corrLevs){
 
 # load sim data
 for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,corrLev,'.rda')) }
@@ -98,26 +102,27 @@ ggBiasPlot = function(varName, h=4, w=8){
 			axis.ticks=element_blank(),
 			panel.border=element_blank(),
 			axis.text.y=element_text(size=8
-				# , family="Source Code Pro Light")
+				, family="Source Code Pro Light"
 			),
 			axis.text.x=element_text(size=10, face='bold'),
 			strip.text.x = element_text(size=9, color='white'
-				# ,family="Source Code Pro Semibold"
+				,family="Source Code Pro Semibold"
 				),
 			strip.text.y = element_text(size=9, color='white'
-				# ,family="Source Code Pro Semibold",
+				,family="Source Code Pro Semibold",
 				,angle=0
 				),
 			strip.background = element_rect(fill = "#525252", color='#525252')
 			)
 	ggsave(g, height=4, width=8,
 		file=paste0(graphicsPath, 'ameSimBias_',varName,corrLev,'.pdf')
-		# , device=cairo_pdf
+		, device=cairo_pdf
 		)
 	return(g)
 }
 
 #
 ggBiasPlot('all', h=12, w=8)
-# ggBiasPlot('beta') ; ggBiasPlot('mu')
+ggBiasPlot('beta') ; ggBiasPlot('mu')
+}
 ##############################
