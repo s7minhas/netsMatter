@@ -31,8 +31,15 @@ facet_labeller = function(string){ TeX(string) }
 NSIM = 1000 ; intEff=-2 ; x1Eff=1 ; x2Eff=1
 
 # load sim results
-# for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,'.rda')) }
 for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,'_asa.rda')) }
+ameSim50 = ameSim50[1:100]
+ameSim100 = ameSim100[1:100]
+
+#
+for(sim in 1:length(ameSim50)){
+	names(ameSim50[[sim]]$'beta')[2] = 'ame' }
+for(sim in 1:length(ameSim100)){
+	names(ameSim100[[sim]]$'beta')[2] = 'ame' }
 
 #
 modKey = data.frame(dirty=names(ameSim50[[1]]$beta))
@@ -126,14 +133,12 @@ ggCoverPlot = function(var,h=3, w=8){
 				),
 			strip.background = element_rect(fill = "#525252", color='#525252')
 			)
-	ggsave(g, height=3, width=8,
-		# file=paste0(graphicsPath, 'ameSimCover_',var,'.pdf')
-		file=paste0(graphicsPath, 'ameSimCover_',var,'_asa.pdf')
-		# , device=cairo_pdf
-		)
+	# ggsave(g, height=3, width=8,
+	# 	file=paste0(graphicsPath, 'ameSimCover_',var,'_asa.pdf')
+	# 	# , device=cairo_pdf
+	# 	)
 	return(g)
 }
 
 ggCoverPlot('all', h=6, w=8)
-# ggCoverPlot('mu') ; ggCoverPlot('beta')
 ##############################
