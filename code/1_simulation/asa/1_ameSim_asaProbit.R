@@ -36,23 +36,24 @@ simRun = function(seed, n, mu, beta, gamma, alpha){
 
 	# create DV
 	Y<- mu + beta*X + gamma*W + alpha*nodeEff + matrix(rnorm(n*n),n,n)
+	Y<- 1*(Y >0)
 	##############
 
 	##############
 	# run AME models
 	fit0 = ame(
 		Y,X,
-		R=0,rvar=FALSE,cvar=FALSE,nvar=FALSE,symmetric=FALSE,model='nrm',
+		R=0,rvar=FALSE,cvar=FALSE,nvar=FALSE,symmetric=FALSE,model='bin',
 		print=FALSE,plot=FALSE)
 
 	fit1 = ame(
 		Y,X,
-		R=1,rvar=TRUE,cvar=TRUE,nvar=TRUE,symmetric=FALSE,model='nrm',
+		R=1,rvar=TRUE,cvar=TRUE,nvar=TRUE,symmetric=FALSE,model='bin',
 		print=FALSE,plot=FALSE)
 
 	fitO = ame(
 		Y,XW,Xrow=nodeEff[,1,drop=FALSE],
-		R=0,rvar=FALSE,cvar=FALSE,nvar=FALSE,symmetric=FALSE,model='nrm',
+		R=0,rvar=FALSE,cvar=FALSE,nvar=FALSE,symmetric=FALSE,model='bin',
 		print=FALSE,plot=FALSE)
 	##############
 
@@ -75,12 +76,12 @@ cl=makeCluster(cores) ; registerDoParallel(cl)
 ameSim50 = foreach(imp = 1:imps, .packages=c('amen')) %dopar% {
 	out=simRun(seed=imp, n=50, mu=-2, beta=1, gamma=1, alpha=1)
 	return(out) } ; stopCluster(cl)
-save( ameSim50, file=paste0(simResPath, 'ameSim50_asa.rda') )
+save( ameSim50, file=paste0(simResPath, 'ameSim50_asaProbit.rda') )
 
 #
 cl=makeCluster(cores) ; registerDoParallel(cl)
 ameSim100 = foreach(imp = 1:imps, .packages=c('amen')) %dopar% {
 	out=simRun(seed=imp, n=100, mu=-2, beta=1, gamma=1, alpha=1)
 	return(out) } ; stopCluster(cl)
-save( ameSim100, file=paste0(simResPath, 'ameSim100_asa.rda') )
+save( ameSim100, file=paste0(simResPath, 'ameSim100_asaProbit.rda') )
 ##############################
