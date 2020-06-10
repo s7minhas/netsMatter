@@ -32,6 +32,8 @@ intEff=1 ; x1Eff=1 ; x2Eff=.25
 
 # load sim results
 for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,'_asa.rda')) }
+ameSim50 = ameSim50[1:100]
+ameSim100 = ameSim100[1:100]
 
 #
 modKey = data.frame(dirty=names(ameSim50[[1]]$beta))
@@ -117,5 +119,4 @@ ggBiasPlot = function(varName, h=4, w=8){
 
 #
 ggBiasPlot('all', h=12, w=8)
-ggBiasPlot('beta') ; ggBiasPlot('mu')
 ##############################
