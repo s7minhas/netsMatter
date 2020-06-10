@@ -56,7 +56,7 @@ simRun = function(seed, n, gMu, mu, beta, gamma){
 
 	# specify Y
 	dX2 = dX^2
-	dY <- gMu + mu*da + beta*dX + gamma*dX2 + rnorm(P)
+	dY <- 1 + mu*da + beta*dX + gamma*dX2 + rnorm(P)
 
 	# create df
 	dataUp <- data.frame(
@@ -130,7 +130,7 @@ simRun = function(seed, n, gMu, mu, beta, gamma){
 
 ##############################
 # params
-imps = 500 ; cores = 30
+imps = 1000 ; cores = 30
 
 #
 cl=makeCluster(cores) ; registerDoParallel(cl)
