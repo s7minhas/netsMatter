@@ -28,12 +28,12 @@ facet_labeller = function(string){ TeX(string) }
 
 ##############################
 # params
-intEff=1 ; x1Eff=1 ; x2Eff=.25
+intEff=-2 ; x1Eff=1 ; x2Eff=1
 
 # load sim results
 for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,'_asa.rda')) }
-ameSim50 = ameSim50[1:100]
-ameSim100 = ameSim100[1:100]
+# ameSim50 = ameSim50[1:20]
+# ameSim100 = ameSim100[1:20]
 
 #
 modKey = data.frame(dirty=names(ameSim50[[1]]$beta))
