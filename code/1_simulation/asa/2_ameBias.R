@@ -20,9 +20,10 @@ toLoad = c(
 	'devtools',
 	'foreach', 'doParallel',
 	'magrittr', 'dplyr', 'ggplot2',
-	'latex2exp', 'Cairo'
+	'latex2exp', 'extrafont', 'Cairo'
 	)
 loadPkg(toLoad)
+suppressMessages(loadfonts(device='win'))
 facet_labeller = function(string){ TeX(string) }
 ##############################
 
@@ -30,10 +31,12 @@ facet_labeller = function(string){ TeX(string) }
 # params
 intEff=-2 ; x1Eff=1 ; x2Eff=1
 
-# load sim results
-for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,'_asa.rda')) }
-# ameSim50 = ameSim50[1:20]
-# ameSim100 = ameSim100[1:20]
+# iterate over sims
+asaSimLabs = c('_asa', '_asaProbit')
+for(asaSimLab in asaSimLabs){
+
+# sim labs
+for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,asaSimLab,'.rda')) }
 
 #
 modKey = data.frame(dirty=names(ameSim50[[1]]$beta))
@@ -81,7 +84,8 @@ ggBiasPlot = function(varName, h=4, w=8){
 		g=ggplot(
 			filter(ameSimBias, var==paste0('$\\',varName,'$')),
 			aes(x=model, y=value, fill=model,color=model)) }
-	if(varName=='all'){ g=ggplot(ameSimBias, aes(x=model,y=value,fill=model,color=model)) }
+	if(varName=='all'){
+		g=ggplot(ameSimBias, aes(x=model,y=value,fill=model,color=model)) }
 	g = g +
 		geom_hline(aes(yintercept=act), color='grey60', size=2) +
 		geom_jitter(alpha=.1) +
@@ -96,27 +100,23 @@ ggBiasPlot = function(varName, h=4, w=8){
 			legend.title=element_blank(),
 			axis.ticks=element_blank(),
 			panel.border=element_blank(),
-			axis.text.y=element_text(size=8
-				# , family="Source Code Pro Light")
-			),
+			axis.text.y=element_text(size=8,
+				family="Source Code Pro Light"),
 			axis.text.x=element_text(size=10, face='bold'),
-			strip.text.x = element_text(size=9, color='white'
-				# ,family="Source Code Pro Semibold"
-				),
-			strip.text.y = element_text(size=9, color='white'
-				# ,family="Source Code Pro Semibold",
-				,angle=0
-				),
+			strip.text.x = element_text(size=9, color='white',
+				family="Source Code Pro Semibold"),
+			strip.text.y = element_text(size=9, color='white',
+				family="Source Code Pro Semibold", angle=0),
 			strip.background = element_rect(fill = "#525252", color='#525252')
 			)
-	# ggsave(g, height=4, width=8,
-	# 	file=paste0(graphicsPath, 'ameSimBias_',varName,'_asa.pdf')
-	# 	file=paste0(graphicsPath, 'ameSimBias_',varName,'_asa_probit.pdf')
-	# 	# , device=cairo_pdf
-	# 	)
+	ggsave(g, height=4, width=8,
+		file=paste0(graphicsPath, 'ameSimBias_',varName,asaSimLab,'.pdf'),
+		device=cairo_pdf
+		)
 	return(g)
 }
 
 #
 ggBiasPlot('all', h=12, w=8)
+}
 ##############################
