@@ -4,7 +4,7 @@ if(Sys.info()['user']=='s7m'){
 	fPath = '~/Research/netsMatter/code/helpers/'
 	dPath = '~/Dropbox/Research/netsMatter/'
 	simResPath = paste0(dPath, 'simulation/')
-	graphicsPath = paste('~/Research/netsMatter/paper/')
+	graphicsPath = paste('~/Research/netsMatter/paper/graphics/')
 	source(paste0(fPath, 'functions.R')) }
 
 if(Sys.info()['user']=='herme' | 'Owner'){
@@ -13,6 +13,7 @@ if(Sys.info()['user']=='herme' | 'Owner'){
 	fPath = paste0(base, 'Research/netsMatter/code/helpers/')
 	dPath = paste0(base, 'Dropbox/Research/netsMatter/')
 	simResPath = paste0(dPath, 'simulation/')
+	graphicsPath = paste(base, 'netsMatter/paper/graphics/')	
 	source(paste0(fPath, 'functions.R')) }
 
 toLoad = c(
