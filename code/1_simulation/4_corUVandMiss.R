@@ -4,7 +4,7 @@ if(Sys.info()['user']=='s7m'){
 	fPath = '~/Research/netsMatter/code/helpers/'
 	dPath = '~/Dropbox/Research/netsMatter/'
 	simResPath = paste0(dPath, 'simulation/')
-	graphicsPath = paste('~/Research/netsMatter/paper/')
+	graphicsPath = paste('~/Research/netsMatter/paper/graphics/')
 	source(paste0(fPath, 'functions.R')) }
 
 if(Sys.info()['user'] %in% c('herme','Owner','S7M')){
@@ -13,7 +13,7 @@ if(Sys.info()['user'] %in% c('herme','Owner','S7M')){
 	fPath = paste0(gPath, 'code/helpers/')
 	dPath = paste0(base, 'Dropbox/Research/netsMatter/')
 	simResPath = paste0(dPath, 'simulation/')
-	graphicsPath = paste0(gPath, 'paper/')
+	graphicsPath = paste0(gPath, 'paper/graphics/')
 	source(paste0(fPath, 'functions.R')) }
 
 toLoad = c(
@@ -101,6 +101,6 @@ g = ggplot() +
 
 #
 ggsave(g, height=3, width=8,
-	# file=paste0(graphicsPath, 'ameSimCorr.pdf'))	
+	# file=paste0(graphicsPath, 'ameSimCorr.pdf'))
 	file=paste0(graphicsPath, 'ameSimCorr_asa.pdf'))
 ##############################
