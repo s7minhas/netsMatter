@@ -27,6 +27,7 @@ Given initial values of $\{\bm\beta, \mathbf{a}, \mathbf{b}, \mathbf{U}, \mathbf
   \end{itemize}
  \end{itemize}
 \newpage
+
 \section{Additional Replication Information}
 
 For each of the replications involving a binary dependent variable we provide a table of coefficient estimates that includes the original GLM estimation and the results from the AME model.  We have adopted for presentation purposes only the use of significance testing on these observational data for facile comparison with the replicated studies.  However, note that we do provide predictive heuristics for these models as well.
@@ -82,19 +83,56 @@ Additional information for the Gibler (2017) re-estimation.
 \FloatBarrier
 \clearpage
 
-\section{Correlation with Omitted Variable}
 
-Things get more challenging when the omitted variable is correlated with the observed variable. In the case of normal linear regression you can show that in general a regression coefficient is unbiased for its "unconditional effect", which is the direct effect plus something related to the direct effects of any omitted variables that it is correlated with. For example, suppose $w_{i,j}$ is correlated with $x_{i,j}$ via the relation $w_{i,j} = \alpha x_{i,j} + z_{i,j}$. Then:
+\section{Additional Simulations: Non-Linear Data}
+
+Aronow et al note that ``fitting a linear approximation to mildly non-linear data'' can be problematic for dyadic random effect models. We agree on the importance of testing this in the context of the simulation that we posed in the paper. Aronow et al incorporate non-linear misspecification by adding in squared version of the key dyadic homophily variable to the DGP for their simulations: $Y_{i,j} = \beta_{0} + \beta_{1} X_{i,j} + \beta_{2} X_{i,j}^{2} + \epsilon_{i,j}$. Here $X$ is their representation of homophily and is considered observed, while $X^{2}$ is their check for robustness to misspecification and is unobserved. We incorporate the same type of misspecification into our probit simulation setup: $Z_{i,j} =  \mu + \beta X_{i,j} + \gamma W_{i,j} + \epsilon_{i,j}$, where $W$ now instead of being drawn from a separate normal distribution is just the squared version of $X$. For the simulation we set values of $\mu$, $\beta$, and $\gamma$ to -2, 1, and 1, respectively. Results are shown below in Figures~\ref{fig:ameBias_asa} and \ref{fig:ameCalib_asa} below. As in the paper, along the x-axis we implement a standard model that does not take any steps to account for dependencies, AME, and the Oracle model, and as in the paper we find that the AME approach provides a number of benefits in terms of bias and coverage over the standard approach of not dealing with dependencies.
+
+\begin{figure}[ht]
+	\centering
+	\caption{Regression parameter estimates for the standard, AME, and oracle models from 1,000 simulations. Summary statistics are presented through a traditional box plot, and the estimates from each simulation are visualized as well as points.}
+	\label{fig:ameBias_asa}
+	\includegraphics[width=1\textwidth]{graphics/ameSimBias_all_asaProbit.pdf} \\
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+	\caption{Proportion of times the true value fell within the estimated 95\% confidence interval for the standard, AME, and oracle models from 1,000 simulations.}
+	\label{fig:ameCalib_asa}
+	\includegraphics[width=1\textwidth]{graphics/ameSimCover_all_asaProbit.pdf} \\
+\end{figure}
+
+\FloatBarrier
+\clearpage
+
+\section{Additional Simulations: Correlation with Omitted Variable}
+
+Estimation certainly gets more challenging when the omitted variable is correlated with the observed variable. In the case of normal linear regression, we can show that in general a regression coefficient is unbiased for its ``unconditional effect'', which is the direct effect plus something related to the direct effects of any omitted variables that it is correlated with. For example, suppose in our simulation setup $X_{i,j}$ is correlated with $W_{i,j}$ via the relation $W_{i,j} = \alpha X_{i,j} + e_{i,j}$. Then:
 
 \begin{align*}
-y_{i,j} & = \mu + \beta x_{i,j} + \gamma w_{i,j} + \epsilon_{i,j} \\
-&= \mu + (\gamma \alpha+\beta ) x_{i,j} + (\gamma z_{i,j} + \epsilon_{i,j})  \\
-&= \mu + \tilde \beta x_{i,j} + \tilde \epsilon_{i,j}
+  Y_{i,j} & = \mu + \beta X_{i,j} + \gamma W_{i,j} + \epsilon_{i,j} \\
+  &= \mu + (\gamma \alpha+\beta ) X_{i,j} + (\gamma Z_{i,j} + \epsilon_{i,j})  \\
+  &= \mu + \tilde \beta X_{i,j} + \tilde \epsilon_{i,j}
 \end{align*}
 
-The naive model is in some sense still "correct" as it is an unbiased estimator of the unconditional (direct plus indirect) effect $\gamma\alpha + \beta$ of $x$ on $y$.
+The naive model is in some sense still ``correct'' as it is an unbiased estimator of the unconditional (direct plus indirect) effect $\gamma\alpha + \beta$ of $X$ on $Y$. However, there is no way to eliminate this extra bias without making further assumptions about the nature of the omitted variable. Additonally, in the binary case with the probit setup, other sources of bias get introduced as well because of the nonlinearity of the population moments as a function of the parameters. An interesting question is whether or not we can reduce the bias in the network setting by assuming the omitted variable $w_{i,j}$ is the product of latent node-specific factors. An idea related to this is discussed in \citet{minhas:etal:2017:arxiv}.
 
-As far as I know there is no way to eliminate this extra biased without making further assumptions about the nature of the omitted variable. However, an interesting question is whether or not we can reduce the bias in the network setting by assuming the omitted variable $w_{i,j}$ is the product of latent node-specific factors. An idea related to this is discussed in \citet{minhas:etal:2017:arxiv}. 
+For now though to show the amount of bias that gets introduced into our setup when $X$ and $W$ are correlated we repeat our simulation exercise but induce varying levels of correlation between $X$ and $W$. Results with $X$ and $W$ correlated at 0.4 and then 0.7 are shown below, respectively.
+
+\begin{figure}[ht]
+\caption{Regression parameter estimates for the standard, AME, and oracle models from 1,000 simulations. Summary statistics are presented through a traditional box plot, and the estimates from each simulation are visualized as well as points. $X$ and $W$ are correlated at 0.4 in this case.}
+\label{fig:ameBias_corrMed}
+\includegraphics[width=1\textwidth]{graphics/ameSimBias_all_corrProbitMed.pdf} \\
+\end{figure}
+
+\begin{figure}[ht]
+\caption{Regression parameter estimates for the standard, AME, and oracle models from 1,000 simulations. Summary statistics are presented through a traditional box plot, and the estimates from each simulation are visualized as well as points. $X$ and $W$ are correlated at 0.7 in this case.}
+\label{fig:ameBias_corrHi}
+\includegraphics[width=1\textwidth]{graphics/ameSimBias_all_corrProbitHi.pdf} \\
+\end{figure}
+
+\FloatBarrier
+\clearpage
 
 \section{AME Tutorial}
 
@@ -143,11 +181,9 @@ Beyond the data inputs, the AMEN function requires additional specification:
     \item gof: whether to calculate goodness of fit statistics
 \end{itemize}
 
-There is often little theoretical reason to choose a particular value of $\sf{R}$ (above). One strategy is to estimate models at different values of $\sf{R}$ and compare goodness of fit statistics across models.
+There is often little theoretical reason to choose a particular value of $\sf{R}$ (above). One strategy is to estimate models at different values of $\sf{R}$ and compare goodness of fit statistics across models. Given the computational time needed for parameter estimates to converge, parallelization strategies are recommended to speed up analysis. In addition, providing AMEN function with starting values, either dictated by theory, previous research, or previous runs can also help speed up convergence time.
 
-Given the computational intensity needed for parameter estimates to converge, parallelization strategies are recommended to speed up analysis. In addition, providing AMEN function with starting values, either dictated by theory, previous research, or previous runs can also help speed up convergence time.
-
-The code below presents an example of an AME model running in parallel across 4 different levels of $\sf{R}$. Note also that the model is using starting values from a previous run, defined in \textit{startVals0}.
+The code below presents an example of an AME model running in parallel across 4 different levels of $\sf{R}$. Note also that the model is using starting values from a previous run, defined in \textit{startVals}.
 
 \begin{lstlisting}[language=R]
 # running in parallel varying k
