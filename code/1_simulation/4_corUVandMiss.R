@@ -20,9 +20,10 @@ toLoad = c(
 	'devtools',
 	'foreach', 'doParallel',
 	'magrittr', 'dplyr', 'ggplot2',
-	'latex2exp', 'Cairo'
+	'latex2exp', 'Cairo', 'extrafont'
 	)
 loadPkg(toLoad)
+suppressMessages(loadfonts())
 facet_labeller = function(string){ TeX(string) }
 ##############################
 
@@ -31,8 +32,7 @@ facet_labeller = function(string){ TeX(string) }
 NSIM = 1000 ; intEff=-2 ; x1Eff=1 ; x2Eff=1
 
 # load sim results
-# for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,'.rda')) }
-for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,'_asa.rda')) }
+for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,'.rda')) }
 ##############################
 
 ##############################
@@ -101,6 +101,5 @@ g = ggplot() +
 
 #
 ggsave(g, height=3, width=8,
-	# file=paste0(graphicsPath, 'ameSimCorr.pdf'))
-	file=paste0(graphicsPath, 'ameSimCorr_asa.pdf'))
+	file=paste0(graphicsPath, 'ameSimCorr.pdf'))
 ##############################
