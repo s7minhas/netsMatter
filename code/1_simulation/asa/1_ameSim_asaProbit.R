@@ -13,7 +13,7 @@ if(Sys.info()['user'] %in% c('herme','Owner','S7M')){
 	fPath = paste0(gPath, 'code/helpers/')
 	dPath = paste0(base, 'Dropbox/Research/netsMatter/')
 	simResPath = paste0(dPath, 'simulation/')
-	graphicsPath = paste(gPath, 'paper/')
+	graphicsPath = paste(gPath, 'paper/graphics/')
 	source(paste0(fPath, 'functions.R')) }
 
 toLoad = c(
