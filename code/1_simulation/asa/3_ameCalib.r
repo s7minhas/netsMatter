@@ -4,7 +4,7 @@ if(Sys.info()['user']=='s7m'){
 	fPath = '~/Research/netsMatter/code/helpers/'
 	dPath = '~/Dropbox/Research/netsMatter/'
 	simResPath = paste0(dPath, 'simulation/')
-	graphicsPath = paste('~/Research/netsMatter/paper/')
+	graphicsPath = paste('~/Research/netsMatter/paper/graphics/')
 	source(paste0(fPath, 'functions.R')) }
 
 if(Sys.info()['user'] %in% c('herme','Owner','S7M')){
@@ -13,16 +13,17 @@ if(Sys.info()['user'] %in% c('herme','Owner','S7M')){
 	fPath = paste0(gPath, 'code/helpers/')
 	dPath = paste0(base, 'Dropbox/Research/netsMatter/')
 	simResPath = paste0(dPath, 'simulation/')
-	graphicsPath = paste0(gPath, 'paper/')
+	graphicsPath = paste0(gPath, 'paper/graphics/')
 	source(paste0(fPath, 'functions.R')) }
 
 toLoad = c(
 	'devtools',
 	'foreach', 'doParallel',
 	'magrittr', 'dplyr', 'ggplot2',
-	'latex2exp', 'Cairo'
+	'latex2exp', 'extrafont', 'Cairo'
 	)
 loadPkg(toLoad)
+suppressMessages(loadfonts(device='win'))
 facet_labeller = function(string){ TeX(string) }
 ##############################
 
@@ -30,10 +31,12 @@ facet_labeller = function(string){ TeX(string) }
 # params
 NSIM = 1000 ; intEff=-2 ; x1Eff=1 ; x2Eff=1
 
-# load sim results
-for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,'_asa.rda')) }
-ameSim50 = ameSim50[1:20]
-ameSim100 = ameSim100[1:20]
+# iterate over sims
+asaSimLabs = c('_asa', '_asaProbit')
+for(asaSimLab in asaSimLabs){
+
+# sim labs
+for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,asaSimLab,'.rda')) }
 
 #
 for(sim in 1:length(ameSim50)){
@@ -102,7 +105,8 @@ ggCoverPlot = function(var,h=3, w=8){
 		g=ggplot(
 			filter(coverSumm, varName==paste0('$\\',var,'$')),
 			aes(x=model, y=coverage, fill=model,color=model)) }
-	if(var=='all'){ g=ggplot(coverSumm, aes(x=model, y=coverage, fill=model,color=model)) }
+	if(var=='all'){
+		g=ggplot(coverSumm, aes(x=model, y=coverage, fill=model,color=model)) }
 	g = g +
 		geom_hline(aes(yintercept=.95), color='grey60', size=4, alpha=.5) +
 		geom_linerange(aes(ymin=0, ymax=coverage),size=1.25) +
@@ -112,33 +116,33 @@ ggCoverPlot = function(var,h=3, w=8){
 		xlab('') +
 		scale_color_manual(values=modCols) +
 		scale_fill_manual(values=modCols) +
-		scale_y_continuous('', breaks=seq(0,1.2,.2), labels=seq(0,1.2,.2), limits=c(0,1)) +
-		annotate('text', x=1, y=.95, label='95% CI', color='black', size=2.5, fontface='bold') +
-		geom_text(aes(label=covLab, y=covLabY), hjust=-.3, size=2.5, fontface='bold', color='black') +
+		scale_y_continuous('',
+			breaks=seq(0,1.2,.2), labels=seq(0,1.2,.2), limits=c(0,1)) +
+		annotate('text',
+			x=1, y=.95, label='95% CI', color='black', size=2.5, fontface='bold') +
+		geom_text(
+			aes(label=covLab, y=covLabY), hjust=-.3, size=2.5, fontface='bold', color='black') +
 		theme(
 			legend.position='none',
 			legend.title=element_blank(),
 			axis.ticks=element_blank(),
 			panel.border=element_blank(),
-			axis.text.y=element_text(size=8
-				# , family="Source Code Pro Light")
-			),
+			axis.text.y=element_text(size=8,
+				family="Source Code Pro Light"),
 			axis.text.x=element_text(size=10, face='bold'),
-			strip.text.x = element_text(size=9, color='white'
-				# ,family="Source Code Pro Semibold"
-				),
-			strip.text.y = element_text(size=9, color='white'
-				# ,family="Source Code Pro Semibold",
-				,angle=0
-				),
+			strip.text.x = element_text(size=9, color='white',
+				family="Source Code Pro Semibold"),
+			strip.text.y = element_text(size=9, color='white',
+				family="Source Code Pro Semibold", angle=0),
 			strip.background = element_rect(fill = "#525252", color='#525252')
 			)
-	# ggsave(g, height=3, width=8,
-	# 	file=paste0(graphicsPath, 'ameSimCover_',var,'_asa.pdf')
-	# 	# , device=cairo_pdf
-	# 	)
+	ggsave(g, height=3, width=8,
+		file=paste0(graphicsPath, 'ameSimCover_',var,asaSimLab,'.pdf'),
+		device=cairo_pdf
+		)
 	return(g)
 }
 
 ggCoverPlot('all', h=6, w=8)
+}
 ##############################

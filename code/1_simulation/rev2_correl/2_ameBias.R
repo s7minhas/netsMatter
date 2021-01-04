@@ -4,7 +4,7 @@ if(Sys.info()['user']=='s7m'){
 	fPath = '~/Research/netsMatter/code/helpers/'
 	dPath = '~/Dropbox/Research/netsMatter/'
 	simResPath = paste0(dPath, 'simulation/')
-	graphicsPath = paste('~/Research/netsMatter/paper/')
+	graphicsPath = paste('~/Research/netsMatter/paper/graphics/')
 	source(paste0(fPath, 'functions.R')) }
 
 if(Sys.info()['user'] %in% c('herme','Owner','S7M')){
@@ -13,16 +13,17 @@ if(Sys.info()['user'] %in% c('herme','Owner','S7M')){
 	fPath = paste0(gPath, 'code/helpers/')
 	dPath = paste0(base, 'Dropbox/Research/netsMatter/')
 	simResPath = paste0(dPath, 'simulation/')
-	graphicsPath = paste0(gPath, 'paper/')
+	graphicsPath = paste0(gPath, 'paper/graphics/')
 	source(paste0(fPath, 'functions.R')) }
 
 toLoad = c(
 	'devtools',
 	'foreach', 'doParallel',
 	'magrittr', 'dplyr', 'ggplot2',
-	'latex2exp', 'Cairo'
+	'latex2exp', 'extrafont', 'Cairo'
 	)
 loadPkg(toLoad)
+suppressMessages(loadfonts(device='win'))
 facet_labeller = function(string){ TeX(string) }
 ##############################
 
@@ -35,6 +36,7 @@ types = c('_corr', '_corrProbit')
 levs = c('Med', 'Hi')
 corrLevs = expand.grid(types, levs) %>% apply(.,1,paste,collapse='')
 
+# iterate over corrSims
 for(corrLev in corrLevs){
 
 # load sim data
@@ -86,7 +88,8 @@ ggBiasPlot = function(varName, h=4, w=8){
 		g=ggplot(
 			filter(ameSimBias, var==paste0('$\\',varName,'$')),
 			aes(x=model, y=value, fill=model,color=model)) }
-	if(varName=='all'){ g=ggplot(ameSimBias, aes(x=model,y=value,fill=model,color=model)) }
+	if(varName=='all'){
+		g=ggplot(ameSimBias, aes(x=model,y=value,fill=model,color=model)) }
 	g = g +
 		geom_hline(aes(yintercept=act), color='grey60', size=2) +
 		geom_jitter(alpha=.1) +
@@ -101,28 +104,23 @@ ggBiasPlot = function(varName, h=4, w=8){
 			legend.title=element_blank(),
 			axis.ticks=element_blank(),
 			panel.border=element_blank(),
-			axis.text.y=element_text(size=8
-				, family="Source Code Pro Light"
-			),
+			axis.text.y=element_text(size=8,
+				family="Source Code Pro Light"),
 			axis.text.x=element_text(size=10, face='bold'),
 			strip.text.x = element_text(size=9, color='white'
-				,family="Source Code Pro Semibold"
-				),
-			strip.text.y = element_text(size=9, color='white'
-				,family="Source Code Pro Semibold",
-				,angle=0
-				),
+				, family="Source Code Pro Semibold"),
+			strip.text.y = element_text(size=9, color='white',
+				family="Source Code Pro Semibold", angle=0),
 			strip.background = element_rect(fill = "#525252", color='#525252')
 			)
 	ggsave(g, height=4, width=8,
-		file=paste0(graphicsPath, 'ameSimBias_',varName,corrLev,'.pdf')
-		, device=cairo_pdf
+		file=paste0(graphicsPath, 'ameSimBias_',varName,corrLev,'.pdf'),
+		device=cairo_pdf
 		)
 	return(g)
 }
 
 #
-ggBiasPlot('all', h=12, w=8)
-ggBiasPlot('beta') ; ggBiasPlot('mu')
+print(ggBiasPlot('all', h=12, w=8))
 }
 ##############################
