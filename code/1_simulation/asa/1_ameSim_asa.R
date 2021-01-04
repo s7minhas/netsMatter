@@ -68,7 +68,7 @@ simRun = function(seed, n, mu, beta, gamma, alpha){
 
 ##############################
 # params
-imps = 100 ; cores = 20
+imps = 100 ; cores = 30
 
 #
 cl=makeCluster(cores) ; registerDoParallel(cl)
