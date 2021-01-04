@@ -4,7 +4,7 @@ if(Sys.info()['user']=='s7m'){
 	fPath = '~/Research/netsMatter/code/helpers/'
 	dPath = '~/Dropbox/Research/netsMatter/'
 	simResPath = paste0(dPath, 'simulation/')
-	graphicsPath = paste('~/Research/netsMatter/paper/')
+	graphicsPath = paste('~/Research/netsMatter/paper/graphics/')
 	source(paste0(fPath, 'functions.R')) }
 
 if(Sys.info()['user'] %in% c('herme','Owner','S7M')){
@@ -13,16 +13,17 @@ if(Sys.info()['user'] %in% c('herme','Owner','S7M')){
 	fPath = paste0(gPath, 'code/helpers/')
 	dPath = paste0(base, 'Dropbox/Research/netsMatter/')
 	simResPath = paste0(dPath, 'simulation/')
-	graphicsPath = paste0(gPath, 'paper/')
+	graphicsPath = paste0(gPath, 'paper/graphics/')
 	source(paste0(fPath, 'functions.R')) }
 
 toLoad = c(
 	'devtools',
 	'foreach', 'doParallel',
 	'magrittr', 'dplyr', 'ggplot2',
-	'latex2exp', 'Cairo'
+	'latex2exp', 'Cairo', 'extrafont'
 	)
 loadPkg(toLoad)
+suppressMessages(loadfonts())
 facet_labeller = function(string){ TeX(string) }
 ##############################
 
@@ -31,8 +32,7 @@ facet_labeller = function(string){ TeX(string) }
 NSIM = 1000 ; intEff=-2 ; x1Eff=1 ; x2Eff=1
 
 # load sim results
-# for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,'.rda')) }
-for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,'_asa.rda')) }
+for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,'.rda')) }
 
 #
 modKey = data.frame(dirty=names(ameSim50[[1]]$beta))
@@ -85,9 +85,6 @@ ggBiasPlot = function(varName, h=4, w=8){
 		geom_hline(aes(yintercept=act), color='grey60', size=2) +
 		geom_jitter(alpha=.1) +
 		geom_boxplot( color='black') +
-		# geom_violin(
-		# 	draw_quantiles=c(0.025,0.5,0.975),
-		# 	trim=TRUE, color='black', alpha=.4) +
 		facet_grid(var ~ n, scales='free_y',
 			labeller=as_labeller(facet_labeller, default = label_parsed)) +
 		xlab('') + ylab('') +
@@ -98,28 +95,26 @@ ggBiasPlot = function(varName, h=4, w=8){
 			legend.title=element_blank(),
 			axis.ticks=element_blank(),
 			panel.border=element_blank(),
-			axis.text.y=element_text(size=8
-				# , family="Source Code Pro Light")
+			axis.text.y=element_text(
+				size=8, family="Source Code Pro Light"
 			),
 			axis.text.x=element_text(size=10, face='bold'),
-			strip.text.x = element_text(size=9, color='white'
-				# ,family="Source Code Pro Semibold"
+			strip.text.x = element_text(
+				size=9, color='white',family="Source Code Pro Semibold"
 				),
-			strip.text.y = element_text(size=9, color='white'
-				# ,family="Source Code Pro Semibold",
-				,angle=0
+			strip.text.y = element_text(
+				size=9, color='white',
+				family="Source Code Pro Semibold",angle=0
 				),
 			strip.background = element_rect(fill = "#525252", color='#525252')
 			)
 	ggsave(g, height=4, width=8,
-		# file=paste0(graphicsPath, 'ameSimBias_',varName,'.pdf')
-		file=paste0(graphicsPath, 'ameSimBias_',varName,'_asa.pdf')
-		# , device=cairo_pdf
+		file=paste0(graphicsPath, 'ameSimBias_',varName,'.pdf'),
+		device=cairo_pdf
 		)
 	return(g)
 }
 
 #
 ggBiasPlot('all', h=12, w=8)
-ggBiasPlot('beta') ; ggBiasPlot('mu')
 ##############################
