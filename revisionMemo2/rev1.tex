@@ -4,37 +4,38 @@
 	\item In my previous review I pointed out some problems with vague language, mostly in the opening sections.   Honestly, I still find the introduction to be problematic. Maybe it could be cut and we just open with the part of section 2 where the paper begins to discuss processes that lead to dyadic and higher order dependencies?  The reason is that the intro tries to strike a very general tone.  But in reality, the paper proposes a specific estimation strategy for parameters in a specific parametric model of networked interactions.  I think the paper would be more useful to readers if it started with the specific applications, and then on the basis of that, motivated the statistical specification on substantive grounds.  There are some swipes at other literature are neither necessary nor clear enough to be very compelling.
 	\begin{itemize}
 		\item \emph{ \textcolor{blue}{
-		something, something
+		We thank the reviewer for taking the time to provide their comments and helping us to make the manuscript more focused. We have made a number of changes to the framing of the article per the reviewer's suggestions.
 		}}
 	\end{itemize}
-	\item ``Most of these studies use a generalized linear model (GLM). However, this approach to studying dyadic data increases the chance of faulty inferences by assuming data are conditionally independent and identically distributed (iid).'' It should really read, ``Most of these studies use a generalized linear model (GLM). However, this approach to studying dyadic data increases the chance of faulty inferences **if the estimation and inference assume** data are conditionally independent and identically distributed (iid).''  But then if this is all just about mistakenly assuming iid, just say it quickly and move on.
+	\item ``Most of these studies use a generalized linear model (GLM). However, this approach to studying dyadic data increases the chance of faulty inferences by assuming data are conditionally independent and identically distributed (iid).'' It should really read, ``Most of these studies use a generalized linear model (GLM). However, this approach to studying dyadic data increases the chance of faulty inferences if the estimation and inference assume data are conditionally independent and identically distributed (iid).''  But then if this is all just about mistakenly assuming iid, just say it quickly and move on.
 	\begin{itemize}
 		\item  \emph{ \textcolor{blue}{
 		something, something.
 		}}
 	\end{itemize}
-	\item Why would the mean estimate be biased downward?  And, **biased with respect to what target of inference**?  A problem with the opening discussion is that it does not establish a target of inference.  Without doing so, "bias" is undefined.  It seems like they mean the coefficient for the linear relationship between some regressor and the latent outcome variable. But what if one is using a nonparametric model or a semiparametric model that operates on a different latent space---is bias even defined?  It seems that for bias to be defined we have to be restricting ourselves to a class of models that propose the same latent space, but that makes this much less general that the discussion leads on.  Moreover, that paper is not committing to talking about bias relative to causal effects under effect heterogeneity, but isn't that usually what people are after?  Or, maybe the paper is really concerned with bias with respect to a forecast prediction? If so, then we need to set up a forecast prediction error analysis.
+	\item Why would the mean estimate be biased downward?  And, biased with respect to what target of inference?  A problem with the opening discussion is that it does not establish a target of inference.  Without doing so, ``bias'' is undefined.  It seems like they mean the coefficient for the linear relationship between some regressor and the latent outcome variable. But what if one is using a nonparametric model or a semiparametric model that operates on a different latent space---is bias even defined?  It seems that for bias to be defined we have to be restricting ourselves to a class of models that propose the same latent space, but that makes this much less general that the discussion leads on.  Moreover, that paper is not committing to talking about bias relative to causal effects under effect heterogeneity, but isn't that usually what people are after?  Or, maybe the paper is really concerned with bias with respect to a forecast prediction? If so, then we need to set up a forecast prediction error analysis.
 	\begin{itemize}
 		\item  \emph{ \textcolor{blue}{
-		something, something.
+		agree that in the case of nonparametric or semiparametric models ... but this is not what most
 		}}
 	\end{itemize}
 	\item Moving to section 2, the extended discussion of specifying a likelihood under iid is overkill.  Again, I would just move on to the discussion of the application. The point that iid is inappropriate will receive due attention in the course of developing the networked interaction model.
 	\begin{itemize}
 		\item  \emph{ \textcolor{blue}{
-		something, something.
+		speaking specifically about glms so ...
 		}}
 	\end{itemize}
 	\item Explain how inference is done for the parameters from the AME model. How are intervals produced exactly? (Need this because you examine these in the simulation and make many statements about intervals throughout the text.)  What are the operating characteristics, in terms of convergence properties, etc.?
 	\begin{itemize}
 		\item  \emph{ \textcolor{blue}{
-		something, something.
+		intervals are produced via a gibbs sampler ...
 		}}
 	\end{itemize}
-	\item The DGP is simple enough that the paper needs to include the analytical calculation of the bias from the simple probit regression of Y on X.  We get no insight by just having monte carlo simulation results. For the simulations, clarify the "standard international relations approach" as just Y regressed on X, when you introduce it. Then explain how confidence intervals were produced. Are these just normal-approximation Wald intervals with non-robust standard errors? Explain exactly how the confidence intervals are produced for the AME model.  They were never characterized in the section that discussion the model.
+	\item The DGP is simple enough that the paper needs to include the analytical calculation of the bias from the simple probit regression of Y on X.  We get no insight by just having monte carlo simulation results. For the simulations, clarify the ``standard international relations approach'' as just Y regressed on X, when you introduce it. Then explain how confidence intervals were produced. Are these just normal-approximation Wald intervals with non-robust standard errors? Explain exactly how the confidence intervals are produced for the AME model.  They were never characterized in the section that discussion the model.
 	\begin{itemize}
 		\item  \emph{ \textcolor{blue}{
-		something, something.
+		we compare with a vanilla ols ...
+		and then the other set of results in the appendix re aranow use their dyad clustered approach ... per your request from last time
 		}}
-	\end{itemize}		
+	\end{itemize}
 \end{enumerate}
