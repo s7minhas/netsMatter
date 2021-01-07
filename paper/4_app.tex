@@ -121,7 +121,7 @@ As Figure~\ref{fig:gibmargeff} illustrates, the substantive results differ notab
 
 \subsection{Lessons Learned}
 
-First, utilizing the AME framework enables scholars to better model the underlying structure inherent to dyadic data. In each of the replications, the AME's predictive performance out-of-sample is notably superior. Specifically, not only does AME perform better at correctly identifying cases in which the dependent variable takes a value of $0$ (via the ROC curves), but it also dominates at correctly identifying occurrences of the dependent variable in the data (seen via the PR curves).
+First, utilizing the AME framework enables scholars to better model the underlying structure inherent to dyadic data. In each of the models the AME substantially outperforms the original model out of sample. Not only does AME perform better at correctly identifying cases in which the dependent variable takes a value of $0$ (via the ROC curves), but it also dominates at correctly identifying occurrences of the dependent variable in the data (seen via the PR curves). This may be because by ignoring dependencies, the original models are misspecifying the DGP, and the AME better accounts for it.  
 
 Second, in both the simulation  and replication sections  we have shown that results can change notably when interdependencies are not taken into account. Not only are coefficients biased in the GLM approaches, but they are often imprecisely measured with poorly calibrated standard errors.  This means that significance testing (for better or worse) is compromised when network effects are ignored.
 
