@@ -13,7 +13,7 @@ Assume that the true data-generating process for a binary variable, $Y$, is give
 $X_{i,j} = x \times x^{T}$, where $x$ is a nodal covariate that is drawn from a standard normal distribution. Similarly,  $W_{i,j} = w \times w^{T}$, where $w$ is also a nodal covariate that is independently drawn from a standard normal distribution. We generate our binary dependent variable, $Y$, within a probit framework with $Z$ serving as the latent variable. $X$ and $W$ are both dyadic covariates that are a part of the data-generating process for $Y$, but $W$ is not observed. We compare inference for $\mu$ and $\beta$---the latter parameter would be of primary concern for applied scholars---using three models:
 
 \begin{itemize}
-	\item the ``standard'' international relations approach estimated through a typical generalized linear model;
+	\item the ``standard'' international relations approach estimated through a generalized linear model;\footnote{Specifically, here we are just regressing $Y$ on $X$ assuming independent errors.}
 	\item the AME approach outlined in the previous section with a unidimensional latent factor space ($K=1$);\footnote{Results with higher values of $K$ are similar.}
 	\item and an ``oracle'' regression model that assumes we have measured all sources of dependencies and thus includes both $x_{i,j}$ and $w_{i,j}$.
 \end{itemize}
@@ -22,7 +22,7 @@ The first model corresponds to the ``standard'' approach in which little is expl
 
 For the simulation we set the true value of $\mu$ (the intercept term) to -2 and $\beta$ (the effect of $X$ on $Y$) to 1.\footnote{The value of $\gamma$ is also set to 1, which corresponds to an example where the $W$ character is associated with homophily.} We conduct two sets of simulations, one in which the number of actors in the network is set to 50 and the other at 100. In total, we run 1,000 simulations where we begin by simulating $Y$ from the specification given in Equation~\ref{eqn:sim} and then for each simulated $Y$ we estimate a standard, AME, and oracle model.
 
-We first compare the performance of the models in terms of how well they estimate the true values of $\mu$ and $\beta$ in Figure~\ref{fig:ameBias} $\mu$ and $\beta$ estimates from the simulations for the three models. The panels on the left show the results for when the number of actors is set to 50 and on the  right for 100 actors. The top pair of panels represents the estimates for $\mu$ while the bottom pair do the same for $\beta$. In each case, we find that the estimates for $\mu$ and $\beta$ produced by the standard approach are notably off from their true values. On the other hand, the AME model performs just as well as the oracle at estimating the true parameter values.
+We first compare the performance of the models in terms of how well they estimate the true values of $\mu$ and $\beta$ in Figure~\ref{fig:ameBias}. The panels on the left show the results for when the number of actors is set to 50 and on the  right for 100 actors. The top pair of panels represents the estimates for $\mu$ while the bottom pair do the same for $\beta$. In each case, we find that the estimates for $\mu$ and $\beta$ produced by the standard approach are notably off from their true values. On the other hand, the AME model performs just as well as the oracle at estimating the true parameter values.
 
 \begin{figure}
 	\centering
@@ -31,7 +31,7 @@ We first compare the performance of the models in terms of how well they estimat
 	\includegraphics[width=1\textwidth]{graphics/ameSimBias_all.pdf} \\
 \end{figure}
 
-Next, we estimate the 95\% confidence interval for the three models in each of the simulations and estimate the proportion of times that the true value fell within those intervals. The results are summarized in Figure~\ref{fig:ameCalib}, and again we see that the AME approach performs as well as the oracle, while the standard approach performs poorly by comparison. The implication of the results presented in Figures~\ref{fig:ameBias} and ~\ref{fig:ameCalib} is that standard approaches can often fail at estimating parameter values and conducting inferential tasks in the presence of unobserved dependencies. The AME approach by comparison can be used as a tool for scholars working with dyadic data to still estimate the true effects of their main variables of interest, while accounting for dependencies that do often emerge in dyadic data.
+Next, we estimate the 95\% credible interval for the three models in each of the simulations and estimate the proportion of times that the true value fell within those intervals. The results are summarized in Figure~\ref{fig:ameCalib}, and again we see that the AME approach performs as well as the oracle, while the standard approach performs poorly by comparison. The implication of the results presented in Figures~\ref{fig:ameBias} and ~\ref{fig:ameCalib} is that standard approaches can often fail at estimating parameter values and conducting inferential tasks in the presence of unobserved dependencies. The AME approach by comparison can be used as a tool for scholars working with dyadic data to still estimate the true effects of their main variables of interest, while accounting for dependencies that do often emerge in dyadic data.
 
 \begin{figure}
 	\centering
