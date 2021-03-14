@@ -33,7 +33,7 @@ ameFit = ame_repL(
     nscan=100000, seed=6886, burn=5000, odens=25,
     plot=FALSE,
     print=FALSE,
-    startVals=startVals0$startVals
+    startVals=startVals0
 )
 endTime = Sys.time()
 print( endTime-startTime )

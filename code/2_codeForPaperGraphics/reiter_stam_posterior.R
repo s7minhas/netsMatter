@@ -17,18 +17,21 @@ if(Sys.info()['user'] == 'juanftellez'){
   source('helperEx.R')
 }
 
-if(Sys.info()['user']=='herme' | 'Owner'){
+if(Sys.info()['user'] %in% c('herme', 'Owner', 'S7M')){
 	user=Sys.info()['user']
 	base = paste0('C:/Users/',user,'/')
 	fPath = paste0(base, 'Research/netsMatter/code/helpers/')
 	dPath = paste0(base, 'Dropbox/Research/netsMatter/')
 	simResPath = paste0(dPath, 'simulation/')
+	resultsPath = paste0(dPath, 'replications/Reiter_Stam_2003/output/')
 	source(paste0(fPath, 'functions.R'))
 	source(paste0(fPath, 'ameHelpers.R'))
 	source(paste0(fPath, 'binPerfHelpers.R'))
 	source(paste0(fPath, 'stargazerHelpers.R'))
 	source(paste0(fPath, 'clusteredSE.R'))
 }
+
+plotPath = 'C:/Users/S7M/Desktop/'
 ############################################
 
 # modData ###########################################
@@ -78,7 +81,7 @@ predDfs = list(
   AME = data.frame(actual=ameOutSamp$outPerf$actual, pred=ameOutSamp$outPerf$pred, model='AME') )
 
 # run
-ggPerfCurves(predDfs, 'reiter_stam')
+ggPerfCurves(predDfs, 'reiter_stam', plotPath)
 ############################################
 
 # addEffdata ###########################################
@@ -87,6 +90,8 @@ effdat = getAddEffData(fit = ameFit) ##This function is in helperEx.R
 effdat$cown = effdat$actor
 effdat$actor = countrycode::countrycode(effdat$actor, 'cown', 'country.name')
 effdat$actor = factor(effdat$actor,  levels=effdat[order(effdat$addEff),'actor'])
+
+effdat[order(effdat$addEff,decreasing=TRUE),]
 
 ## spatial visualization
 # fix actor names
@@ -138,6 +143,7 @@ rsaeff = addEffPlot(fit = effdatSub, addEffData = effdatSub, row = T) +
     axis.text.x=element_text(angle=0, size=12),
     axis.text.y=element_text(size=12)
     )
+rsaeff
 ggsave(rsaeff, file=paste0(plotPath, 'reiter_stam_aEff_line.pdf'), height=6, width=4)
 
 # receiver effects

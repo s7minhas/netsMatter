@@ -24,7 +24,7 @@ ameFit = ame_repL(
   model="bin",symmetric=FALSE,intercept=TRUE,
   R=2,
   nscan=10000, seed=6886, burn=25000, odens=10,
-  plot=FALSE, print=FALSE, gof=TRUE, startVals=startVals0$startVals,
+  plot=FALSE, print=FALSE, gof=TRUE, startVals=startVals0,
   periodicSave=TRUE
 )
 endTime = Sys.time()
