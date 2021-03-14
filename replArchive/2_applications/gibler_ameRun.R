@@ -13,17 +13,19 @@ library(amen)
 ##############################
 # load ame version of data
 load(paste0(gPth, 'giblerData.rda'))
+##############################
 
-# run ame and save
+##############################
+# run ame and save ~2 days
 startTime = Sys.time()
 ameFit = ame_repL(
 	Y=yList,Xdyad=xDyadList,Xrow=NULL,Xcol=NULL,
 	model="bin",symmetric=TRUE, # MID DV: undirected data
 	R=2,
-	nscan=50000, seed=6886, burn=25000, odens=25,
+	nscan=100000, seed=6886, burn=25000, odens=25,
 	plot=FALSE, print=FALSE,
-	startVals = startVals0$startVals )
+	startVals = startVals0 )
 endTime = Sys.time()
 print( endTime-startTime )
-save(ameFit, startTime, endTime, file=paste0(gPth, 'ameFitGibler.rda'))
+save(ameFit, startTime, endTime, file=paste0(gPth, 'ameFitGibler_v2.rda'))
 ##############################
