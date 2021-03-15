@@ -14,7 +14,7 @@ assignInNamespace("rZ_bin_fc", rZ_bin_fc2, pos="package:amen")
 
 # load in helper functions for ameOutSamp
 source(paste0(pth, 'helpers/functions.R'))
-loadPkg(c('ROCR', 'RColorBrewer', 'caTools'))
+loadPkg(c('doParallel','foreach','ROCR', 'RColorBrewer', 'caTools'))
 source(paste0(pth, 'helpers/binPerfHelpers.r'))
 source(paste0(pth, 'helpers/ameOutSamp.R'))
 ##############################
@@ -30,12 +30,12 @@ startVals0 = ameFit$startVals ; rm(ameFit)
 # run out samp code and save
 startTime = Sys.time()
 ameOutSamp_k2 = ameOutSamp(
-  yList=ylist, xDyadL=xDyadList,
+  yList=yList, xDyadL=xDyadList,
   xRowL=xNodeList.s,
   xColL=xNodeList.r,
   R=2, model='bin',
   startVals=startVals0,
-  folds = 30, cores=10, rzBinFix=TRUE )
+  folds = 30, cores=10, rzBinFix=TRUE, fPth=fPth )
 endTime = Sys.time()
 save(ameOutSamp_k2, startTime, endTime,
   file=paste0(wPth, 'ameOutSampWeeks.rda'))
