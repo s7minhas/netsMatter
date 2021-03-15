@@ -1,4 +1,15 @@
 ##################################################################
+# install/load libraries
+loadPkg=function(toLoad){
+	for(lib in toLoad){
+	  if(!(lib %in% installed.packages()[,1])){
+	    install.packages(lib, repos='http://cran.rstudio.com/') }
+	  suppressMessages( library(lib, character.only=TRUE) )
+	}
+}
+##################################################################
+
+##################################################################
 #
 coefp_colors = c(
 	"Positive"=rgb(54, 144, 192, maxColorValue=255),
@@ -22,12 +33,12 @@ plotVC = function(vcFit, fName, w=7, h=4){
 			median=median(value),
 			lo95=quantile(value,.025),
 			lo90=quantile(value,.05),
-			hi90=quantile(value,.95), 		
+			hi90=quantile(value,.95),
 			hi95=quantile(value,.975)
 			)
 
 	# clean var name
-	vcKey = data.frame(dirty=colnames(vcFit)[-ncol(vcFit)], stringsAsFactors = FALSE) 
+	vcKey = data.frame(dirty=colnames(vcFit)[-ncol(vcFit)], stringsAsFactors = FALSE)
 	vcKey$clean = c(
 		'Within-Sender\nVariance ($\\sigma_{a]^{2}$)',
 		'Sender-Receiver\nCovariance ($\\sigma_{ab]$)',
@@ -39,13 +50,13 @@ plotVC = function(vcFit, fName, w=7, h=4){
 	vc$varClean = factor(vc$varClean, levels=vcKey$clean[c(1,3,2,4)])
 	vc$sig = 'Positive'
 	vc$bigLab = 'SRRM Parameters'
-	ggVC = ggplot(vc, aes(x=varClean, y=median, color=sig)) + 
-		geom_hline(aes(yintercept=0), linetype=2, color = "black") + 
-		geom_point(size=2.5) + 
-		geom_linerange(aes(ymin=lo95,ymax=hi95), linetype=1, size=.5) + 
-		geom_linerange(aes(ymin=lo90,ymax=hi90), linetype=1, size=1.5) + 
-		scale_color_manual(values=coefp_colors) + 
-		facet_grid(~bigLab) + 
+	ggVC = ggplot(vc, aes(x=varClean, y=median, color=sig)) +
+		geom_hline(aes(yintercept=0), linetype=2, color = "black") +
+		geom_point(size=2.5) +
+		geom_linerange(aes(ymin=lo95,ymax=hi95), linetype=1, size=.5) +
+		geom_linerange(aes(ymin=lo90,ymax=hi90), linetype=1, size=1.5) +
+		scale_color_manual(values=coefp_colors) +
+		facet_grid(~bigLab) +
 		scale_x_discrete('',labels=TeX(levels(rev(vc$varClean)))) + ylab('') +
 		theme(
 			legend.position = 'none',
@@ -67,17 +78,17 @@ getAddEffData = function(fit, row=TRUE, addDegree=FALSE, yList=NULL, orderByDegr
 	if(!row){addEffData = data.frame(addEff=fit$BPM, stringsAsFactors = FALSE) ; yLabel='Receiver Effects'}
 	addEffData$actor = rownames(addEffData) ; rownames(addEffData) = NULL
 	if(!orderByDegree){
-		addEffData$actor = factor(addEffData$actor, 
+		addEffData$actor = factor(addEffData$actor,
 			levels=addEffData[order(addEffData$addEff),'actor'])
 	}
 	if(addDegree){
 		yArr = listToArray(
-			actors=sort(unique(unlist(lapply(yList,rownames)))), 
+			actors=sort(unique(unlist(lapply(yList,rownames)))),
 			Y=yList, Xdyad=NULL, Xrow=NULL, Xcol=NULL)$Y
 		if(row){ degree = sort(apply(yArr, 1, mean, na.rm=TRUE)) }
 		if(!row){ degree = sort(apply(yArr, 2, mean, na.rm=TRUE)) }
-		if(orderByDegree){ 
-			addEffData$actor = factor(addEffData$actor, 
+		if(orderByDegree){
+			addEffData$actor = factor(addEffData$actor,
 				levels=names(degree) )
 		}
 		addEffData$var = 'Additive Effect'
@@ -85,7 +96,7 @@ getAddEffData = function(fit, row=TRUE, addDegree=FALSE, yList=NULL, orderByDegr
 		addEffData = rbind(addEffData, tmp) ; rm(tmp)
 	}
 	addEffData$max = ifelse(addEffData$addEff>=0,addEffData$addEff,0)
-	addEffData$min = ifelse(addEffData$addEff<0,addEffData$addEff,0) 
+	addEffData$min = ifelse(addEffData$addEff<0,addEffData$addEff,0)
 	return(addEffData)
 }
 ##################################################################
@@ -96,11 +107,11 @@ addEffPlot = function(fit, row=TRUE, addDegree=FALSE, yList=NULL, orderByDegree=
 		addEffData = getAddEffData(fit, row, addDegree, yList, orderByDegree)
 	}
 	if(row){ yLabel='Sender Effects'}
-	if(!row){ yLabel='Receiver Effects'}		
+	if(!row){ yLabel='Receiver Effects'}
 	gg = ggplot(addEffData, aes(x=actor, y=addEff)) +
 		geom_point() + geom_linerange(aes(ymax=max,ymin=min)) +
-		ylab(yLabel) + xlab('') + 
-		geom_hline(yintercept=0,color='red') + 
+		ylab(yLabel) + xlab('') +
+		geom_hline(yintercept=0,color='red') +
 		theme(
 			panel.border=element_blank(), axis.ticks=element_blank(),
 			# axis.text.x=element_text(angle=45, hjust=1, size=4)
@@ -118,7 +129,7 @@ addEffPlot = function(fit, row=TRUE, addDegree=FALSE, yList=NULL, orderByDegree=
 # calc diffs
 getScenDiff = function(
 	linkType='logit', # logit or probit
-	scenHi, scenLo, scenNames, 
+	scenHi, scenLo, scenNames,
 	beta, modName, type='summStats' # summStats or density
 	){
 	if(linkType=='logit'){
@@ -140,7 +151,7 @@ getScenDiff = function(
 			summPred['hi90',s]=quantile(predDiff[,s],.95)
 			summPred['lo95',s]=quantile(predDiff[,s],.025)
 			summPred['lo90',s]=quantile(predDiff[,s],.05) }
-	
+
 		# org and spit
 		summPred = t(summPred) %>% data.frame() %>%
 			mutate(
@@ -178,7 +189,7 @@ getScenDiff = function(
 loadPkg('ggrepel')
 
 getDataForCirc = function(
-	Y, U=NULL, V=NULL, row.names=rownames(Y), 
+	Y, U=NULL, V=NULL, row.names=rownames(Y),
 	col.names=colnames(Y), vscale=.8, removeIsolates=TRUE,
 	uLabel='U', vLabel='V'
 	){
@@ -225,14 +236,14 @@ getDataForCirc = function(
 	rsum <- apply(abs(Y), 1, sum, na.rm = TRUE)
 	csum <- apply(abs(Y), 2, sum, na.rm = TRUE)
 	links <- which(Y != 0, arr.ind = TRUE)
-	
+
 	# org df for gg
 	uG = data.frame(u*1.2)
 	uG$actor = rownames(Y)
 	uG$tPch = 0 ; uG$tPch[rsum>0] = (mu[rsum>0])^3
 	if(removeIsolates){ uG = uG[uG$tPch>0,] }
 	uG$tPch = uG$tPch
-	
+
 	# add v if supplied
 	if(!vLogic){
 		vG = data.frame(v*1.2)
@@ -240,9 +251,9 @@ getDataForCirc = function(
 		vG$tPch = 0 ; vG$tPch[csum>0] = (mv[csum>0])^3
 		if(removeIsolates){ vG = vG[vG$tPch>0,] }
 		vG$tPch = vG$tPch
-		
+
 		uG$eff = uLabel ; vG$eff = vLabel
-		uG = rbind(uG, vG)		
+		uG = rbind(uG, vG)
 		uG$eff = factor(uG$eff, levels=c(uLabel,vLabel)) }
 
 	#
@@ -253,11 +264,11 @@ ggCirc = function(
 	Y, U=NULL, V=NULL, row.names=rownames(Y), col.names=colnames(Y),
 	vscale=.8, prange=c(2,5), lcol='gray85', ltype='dotted', lsize=.5,
 	force=1, maxIter = 3e3, removeIsolates=TRUE, uLabel='U', vLabel='V',
-	showActLinks=TRUE, geomLabel=TRUE, geomText=FALSE, geomPoint=TRUE, ...	
+	showActLinks=TRUE, geomLabel=TRUE, geomText=FALSE, geomPoint=TRUE, ...
 	){
 
 	#
-	ggData = getDataForCirc(Y=Y, U=U, V=V, 
+	ggData = getDataForCirc(Y=Y, U=U, V=V,
 		row.names=row.names, col.names=col.names,
 		vscale=vscale, removeIsolates=removeIsolates,
 		uLabel=uLabel, vLabel=vLabel)
@@ -269,7 +280,7 @@ ggCirc = function(
 
 	# add v if supplied
 	if(!vLogic){ ggCirc = ggplot(uG, aes(x=X1, y=X2, color=eff)) }
-	if(vLogic){ ggCirc = ggplot(uG, aes(x=X1, y=X2)) }	
+	if(vLogic){ ggCirc = ggplot(uG, aes(x=X1, y=X2)) }
 
 	# add segments
 	if(showActLinks){
@@ -314,9 +325,9 @@ ggCoef = function(data, group = NULL)
                                   ymax = hi95, fatten = 3),
                               lwd = 1/2, position = position_dodge(width = .6),
                               shape = 21, fill = "WHITE")
-  zp1 = zp1 + coord_flip() + labs(x = "", y = '', 
+  zp1 = zp1 + coord_flip() + labs(x = "", y = '',
                                   color = 'model type')
-  zp1 = zp1 + theme_bw() + scale_color_brewer(palette = 'Set1') + 
+  zp1 = zp1 + theme_bw() + scale_color_brewer(palette = 'Set1') +
     theme(
       legend.position='top', legend.title=element_blank(),
       legend.text=element_text(family="Source Sans Pro Light"),
