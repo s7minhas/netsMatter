@@ -9,7 +9,7 @@ ameOutSamp = function(
   seed=6886, folds=4, cores=folds,
   R=2, model='bin', burn=2000, nscan=4000, odens=10,
   intercept=TRUE, rvar=TRUE, cvar=TRUE, symmetric=TRUE,
-  rzBinFix=FALSE
+  rzBinFix=FALSE, fPth=NULL
 ){
 
   ################
