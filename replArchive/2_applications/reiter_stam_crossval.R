@@ -11,7 +11,7 @@ library(amen)
 
 # load in helper functions for ameOutSamp
 source(paste0(pth, 'helpers/functions.R'))
-loadPkg(c('ROCR', 'RColorBrewer', 'caTools'))
+loadPkg(c('doParallel','foreach','ROCR', 'RColorBrewer', 'caTools'))
 source(paste0(pth, 'helpers/binPerfHelpers.r'))
 source(paste0(pth, 'helpers/ameOutSamp.R'))
 ##############################
