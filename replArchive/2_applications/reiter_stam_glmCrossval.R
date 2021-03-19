@@ -73,6 +73,11 @@ xd =  xd[which(xd$Var1 != xd$Var2),]
 
 # get vector of ivs
 ivs = dimnames(xDyadList[[1]])[[3]]
+
+# clean up var labels, remove any underscores
+# as that screws up the formula creation
+names(xd) = gsub('_','',names(xd))
+ivs = gsub('_', '', ivs)
 ##############################
 
 ##############################
@@ -119,9 +124,8 @@ outPerf = do.call('rbind', lapply(1:folds, function(f){
     # y=c(y*foldID) ; return(y[!is.na(y)])
     return( y[!is.na(foldID)] )
   }))
-  if(length(actual)!=length(prob)){stop('shit went wrong.')}
+  if(length(actual)!=length(prob)){stop('mismatch in preds from glm and actual.')}
   res = data.frame(actual=actual, pred=prob, fold=f, stringsAsFactors = FALSE)
-  if(any(grepl('lagDV',modForm))){res=na.omit(res)}
   return(res)
 }))
 ##############################
@@ -147,3 +151,7 @@ glmOutSamp_wFullSpec = list(
   outPerf=outPerf, aucByFold=aucByFold,
   aucROC=aucROC, aucPR=aucPR )
 ##############################
+
+lapply(glmOutSamp_wFullSpec, dim)
+
+glmOutSamp_wFullSpec[3:4]
