@@ -26,7 +26,7 @@ ameFit = ame_repL(
 	Y=yList,Xdyad=xDyadList,Xrow=NULL,Xcol=NULL,
 	model="bin",symmetric=TRUE, # MID DV: undirected data
 	R=2,
-	nscan=100000, seed=6886, burn=25000, odens=25,
+	nscan=100000, seed=6886, burn=100, odens=25,
 	plot=FALSE, print=FALSE, periodicSave=TRUE,
 	startVals = startVals0 )
 endTime = Sys.time()
