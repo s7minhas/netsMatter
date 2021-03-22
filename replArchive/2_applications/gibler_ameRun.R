@@ -12,7 +12,7 @@ library(amen)
 
 ##############################
 # load ame version of data
-load(paste0(gPth, 'giblerData_v2.rda'))
+load(paste0(gPth, 'giblerData.rda'))
 # load(paste0(gPth, 'giblerData.rda'))
 # load(paste0(gPth, 'ameFitGibler_v2.rda'))
 # startVals0 = ameFit$startVals
@@ -20,7 +20,7 @@ load(paste0(gPth, 'giblerData_v2.rda'))
 ##############################
 
 ##############################
-# run ame and save ~4 days
+# run ame and save ~3 days
 startTime = Sys.time()
 ameFit = ame_repL(
 	Y=yList,Xdyad=xDyadList,Xrow=NULL,Xcol=NULL,
@@ -31,5 +31,5 @@ ameFit = ame_repL(
 	startVals = startVals0 )
 endTime = Sys.time()
 print( endTime-startTime )
-save(ameFit, startTime, endTime, file=paste0(gPth, 'ameFitGibler_v3.rda'))
+save(ameFit, startTime, endTime, file=paste0(gPth, 'ameFitGibler.rda'))
 ##############################
