@@ -1,7 +1,8 @@
 #############################
 # set a path
 require(here)
-pth = paste0(here::here(), '/replArchive/')
+# pth = paste0(here::here(), '/replArchive/')
+pth = paste0(here::here(), '/')
 fPth = paste0(pth, 'helpers/')
 gPth = paste0(pth, '2_applications/application_data/gibler/')
 
@@ -47,17 +48,19 @@ yListFolds = lapply(yList, function(y){ # assign each y-matrix to a fold
 ##############################
 
 ##############################
-# divide dataset up into folds where each fold
+# divide dataset up into folds where each subsample
 # contains observations from each fold except
-# a particular fold which will serve as the
+# a particular fold that serves as the
 # holdout sample for perf testing
-yCrossValTrain = lapply(1:folds, function(f){
-  yListMiss = lapply(1:length(yList), function(t){
-    foldID = yListFolds[[t]] ; y = yList[[t]]
-    foldID[foldID==f]=NA ; y=y*foldID
-    return(y) })
-  names(yListMiss) = names(yList)
-  return(yListMiss) }) ; names(yCrossValTrain) = as.character(1:folds)
+dvDf = reshape2::melt(yList)
+dvDf = dvDf[dvDf$Var1!=dvDf$Var2,]
+fDf = reshape2::melt(yListFolds)
+fDf = fDf[fDf$Var1!=fDf$Var2,]
+dvDf$fold = fDf$value
+dvDf$id = with(dvDf, paste(Var1, Var2, L1, sep='_'))
+
+# cleanup
+rm(yList, yListFolds)
 ##############################
 
 ##############################
@@ -78,56 +81,59 @@ ivs = dimnames(xDyadList[[1]])[[3]]
 # as that screws up the formula creation
 names(xd) = gsub('_','',names(xd))
 ivs = gsub('_', '', ivs)
+
+# add id var
+xd$id = with(xd, paste(Var1, Var2, L1, sep='_'))
 ##############################
 
 ##############################
-# melt y down into a list of dyadic dfs and merge in covariates
-yCrossValTrain = lapply(yCrossValTrain, function(y){
-  y = reshape2::melt(y) ; y$id = paste(y$Var1, y$Var2, y$L1, sep='_')
-  y = y[which(y$Var1!=y$Var2),]
-  matchedIDs = match(y$id, xd$id)
-  y = cbind(y, xd[matchedIDs,ivs])
-  return(y) })
+# merge covars with dv data
+xd = xd[match(dvDf$id, xd$id),]
+df = cbind(dvDf, xd)
+rm(xd, dvDf)
 ##############################
 
 ##############################
-# generate model formula and run glm
+# gen model formula
 modForm = formula(
   paste0("value ~ ", paste(ivs, collapse='+')))
-fitCrossVal = lapply(yCrossValTrain, function(glmData){
-  glmData$value[glmData$value>1] = 1
-  fit = glm(modForm, data=glmData, family='binomial')
-  return(fit) })
 ##############################
 
 ##############################
-# get preds
-f = 1
-t = 1
+# run model by holding out one
+# fold at a time, predicting
+# out and saving perf results
+outPerf = lapply(1:folds, function(fold){
 
+	# divide data into train/test
+	train = df[df$fold!=fold,]
+	test = df[df$fold==fold,]
 
-outPerf = do.call('rbind', lapply(1:folds, function(f){
-  # get probs
-  testData = cbind(
-    int=1,
-    yCrossValTrain[[f]][
-        is.na(yCrossValTrain[[f]]$value),
-        names(coef(fitCrossVal[[f]]))[-1]
-      ]
-    )
-  prob = 1/(1+exp(-as.matrix(testData) %*% coef(fitCrossVal[[f]])))
+	# run model
+	mod = glm(
+		modForm,
+		data=train,
+		family=binomial)
 
-  # get actual
-  actual=unlist(lapply(1:length(yListFolds), function(t){
-    foldID = yListFolds[[t]] ; y = yList[[t]]
-    foldID[foldID!=f]=NA ; foldID[!is.na(foldID)] = 1
-    # y=c(y*foldID) ; return(y[!is.na(y)])
-    return( y[!is.na(foldID)] )
-  }))
-  if(length(actual)!=length(prob)){stop('mismatch in preds from glm and actual.')}
-  res = data.frame(actual=actual, pred=prob, fold=f, stringsAsFactors = FALSE)
-  return(res)
-}))
+	# set up covars for fold holdout pred
+	testCovars = data.matrix(test[,ivs])
+	testCovars = cbind(int=1, testCovars)
+
+	# get preds and probs
+	pred = testCovars %*% coef(mod)
+	prob = 1/(1+exp(-pred))
+
+	# get actual data and combine into
+	# new df for perf eval with NAs removed
+	act = test[,'value']
+  res = data.frame(
+		actual=act, pred=prob, fold=fold,
+		stringsAsFactors = FALSE)
+	res = na.omit(res)
+  return(res)	 })
+
+# combine list df elements into single df
+outPerf = do.call('rbind', outPerf)
 ##############################
 
 ##############################
