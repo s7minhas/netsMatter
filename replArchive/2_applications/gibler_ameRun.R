@@ -13,10 +13,6 @@ library(amen)
 ##############################
 # load ame version of data
 load(paste0(gPth, 'giblerData.rda'))
-# load(paste0(gPth, 'giblerData.rda'))
-# load(paste0(gPth, 'ameFitGibler_v2.rda'))
-# startVals0 = ameFit$startVals
-# save(yList, xDyadList, startVals0, file=paste0('giblerData_v2.rda'))
 ##############################
 
 ##############################
