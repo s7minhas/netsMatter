@@ -17,9 +17,31 @@ trim = function (x) { gsub("^\\s+|\\s+$", "", x) }
 
 #
 source(paste0(fPth, 'binPerfHelpers.R'))
+source(paste0(fPth, 'glmOutSamp.R'))
 ##############################
 
 ##############################
 # load data
 load(paste0(wPth, 'weeksData.rda'))
+
+# combine nodal and dyadic covars
+xDyadList = lapply(1:length(xDyadList), function(ii){
+  xd = xDyadList[[ii]]
+  xs = xNodeList.s[[ii]]
+  xr = xNodeList.r[[ii]]
+  covarArr = amen::design_array_listwisedel(
+    xs, xr, xd, FALSE, nrow(xd))
+  rownames(covarArr) = colnames(covarArr) = rownames(xd)
+  return( covarArr ) })
+
+# cleanup
+rm(xNodeList.s, xNodeList.r)
+##############################
+
+##############################
+glmPerf = glmOutSamp(
+  yList=yList, xDyadL=xDyadList,
+  seed=6886, folds=30 )
+save(glmPerf,
+  file=paste0(wPth, 'glmOutSampWeeks.rda'))
 ##############################
