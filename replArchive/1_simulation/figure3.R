@@ -1,7 +1,7 @@
 ##############################
 # set a path
 require(here)
-pth = paste0(here::here(), '/replArchive/')
+pth = paste0(here::here(), '/')
 simResPath = pth
 graphicsPath = pth
 
@@ -29,6 +29,12 @@ facet_labeller = function(string){ TeX(string) }
 # params
 NSIM = 1000 ; intEff=-2 ; x1Eff=1 ; x2Eff=1
 
+# check if sim results are in path
+fileLogical = !all( file.exists(
+	paste0(simResPath,'ameSim',c(50,100),'.rda') ) )
+# if they arent in path then run sim script
+if( fileLogical ){
+	source(paste0(pth, '1_simulation/1_simManuscript.R')) }
 # load sim results
 for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,'.rda')) }
 

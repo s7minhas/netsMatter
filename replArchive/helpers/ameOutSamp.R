@@ -5,7 +5,7 @@
 ##################################################################
 # function to run k-fold cross validation analysis using ame
 ameOutSamp = function(
-  yList, xDyadL=NULL, xRowL=NULL, xColL=NULL, startVals,
+  yList, xDyadL=NULL, xRowL=NULL, xColL=NULL, startVals=ameFit$startVals,
   seed=6886, folds=4, cores=folds,
   R=2, model='bin', burn=2000, nscan=4000, odens=10,
   intercept=TRUE, rvar=TRUE, cvar=TRUE, symmetric=TRUE,
@@ -76,7 +76,7 @@ ameOutSamp = function(
 
   # org output and return
   out=list(
-    fitCrossVal=fitCrossVal,
+    # fitCrossVal=fitCrossVal,
     outPerf=outPerf, aucByFold=aucByFold,
     aucROC=aucROC, aucPR=aucPR
   )
