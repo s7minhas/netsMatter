@@ -1,7 +1,7 @@
 #############################
 # set a path
 require(here)
-pth = paste0(here::here(), '/replArchive/')
+pth = paste0(here::here(), '/')
 rsPth = paste0(pth, '2_applications/application_data/reiter_stam/')
 
 #
@@ -14,6 +14,12 @@ library(amen)
 
 ##############################
 # load models
+
+# if ame model for reiter and stam is not present run script
+if(!file.exists(paste0(rsPth, 'ameFitReiterStam.rda'))){
+  source(paste0(pth, '2_applications/reiter_stam_ameRun.R')) }
+
+  # load in ame results
 load(paste0(rsPth,'ameFitReiterStam.rda'))
 ##############################
 
@@ -33,7 +39,9 @@ cntryKey$cowc = countrycode(cntryKey$cname, 'country.name', 'cowc')
 # geo colors for nodes
 loadPkg('cshapes')
 cmap = cshp(date=as.Date('2016-1-1'))
-cmapDF=fortify(cmap,region='FEATUREID') ; names(cmapDF)[6]='FEATUREID' ; cmapDF=join(cmapDF, cmap@data)
+cmapDF=fortify(cmap,region='FEATUREID')
+names(cmapDF)[6]='FEATUREID'
+cmapDF=join(cmapDF, cmap@data)
 cmapDF$addEff = effdat$addEff[match(cmapDF$COWCODE, effdat$cown)]
 
 ggMap = ggplot() +
