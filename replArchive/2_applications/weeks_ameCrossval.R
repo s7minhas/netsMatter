@@ -1,7 +1,7 @@
 #############################
 # set a path
 require(here)
-pth = paste0(here::here(), '/replArchive/')
+pth = paste0(here::here(), '/')
 fPth = paste0(pth, '/helpers/')
 wPth = paste0(pth, '2_applications/application_data/weeks/')
 
@@ -23,20 +23,17 @@ source(paste0(pth, 'helpers/ameOutSamp.R'))
 # load data
 load(paste0(wPth, 'weeksData.rda'))
 load(paste0(wPth, 'ameFitWeeks.rda'))
-startVals0 = ameFit$startVals ; rm(ameFit)
 ##############################
 
 ##############################
-# run out samp code and save ~17 hours
-startTime = Sys.time()
+# run out samp code and save ~8 hours
 ameOutSamp_k2 = ameOutSamp(
   yList=yList, xDyadL=xDyadList,
   xRowL=xNodeList.s,
   xColL=xNodeList.r,
   R=2, model='bin',
-  startVals=startVals0,
-  folds = 30, cores=10, rzBinFix=TRUE, fPth=fPth )
-endTime = Sys.time()
-save(ameOutSamp_k2, startTime, endTime,
+  symmetric=FALSE,
+  folds = 30, cores=30, rzBinFix=TRUE, fPth=fPth )
+save(ameOutSamp_k2,
   file=paste0(wPth, 'ameOutSampWeeks.rda'))
 ##############################
