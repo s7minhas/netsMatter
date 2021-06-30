@@ -1,7 +1,7 @@
 #############################
 # set a path
 require(here)
-pth = paste0(here::here(), '/replArchive/')
+pth = paste0(here::here(), '/')
 gPth = paste0(pth, '2_applications/application_data/gibler/')
 
 #
@@ -12,7 +12,17 @@ source(paste0(pth, 'helpers/stargazerHelpers.R'))
 
 ##############################
 # load models
-load(paste0(gPth,'ameFitGibler.rda'))
+
+# load ame mods run in parallel
+files = list.files(gPth)[grepl('ameFitGibler_', list.files(gPth))]
+pthFiles = paste0(gPth, files)
+
+# gather together into new ameFit$BETA object
+ameFit=list()
+ameFit$BETA = do.call('rbind', lapply(pthFiles, function(pthFile){
+	load(pthFile) ; return( ameFit$BETA ) } ) )
+
+# load glm data
 load( paste0(gPth,'glmFitGibler.rda') )
 ##############################
 
