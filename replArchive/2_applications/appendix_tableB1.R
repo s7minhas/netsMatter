@@ -1,7 +1,7 @@
 #############################
 # set a path
 require(here)
-pth = paste0(here::here(), '/replArchive/')
+pth = paste0(here::here(), '/')
 rsPth = paste0(pth, '2_applications/application_data/reiter_stam/')
 
 #
