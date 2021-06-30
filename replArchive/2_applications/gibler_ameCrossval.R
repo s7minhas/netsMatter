@@ -1,7 +1,7 @@
 #############################
 # set a path
 require(here)
-pth = paste0(here::here(), '/replArchive/')
+pth = paste0(here::here(), '/')
 gPth = paste0(pth, '2_applications/application_data/gibler/')
 
 # install github from specific repo
@@ -19,19 +19,16 @@ source(paste0(pth, 'helpers/ameOutSamp.R'))
 ##############################
 # load ame version of data
 load(paste0(gPth, 'giblerData.rda'))
-load(paste0(gPth, 'ameFitGibler.rda'))
-startVals0 = ameFit$startVals ; rm(ameFit)
+load(paste0(gPth, 'ameFitGibler_s119.rda'))
 ##############################
 
 ##############################
 # run out samp code and save
-startTime = Sys.time()
+# this model was run on an ec2 instance
 ameOutSamp_k2 = ameOutSamp(
   yList=yList, xDyadL=xDyadList, xRowL=NULL, xColL=NULL,
   R=2, model='bin',
-  startVals=startVals0,
-  folds = 30, cores=20 )
-endTime = Sys.time()
-save(ameOutSamp_k2, startTime, endTime,
+  folds = 30, cores=30 )
+save(ameOutSamp_k2,
   file=paste0(rsPth, 'ameOutSampGibler.rda'))
 ##############################
