@@ -1,7 +1,7 @@
 #############################
 # set a path
 require(here)
-pth = paste0(here::here(), '/replArchive/')
+pth = paste0(here::here(), '/')
 simResPath = pth
 
 # install github from specific repo

@@ -1,7 +1,7 @@
 #############################
 # set a path
 require(here)
-pth = paste0(here::here(), '/replArchive/')
+pth = paste0(here::here(), '/')
 gPth = paste0(pth, '2_applications/application_data/gibler/')
 
 #
@@ -10,22 +10,35 @@ source(paste0(pth, 'helpers/functions.R'))
 source(paste0(pth, 'helpers/ameHelpers.R'))
 
 #
-library(mvtnorm)
+loadPkg('mvtnorm')
 ##############################
 
 ##############################
 # load models
-load(paste0(gPth,'ameFitGibler.rda'))
+
+# load ame mods run in parallel
+files = paste0(
+	'ameFitGibler_s',c(119, 1571, 1922, 211, 3316, 3466, 3508, 4087, 6516, 806))
+
+files = list.files(gPth)[grepl('ameFitGibler_', list.files(gPth))]
+pthFiles = paste0(gPth, files)
+
+# gather together into new ameFit$BETA object
+ameFit=list()
+ameFit$BETA = do.call('rbind', lapply(pthFiles, function(pthFile){
+	load(pthFile) ; return( ameFit$BETA ) } ) )
+
+# load glm data
 load( paste0(gPth,'glmFitGibler.rda') )
 ##############################
 
 ##############################
 # plot marg effs
 # get data and add intercept val
-modData = mod$model ; modData$intercept = 1
+modData = mod$model
 
 # create scenario matrix
-vars = colnames(ameFit$BETA)
+vars = colnames(ameFit$BETA)[-1]
 varsMod = gsub('.dyad','',vars,fixed=TRUE) %>% gsub('_s','s',.,fixed=TRUE)
 medVals = apply(modData[,varsMod], 2, median) ; names(medVals) = varsMod
 replaceVal = function(var, newVal, oVals=medVals){
@@ -50,11 +63,12 @@ scens = c( 'Allied', 'Joint Democracy', 'Contiguity',
 	'Rivalry', 'Parity at entry year', 'Parity')
 
 # for ame
-glmDraws = rmvnorm(1000, coef(mod), vcov(mod)) ; colnames(glmDraws)[1] = 'intercept'
+set.seed(6886)
+glmDraws = rmvnorm(1000, coef(mod), vcov(mod))
 ameDraws = rmvnorm(1000, apply(ameFit$BETA, 2, median), cov(ameFit$BETA))
 scenDiffs = rbind(
-	getScenDiff(linkType='logit', scen1, scen0, scens, glmDraws, 'GLM', type='densityShade'),
-	getScenDiff(linkType='probit', scen1, scen0, scens, ameFit$BETA, 'AME', type='densityShade') )
+	getScenDiff(linkType='logit', scen1, scen0, scens, glmDraws[,-1], 'GLM', type='densityShade'),
+	getScenDiff(linkType='probit', scen1, scen0, scens, ameDraws[,-1], 'AME', type='densityShade') )
 
 ggCols = c(GLM='#d6604d', AME='#4393c3')
 ggLty = c(GLM='dashed', AME='solid')

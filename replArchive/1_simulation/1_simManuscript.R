@@ -1,7 +1,7 @@
 #############################
 # set a path
 require(here)
-pth = paste0(here::here(), '/replArchive/')
+pth = paste0(here::here(), '/')
 simResPath = pth
 
 # install github from specific repo
@@ -50,8 +50,10 @@ simRun = function(seed, n, mu, beta, gamma){
 ##############################
 
 ##############################
+## running these simulations takes approximately
+## 6 hours
+
 # params
-startSimTime = Sys.time()
 imps = 1000
 intEff=-2 ; x1Eff=1 ; x2Eff=1
 
@@ -68,8 +70,4 @@ ameSim100 = foreach(imp = 1:imps, .packages=c('amen')) %dopar% {
 	out=simRun(seed=imp, n=100, mu=intEff, beta=x1Eff, gamma=x2Eff)
 	return(out) } ; stopCluster(cl)
 save( ameSim100, file=paste0(simResPath, 'ameSim100.rda') )
-
-#
-endSimTime = Sys.time()
-print(endSimTime - startSimTime) # ~6 hours
 ##############################

@@ -1,7 +1,7 @@
 #############################
 # set a path
 require(here)
-pth = paste0(here::here(), '/replArchive/')
+pth = paste0(here::here(), '/')
 fPth = paste0(pth, '/helpers/')
 wPth = paste0(pth, '2_applications/application_data/weeks/')
 
@@ -20,7 +20,7 @@ load(paste0(wPth, 'weeksData.rda'))
 
 ##############################
 # run and save
-# ~19 hours
+# ~1.14 days
 startTime = Sys.time()
 ameFit = ame_repL(
     Y=yList,
@@ -30,12 +30,13 @@ ameFit = ame_repL(
     model="bin",
     symmetric=FALSE,
     R=2,
-    nscan=100000, seed=6886, burn=5000, odens=25,
+    nscan=100000, seed=6886, burn=50000, odens=25,
     plot=FALSE,
-    print=FALSE,
-    startVals=startVals0
+    print=FALSE
+    # startVals=startVals0
 )
 endTime = Sys.time()
 print( endTime-startTime )
-save(ameFit, startTime, endTime, file=paste0(wPth, 'ameFitWeeks.rda'))
+save(ameFit, startTime, endTime,
+  file=paste0(wPth, 'ameFitWeeks.rda'))
 ##############################
