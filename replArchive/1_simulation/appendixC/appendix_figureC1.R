@@ -1,7 +1,7 @@
 #############################
 # set a path
 require(here)
-pth = paste0(here::here(), '/replArchive/')
+pth = paste0(here::here(), '/')
 graphicsPath=simResPath = pth
 
 # install github from specific repo
@@ -28,9 +28,13 @@ facet_labeller = function(string){ TeX(string) }
 # params
 intEff=-2 ; x1Eff=1 ; x2Eff=1
 
-# iterate over sims
-
-# sim labs
+# check if sim results are in path
+fileLogical = !all( file.exists(
+	paste0(simResPath,'ameSim',c(50,100),'_asaProbit.rda') ) )
+# if they arent in path then run sim script
+if( fileLogical ){
+	source(paste0(pth, '1_simulation/appendixC/1_ameSim_asaProbit.R')) }
+# load sim results
 for(n in c( 50,100)){ load(paste0(simResPath,'ameSim',n,'_asaProbit.rda')) }
 
 #

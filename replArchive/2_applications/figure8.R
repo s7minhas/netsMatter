@@ -1,7 +1,7 @@
 #############################
 # set a path
 require(here)
-pth = paste0(here::here(), '/replArchive/')
+pth = paste0(here::here(), '/')
 wPth = paste0(pth, '2_applications/application_data/weeks/')
 
 #
@@ -14,7 +14,15 @@ library(amen)
 
 ##############################
 # load models
+
+# if ame model for weeks is not present run script
+if(!file.exists(paste0(rsPth, 'weeksStam.rda'))){
+  source(paste0(pth, '2_applications/weeks_ameRun.R')) }
+
+# load in ame results
 load(paste0(wPth,'ameFitWeeks.rda'))
+
+# load in weeks data
 load(paste0(wPth, 'WeeksamenData.rda'))
 ##############################
 
