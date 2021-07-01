@@ -2,6 +2,7 @@
 # set a path
 require(here)
 pth = paste0(here::here(), '/')
+pth = 'C:/Users/S7M/Research/netsMatter/replArchive/'
 graphicsPath=simResPath = pth
 
 # install github from specific repo
@@ -27,6 +28,18 @@ facet_labeller = function(string){ TeX(string) }
 ##############################
 # params
 NSIM = 1000 ; intEff=-2 ; x1Eff=1 ; x2Eff=1
+
+# check if sim results are in path
+files = paste0(simResPath, c(
+	'ameSim50_corrProbitMed.rda',
+	'ameSim100_corrProbitMed.rda',
+	'ameSim50_corrProbitHi.rda',
+	'ameSim100_corrProbitHi.rda' ))
+fileLogical = !all( file.exists( files ) )
+
+# if they arent in path then run sim script
+if( fileLogical ){
+	source(paste0(pth, '1_simulation/appendixD/1_ameSim_rev2_probitCorrel.R')) }
 
 # iterate over correlation levels
 figNames = c('a', 'b')
