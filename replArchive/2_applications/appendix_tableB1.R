@@ -13,6 +13,9 @@ source(paste0(pth, 'helpers/stargazerHelpers.R'))
 ##############################
 # load models
 load(paste0(rsPth,'ameFitReiterStam.rda'))
+
+if(!file.exists(paste0(rsPth,'glmFitReiterStam.rda'))){
+	source(paste0(pth, '2_applications/reiter_stam_glmRun.R')) }
 load( paste0(rsPth,'glmFitReiterStam.rda') )
 ##############################
 
