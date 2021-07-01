@@ -66,7 +66,7 @@ Scripts for the simulation portion of the appendix can be found in `replArchive/
 
 - **1_simulation/appendixC/appendix_figureC1.R**: Creates the visualization for the regression parameter estimates from the simulation and stores the resulting figure in `replArchive/appendix_figureC1.pdf`. This script depends on the presence of `replArchive/ameSim50_asaProbit.rda` and `replArchive/ameSim50_asaProbit.rda`. Both of these .rdas are created by `1_simulation/appendixC/1_ameSim_asaProbit.R`, which takes 36 minutes to complete. If the .rdas are not present, then `1_simulation/appendixC/1_ameSim_asaProbit.R` will be run via source.
 - **1_simulaton/appendixC/appendix_figureC2.R**: Creates the visualization showcasing the calibration of the various models from the simulation and stores the resulting figure in `replArchive/appendix_figureC2.pdf`. This script also depends on the simulation results from `1_simulation/appendixC/1_ameSim_asaProbit.R`.
-- **1_simulation/appendixD/appendix_
+- **1_simulation/appendixD/appendix_figureD1.R**: Creates the visualization for the regression parameter estimates from the simulation and stores the resulting figures in `replArchive/appendix_figureD1a.pdf` and `replArchive/appendix_figureD1b.pdf`. This script depends on the presence of `replArchive/ameSim50_corrProbitMed.rda`, `replArchive/ameSim100_corrProbitMed.rda`, `replArchive/ameSim50_corrProbitHi.rda`, and `replArchive/ameSim100_corrProbitHi.rda`. Each of these .rdas are created by `1_simulation/appendixD/1_ameSim_rev2_probitCorrel.R`, which takes 13 hours to complete. If the .rdas are not present, then `1_simulation/appendixD/1_ameSim_rev2_probitCorrel.R` will be run via source.
 
 ##### Applications: Manuscript
 
@@ -139,6 +139,12 @@ Scripts for the simulation portion of the appendix can be found in `replArchive/
 		> benchmarkme::get_ram()
 		401 GB
 		```
+
+##### Applications: Appendix
+
+- **2_applications/appendix_tableB1.R**: Creates the table showcasing differences in parameter estimates from GLM vs AME for the Reiter & Stam replication. This script depends on the presence of `replArchive/2_applications/application_data/reiter_stam/ameFitReiterStam.rda`, which is created by `2_application/reiter_stam_ameRun.R`. Script also depends on the presence of `replArchive/2_applications/application_data/reiter_stam/glmFitReiterStam.rda`, which is created by `2_applications/reiter_stam_glmRun.R`.
+- **2_applications/appendix_tableB2.R**: Creates the table showcasing differences in parameter estimates from GLM vs AME for the Weeks replication. This script depends on the presence of `replArchive/2_applications/application_data/weeks/ameFitWeeks.rda`, which is created by `2_application/weeks_ameRun.R`. Script also depends on the presence of `replArchive/2_applications/application_data/weeks/glmFitWeeks.rda`, which is created by `2_applications/weeks_glmRun.R`.
+- **2_applications/appendix_tableB3.R**: Creates the table showcasing differences in parameter estimates from GLM vs AME for the Gibler replication. This script depends on the presence of `replArchive/2_applications/application_data/gibler/ameFitGibler_s[119, 1571, 1922, 211, 3316, 3466, 3508, 4087, 6516, 806].rda`, which are created by `2_application/gibler_ameRun.R`. Script also depends on the presence of `replArchive/2_applications/application_data/gibler/glmFitGibler.rda`, which is created by `2_applications/gibler_glmRun.R`.
 
 #### R package build notes
 

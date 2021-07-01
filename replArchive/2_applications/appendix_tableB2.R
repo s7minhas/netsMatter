@@ -13,6 +13,9 @@ source(paste0(pth, 'helpers/stargazerHelpers.R'))
 ##############################
 # load models
 load(paste0(wPth,'ameFitWeeks.rda'))
+
+if(!file.exists(paste0(wPth,'glmFitWeeks.rda'))){
+	source(paste0(pth, '2_applications/weeks_glmRun.R')) }
 load( paste0(wPth,'glmFitWeeks.rda') )
 ##############################
 
