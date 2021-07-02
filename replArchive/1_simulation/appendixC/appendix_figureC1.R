@@ -31,6 +31,7 @@ intEff=-2 ; x1Eff=1 ; x2Eff=1
 # check if sim results are in path
 fileLogical = !all( file.exists(
 	paste0(simResPath,'ameSim',c(50,100),'_asaProbit.rda') ) )
+
 # if they arent in path then run sim script
 if( fileLogical ){
 	source(paste0(pth, '1_simulation/appendixC/1_ameSim_asaProbit.R')) }
@@ -99,18 +100,21 @@ ggBiasPlot = function(varName, h=4, w=8){
 			legend.title=element_blank(),
 			axis.ticks=element_blank(),
 			panel.border=element_blank(),
-			axis.text.y=element_text(size=8,
-				family="Source Code Pro Light"),
+			axis.text.y=element_text(size=8
+				#, family="Source Code Pro Light"
+				),
 			axis.text.x=element_text(size=10, face='bold'),
-			strip.text.x = element_text(size=9, color='white',
-				family="Source Code Pro Semibold"),
+			strip.text.x = element_text(size=9, color='white'
+				#, family="Source Code Pro Semibold"
+				),
 			strip.text.y = element_text(size=9, color='white',
-				family="Source Code Pro Semibold", angle=0),
+				#family="Source Code Pro Semibold",
+				angle=0),
 			strip.background = element_rect(fill = "#525252", color='#525252')
 			)
 	ggsave(g, height=4, width=8,
-		file=paste0(graphicsPath, 'appendix_figureC1.pdf'),
-		device=cairo_pdf
+		file=paste0(graphicsPath, 'appendix_figureC1.pdf')
+		#, device=cairo_pdf
 		)
 	return(g)
 }
