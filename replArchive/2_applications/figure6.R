@@ -53,12 +53,12 @@ wFiles = c(
 if(!file.exists(wFiles[1])){
   source(
     paste0(pth, '2_applications/weeks_ameCrossval.R')) }
-load(rsFiles[1])
+load(wFiles[1])
 
 if(!file.exists(wFiles[2])){
   source(
     paste0(pth, '2_applications/weeks_glmCrossval.R')) }
-load(rsFiles[2])
+load(wFiles[2])
 
 # org
 predDfs = list(
