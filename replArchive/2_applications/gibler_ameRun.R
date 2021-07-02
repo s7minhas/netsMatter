@@ -20,7 +20,8 @@ load(paste0(gPth, 'giblerData.rda'))
 ##############################
 # run ame and save ~4 days
 set.seed(6886)
-seeds = sample(1:6886, 10)
+# seeds = sample(1:6886, 10) # commenting out to ensure replication but should return the same values set manually in line 24
+seeds = c(119, 1571, 1922, 211, 3316, 3466, 3508, 4087, 6516, 806)
 cl=makeCluster(length(seeds)) ; registerDoParallel(cl)
 shh = foreach(s = seeds, .packages=c('amen')) %dopar% {
 	startTime = Sys.time()

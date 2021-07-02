@@ -17,18 +17,25 @@ loadPkg('mvtnorm')
 # load models
 
 # load ame mods run in parallel
+
+# define files from gibler ame run
 files = paste0(
 	'ameFitGibler_s',c(119, 1571, 1922, 211, 3316, 3466, 3508, 4087, 6516, 806))
-
 files = list.files(gPth)[grepl('ameFitGibler_', list.files(gPth))]
 pthFiles = paste0(gPth, files)
+
+# if files dont exist run
+if( !all(file.exists(pthFiles)) ){
+	source(paste0(pth, '2_applications/gibler_ameRun.R'))}
 
 # gather together into new ameFit$BETA object
 ameFit=list()
 ameFit$BETA = do.call('rbind', lapply(pthFiles, function(pthFile){
 	load(pthFile) ; return( ameFit$BETA ) } ) )
 
-# load glm data
+# load glm data and run if not present
+if( !file.exists(paste0(gPth, 'glmFitGibler.rda')) ){
+	source(paste0(pth, '2_applications/gibler_glmRun.R')) }
 load( paste0(gPth,'glmFitGibler.rda') )
 ##############################
 
@@ -62,13 +69,17 @@ scen1 = scen[,seq(1,ncol(scen),2)] ; scen0 = scen[,seq(2,ncol(scen),2)]
 scens = c( 'Allied', 'Joint Democracy', 'Contiguity',
 	'Rivalry', 'Parity at entry year', 'Parity')
 
+# add intercept terms
+scen1 = rbind(intercept=1, scen1)
+scen0 = rbind(intercept=1, scen0)
+
 # for ame
 set.seed(6886)
 glmDraws = rmvnorm(1000, coef(mod), vcov(mod))
 ameDraws = rmvnorm(1000, apply(ameFit$BETA, 2, median), cov(ameFit$BETA))
 scenDiffs = rbind(
-	getScenDiff(linkType='logit', scen1, scen0, scens, glmDraws[,-1], 'GLM', type='densityShade'),
-	getScenDiff(linkType='probit', scen1, scen0, scens, ameDraws[,-1], 'AME', type='densityShade') )
+	getScenDiff(linkType='logit', scen1, scen0, scens, glmDraws, 'GLM', type='densityShade'),
+	getScenDiff(linkType='probit', scen1, scen0, scens, ameDraws, 'AME', type='densityShade') )
 
 ggCols = c(GLM='#d6604d', AME='#4393c3')
 ggLty = c(GLM='dashed', AME='solid')
@@ -86,7 +97,7 @@ scenGG = ggplot(data=scenDiffsSlice, aes(color=mod, fill=mod)) +
 		) +
 	xlab('Pr(MID=1 | Rivalry=1) - Pr(MID=1 | Rivalry=0)') +
 	ylab('Density') +
-	facet_wrap(~scen, scales='free', ncol=1) +
+	facet_wrap(mod~scen, scales='free', ncol=1) +
 	theme(
 		legend.position = 'top', legend.title=element_blank(),
 		axis.ticks=element_blank(), axis.text.y=element_blank(),
@@ -94,5 +105,5 @@ scenGG = ggplot(data=scenDiffsSlice, aes(color=mod, fill=mod)) +
 		strip.text.x = element_text(size = 9, color='white' ),
 		strip.background = element_rect(fill = "#525252", color='#525252')
 		)
-ggsave(scenGG, file=paste0(pth, 'figure9.pdf'), width=7, height=3)
+ggsave(scenGG, file=paste0(pth, 'figure9.pdf'), width=7, height=5)
 ############################################
