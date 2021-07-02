@@ -16,14 +16,14 @@ library(amen)
 # load models
 
 # if ame model for weeks is not present run script
-if(!file.exists(paste0(rsPth, 'weeksStam.rda'))){
+if(!file.exists(paste0(wPth, 'ameFitWeeks.rda'))){
   source(paste0(pth, '2_applications/weeks_ameRun.R')) }
 
 # load in ame results
 load(paste0(wPth,'ameFitWeeks.rda'))
 
 # load in weeks data
-load(paste0(wPth, 'WeeksamenData.rda'))
+load(paste0(wPth, 'weeksData.rda'))
 ##############################
 
 ##############################
