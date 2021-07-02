@@ -23,8 +23,6 @@ ameFit$BETA = do.call('rbind', lapply(pthFiles, function(pthFile){
 	load(pthFile) ; return( ameFit$BETA ) } ) )
 
 # load glm data
-if(!file.exists(paste0(gPth,'glmFitGibler.rda'))){
-	source(paste0(pth, '2_applications/gibler_glmRun.R')) }
 load( paste0(gPth,'glmFitGibler.rda') )
 ##############################
 
