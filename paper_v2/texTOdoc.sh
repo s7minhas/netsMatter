@@ -1,1 +1,0 @@
- pandoc netsMatter.tex --bibliography=/Users/s7m/whistle/master.bib -o netsmatter.docx
