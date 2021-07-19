@@ -29,5 +29,6 @@
 *.snm
 *.nav
 *.fls
+*.zip
 .Rproj.user
 netsMatter.Rproj
