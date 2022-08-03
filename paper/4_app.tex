@@ -27,14 +27,14 @@ For each of the replications, we find that the AME approach substantially outper
 	\centering
 	\begin{tabular}{cc}
 		\multicolumn{2}{l}{\textbf{\tiny{Reiter \& Stam (2003)}}} \\
-		\includegraphics[width=.4\textwidth]{graphics/reiter_stam_roc_outSample.pdf} &
-		\includegraphics[width=.4\textwidth]{graphics/reiter_stam_pr_outSample.pdf} \\
+		\includegraphics[width=.4\textwidth]{graphics/figure6_reiter_stam_roc_outSample.pdf} &
+		\includegraphics[width=.4\textwidth]{graphics/figure6_reiter_stam_pr_outSample.pdf} \\
 		\multicolumn{2}{l}{\textbf{\tiny{Weeks (2012)}}} \\
-		\includegraphics[width=.4\textwidth]{graphics/weeks_roc_outSample.pdf} &
-		\includegraphics[width=.4\textwidth]{graphics/weeks_pr_outSample.pdf} \\
+		\includegraphics[width=.4\textwidth]{graphics/figure6_weeks_roc_outSample.pdf} &
+		\includegraphics[width=.4\textwidth]{graphics/figure6_weeks_pr_outSample.pdf} \\
 		\multicolumn{2}{l}{\textbf{\tiny{Gibler (2017)}}} \\
-		\includegraphics[width=.4\textwidth]{graphics/gibler_roc_outSample.pdf} &
-		\includegraphics[width=.4\textwidth]{graphics/gibler_pr_outSample.pdf} \\
+		\includegraphics[width=.4\textwidth]{graphics/figure6_gibler_roc_outSample.pdf} &
+		\includegraphics[width=.4\textwidth]{graphics/figure6_gibler_pr_outSample.pdf} \\
 	\end{tabular}
 	\caption{Assessments of out-of-sample predictive performance using ROC curves, PR curves, and separation plots.}
 	\label{fig:perf}
@@ -69,15 +69,15 @@ Even though we are able to confirm the original results, employing the AME model
 
 \begin{figure}[ht]
 	\begin{tabular}{cc}
-	\includegraphics[width=.7\textwidth]{graphics/reiter_stam_aEff_map.pdf} &
-	\includegraphics[width=.3\textwidth]{graphics/reiter_stam_aEff_line.pdf} \\
+	\includegraphics[width=.7\textwidth]{graphics/figure7a.pdf} &
+	\includegraphics[width=.3\textwidth]{graphics/figure7b.pdf} \\
 	\end{tabular}
 	\caption{Estimates of sender random effects ($a_{i}$) from AME for the Reiter \& Stam (2003) model. Positive values indicate that the particular country is more likely to be involved in conflict than predicted by the covariates in the model. Negative values indicate that the country is less likely to be involved in conflict. The left-panel shows $a_{i}$ estimates for all countries and right-panel highlights the top ten countries in terms of positive and values of $a_{i}$.}
 	\label{fig:reiter_stam_aEff}
 \end{figure}
 \FloatBarrier
 
-The visualization of the sender random effects highlights that the behavior of countries does not fully accord with predictions from the covariates specified by Reiter \& Stam. Specifically, we can see that countries such as Iraq, Israel, Egypt, and Iran are more likely to be involved in initiating or continuing conflict with other countries than the model would predict. Further, other countries such as Bhutan, Finland, and Turkmenistan are less likely to engage in conflict than the exogenous covariates in the model would suggest. In this case, the finding that countries in the middle east experience more conflict with other countries might lead one to more carefully examine the effects of geography on conflict initiation or to account for \citet{colgan:2010}'s theory that revolutionary petrostates are more aggressive. None of these findings change the key conclusion from Reiter \& Stam's work, but by using the AME framework we are able to better understand the limitations of their model.
+The visualization of the sender random effects highlights that the behavior of countries does not fully accord with predictions from the covariates specified by Reiter \& Stam. Specifically, we can see that countries such as Iraq, Israel, and Iran are more likely to be involved in initiating or continuing conflict with other countries than the model would predict. Further, other countries such as Sweden, Finland, and Swaziland are less likely to engage in conflict than the exogenous covariates in the model would suggest. In this case, the finding that countries in the middle east experience more conflict with other countries might lead one to more carefully examine the effects of geography on conflict initiation or to account for \citet{colgan:2010}'s theory that revolutionary petrostates are more aggressive. None of these findings change the key conclusion from Reiter \& Stam's work, but by using the AME framework we are able to better understand the limitations of their model.
 
 \subsection{Weeks (2012)}
 
@@ -85,10 +85,10 @@ The visualization of the sender random effects highlights that the behavior of c
 
 The major innovation in her study resides in the nuanced way she conceptualizes and codes regimes into four types: a) Machine, b) Junta, c) Boss, and d) Strongmen.\footnote{Weeks also includes a variety of control variables focusing on capabilities for both sides of the dyad, alliances, geography, trade dependence, regime instability, and the regime type of ``side B.'' For a full tabular display of the results see the Appendix.} She uses a logistic regression, following \citet{beck:etal:1998} and includes splines to capture temporal covariation in the dependent variable along with dyad clustered standard errors. The key findings of her work are that a) juntas, boss, and strongmen regimes are more likely to initiate conflict than machine-type regimes and b) machine-type regimes are no more belligerent than democracies.\footnote{These insights are mainly emphasized in the paper by the parameter estimates depicted in Tables 1 and 2 (pages 339--340) from the paper.} In the empirical analysis, Weeks finds that machines are less prone to initiate conflict than the reference category, whereas juntas, bosses, and strongmen are more conflict-prone. When analyzing the results using AME, however, we find that the parameters on each of her autocratic regime type variables are too imprecisely measured to draw any inference about their putative causal effects. Consequentially, none of the findings from her original analysis are confirmed once known dependencies among the data are taken into account via AME.
 
-There is also a striking difference between Weeks' original model and our estimation using AME in terms of capturing the data generating process. Specifically, the area under the ROC curve for AME and GLM models are 0.97 and 0.64, respectively, which is a dramatic difference given that both models use the same exogenous covariates. As with Reiter \& Stam, the divergence is a result of the GLM framework's inability to account for underlying structure generating the event of interest. To uncover this structure, we illustrate another beneficial aspect of the AME framework, which is the multiplicative random effects estimated through the LFM portion of the model: $\mathbf{u}_{i}^{\top} \mathbf{D} \mathbf{v}_{j}$. These random effects account for higher order dependencies that manifest as a result of homophily and stochastic equivalence in dyadic data.
+There is also a striking difference between Weeks' original model and our estimation using AME in terms of capturing the data generating process. As with Reiter \& Stam, the divergence is a result of the GLM framework's inability to account for underlying structure generating the event of interest. To uncover this structure, we illustrate another beneficial aspect of the AME framework, which is the multiplicative random effects estimated through the LFM portion of the model: $\mathbf{u}_{i}^{\top} \mathbf{D} \mathbf{v}_{j}$. These random effects account for higher order dependencies that manifest as a result of homophily and stochastic equivalence in dyadic data.
 
 \begin{figure}[!h]
-	\includegraphics[width=\textwidth]{graphics/weeks_circPlot.png}
+	\includegraphics[width=\textwidth]{graphics/figure8.pdf}
 	\caption{ Visualization of multiplicative effects for Weeks (2012). Each circle designates a country and the color corresponds to the legend at the center of the visualization. Countries that cluster together in the outer ring are those that were found by the model to have similar sending patterns, meaning that they tend to send conflict to similar sets of countries. The inner ring clusters countries by the similarity of who they receive conflict from.
 	}
 	\label{fig:weekscirc}
@@ -97,7 +97,7 @@ There is also a striking difference between Weeks' original model and our estima
 
 To visualize the multiplicative effects, we display the circular diagram shown in Figure~\ref{fig:weekscirc}. The nodes throughout the diagram represent countries and are colored according to their geographic position -- a legend is provided in the center. The outer ring visualizes higher order dependence patterns through countries' sender relationships -- country positions here are estimated in the $\mathbf{u}_{i}$ random effects described in Equation~\ref{eqn:ame}. Countries that are more proximate to each other in this outer ring are more likely to send or initiate conflicts with similar targets. The inner ring, based on estimates of $\mathbf{v}_{i}$, is constructed such that countries closer together are more likely to receive conflict from the same sender countries. Last, the distance between countries in the inner and outer rings proportionately reflects who a country is more likely to be in conflict with.
 
-Figure~\ref{fig:weekscirc} reveals a number of notable clusters. For example, in the top left corner we see the US, UK, Germany, Canada, and Israel. These states cluster together in the outer ring of this visualization because they tend to send conflicts to similar targets. Conversely, in the bottom right of the outer ring, we see a cluster of authoritarian countries: Iraq, Russia, Syria, North Korea, and China. We observe similar clusters in the inner ring. Specifically, we again see the US, UK, Germany, Canada, and Israel clustering together indicating that they are more likely to receive conflict from the same countries.  The  cluster of democratic and authoritarian countries facing each other in the inner and outer rings indicate that they are more likely to engage in conflict with one another.
+Figure~\ref{fig:weekscirc} reveals a number of notable clusters. For example, in the bottom right corner we see the US, UK, Germany, Canada, and Israel. These states cluster together in the outer ring of this visualization because they tend to send conflicts to similar targets. Conversely, in the top left of the outer ring, we see a cluster of authoritarian countries: Iraq, Russia, Syria, North Korea, and China. We observe similar clusters in the inner ring. Specifically, we again see the US, UK, Germany, Canada, and Israel clustering together indicating that they are more likely to receive conflict from the same countries.  The  cluster of democratic and authoritarian countries facing each other in the inner and outer rings indicate that they are more likely to engage in conflict with one another.
 
 Perhaps most critically, an evaluation of this visualization highlights Weeks' original expectation of how states behave in the conflict system.  Specifically, Iraq, Syria, Libya, and North Korea all fell under Weeks' ``boss" category, and each of these states tends to cluster together in the inner and outer rings. This indicates that even though we do not find support for Weeks' assertion that certain authoritarian regime types are more likely to initiate conflict, we do find that these regimes are more likely to behave similarly in terms of who they target and receive conflict from.
 
@@ -113,15 +113,15 @@ To clarify the difference, we turn to a simulation based approach. We employ mea
 
 \begin{figure}
 	\caption{Marginal effects of a change in the Rivalry variable for both the AME and the Gibler estimation.  \label{fig:gibmargeff}}
-	\includegraphics[width=\textwidth]{graphics/gibler_margeff.pdf}
+	\includegraphics[width=\textwidth]{graphics/figure9.pdf}
  	\label{fig:gibmargeff}
  \end{figure}
 
-As Figure~\ref{fig:gibmargeff} illustrates, the substantive results differ notably. The expected value of the dependent variable---the probability of the onset of a militarized interstate dispute, is considerably lower once interdependencies are taken into account with the AME model.  These are rare events, so the probabilities are low, but the difference is a factor of almost two. Thus, we find substantially different expected values from these two models.
+As Figure~\ref{fig:gibmargeff} illustrates, the substantive results differ notably. The expected value of the dependent variable---the probability of the onset of a militarized interstate dispute, is considerably lower once interdependencies are taken into account with the AME model.  These are rare events, so the probabilities are low, but the difference in predictions is notable.
 
 \subsection{Lessons Learned}
 
-First, utilizing the AME framework enables scholars to better model the underlying structure inherent to dyadic data. In each of the models the AME substantially outperforms the original model out of sample. Not only does AME perform better at correctly identifying cases in which the dependent variable takes a value of $0$ (via the ROC curves), but it also dominates at correctly identifying occurrences of the dependent variable in the data (seen via the PR curves). This may be because by ignoring dependencies, the original models are misspecifying the DGP, and the AME better accounts for it.  
+First, utilizing the AME framework enables scholars to better model the underlying structure inherent to dyadic data. In each of the models the AME substantially outperforms the original model out of sample. Not only does AME perform better at correctly identifying cases in which the dependent variable takes a value of $0$ (via the ROC curves), but it also dominates at correctly identifying occurrences of the dependent variable in the data (seen via the PR curves). This may be because by ignoring dependencies, the original models are misspecifying the DGP, and the AME better accounts for it.
 
 Second, in both the simulation  and replication sections  we have shown that results can change notably when interdependencies are not taken into account. Not only are coefficients biased in the GLM approaches, but they are often imprecisely measured with poorly calibrated standard errors.  This means that significance testing (for better or worse) is compromised when network effects are ignored.
 
